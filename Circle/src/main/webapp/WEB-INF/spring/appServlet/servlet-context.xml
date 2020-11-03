@@ -21,8 +21,16 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.kh.circle" />
-	
-	
+	<!-- 
+		문제점 : 모든 annotation 등록이 servlet-context.xml에 된다는 것
+		- 원하는 파일로 자동으로 나눠서 등록되도록 구분할 필요가 있다
+		- @Controller : servlet-context.xml에 등록(요청 처리)
+		- @Service : root-context.xml, 요청과 무관하게 실행이 가능해야 한다
+		- @Repository : root-context.xml
+		- @Component : root-context.xml
+	 -->
+	<context:component-scan base-package="com.kh.circle" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>	
+	</context:component-scan>
 	
 </beans:beans>
