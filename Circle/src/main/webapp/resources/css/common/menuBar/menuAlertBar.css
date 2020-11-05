@@ -1,0 +1,22 @@
+.menuAlertBar {
+	width: 100%;
+	min-width: 700px;
+	height: 30px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #F1F9FF, #AFDBFF, #F1F9FF);
+	background: linear-gradient(to right, #F1F9FF, #AFDBFF, #F1F9FF);
+}
+
+.menuAlertBox {
+	margin-top:-2px;
+	margin-left: 0px;
+	text-align: center;
+	width: 100%;
+	height: 30px;
+	border: none;
+	outline: none;
+	background: none;
+	color: black;
+	font-size: 16px;
+	font-weight: bolder;
+}
