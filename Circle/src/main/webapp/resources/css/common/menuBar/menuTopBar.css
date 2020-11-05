@@ -1,0 +1,87 @@
+.menuTopBar {
+	width: 100%;
+	min-width: 700px;	
+	height: 40px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #9DC8FF);
+	background: linear-gradient(to right, #0072C6, #9DC8FF);
+}
+
+.menuBtnLeft {
+	float: left;	
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+
+.menuBtnLeft:hover {
+	float: left;	
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	background: #9DC8FF;
+}
+
+.menuBtnRight {
+	float: right;	
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+
+.menuBtnRight:hover {
+	float: right;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	background: #0072C6;
+}
+
+.menuBtn {
+	float: left;	
+	width: 150px;
+	height: 40px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	color: white;
+	font-size: 15px;
+	font-weight: bolder;	
+}
+
+.menuBtn2 {
+	float: left;	
+	width: 80px;
+	height: 40px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	color: white;
+	font-size: 12px;
+	font-weight: bolder;	
+}
+
+.menuAlert {
+	float: right;	
+	text-align: center;
+	width: 40px;
+	height: 40px;
+	border: none;
+	background: none;
+	outline: none;
+	font-size: 25px;
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+.menuSearchBox {
+	float: right;
+	margin-top: 5px;
+	width: 200px;
+	height: 30px;
+	background: white;
+	border: none;
+	outline: none;
+}
