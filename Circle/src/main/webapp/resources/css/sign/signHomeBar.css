@@ -1,0 +1,16 @@
+.signHomeBar {
+	width: 100%;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.signHomeTitle {
+	height: 30px;
+	margin-top: 6px;
+	margin-left: 12px;
+	font-size: 17px;
+	font-weight: bolder;
+}
