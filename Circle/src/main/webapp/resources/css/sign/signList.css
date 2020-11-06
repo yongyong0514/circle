@@ -5,13 +5,13 @@ html, body {
 }
 
 .container {
-	position: relative;
 }
 
 .navLeft {
-	display: inline-block;
+	float: left;
 }
 
 .content {
-	display: inline-block;
+	width: 100%;
+	height: 100%;
 }

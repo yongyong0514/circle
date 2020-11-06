@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>Circle</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signList.css">
+
 </head>
 <body>
 	<div class="wrap">
@@ -16,6 +18,10 @@
 				<jsp:include page="../common/menuLeftBar.jsp" />
 			</div>
 			<div class="content">
+				<div>
+					<jsp:include page="../sign/signHomeBar.jsp"/>
+					<jsp:include page="../sign/signHomeListBar.jsp"/>
+				</div>
 			</div>
 		</div>
 	</div>
