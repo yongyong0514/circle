@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper라는 영역 안에 구문을 작성한다
+	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
+-->
+<mapper namespace="post">
+	
+<select id="seq" resultType="String">
+ select post_seq.nexval from dual
+</select>
+
+<insert id="add" parameterType="post">
+	insert into post( 
+	post_code, post_emp, post_title, post_comt, post_wdat, post_type
+	)
+	values(
+	
+	)
+</insert>
+	
+	<select id="list" resultType="post">
+		select * from post order by post_code
+	</select>
+	
+</mapper>

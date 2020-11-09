@@ -14,7 +14,8 @@
 	 -->
 	<typeAliases>
 		<!-- <typeAlias type="클래스 전체 경로" alias="별칭"/> -->
-		
+		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
+		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/>
 	</typeAliases>
 
 	<!-- 
@@ -38,8 +39,8 @@
 			<dataSource type="POOLED">
 				<property name="driver" value="oracle.jdbc.OracleDriver" />
 				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-				<property name="username" value="springuser" />
-				<property name="password" value="springuser" />
+				<property name="username" value="circle" />
+				<property name="password" value="circle" />
 			</dataSource>
 		</environment>
 		
@@ -51,6 +52,8 @@
 	 -->
 	<mappers>
 		<!-- <mapper resource="mybatis/mapper/example-mapper.xml" /> -->
+		 <mapper resource="mybatis/mapper/post-mapper.xml" />
+		 <mapper resource="mybatis/mapper/postFile-mapper.xml" />
 		
 	</mappers>
 	

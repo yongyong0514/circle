@@ -30,20 +30,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- 
-		Spring에서 사용자의 모든 요청을 처리하는 핵심(core) 서블릿
-		= 중앙 제어 서블릿(요청처리,교통정리,콜센터,분배기)
-		= 만드려면 난이도가 너무 높아서 스프링에서 사용하도록 만들어서 제공
-		이름 : appServlet
-		클래스 : org.springframework.web.servlet.DispatcherServlet
-		초기설정 : 
-			- 설정파일 : servlet-context.xml
-			
-		mapping pattern
-			/		전부다(원한다면 제외 수 있음, 나머지 전부다)
-			/*		전부다(하나도 빠짐없이)
-			*.me	위치 상관없이 .me로 끝나는 주소
-	-->
+
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -58,7 +45,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- 한글설정 [S] --> 
+	
 	<filter> 
 		<filter-name>encodingFilter</filter-name> 
 		<filter-class> org.springframework.web.filter.CharacterEncodingFilter </filter-class> 
@@ -75,5 +62,4 @@
 		<filter-name>encodingFilter</filter-name> 
 		<url-pattern>/*</url-pattern> 
 	</filter-mapping> 
-	<!-- 한글설정 [E] -->
 </web-app>
