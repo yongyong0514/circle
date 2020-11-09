@@ -1,7 +1,7 @@
 .menuBox {
-	max-width: 1440px;
-	min-width: 800px;
-	background: blue;
+	max-width: 1400px;
+	min-width: 700px;
+	background: none;
 }
 
 .arrow {
@@ -10,24 +10,76 @@
 }
 
 .buttonArea {
-	max-width: 1440px;
-	min-width: 800px;
+	min-height: 130px;
+	overflow: hidden;
+	max-width: 1400px;
+	min-width: 700px;
 	height: auto;
-	background: green/* #F2F2F2 */;
+	background: white/* #F2F2F2 */;
 }
 
 .buttonSize {
 	margin-top: 10px;
 	margin-left: 5px;
 	float: left;
-	width: 100px;
-	height: 100px;
+	width: 99px;
+	height: 99px;
 	background: #535050;
+	color: white;
+	font-weight: bolder;
+	font-size: 14px;
+	border: none;
+	outline: none;
+	cursor: pointer;	
+}
+
+.buttonSize:hover {
+	margin-top: 10px;
+	margin-left: 5px;
+	float: left;
+	width: 99px;
+	height: 99px;
+	background: #408EF2;
+	border: none;
+	outline: none;
+	cursor: pointer;	
+}
+
+.buttonSize1 {
+	margin-top: 10px;
+	margin-left: 5px;
+	float: left;
+	width: 99px;
+	height: 99px;
+	background: #BB1909;
+	color: white;
+	font-weight: bolder;
+	font-size: 14px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.buttonSize1:hover {
+	margin-top: 10px;
+	margin-left: 5px;
+	float: left;
+	width: 99px;
+	height: 99px;
+	background: #408EF2;
+	border: none;
+	outline: none;
+	cursor: pointer;	
 }
 
 .changePlan {
-	max-width: 1440px;
+	max-width: 1400px;
 	min-width: 800px;
 	height: 30px;
-	background: yellow;
+	background: #F2F2F2;
+}
+
+.menuIcon {
+	width: 50px;
+	height: 50px;
 }
