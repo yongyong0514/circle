@@ -12,4 +12,19 @@ public class SignController {
 	public String signList() {
 		return "sign/signList";
 	}
+	
+	@GetMapping("/signWrite")
+	public String signWrite() {
+		return "sign/signWrite";
+	}
+	
+	@GetMapping("/signWriteForm")
+	public String signWriteForm() {
+		return "sign/signWriteForm";
+	}
+	
+	@GetMapping("/signSelectOne")
+	public String signSelectOne() {
+		return "sign/signSelectOne";
+	}
 }

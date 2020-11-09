@@ -1,0 +1,121 @@
+html, body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.container {
+}
+
+.navLeft {
+	float: left;
+}
+
+.content {
+	width: 100%;
+	height: 100%;
+}
+
+.formArea {
+	min-width: 1400px;
+}
+
+.formBox {
+	float: left;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
+.formBox0 {
+	height: 20px;
+}
+.formBox1 {
+	width: 180px;
+	height: 40px;
+	background: #7d7d7d;
+	border: 1px solid #D9D9D9;
+	color: white;
+	font-size: 17px;
+	font-weight: bolder;
+}
+
+.formBox2 {
+	width: 280px;
+	height: 40px;
+	background: #F5F5F5;
+	border: 1px solid #D9D9D9;
+}
+
+.formBox4 {
+	height: 30px;
+	background: #F5F5F5;
+	border: 1px solid #D9D9D9;
+}
+
+.formBox5 {
+	height: 1000px;
+	border: 1px solid #D9D9D9; 
+}
+
+.formBox6 {
+	float: left;
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 180px;
+	height: 50px;
+
+}
+
+.formBtn1 {
+	width: 180px;
+	height: 50px;
+	outline: none;
+	font-size: 16px;
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 5px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.formInput1 {
+	margin-top: 10px;
+	width: 260px;
+	height: 35px;
+	border: none;
+	outline: none;
+}
+
+.formInput2 {
+	margin-top: 10px;
+	width: 722px;
+	height: 35px;
+	border: none;
+	outline: none;
+}
+
+.formSelect1 {
+	margin-top: 10px;
+	width: 264px;
+	height: 35px;
+	border: none;
+	outline: none;
+}
+
+.formSelect2 {
+	margin-top: 10px;
+	width: 726px;
+	height: 35px;
+	border: none;
+	outline: none;
+}
+
+.formResult1 {
+	float: left;
+	margin-left: 20px;
+	width: 180px;
+	height: 390px;
+	background: #F5F5F5;
+	border-radius: 5px;
+}

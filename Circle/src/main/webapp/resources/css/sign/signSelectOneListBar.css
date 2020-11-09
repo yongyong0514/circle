@@ -8,16 +8,8 @@
 	border: 1px solid lightgrey;
 }
 
-.signHomeListTitleImg {
-	float: left;
-	width: 20px;
-	height: 20px;
-}
-
 .signHomeListTitle {
 	float: left;	
-	margin-top: 6px;
-	margin-left: 15px;	
 	font-size: 17px;
 	font-weight: bolder;
 }
@@ -48,7 +40,7 @@
 
 .signListBtn3 {
 	float: right;
-	width: 80px;
+	width: 120px;
 	height: 30px;
 	outline: none;
 	border: none;
@@ -58,38 +50,17 @@
 	font-weight: bolder;	
 }
 
-.signListBtn4 {
-	float: right;
-	width: 80px;
-	height: 30px;
-	outline: none;
-	border: none;
+.signSelectOneModifyBtn {
+	margin-left: 20px;
+	margin-top: 2px;
+	float: left;
+	width: 100px;
+	height: 25px;
 	cursor: pointer;
-	background: none;
 	font-size: 15px;
-	font-weight: bolder;	
-}
-
-.signListBtn5 {
-	float: right;
-	width: 80px;
-	height: 30px;
-	outline: none;
-	border: none;
-	cursor: pointer;
-	background: none;
-	font-size: 15px;
-	font-weight: bolder;	
-}
-
-.signListBtn6 {
-	float: right;
-	width: 80px;
-	height: 30px;
-	outline: none;
-	border: none;
-	cursor: pointer;
-	background: none;
-	font-size: 15px;
-	font-weight: bolder;	
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
 }
