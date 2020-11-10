@@ -13,3 +13,5 @@ public class MenuController {
 		return "common/menuScrollList";
 	}
 }
+
+//메뉴 합병 완료 삭제 예정
