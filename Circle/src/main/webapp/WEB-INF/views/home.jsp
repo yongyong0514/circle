@@ -188,7 +188,7 @@ margin-left:20px;
 	function login(){
 		var login = document.getElementById("login").setAttribute("onclick","login()")
 		/* location.href='/views/sign/signList.jsp;' */
-	
+		/**/
 	}
 	</script>
 
