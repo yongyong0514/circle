@@ -189,6 +189,7 @@ margin-left:20px;
 		var login = document.getElementById("login").setAttribute("onclick","login()")
 		/* location.href='/views/sign/signList.jsp;' */
 		/**/
+		//주 석
 	}
 	</script>
 
