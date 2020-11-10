@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.service.PostService;
-
+/*
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -92,3 +92,4 @@ public class PostController {
 	}
 	
 }
+*/
