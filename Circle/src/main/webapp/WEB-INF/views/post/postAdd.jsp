@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/post/postAdd.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
 <body>
@@ -26,22 +26,38 @@
 				</div>
 				
 				<!-- 내용 -->
+				<div class="wraper">
 				<form class="insert" action="postAdd" method="get">
-				<h3>제목</h3>	<input type="text" name="title" required>
-				<h3>카테고리</h3>
-				<select type="dropbox" name="category" required>
+				<h3 class="name">제목</h3>
+					<input type="text" name="title" class="up">
+				<h3 class="name">카테고리</h3>
+				<select type="dropbox" name="category" class="category">
 				<option>1</option>
 				<option>2</option>
 				 </select>
-				<h3>본문</h3>
+				 
+				 
+				<h3 class="name">본문</h3>
+				<br>
+				
+				</select>
 				<br>
 				 <div id="editor" name="comment"></div>
-				 
 				
-				파일<input type="file" name="file" value="파일"  accept=".*" multiple required>
-				<input type="submit" value="글쓰기">
+				<div> 
+				<h3> 공개 여부</h3>
+				<select type="radiobox" name="open" class="open">
+				<option>y</option>
+				<option>n</option>
+				<br>
+				<br>
+				<input type="file" id="file" accept="*/*">
+				
+				<input type="submit" id="submit" value="글쓰기">
+				</div>
 				
 				</form>
+			</div>
 			</div>
 		</div>
 	</div>

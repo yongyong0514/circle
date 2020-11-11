@@ -25,11 +25,24 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.service.PostService;
-/*
+
 @Controller
 @RequestMapping("/post")
 public class PostController {
+	
 
+@GetMapping("/postMain")
+	public String postMain() {
+		return "post/postMain";
+	}
+
+
+@GetMapping("/postAdd")
+public String postAdd() {
+	return "post/postAdd";
+}
+}
+/*
 	@Autowired
 	private PostService postService;
 
