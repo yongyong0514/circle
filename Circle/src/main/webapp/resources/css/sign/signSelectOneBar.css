@@ -2,6 +2,7 @@
 	min-width: 1000px;
 	width: 100%;
 	height: 60px;
+	background: #F7F7F7;
 }
 
 .imgBox1 {
@@ -55,7 +56,7 @@
 	height: 60px;
 	outline: none;
 	border: none;
-	
+	background: #F7F7F7;
 }
 
 .signSee {
@@ -63,6 +64,7 @@
 	height: 60px;
 	outline: none;
 	border: none;
+	background: #F7F7F7;
 }
 
 .signJoin {
@@ -70,6 +72,7 @@
 	height: 60px;
 	outline: none;
 	border: none;
+	background: #F7F7F7;
 }
 
 .signCount {
@@ -77,6 +80,7 @@
 	height: 60px;
 	outline: none;
 	border: none;
+	background: #F7F7F7;
 }
 
 .signWriter {
@@ -84,6 +88,7 @@
 	height: 60px;
 	outline: none;
 	border: none;
+	background: #F7F7F7;
 }
 
 .signTitle {
@@ -91,6 +96,6 @@
 	height: 60px;
 	outline: none;
 	border: none;
+	background: #F7F7F7;
 }
 	
-}
