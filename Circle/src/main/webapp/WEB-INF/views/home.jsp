@@ -142,6 +142,11 @@ margin-left:20px;
 	font-weight: bold;
 	font-size: 15px;
 }
+#foot{
+	margin-left:35%;
+	color:#4A5BF9;
+	font-weight: bold;
+}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -178,7 +183,7 @@ margin-left:20px;
 			
 			<div id="rectangle355">
 			<br>
-			<label id="">서비스 이용</label>&nbsp;&nbsp;<label id="" onclick="join();">약관보기</label> 
+			<label id="foot">서비스 이용</label>&nbsp;&nbsp;<label id="" onclick="join();">약관보기</label> 
 			</div>
 		</aside>
 		
@@ -186,11 +191,14 @@ margin-left:20px;
 	
 		<script>
 	function login(){
-		var login = document.getElementById("login").setAttribute("onclick","login()")
-		/* location.href='/views/sign/signList.jsp;' */
-		/**/
-		//주 석
+		//var login = document.getElementById("login").setAttribute("onclick","login()")
+		location.href='/views/community/comuList.jsp';
+		
 	}
+	function join(){
+		location.href='/views/empinfo/myPage.jsp';
+	}
+	//주석주석
 	</script>
 
 </body>
