@@ -19,15 +19,13 @@ html, body {
 
 .formArea {
 	width: 100%;
-	min-width: 1000px;
-	height: 93vh;
-	background: #F7F7F7;
+	height: 100%;
 }
 
 .formBox {
 	float: left;
 	width: 800px;
-	height: 80vh;
+	height: 100%;
 	margin-left: 100px;
 	margin-top: 20px;
 	border: 1px solid #D9D9D9;
@@ -72,30 +70,35 @@ html, body {
 }
 
 .formBox5 {
-	width: 800px;
-	height: 50vh;
-	max-width: 800px;
-	min-width: 600px;
-	background: red;
 }
 
 .formBox6 {
 	width: 800px;
 	height: 100%;
-	background: green; 
+	background: #F1F9FF; 
 }
 
 .formBox7 {
 	width: 800px;
-	height: 60px;
-	background: yellow;
+	height: 40px;
 }
 
 .formBox8 {
 	width: 800px;	
 	height: 80px;
-	background: blue;
 }
+
+.formBox9 {
+	width: 800px;	
+	height: 80px;
+}
+
+.formBox10 {
+	width: 800px;
+	height: 30px;
+	background: #D9D9D9;
+}
+
 .formBtn1 {
 	width: 180px;
 	height: 50px;
@@ -120,8 +123,338 @@ html, body {
 }
 
 .formResult2 {
-	width: 90%;
+	margin-left: 10px;
+	width: 90px;
 	height: 30px;
 	outline: none;
 	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;
 }
+
+.formResult3 {
+	margin-left: 10px;
+	width: 780px;
+	height: 60px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+}
+
+.formResult4 {
+	margin-left: 10px;
+	width: 190px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	color: #7D7D7D;
+	background: none;
+}
+
+.formResult5 {
+	width: 100%;
+	height: 100%;
+	background: #F1F9FF;
+	border: 1px solid #D8D8D8;
+}
+
+.formResult6 {
+	width: 100%;
+	height: 100%;
+	background: none;
+	border: none;
+	outline: none;
+}
+
+.formInput1 {
+	margin-left: 10px;
+	margin-top: 10px;
+	width: 665px;
+	height: 60px;
+	background: none;
+	border: 1px solid #D8D8D8;
+}
+
+.formBtn0 {
+	margin-top: 10px;
+	margin-right: 10px;
+	float: right;
+	width: 100px;
+	height: 60px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	color: black;	
+}
+
+.formBtn2 {
+	margin-top: 3px;
+	margin-left: 10px;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	color: black;	
+}
+
+#formBtn3 {
+	line-height: 40px;
+	text-align: center;
+	width: 800px;
+	height: 40px;
+	background: #4CAEFE;
+	color: white;
+	font-weight: bolder;
+	font-size: 18px;	
+	border:none;
+	outline: none;
+	cursor: pointer;
+}
+
+#formBtn3:hover {
+	background: #747EA9;
+}
+
+#formBtn3:disabled {
+	background: #D9D9D9;
+}
+
+#viewer {
+	margin-left: 10px;
+	height: 100%;
+	min-height: 500px;
+}
+
+/*signSelectOneBar*/
+.signBar1 {
+	min-width: 1000px;
+	width: 100%;
+	height: 60px;
+	background: #F7F7F7;
+}
+
+.imgBox1 {
+	float: left;
+	width: 60px;
+	height: 60px;
+	background: #0072C6;
+}
+
+.img1 {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+.imgBox2 {
+	float: right;
+	width: 80px;
+	height: 60px;
+	background: green;
+}
+
+.resultBox1 {
+	float: left;
+	width: 600px;
+	height: 60px;
+}
+
+.resultBox2 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	background: yellow;
+}
+
+.resultBox3 {
+	float: right;
+	width: 80px;
+	height: 60px;
+	background: purple;	
+}
+
+.resultBox4 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	background: cyan;
+}
+
+.signDate {
+	text-align: center;
+	width: 120px;
+	height: 28px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	font-size: 14px;
+}
+
+.signSee {
+	width: 80px;
+	height: 60px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	cursor: pointer;
+}
+
+.signJoin {
+	width: 80px;
+	height: 60px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	cursor: pointer;
+}
+
+.signCount {
+	text-align: center;
+	width: 80px;
+	height: 58px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.signWriter {
+	text-align: center;
+	width: 120px;
+	height: 28px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	font-size: 16px;
+	font-weight: bolder;
+}
+.signType {
+	margin-left: 10px;
+	width: 120px;
+	height: 58px;
+	outline: none;
+	border: none;
+	font-size: 16px;
+	font-weight: bolder;
+	background: #F7F7F7;
+}
+
+.signTitle {
+	width: 450px;
+	height: 58px;
+	outline: none;
+	border: none;
+	background: #F7F7F7;
+	font-size: 16px;
+	font-weight: bolder;
+}
+	
+/*signSelectOneListBar*/
+.signHomeListBar {
+	width: 100%;
+	min-width: 1000px;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #F7F7F7, #FFFFFF);
+	background: linear-gradient(to top, #F7F7F7, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.signHomeListTitle {
+	float: left;	
+	font-size: 17px;
+	font-weight: bolder;
+}
+
+.signListBtn1 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;	
+}
+
+.signListBtn2 {
+	float: right;
+	width: 80px;
+	height: 30px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;	
+}
+
+.signListBtn3 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;	
+}
+
+.signSelectOneModifyBtn {
+	margin-left: 20px;
+	margin-top: 2px;
+	float: left;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.imgSize {
+	width: 25px;
+	height: 25px;
+}
+
+#signSelect {
+	width: 300px;
+	height: 140px;
+	margin: 0 auto;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+	display: none;
+	position: absolute;
+	background: #D8D8D8;
+}
+
+#signSelect > li > button {
+	margin-top: 20px;
+	width: 120px;
+	height: 100px;
+	font-size: 20px;
+	font-weight: bolder;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: white;
+}
+
+

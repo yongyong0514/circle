@@ -16,7 +16,7 @@
 		<jsp:include page="../common/menuAlertBar.jsp" />
 		<div class="container">
 			<div class="navLeft">
-				<jsp:include page="../common/menuLeftBar.jsp" />
+				<jsp:include page="../sign/signLeftBar.jsp" />
 			</div>
 			<div class="content">
 			<div class="signWriteFormBar1">
