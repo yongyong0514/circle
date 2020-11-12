@@ -9,7 +9,7 @@
 <body>
 	<div class="projHomeBar">
 		<ul>
-			<li class="projHomeTitle">프로젝트</li>
+			<li class="projHomeTitle">업무</li>
 		</ul>
 	</div>
 </body>

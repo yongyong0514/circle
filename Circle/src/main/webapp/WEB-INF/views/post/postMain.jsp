@@ -29,7 +29,6 @@
 				<!-- 내용 -->
 				
 				
-				
 			<div class="wrapper">
 	<div class="links">
 		<ul>
@@ -52,99 +51,18 @@
 			<div class="view_item">
 				<div class="vi_left">
 				</div>
-				<div class="vi_right">
-					<p class="title">Tomato</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
+				<c:forEach var="post" items="${list}">
 				<div class="vi_left">
+				${post.post_code}
 				</div>
 				<div class="vi_right">
-					<p class="title">Chilli</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
+					<p class="title"> ${post.post_title}</p>
+					<p class="content">${post.post_comt}</p>
 					<div class="btn">View More</div>
 				</div>
+				</c:forEach>
 			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Carrot</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Onion</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Potato</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		
-		
-		<!--  grid -->
-		<div class="view_wrap grid-view" style="display: none;">
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Apple</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Banana</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Grapes</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Pineapple</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
-			</div>
-			<div class="view_item">
-				<div class="vi_left">
-				</div>
-				<div class="vi_right">
-					<p class="title">Strawberry</p>
-					<p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit animi!</p>
-					<div class="btn">View More</div>
-				</div>
+			
 			</div>
 
 		</div>
@@ -157,7 +75,6 @@
 				
 				
 				
-				
 				<!-- - end  -->
 			</div>
 		</div>
@@ -165,8 +82,6 @@
 	</div>
 
 
-	<script
-		href="${pageContext.request.contextPath}/resources/js/post/postMain.js"></script>
 	<script src="<c:url value="/resources/js/post/postMain.js" />"></script>
 	<script>
 		const editor = new toastui.Editor({

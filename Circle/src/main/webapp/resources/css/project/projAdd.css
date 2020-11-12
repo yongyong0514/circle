@@ -40,14 +40,14 @@ html, body {
 }
 
 .wrapper .title h1{
-  color: #0059a1;
+  color: #c5ecfd;
   text-align: center;
   margin-bottom: 25px;
 }
 
 .contact-form{
+	background:#e8f0fd;
   display: flex;
-  background-color: #e8f0fd;
 }
 
 .input-fields{
@@ -70,7 +70,7 @@ html, body {
   border: 0px;
   border-bottom: 2px solid #c5ecfd;
   padding: 10px;
-  color: #0059a1;
+  color: #c5ecfd;
   width: 100%;
 }
 
@@ -80,19 +80,19 @@ html, body {
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: #0059a1;
+  color: #c5ecfd;
 }
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: #0059a1;
+  color: #c5ecfd;
 }
 :-ms-input-placeholder {
   /* IE 10+ */
-  color: #0059a1;
+  color: #c5ecfd;
 }
 
 .btn {
-    background: #0059a1;
+    background: #39b7dd;
     text-align: center;
     padding: 15px;
     border-radius: 5px;
@@ -178,7 +178,7 @@ html, body {
 
 .selected::after {
   content: "";
-  
+  background: url("img/arrow-down.svg");
   background-size: contain;
   background-repeat: no-repeat;
 

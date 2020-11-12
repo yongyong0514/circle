@@ -2,13 +2,19 @@ package com.kh.circle.post.repository;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.kh.circle.post.entity.PostFile;
 
+@Repository
 public class PostFileDaoImp implements PostFileDao{
 
 	@Autowired
 	private SqlSession sqlession;
+	
+	@Autowired
+	private PostFileDao postFileDao;
+	
 	
 	@Override
 	public String add(PostFile postFile) {

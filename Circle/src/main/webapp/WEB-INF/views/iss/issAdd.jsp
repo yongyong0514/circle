@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/post/postAdd.css">
+	href="${pageContext.request.contextPath}/resources/css/iss/issAdd.css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
 <link rel="stylesheet"
@@ -31,11 +31,11 @@
 		<jsp:include page="../common/menuAlertBar.jsp" />
 
 		<div class="navLeft">
-			<jsp:include page="../post/postSidebar.jsp" />
+			<jsp:include page="../project/projSidebar.jsp" />
 		</div>
 		<div class="content">
 			<div>
-				<jsp:include page="../post/postHomebar.jsp" />
+				<jsp:include page="../iss/issHomebar.jsp" />
 			</div>
 
 			<!-- 내용 -->
@@ -82,9 +82,9 @@
 						<div class="radio-group">
 
 							<label class="radio"> <input type="radio" value="open"
-								name="post_sec"> 공개 <span></span>
+								name="iss_sec"> 공개 <span></span>
 							</label> <label class="radio"> <input type="radio" value="close"
-								name="post_sec"> 비공개 <span></span>
+								name="iss_sec"> 비공개 <span></span>
 							</label>
 						</div>
 						<br>
@@ -108,6 +108,6 @@
 
 
 
-		<script src="<c:url value="/resources/js/post/postAdd.js" />"></script>
+		<script src="<c:url value="/resources/js/iss/issAdd.js" />"></script>
 </body>
 </html>

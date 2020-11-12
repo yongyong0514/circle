@@ -31,18 +31,7 @@ import com.kh.circle.post.service.PostService;
 public class PostController {
 	
 
-@GetMapping("/postMain")
-	public String postMain() {
-		return "post/postMain";
-	}
 
-
-@GetMapping("/postAdd")
-public String postAdd() {
-	return "post/postAdd";
-}
-}
-/*
 	@Autowired
 	private PostService postService;
 
@@ -105,4 +94,3 @@ public String postAdd() {
 	}
 	
 }
-*/
