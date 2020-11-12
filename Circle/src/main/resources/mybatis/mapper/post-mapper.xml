@@ -28,7 +28,7 @@
 	</insert>
 	
 	<select id="list" resultType="String">
-		select * from menu order by no
+		select * from menu order by post_code
 	</select>
 	
 	
