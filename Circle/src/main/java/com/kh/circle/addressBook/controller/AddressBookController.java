@@ -9,7 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AddressBookController {
 
 	@GetMapping("/main")
-	public String addressList() {
+	public String main() {
 		return "addressBook/addressBookMain";
+	}
+	
+	@GetMapping("/detail")
+	public String detail() {
+		return "addressBook/addressBookDetail";
 	}
 }

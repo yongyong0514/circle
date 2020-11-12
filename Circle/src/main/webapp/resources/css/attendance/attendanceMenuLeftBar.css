@@ -1,0 +1,90 @@
+.menuLeftBar {
+	width: 180px;
+	height: 100vh;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
+	background: linear-gradient(to right, #0072C6, #5DA6DC);
+	font-size: small;
+}
+
+.menuLeftListTop {
+	width: 180px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bolder;
+	color: white;
+	background: none;
+}
+
+.menuLeftListTitle {
+	width: 180px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 15px;
+	font-weight: bolder;
+	color: white;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #0059A1);
+	background: linear-gradient(to right, #0072C6, #0059A1);
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.menuLeftListBtn {
+	width: 180px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bolder;
+	color: white;
+	background: none;
+}
+
+.menuLeftList {
+	width: 140px;
+	height: 40px;
+	padding-left: 40px;
+	line-height: 40px;
+	text-align: left;
+	font-size: 14px;
+	font-weight: bolder;
+	color: white;
+	background: none;
+	border-left: 3px solid transparent;
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+
+.menuLeftList:hover{
+	color: cyan;
+	border-left-color: cyan;
+}
+
+.menuLeftBtn {
+	width: 130px;
+	height: 35px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+a{
+	text-decoration: none;
+}
+
+.statusTable{
+	width:100%;
+}
+
+.statusTable td:first-of-type{
+	witdh: 30%;
+}
+
+.statusTable td:nth-of-type(2){
+	text-align:right;
+}
