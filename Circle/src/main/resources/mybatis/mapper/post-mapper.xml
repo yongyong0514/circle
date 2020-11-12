@@ -27,8 +27,8 @@
     , DEFAULT , '', 0, 'Y', 'N', '', 'N');
 	</insert>
 	
-	<select id="list" resultType="String">
-		select * from menu order by post_code
+	<select id="list" resultType="int">
+		select * from post
 	</select>
 	
 	
