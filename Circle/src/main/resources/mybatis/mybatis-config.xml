@@ -16,6 +16,8 @@
 		<!-- <typeAlias type="클래스 전체 경로" alias="별칭"/> -->
 		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
 		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/>
+		<typeAlias type="com.kh.circle.post.entity.PostStorage" alias="postStorage"/>
+		<typeAlias type="com.kh.circle.post.entity.PostType" alias="postType"/>
 	</typeAliases>
 
 	<!-- 
@@ -52,8 +54,7 @@
 	 -->
 	<mappers>
 		<!-- <mapper resource="mybatis/mapper/example-mapper.xml" /> -->
-		 <mapper resource="mybatis/mapper/post-mapper.xml" />
-		 <mapper resource="mybatis/mapper/postFile-mapper.xml" />
+		 
 		
 	</mappers>
 	
