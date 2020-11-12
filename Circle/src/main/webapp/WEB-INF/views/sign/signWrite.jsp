@@ -15,17 +15,16 @@
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
 	</div>
-	<div>
-		<div class="container">
-			<div class="navLeft">
+		<div class="leftBar">
 				<jsp:include page="../sign/signLeftBar.jsp" />
 			</div>
-			<div class="content">
+			<div class="container">
+				<div class="contentBar">
 					<jsp:include page="../sign/signWriteBar.jsp" />
 					<div class="signHomeListBar">
 						<button class="signListBtn">작성하기</button>
 					</div>
-				<div class="formArea">
+				<div class="content">
 					<div class="formBox">
 						<table>
 							<tr>
@@ -75,14 +74,13 @@
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script>
         var editor = new toastui.Editor({
             el:document.querySelector("#editor"),
-            height:"630px",
+            height: "630px",
             hooks:{
                 "addImageBlobHook":function(blob, callback){
                     var fd = new FormData();
@@ -105,15 +103,15 @@
 <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
-    		var leftBar = $(".navLeft").offset().top;
+    		var leftBar = $(".leftBar").offset().top;
     			$(window).scroll(function() {
     		var window = $(this).scrollTop();
     		console.log(leftBar+"left");
     		console.log(window+"window");
     		if(leftBar <= window) {
-    			$(".navLeft").addClass("fixed");
+    			$(".leftBar").addClass("fixed");
     		} else {
-    			$(".navLeft").removeClass("fixed");
+    			$(".leftBar").removeClass("fixed");
     			}
     		})
     	});
