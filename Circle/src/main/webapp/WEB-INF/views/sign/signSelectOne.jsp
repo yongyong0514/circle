@@ -101,7 +101,8 @@
 								<td class="formBox7" colspan="2">
 								<button id="formBtn3">결재</button>
 									<ul id="signSelect">
-										<li><button>결재</button>&nbsp;&nbsp;&nbsp;<button>반려</button></li>
+										<li><button>승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;<button>반려<br><a class="fontSize1">결재를 거부합니다</a></button></li>
+										<li><img src="${pageContext.request.contextPath}/resources/img/sign/arrow.png" class="arrowImg"></li>
 									</ul>
 								</td>
 							</tr>
@@ -143,30 +144,22 @@
 							</tr> -->
 						</table>
 					</div>
-					<div>
+					<div class="formRight">
 						<table>
 							<tr>
-								<th class="formBox1"><button class="formBtn1">결재자</button></th>
+								<th class="formBox6"><button class="formBtn1">결재자</button></th>
 							</tr>
 						</table>
+						<table class="formResult1" id="signJoiner">
+						</table>
 						<table>
 							<tr>
-								<td class="formResult1">
-									
-								</td>
+								<th class="formBox6"><button class="formBtn1">참조자</button></th>
 							</tr>
 						</table>
-						<table>
-							<tr>
-								<th class="formBox1"><button class="formBtn1">참조자</button></th>
-							</tr>
+						<table class="formResult1" id="signWatcher">							
 						</table>
-						<table>
-							<tr>
-								<td class="formResult1"></td>
-							</tr>											
-						</table>
-					</div>					
+					</div>				
 				</div>
 
 			</div>
@@ -191,6 +184,11 @@
     <script>
     	$("#formBtn3").click(function(){
     		$("#signSelect").fadeIn(100);
+    	});
+    </script>
+    <script>
+    	$("#signSelect").mouseleave(function(){
+    		$("#signSelect").fadeOut(100);
     	});
     </script>
 </body>

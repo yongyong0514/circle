@@ -7,9 +7,9 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/post/postHomebar.css">
 </head>
 <body>
-	<div class="postHomeBar">
+	<div class="projHomeBar">
 		<ul>
-			<li class="postHomeTitle">게시판</li>
+			<li class="projHomeTitle">프로젝트</li>
 		</ul>
 	</div>
 </body>

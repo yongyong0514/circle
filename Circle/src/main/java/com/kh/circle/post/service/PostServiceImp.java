@@ -18,7 +18,7 @@ import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
 
-/*
+
 @Service
 public class PostServiceImp implements PostService{
 
@@ -78,5 +78,5 @@ public class PostServiceImp implements PostService{
 		
 		
 		return entity;
-	}}
-*/
+	}
+	}

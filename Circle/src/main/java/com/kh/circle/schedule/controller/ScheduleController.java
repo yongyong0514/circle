@@ -5,11 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/schdule")
+@RequestMapping("/schedule")
 public class ScheduleController  {
 	
-	@GetMapping("schMain")
-	public String schMonth() {
+	@GetMapping("/schMain")
+	public String schMain() {
+		
+		
+		
+		
 		return "/schedule/schMain";
 	}
 	

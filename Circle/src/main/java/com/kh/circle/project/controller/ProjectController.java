@@ -5,13 +5,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/proj")
+@RequestMapping("/project")
 public class ProjectController {
 
 	
 	@GetMapping("/projMain")
-	public String signList() {
-		return "proj/projMain";
+	public String projMain() {
+		return "project/projMain";
+	}
+	
+	
+	@GetMapping("/projAdd")
+	public String projAdd() {
+		return "project/projAdd";
+	}
+	
+	
+	@GetMapping("/projKanban")
+	public String projKanban() {
+		return "project/projKanban";
+	}
+	
+	@GetMapping("/projTodo")
+	public String projTodo() {
+		return "project/projTodo";
 	}
 	
 	
