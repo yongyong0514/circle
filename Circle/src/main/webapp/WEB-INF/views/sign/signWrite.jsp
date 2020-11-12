@@ -14,15 +14,17 @@
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
+	</div>
+	<div>
 		<div class="container">
 			<div class="navLeft">
 				<jsp:include page="../sign/signLeftBar.jsp" />
 			</div>
 			<div class="content">
-				<div>
 					<jsp:include page="../sign/signWriteBar.jsp" />
-					<jsp:include page="../sign/signHomeWriteBar.jsp" />
-				</div>
+					<div class="signHomeListBar">
+						<button class="signListBtn">작성하기</button>
+					</div>
 				<div class="formArea">
 					<div class="formBox">
 						<table>
@@ -53,22 +55,22 @@
 						<div class="formBox5" id="editor">
 						</div>
 					</div>
-					<div>
+					<div class="formRight">
 						<table>
 							<tr>
-								<th class="formBox6"><button class="formBtn1">결재자 추가</button></th>
-							</tr>
-							<tr>
-								<th class="formResult1">
+								<th class="formBox6">
+									<button class="formBtn1">결재자 추가</button>
 								</th>
 							</tr>
+						</table>
+						<table class="formResult1" id="signJoiner">
+						</table>
+						<table>
 							<tr>
 								<th class="formBox6"><button class="formBtn1">참조자 추가</button></th>
 							</tr>
-							<tr>
-								<th class="formResult1">
-								</th>
-							</tr>							
+						</table>
+						<table class="formResult1" id="signWatcher">							
 						</table>
 					</div>
 				</div>
@@ -99,6 +101,22 @@
                 }
             },
         });        
+    </script>
+<!-- 왼쪽바 고정 추가 옵션 시작-->
+	<script>
+		$(function() {
+    		var leftBar = $(".navLeft").offset().top;
+    			$(window).scroll(function() {
+    		var window = $(this).scrollTop();
+    		console.log(leftBar+"left");
+    		console.log(window+"window");
+    		if(leftBar <= window) {
+    			$(".navLeft").addClass("fixed");
+    		} else {
+    			$(".navLeft").removeClass("fixed");
+    			}
+    		})
+    	});
     </script>
 </body>
 </html>
