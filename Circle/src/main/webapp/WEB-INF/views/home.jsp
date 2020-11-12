@@ -175,7 +175,7 @@ margin-left:20px;
 			<label id="password">PassWord</label><br> <input type="password" name="pwd"  class="pwd">
 			<br><br>
 			
-				<label id="login" onclick="login();">Login</label>
+				<a href="login" type="submit" id="login">로그인</a>
 				<br><br><br>	
 			<label id="pwdfind" onclick="pwdfind();">비밀번호를 잊었습니다.</label>
 			
@@ -190,13 +190,15 @@ margin-left:20px;
 	</section>
 	
 		<script>
-	function login(){
+	
+		/* function login(){
 		//var login = document.getElementById("login").setAttribute("onclick","login()")
 		location.href='/views/community/comuList.jsp';
 		
-	}
+	} */
 	function join(){
-		location.href='/views/empinfo/myPage.jsp';
+		location.href='/circle/sign/signList';
+		//http://localhost:8888/circle/sign/signList
 	}
 	//주석주석
 	</script>

@@ -16,6 +16,9 @@
 		<!-- <typeAlias type="클래스 전체 경로" alias="별칭"/> -->
 		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
 		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/>
+	
+		<!-- member 별칭 등록 -->
+		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
 	</typeAliases>
 
 	<!-- 
