@@ -8,7 +8,7 @@
 <title>Circle</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/addressBook/leftNav.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/addressBook/addressLeftNav.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/addressBook/addressBookDetail.css">
 </head>
 <body>
