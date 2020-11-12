@@ -27,57 +27,163 @@
 					<jsp:include page="../post/postHomebar.jsp" />
 				</div>
 				<!-- 내용 -->
-				
-				
-			<div class="wrapper">
-	<div class="links">
-		<ul>
-			<li data-view="list-view" class="li-list active">
-			<i class="fas fa-th-list"></i>
-			List View</li>
-			<li data-view="grid-view" class="li-grid">
-			<i class="fas fa-th-large"></i>
-			Grid View</li>
-		</ul>
-	</div>
-	
-	
-	
-	<div class="view_main">
-	
-	
-	<!--  list -->
-		<div class="view_wrap list-view" style="display: block;">
-			<div class="view_item">
-				<div class="vi_left">
+
+
+				<div class="wrapper">
+					<div class="links">
+						<ul>
+							<li data-view="list-view" class="li-list active"><i
+								class="fas fa-th-list"></i> List View</li>
+							<li data-view="grid-view" class="li-grid"><i
+								class="fas fa-th-large"></i> Grid View</li>
+						</ul>
+					</div>
+
+
+
+					<div class="view_main">
+
+
+						<!--  list -->
+						<div class="view_wrap list-view" style="display: block;">
+							<c:forEach var="post" items="${list}">
+						<div class="view_item">
+								<div class="vi_left">${post.post_code}</div>
+								<div class="vi_right">
+									<p class="title">${post.post_title}</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Chilli</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Carrot</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Onion</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Potato</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left">${post.post_code}</div>
+								<div class="vi_right">
+									<p class="title">${post.post_title}</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+						</c:forEach>
+						</div>
+
+
+
+
+						<!--  grid -->
+						<div class="view_wrap grid-view" style="display: none;">
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Apple</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Banana</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Grapes</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Pineapple</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+							<div class="view_item">
+								<div class="vi_left"></div>
+								<div class="vi_right">
+									<p class="title">Strawberry</p>
+									<p class="content">Lorem ipsum dolor sit amet, consectetur
+										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
+										animi!</p>
+									<div class="btn">View More</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
 				</div>
-				<c:forEach var="post" items="${list}">
-				<div class="vi_left">
-				${post.post_code}
-				</div>
-				<div class="vi_right">
-					<p class="title"> ${post.post_title}</p>
-					<p class="content">${post.post_comt}</p>
-					<div class="btn">View More</div>
-				</div>
-				</c:forEach>
+
 			</div>
-			
-			</div>
+			<!-- grid end -->
+
 
 		</div>
-		<!-- grid end -->
-		
-		
 	</div>
-</div>
-				
-				
-				
-				
-				<!-- - end  -->
-			</div>
-		</div>
+
+
+
+
+	<!-- - end  -->
+	</div>
+	</div>
 	</div>
 	</div>
 
