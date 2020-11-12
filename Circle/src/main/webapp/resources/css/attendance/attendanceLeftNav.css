@@ -5,7 +5,12 @@ html, body {
 }
 
 .container {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+	margin:0;
 }
+
 
 .navLeft {
 	float: left;
@@ -20,4 +25,6 @@ html, body {
 	width: 100%;
 	min-width: 1000px;
 	height: 400px;
+	background: blue;
+}
 

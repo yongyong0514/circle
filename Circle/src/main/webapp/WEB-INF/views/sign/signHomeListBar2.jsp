@@ -11,12 +11,12 @@
 	<div class="signHomeListBar">
 		<ul>
 			<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">최근 결재 완료 목록</li>
-			<li><button class="signListBtn1">작성자</button></li>
-			<li><button class="signListBtn2">남은결재</button></li>
-			<li><button class="signListBtn2">결재자</button></li>
+			<li><button class="signListBtn3">완료일</button></li>
+			<li><button class="signListBtn3">작성일</button></li>
 			<li><button class="signListBtn2">참조자</button></li>
-			<li><button class="signListBtn2">수정</button></li>
-			<li><button class="signListBtn1">작성일</button></li>
+			<li><button class="signListBtn2">결재자</button></li>
+			<li><button class="signListBtn2">남은결재</button></li>
+			<li><button class="signListBtn1">작성자</button></li>
 		</ul>
 	</div>
 </body>

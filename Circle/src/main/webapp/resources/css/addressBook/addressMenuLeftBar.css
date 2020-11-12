@@ -28,6 +28,7 @@
 	background: #0072C6;
 	background: -webkit-linear-gradient(to right, #0072C6, #0059A1);
 	background: linear-gradient(to right, #0072C6, #0059A1);
+	border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .menuLeftListBtn {
@@ -42,15 +43,23 @@
 }
 
 .menuLeftList {
-	width: 180px;
+	width: 140px;
 	height: 40px;
-	margin-left: 30px;
+	padding-left: 40px;
 	line-height: 40px;
 	text-align: left;
 	font-size: 14px;
 	font-weight: bolder;
 	color: white;
 	background: none;
+	border-left: 3px solid transparent;
+	border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+
+.menuLeftList:hover{
+	color: cyan;
+	border-left-color: cyan;
 }
 
 .menuLeftBtn {
@@ -63,12 +72,6 @@
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
 }
 
-.menuLeftBtn:hover {
-	width: 130px;
-	height: 35px;
-	border: 1px solid black;
-	border-radius: 5px;
-	background: #D8D8D8;
-	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
-	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+a{
+	text-decoration: none;
 }
