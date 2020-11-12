@@ -40,6 +40,11 @@
 	 color:black;
  font-size: 17px;
 	font-weight: bolder;
+	align:center;
+	}
+	#submit{
+	   margin-left:500px;
+     
 	}
 </style>
 
@@ -67,6 +72,7 @@
             <table>
                <tr>
                   <td>동호회</td>
+                 
                   <td>
                      <select name="category">
                      <c:forEach var="b" items="${ requestScope.list }">
@@ -78,19 +84,20 @@
                   </td>
                   
                </tr>
+               <br>
                <tr>
                   <td>제목 </td>
-                  <td colspan="3"><input type="text" size="58" name="title"></td>
+                  <td colspan="3"><input type="text" size="60" name="title"></td>
                </tr>
                <tr>
-                  <td>내용 </td>
+                  <td align="center">내용 </td>
                   <td colspan="3">
-                     <textarea name="content" cols="100" rows="15" style="resize:none;"></textarea>
+                     <textarea name="content" cols="100" rows="20" style="resize:none;"></textarea>
                   </td>
                </tr>
             </table>
             <br>
-            <div align="center">
+            <div id="submit">
                <button type="reset">취소하기</button>
                <button type="submit">등록하기</button>
             </div>
