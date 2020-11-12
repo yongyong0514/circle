@@ -14,8 +14,10 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
+			<jsp:include page="docuLeftBar.jsp" />
 		</div>
 		<div class="container">
+		
 		</div>
 	</div>
 </body>
