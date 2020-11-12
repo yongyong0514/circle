@@ -15,10 +15,13 @@
 	<typeAliases>
 		<!-- <typeAlias type="클래스 전체 경로" alias="별칭"/> -->
 		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
-		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/>
-		<typeAlias type="com.kh.circle.post.entity.PostType" alias="postType"/>
+		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/> 
+    <typeAlias type="com.kh.circle.post.entity.PostType" alias="postType"/>
+    
+		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
     
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
+
 	</typeAliases>
 
 	<!-- 

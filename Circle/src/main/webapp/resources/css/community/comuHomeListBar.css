@@ -1,0 +1,48 @@
+.comuHomeListBar {
+	width: 100%;
+	min-width: 1000px;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #F7F7F7, #FFFFFF);
+	background: linear-gradient(to top, #F7F7F7, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.comuHomeListTitleImg {
+	float: left;
+	width: 20px;
+	height: 20px;
+}
+
+.comuHomeListTitle {
+	float: left;	
+	margin-top: 6px;
+	margin-left: 15px;	
+	font-size: 17px;
+	font-weight: bolder;
+}
+
+.comuListBtn1 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;	
+}
+
+
+.comuListBtn2 {
+	float: right;
+	width: 80px;
+	height: 30px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;	
+}
