@@ -62,3 +62,13 @@
 	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
 }
+
+.menuLeftBtn:hover {
+	width: 130px;
+	height: 35px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}

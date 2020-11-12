@@ -32,6 +32,13 @@ html, body {
 	background: white;
 }
 
+.formRight {
+	margin-top: 20px;
+	margin-left: 20px;
+	float: left;
+	width: 180px;
+}
+
 .formBox0 {
 	width: 100vh;
 	height: 20px;
@@ -114,12 +121,10 @@ html, body {
 }
 
 .formResult1 {
-	float: left;
-	margin-left: 20px;
 	width: 178px;
-	height: 300px;
+	height: 360px;
 	border: 1px solid #D9D9D9;
-	background: white;
+	background: #F5F5F5;
 }
 
 .formResult2 {
@@ -214,21 +219,26 @@ html, body {
 	text-align: center;
 	width: 800px;
 	height: 40px;
-	background: #4CAEFE;
-	color: white;
-	font-weight: bolder;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
 	font-size: 18px;	
-	border:none;
+	border: 1px solid black;
+	border-radius: 3px;
 	outline: none;
 	cursor: pointer;
 }
 
 #formBtn3:hover {
-	background: #747EA9;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
 #formBtn3:disabled {
-	background: #D9D9D9;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
 }
 
 #viewer {
@@ -242,7 +252,11 @@ html, body {
 	min-width: 1000px;
 	width: 100%;
 	height: 60px;
-	background: #F7F7F7;
+	border: 1px solid #D8D8D8;
+}
+
+.signBar1:hover {
+	background: #F1F9FF;
 }
 
 .imgBox1 {
@@ -260,7 +274,6 @@ html, body {
 	float: right;
 	width: 80px;
 	height: 60px;
-	background: green;
 }
 
 .resultBox1 {
@@ -273,21 +286,18 @@ html, body {
 	float: right;
 	width: 120px;
 	height: 30px;
-	background: yellow;
 }
 
 .resultBox3 {
 	float: right;
 	width: 80px;
 	height: 60px;
-	background: purple;	
 }
 
 .resultBox4 {
 	float: right;
 	width: 120px;
 	height: 30px;
-	background: cyan;
 }
 
 .signDate {
@@ -296,8 +306,8 @@ html, body {
 	height: 28px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
 	font-size: 14px;
+	background: none;
 }
 
 .signSee {
@@ -305,8 +315,8 @@ html, body {
 	height: 60px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
 	cursor: pointer;
+	background: none;
 }
 
 .signJoin {
@@ -314,7 +324,7 @@ html, body {
 	height: 60px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
+	background: none;
 	cursor: pointer;
 }
 
@@ -324,7 +334,7 @@ html, body {
 	height: 58px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
+	background: none;
 	font-size: 20px;
 	font-weight: bolder;
 }
@@ -335,7 +345,7 @@ html, body {
 	height: 28px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
+	background: none;
 	font-size: 16px;
 	font-weight: bolder;
 }
@@ -347,7 +357,7 @@ html, body {
 	border: none;
 	font-size: 16px;
 	font-weight: bolder;
-	background: #F7F7F7;
+	background: none;
 }
 
 .signTitle {
@@ -355,9 +365,10 @@ html, body {
 	height: 58px;
 	outline: none;
 	border: none;
-	background: #F7F7F7;
+	background: none;
 	font-size: 16px;
 	font-weight: bolder;
+	cursor: pointer;
 }
 	
 /*signSelectOneListBar*/
@@ -434,27 +445,40 @@ html, body {
 }
 
 #signSelect {
-	width: 300px;
+	width: 500px;
 	height: 140px;
-	margin: 0 auto;
     text-align: center;
-    border: none;
+    background: #E8F0FD;
     border-radius: 10px;
 	display: none;
 	position: absolute;
-	background: #D8D8D8;
+	margin-left: 150px;
+	margin-top: -200px;
 }
 
 #signSelect > li > button {
+
 	margin-top: 20px;
-	width: 120px;
+	width: 220px;
 	height: 100px;
-	font-size: 20px;
+	font-size: 24px;
 	font-weight: bolder;
 	outline: none;
-	border: none;
 	cursor: pointer;
 	background: white;
+	border: none;
 }
 
+#signSelect > li > button:hover {
+	background: #408EF2;
+}
 
+.arrowImg {
+	margin-top: 15px;
+}
+
+.fontSize1 {
+	font-size: 16px;
+	color: #7D7D7D;
+	
+}
