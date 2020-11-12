@@ -1,3 +1,9 @@
-.leftBar {
-	position: fixed;
+body {
+	overflow-x: hidden;
+}
+
+.content {
+	position: absolute;
+	left: 180px;
+	width: 100%;
 }

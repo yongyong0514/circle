@@ -11,7 +11,7 @@
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">문서관리</div>
 			<div class="menuLeftListBtn"><button class="menuLeftBtn">새 문서 업로드</button></div>
-			<div class="menuLeftList"></div>
+			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">공용 문서</div>
 			<div class="menuLeftList">전체</div>
 			<div class="menuLeftList"></div>					

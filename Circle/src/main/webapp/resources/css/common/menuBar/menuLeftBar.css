@@ -1,6 +1,6 @@
 .menuLeftBar {
 	width: 180px;
-	height: 100%;
+	height: 100vh;
 	background: #0072C6;
 	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
 	background: linear-gradient(to right, #0072C6, #5DA6DC);
@@ -30,6 +30,18 @@
 	background: linear-gradient(to right, #0072C6, #0059A1);
 }
 
+.menuLeftList0 {
+	width: 180px;
+	height: 40px;
+	margin-left: 30px;
+	line-height: 40px;
+	text-align: left;
+	font-size: 16px;
+	font-weight: bolder;
+	color: white;
+	background: none;
+}
+
 .menuLeftListBtn {
 	width: 180px;
 	height: 40px;
@@ -53,6 +65,13 @@
 	background: none;
 }
 
+.menuLeftList:hover {
+	width: 150px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #F1F9FF);
+	background: linear-gradient(to right, #0072C6, #F1F9FF);
+}
+
 .menuLeftBtn {
 	width: 130px;
 	height: 35px;
@@ -61,4 +80,20 @@
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.menuLeftBtn:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+.leftBar {
+	float: left;
+}
+
+.leftBar.fixed {
+	position: fixed;
+	left: 0px;
+	top: 0px;
 }

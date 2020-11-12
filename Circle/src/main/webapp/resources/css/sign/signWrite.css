@@ -1,46 +1,29 @@
-html, body {
-	margin: 0;
-	width: 100%;
-	height: 100%;
+body {
 	overflow-x: hidden;
 }
 
-.wrap {
-	width: auto;
-	height: auto;
-}
-
 .container {
-	
-}
 
-.navLeft {
-	position: fixed;
-	top: 70px;
 }
 
 .content {
-	position: relative;
+	position: absolute;
 	left: 180px;
-	min-width: 1200px;
+	width: 100%;
+	min-width: 1500px;
+	height: 2000px;
 }
 
 .formRight {
-	margin-top: 20px;
-	margin-left: 20px;
 	float: left;
 	width: 180px;
-}
-
-.formArea {
-	width: 100%;
-	height: 100%;
 }
 
 .formBox {
 	float: left;
 	margin-top: 20px;
 	margin-left: 20px;
+	min-width: 950px;
 }
 
 .formBox0 {
@@ -73,14 +56,12 @@ html, body {
 }
 
 .formBox5 {
-	height: 1000px;
-	border: 1px solid #D9D9D9; 
+	width: 925px;
 }
 
 .formBox6 {
 	width: 180px;
 	height: 50px;
-
 }
 
 .formBtn1 {
@@ -170,14 +151,6 @@ html, body {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
-}
-
-/*왼쪽바 고정 추가 옵션 시작*/
-
-.navLeft.fixed {
-	position: fixed;
-	left: 0px;
-	top: 0px;
 }
 
  

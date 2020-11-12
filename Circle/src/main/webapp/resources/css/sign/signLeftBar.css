@@ -72,3 +72,13 @@
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
+
+.leftBar {
+	float: left;
+}
+
+.leftBar.fixed {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+}
