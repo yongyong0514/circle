@@ -11,9 +11,9 @@
 -->
 <mapper namespace="schedule">
 	
-	<select id="list" resultType="sch_unit">
+<!-- 	<select id="list" resultType="sch_unit">
 		select * from sch_unit
-	</select>
+	</select> -->
 	
 	
 	
