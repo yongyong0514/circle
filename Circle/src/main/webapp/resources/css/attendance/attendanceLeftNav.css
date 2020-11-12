@@ -1,0 +1,30 @@
+html, body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.container {
+	display: table;
+	width: 100%;
+	border-collapse: collapse;
+	margin:0;
+}
+
+
+.navLeft {
+	float: left;
+}
+
+.content {
+	width: 100%;
+	height: 100%;
+}
+
+.resultArea1 {
+	width: 100%;
+	min-width: 1000px;
+	height: 400px;
+	background: blue;
+}
+
