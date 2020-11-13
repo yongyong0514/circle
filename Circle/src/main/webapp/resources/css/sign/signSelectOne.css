@@ -9,8 +9,7 @@ body {
 .content {
 	position: absolute;
 	left: 180px;
-	width: 100%;
-	min-width: 1500px;
+	width: calc(100%-180px);
 	height: 2000px;
 }
 
@@ -241,7 +240,7 @@ body {
 
 /*signSelectOneBar*/
 .signBar1 {
-	width: 100%;
+	width: 1200px;
 	height: 60px;
 	border: 1px solid #D8D8D8;
 }
@@ -269,7 +268,7 @@ body {
 
 .resultBox1 {
 	float: left;
-	width: 600px;
+	width: 500px;
 	height: 60px;
 }
 
@@ -336,13 +335,13 @@ body {
 	height: 28px;
 	outline: none;
 	border: none;
-	background: none;
 	font-size: 16px;
 	font-weight: bolder;
+	background: yellow;
 }
 .signType {
 	margin-left: 10px;
-	width: 120px;
+	width: 100px;
 	height: 58px;
 	outline: none;
 	border: none;
@@ -352,14 +351,14 @@ body {
 }
 
 .signTitle {
-	width: 450px;
+	width: 400px;
 	height: 58px;
 	outline: none;
 	border: none;
-	background: none;
 	font-size: 16px;
 	font-weight: bolder;
 	cursor: pointer;
+	background: blue;
 }
 	
 /*signSelectOneListBar*/

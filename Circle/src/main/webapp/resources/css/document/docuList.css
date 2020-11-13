@@ -1,11 +1,10 @@
 body {
-	overflow-x: hidden;
 }
 
 .content {
 	position: absolute;
 	left: 180px;
-	width: 100%;
+	width: calc(100% - 180px);
 }
 
 .homeListBar {
@@ -37,4 +36,12 @@ body {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+.test{
+	float: right;
+	width: 200px;
+	height: 200px;
+	background: black;
+	
 }
