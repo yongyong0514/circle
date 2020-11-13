@@ -1,5 +1,8 @@
 package com.kh.circle.schedule.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,11 +16,11 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public Sch_unit list() {
+	public List<Map<String, String>> list() {
 
-//		Sch_unit list = sqlSession.selectSch();
+		List<Map<String, String>> list = (List<Map<String, String>>) sqlSession.selectMap(null, null);
 		
-		return null;
+		return list;
 	}
 
 }

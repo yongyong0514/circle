@@ -10,11 +10,18 @@
 	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
 -->
 <mapper namespace="schedule">
+<!-- 	
+	<resultMap type="map" id="sch_map">
+		<result column="sch_unit_name" property="title"/>
+		<result column="sch_unit_sdat" property="start"/>
+		<result column="sch_unit_edat" property="end"/>
+	</resultMap>
 	
-<!-- 	<select id="list" resultType="sch_unit">
-		select * from sch_unit
-	</select> -->
-	
+	<select id="selectMap" resultMap="sch_map">
+		select sch_unit_name, sch_unit_sdat, sch_unit_edat from sch_unit
+	</select>
+ -->
+
 	
 	
 </mapper>

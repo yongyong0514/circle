@@ -1,8 +1,10 @@
 package com.kh.circle.schedule.repository;
 
-import com.kh.circle.schedule.entity.Sch_unit;
+import java.util.List;
+import java.util.Map;
+
 
 public interface ScheduleDao {
 	
-	Sch_unit list();
+	List<Map<String, String>> list();
 }
