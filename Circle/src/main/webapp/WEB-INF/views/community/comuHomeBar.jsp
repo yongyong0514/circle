@@ -9,7 +9,7 @@
 <body>
 	<div class="comuHomeBar">
 		<ul>
-			<li class="comuHomeTitle" >동호회 홈</li>
+			<li class="comuHomeTitle" onclick="location.href='/circle/community/comuList'">동호회 홈</li>
 		</ul>
 	</div>
 </body>
