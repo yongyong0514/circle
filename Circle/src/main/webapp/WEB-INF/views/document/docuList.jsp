@@ -25,7 +25,8 @@
 				<button class="homeListBtn">작성하기</button>
 			</div>			
 			<div class="content">
-				
+				<div class="test">
+				</div>
 			</div>
 		</div>
 	</div>
