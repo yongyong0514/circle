@@ -39,6 +39,7 @@
 			</div>
 
 			<!-- 내용 -->
+			<form action="add" method="post">
 			<div class="wrapper">
 				<div class="title">
 					<h1>게시글쓰기</h1>
@@ -101,6 +102,7 @@
 					</div>
 				</div>
 			</div>
+			</form>
 
 
 		</div>

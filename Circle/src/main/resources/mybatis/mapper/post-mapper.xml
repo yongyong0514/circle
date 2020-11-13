@@ -27,9 +27,9 @@
     , DEFAULT , '', 0, 'Y', 'N', '', 'N');
 	</insert>
 	
-	<select id="list" resultType="int">
-		select * from post
+	<select id="list" resultType="post">
+		select * from post where post_code = #{post_code}
 	</select>
 	
-	
+
 </mapper>

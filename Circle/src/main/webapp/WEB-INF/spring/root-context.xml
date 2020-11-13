@@ -80,7 +80,6 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="factory"></constructor-arg>
 	</bean>
-	
 	<!-- 
 		BCrypt 암호화 도구 등록
 	 -->

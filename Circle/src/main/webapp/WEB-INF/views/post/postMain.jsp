@@ -43,7 +43,6 @@
 
 					<div class="view_main">
 
-
 						<!--  list -->
 						<div class="view_wrap list-view" style="display: block;">
 							<c:forEach var="post" items="${list}">
@@ -51,12 +50,12 @@
 								<div class="vi_left">${post.post_code}</div>
 								<div class="vi_right">
 									<p class="title">${post.post_title}</p>
-									<p class="content">Lorem ipsum dolor sit amet, consectetur
-										adipisicing elit. Aperiam impedit, veniam! Voluptate a impedit
-										animi!</p>
+									<p class="content">${post.post_comt}</p>
 									<div class="btn">View More</div>
+									
 								</div>
 							</div>
+							</c:forEach>
 							<div class="view_item">
 								<div class="vi_left"></div>
 								<div class="vi_right">
@@ -107,7 +106,6 @@
 									<div class="btn">View More</div>
 								</div>
 							</div>
-						</c:forEach>
 						</div>
 
 
@@ -196,6 +194,22 @@
 			height : '500px',
 			initialValue : content
 		});
+	</script>
+	<script>
+	var arr = [${"post_code"}, ${"post_title"}, ${"post_cont"}]
+	
+	$.ajax({
+		url: 'post/postMain',
+		type: 'post',
+		data type: 'json',
+		contentType: 'application/json',
+		data : JSON.stringify(arr)
+		, success: function(response){
+			
+		}
+		
+		
+	});
 	</script>
 </body>
 </html>
