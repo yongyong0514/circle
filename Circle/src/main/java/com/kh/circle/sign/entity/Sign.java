@@ -19,7 +19,7 @@ public class Sign {
 	private String sign_acc;
 	private String sign_title;
 	private String sign_note;
-	private String sing_status;
+	private String sign_status;
 	private Date sign_wdat;
 	private Date sign_edat;
 	private String sign_emp_code;

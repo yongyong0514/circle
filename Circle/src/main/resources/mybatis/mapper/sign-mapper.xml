@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sign">
+
+	<select id="list" resultType="signList">
+		SELECT ST.SIGN_TYPE_NAME
+    		 , SI.SIGN_TITLE
+    		 , EI.EMP_INFO_NAME
+    		 , SI.SIGN_WDAT
+    		 , SI.SIGN_EDAT
+ 		  FROM SIGN SI
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+  		  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+ 		 WHERE SI.SIGN_EMP_CODE = '199207220001'
+ 		 ORDER BY SI.SIGN_CODE DESC
+	</select>
+
+</mapper>
