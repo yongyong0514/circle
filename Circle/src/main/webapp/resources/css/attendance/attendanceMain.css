@@ -40,10 +40,6 @@ body {
 }
 
 /* 추가 css 영역 */
-body{
-	font-size: small;
-}
-
 a{
 	text-decoration: none;
 	color: inherit;
@@ -67,6 +63,7 @@ a{
 }
 
 .summaryTable{
+	font-size: small;
 	width: 100%;
 	text-align: center;
 }
@@ -87,6 +84,7 @@ a{
 }
 
 .historyTable{
+	font-size: small;
 	padding: 1rem;
 	border: 1px solid rgba(0,0,0,0.1);
 	border-right: 1px solid rgba(0,0,0,0.5);
@@ -101,6 +99,7 @@ a{
 
 .historyTable th{
 	padding: 1rem;
+	font-weight: bold;
 }
 
 .historyTable td{

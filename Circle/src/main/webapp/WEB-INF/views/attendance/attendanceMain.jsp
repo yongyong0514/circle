@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,15 +71,15 @@
 					-->
 					
 					<!-- 주간 근태내역 시작 -->
-					<c:forEach var="" items="">
-						<tr class="">
+					<c:forEach var="주차" items="주차s">
+						<tr class="week">
 							<td colspan="2">2020-11-08 ~ 2020-11-14</td>
 							<td colspan="2">누적근무시간: 18h 2m</td>
 							<td colspan="2">초과근무시간: 0h</td>
 						</tr>
 						
 						<!-- 일간 근태내역 시작 -->
-						<c:forEach var="" items="">
+						<c:forEach var="일차" items="일자s">
 
 							<!-- 예시용 시작 -->
 							<tr>
@@ -90,6 +91,204 @@
 								<td></td>
 							</tr>
 
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-12(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-12(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>2020-11-13(목)</td>
+								<td>09:00</td>
+								<td>18:00</td>
+								<td>08:00</td>
+								<td>휴게시간 1h 제외</td>
+								<td></td>
+							</tr>
+							
 							<tr>
 								<td>2020-11-13(목)</td>
 								<td>09:00</td>

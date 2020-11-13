@@ -12,4 +12,9 @@ public class AttendanceController {
 	public String main() {
 		return "attendance/attendanceMain";
 	}
+	
+	@GetMapping("/myInfo")
+	public String myInfo() {
+		return "attendance/attendanceMyInfo";
+	}
 }
