@@ -1,4 +1,4 @@
-signHomeBar.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@ signHomeBar.jsp<%@ page language="java" contentType="text/html; charset=UTF-8"
 <body>
 	<div class="signHomeBar">
 		<ul>
-			<li class="signHomeTitle">전자결재 홈</li>
+			<li class="signHomeTitle">전자결재 선택</li>
 		</ul>
 	</div>
 </body>
