@@ -74,7 +74,7 @@
 							<div class="selected">게시판을 선택하시오</div>
 						</div>
 						<!--  -->
-
+<br>
 						<br>
 						<!-- -->
 						<br>
