@@ -17,4 +17,8 @@ public class ComuController {
 	public String comuAdd() {
 		return "community/comuAdd";
 	}
+	@GetMapping("/comuInfoList")
+	public String comuInfoList() {
+		return "community/comuInfoList";
+	}
 }

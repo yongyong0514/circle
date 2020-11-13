@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Circle</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/community/comuList.css">
 
@@ -55,6 +56,8 @@
 					</tr>
 				</c:forEach>
 			</table>
+			
+			
 				</div>		
 			</div>
 		</div>
