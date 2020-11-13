@@ -45,8 +45,10 @@
                 	defaultDate			: moment(),//현재를 기준으로 생성
                 	editable			: true,
                 	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
-            	 	dayClick			: function(date) {//날짜 클릭 기능 설정
-            		   						 alert(date.format());
+            	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
+            		   						 alert(date);
+            		   						 alert(jsEvent);
+            		   						 alert(view);
         								  },
     				                	
                 	eventCilck			: function(info, e) {//클릭시 실행코드
