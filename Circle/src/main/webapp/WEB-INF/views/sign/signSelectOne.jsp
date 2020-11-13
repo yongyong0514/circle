@@ -35,7 +35,7 @@
 			</div>
 			<div class="content">
 			<!--1개의 건 시작 -->
-				<div class="signBar1">
+				<div class="signOneList">
 					<ul>
 						<li class="resultBox4">
 							<input type="text" class="signDate" value="2020-11-11" readonly>
@@ -67,7 +67,7 @@
 						</li>
 						<li class="resultBox1">
 							<input type="text" class="signType"  value="기안문서" readonly>
-							<input type="text" class="signTitle"  value="기안 바랍니다아아아아앙아아아아아sfdsdfs앙아아앙앙" readonly>
+							<input type="text" class="signTitle"  value="기안 바랍니다아아아아앙" readonly>
 						</li>
 					</ul>
 				</div>
@@ -190,6 +190,22 @@
     <script>
     	$("#signSelect").mouseleave(function(){
     		$("#signSelect").fadeOut(100);
+    	});
+    </script>
+    <!-- 왼쪽바 고정 추가 옵션 시작-->
+	<script>
+		$(function() {
+    		var leftBar = $(".leftBar").offset().top;
+    			$(window).scroll(function() {
+    		var window = $(this).scrollTop();
+    		console.log(leftBar+"left");
+    		console.log(window+"window");
+    		if(leftBar <= window) {
+    			$(".leftBar").addClass("fixed");
+    		} else {
+    			$(".leftBar").removeClass("fixed");
+    			}
+    		})
     	});
     </script>
 </body>

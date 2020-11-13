@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signList.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signSelectOne.css">
 </head>
 <body>
 	<div class="wrap">
@@ -25,42 +25,24 @@
 		</div>
 		<div class="content">
 			<div class="resultArea1">
-				<div class="signBar1">
-					<ul>
-						<li class="resultBox4">
-							<input type="text" class="signDate" value="2020-11-11" readonly> 
-							<input type="text" class="signDate" value="09:50E" readonly>
-						</li>
-						<li class="resultBox4">
-							<input type="text" class="signDate" value="2020-11-11" readonly>
-							<input type="text" class="signDate" value="10:50S" readonly>
-						</li>
-						<li class="resultBox3">
-							<button class="signSee">
-								<img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="imgSize">
-							</button>
-						</li>
-						<li class="resultBox3">
-							<button class="signJoin">
-								<img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="imgSize">
-							</button>
-						</li>
-						<li class="imgBox2">
-							<input type="text" class="signCount" value="4" readonly>
-						</li>
-						<li class="resultBox2">
-							<input type="text" class="signWriter" value="작성자" readonly>
-							<input type="text" class="signWriter" value="직위" readonly>
-						</li>
-						<li class="imgBox1">
-							<img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1">
-						</li>
-						<li class="resultBox1">
-							<input type="text" class="signType" value="기안문서" readonly>
-							<input type="text" class="signTitle" value="기안 바랍니다아아아아앙아아아아아sfdsdfs앙아아앙앙" readonly>
-						</li>
-					</ul>
-				</div>
+				<table id="listArea">
+					<c:forEach var="sign" items="${list}">
+						<tr id="result">
+							<th class="imgBox1" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1"></td>
+							<th class="textBox1"><c:out value="${sign.sign_type_name}"/></th>
+							<th rowspan="2"></th>
+							<th rowspan="2"></th>
+							<th><c:out value="${sign.emp_info_name}"/></th>							
+							<th><c:out value="${sign.sign_wdat}"/></th>
+							<th><c:out value="${sign.sign_edat}"/></th>							
+						</tr>
+						<tr>
+							<th class="textBox2"><c:out value="${sign.sign_title}"/></th>
+							<th><c:out value="${sign.emp_info_name}"/></th>
+							<th></th>
+						</tr>
+					</c:forEach>
+				</table>
 			</div>
 			<div>
 				<jsp:include page="../sign/signHomeListBar2.jsp" />
@@ -68,5 +50,21 @@
 			<div class="resultArea1"></div>
 		</div>
 	</div>
+<!-- 왼쪽바 고정 추가 옵션 시작-->
+	<script>
+		$(function() {
+    		var leftBar = $(".leftBar").offset().top;
+    			$(window).scroll(function() {
+    		var window = $(this).scrollTop();
+    		console.log(leftBar+"left");
+    		console.log(window+"window");
+    		if(leftBar <= window) {
+    			$(".leftBar").addClass("fixed");
+    		} else {
+    			$(".leftBar").removeClass("fixed");
+    			}
+    		})
+    	});
+    </script>
 </body>
 </html>

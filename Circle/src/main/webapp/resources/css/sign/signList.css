@@ -3,17 +3,41 @@ body {
 }
 
 .container {
-}
-
-
-.content {
 	position: absolute;
 	left: 180px;
-	width: 100%;
+	width: calc(100% - 180px);
+}
+
+.content {
 }
 
 .resultArea1 {
 	width: 100%;
 	min-width: 1000px;
 	height: 400px;
+}
 
+.img1 {
+	margin-top: 10px;
+}
+
+.imgBox1 {
+	vertical-align: top;
+	width: 60px;
+	height: 60px;
+	background: #0072C6;
+}
+
+.textBox1 {
+	text-align: left;
+	width: 425px;
+	height: 28px;
+	background: yellow;
+}
+
+.textBox2 {
+	text-align: left;
+	width: 425px;
+	height: 28px;
+	background: green;
+}
