@@ -10,16 +10,17 @@
 	<div>
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">동호회</div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn">글 작성</button></div>
+			<div class="menuLeftListBtn"><button class="menuLeftBtn" onclick="location.href='/circle/community/comuAdd'">글 작성</button></div>
+				
 			<div class="menuLeftList"></div>
 			
 			<div class="menuLeftListTitle"># 가입 동호회</div>
 			
-			<!-- <div class="menuLeftList">전체</div>
-			<div class="menuLeftList">임시 저장</div>					
-			<div class="menuLeftList">대기</div>
-			<div class="menuLeftList">진행</div>
-			<div class="menuLeftList"></div> -->
+			<div class="menuLeftList"></div>
+			<div class="menuLeftList"></div>					
+			<div class="menuLeftList"></div>
+			<div class="menuLeftList"></div>
+			<div class="menuLeftList"></div>
 			
 			<!-- <div class="menuLeftListTitle"># 가입 회원</div> -->
 									

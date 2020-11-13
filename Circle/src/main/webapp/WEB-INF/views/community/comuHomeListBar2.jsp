@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/community/comuHomeListBar.css">
 </head>
@@ -12,7 +14,8 @@
 		<ul>
 			<li class="comuHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="comuHomeListTitleImg">동호회 글</li>
 			
-			<!-- <li><button class="comuListBtn1">작성자</button></li>
+			<!-- 
+			<li><button class="comuListBtn1">작성자</button></li>
 			<li><button class="comuListBtn2">남은결재</button></li>
 			<li><button class="comuListBtn2">결재자</button></li>
 			<li><button class="comuListBtn2">참조자</button></li>

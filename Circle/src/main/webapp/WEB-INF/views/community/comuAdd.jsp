@@ -38,13 +38,16 @@
 	}
 	td{
 	 color:black;
- font-size: 17px;
-	font-weight: bolder;
 	align:center;
 	}
 	#submit{
+	
 	   margin-left:500px;
-     
+	}
+	h1{
+		 color:black;
+ font-size: 17px;
+	font-weight: bolder;
 	}
 </style>
 
@@ -67,6 +70,9 @@
 				</div> 
 				
 				<div class="resultArea1">
+				
+				<br>
+				<h1>동호회 글 작성</h1>
 				
 				   <form action="${ applicationScope.contextPath }/insert.bo" method="post">
             <table>
