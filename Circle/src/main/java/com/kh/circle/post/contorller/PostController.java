@@ -62,7 +62,12 @@ public class PostController {
 		
 		
 		List<Post> list = sqlSession.selectList("post.list");
+		System.out.println("con" + list);
+		 
 		model.addAttribute("list", list);
+		
+		System.out.println("model" + list);
+		
 		
 		return "post/postMain";
 	}
@@ -89,7 +94,7 @@ public class PostController {
 	public ResponseEntity<ByteArrayResource> downdload2(@RequestParam String no) throws UnsupportedEncodingException, IOException{
 		
 		ResponseEntity<ByteArrayResource> entity = postService.download(no);
-		return null;
+		return entity;
 		
 	}
 	

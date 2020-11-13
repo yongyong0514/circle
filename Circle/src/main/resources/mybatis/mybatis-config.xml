@@ -8,7 +8,7 @@
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
  
 <configuration>
-
+	  <settings> <setting name="jdbcTypeForNull" value="NULL" /> </settings>
 	<!-- 
 		별칭 부여 공간 : 클래스의 전체 경로를 별칭을 부여하여 편하게 호출하도록 설정
 	 -->
@@ -21,6 +21,8 @@
 		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
     
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
+		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
+		<typeAlias type="com.kh.circle.schedule.entity.SchAjax_min" alias="schAjax_min"/>
 
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		
@@ -63,11 +65,9 @@
 		<!-- <mapper resource="mybatis/mapper/example-mapper.xml" /> -->
 
 		 <mapper resource="mybatis/mapper/postFile-mapper.xml" />
-		 
-		 <mapper resource="mybatis/mapper/schedule-mapper.xml" />
-		 
+
 <!-- 		 <mapper resource="mybatis/mapper/sign-mapper.xml" /> -->
 	
 	</mappers>
-	
+
 </configuration>

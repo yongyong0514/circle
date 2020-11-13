@@ -39,27 +39,9 @@ body {
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
-
 /* 추가 css 영역 */
 body{
 	font-size: small;
-}
-
-
-.content{
-	padding: 1rem;
-}
-
-.indexTable{
-	display: inline-block;
-	width: 65%;
-}
-
-.indexTable td{
-	border-top:1px solid black;
-	border-left:1px solid black;
-	border-right:1px solid black;
-	padding: 0.3rem;
 }
 
 a{
@@ -67,23 +49,65 @@ a{
 	color: inherit;
 }
 
-.addressListTable{
+.content{
+	padding: 1rem;
+}
+
+.title{
+	display: table;
 	width:100%;
 }
 
-.addressListTable th,
-.addressListTable td{
+.title > h3{
+	display: table-cell;
+}
+
+.title > h3:last-of-type{
+	text-align: right;
+}
+
+.summaryTable{
+	width: 100%;
+	text-align: center;
+}
+
+.summaryTable td{
+	color: #0072C6;
+	font-size: large;
 	padding: 0.5rem;
+	border-right: 1px dashed rgba(0,0,0,0.5);
 }
 
-.addressListTable th{
-	border-top:1px solid black;
-	border-bottom:1px solid black;
+.summaryTable td:last-of-type{
+	border-right: 0;
 }
 
-.thumbnail{
-	display:inline-block;
-	background:red;
-	width:20px;
-	height:20px;
+.historyTable{
+	width: 100%;
 }
+
+.historyTable{
+	padding: 1rem;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-right: 1px solid rgba(0,0,0,0.5);
+	border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+.week td{
+	font-size: medium;
+	color: #0072C6;
+	text-align: center;
+}
+
+.historyTable th{
+	padding: 1rem;
+}
+
+.historyTable td{
+	padding: 1rem;
+	border-top: 1px solid lightgrey;
+}
+
+
+
+
