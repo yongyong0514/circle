@@ -19,9 +19,13 @@
 		</div>
 		<div class="container">
 			<div class="contentBar">
+				<jsp:include page="docuHomeBar.jsp" />
 			</div>
+			<div class="homeListBar">
+				<button class="homeListBtn">작성하기</button>
+			</div>			
 			<div class="content">
-			01234567891011121314151617181920
+				
 			</div>
 		</div>
 	</div>

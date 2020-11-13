@@ -22,24 +22,12 @@
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bolder;
 	color: white;
 	background: #0072C6;
 	background: -webkit-linear-gradient(to right, #0072C6, #0059A1);
 	background: linear-gradient(to right, #0072C6, #0059A1);
-}
-
-.menuLeftListBtn {
-	width: 180px;
-	height: 40px;
-	line-height: 40px;
-	text-align: center;
-	font-size: 16px;
-	font-weight: bolder;
-	color: white;
-	background: none;
-	cursor: pointer;
 }
 
 .menuLeftList0 {
@@ -54,17 +42,27 @@
 	background: none;
 }
 
+.menuLeftListBtn {
+	width: 180px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: bolder;
+	color: white;
+	background: none;
+}
+
 .menuLeftList {
 	width: 180px;
 	height: 40px;
 	margin-left: 30px;
 	line-height: 40px;
 	text-align: left;
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: bolder;
 	color: white;
 	background: none;
-	cursor: pointer;
 }
 
 .menuLeftList:hover {
@@ -79,7 +77,6 @@
 	height: 35px;
 	border: 1px solid black;
 	border-radius: 5px;
-	cursor: pointer;
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);

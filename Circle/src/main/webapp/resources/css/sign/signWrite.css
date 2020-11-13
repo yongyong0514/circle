@@ -15,6 +15,7 @@ body {
 }
 
 .formRight {
+	margin-top: 20px;
 	float: left;
 	width: 180px;
 }

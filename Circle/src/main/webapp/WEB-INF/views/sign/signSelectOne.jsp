@@ -14,61 +14,64 @@
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
+	</div>
+		<div class="leftBar">
+			<jsp:include page="../sign/signSelectOneLeftBar.jsp" />
+		</div>
 		<div class="container">
-			<div class="navLeft">
-				<jsp:include page="../sign/signLeftBar.jsp" />
+			<div class="contentBar">
+				<jsp:include page="../sign/signSelectOneHomeBar.jsp"/>
+				<div class="signHomeListBar">
+					<ul>
+						<li class="signHomeListTitle"><button class="signSelectOneModifyBtn">수정하기</button></li>
+						<li><button class="signListBtn3">완료일</button></li>
+						<li><button class="signListBtn3">작성일</button></li>
+						<li><button class="signListBtn2">참조자</button></li>
+						<li><button class="signListBtn2">결재자</button></li>
+						<li><button class="signListBtn2">남은결재</button></li>
+						<li><button class="signListBtn1">작성자</button></li>
+					</ul>
+				</div>
 			</div>
-				<div class="content">
-					<div>
-						<jsp:include page="../sign/signHomeBar.jsp"/>
-						<div class="signHomeListBar">
-							<ul>
-								<li class="signHomeListTitle"><button class="signSelectOneModifyBtn">수정하기</button></li>
-								<li><button class="signListBtn3">완료일</button></li>
-								<li><button class="signListBtn3">작성일</button></li>
-								<li><button class="signListBtn2">참조자</button></li>
-								<li><button class="signListBtn2">결재자</button></li>
-								<li><button class="signListBtn2">남은결재</button></li>
-								<li><button class="signListBtn1">작성자</button></li>
-							</ul>
-						</div>
-						<div class="signBar1">
-							<ul>
-								<li class="resultBox4">
-									<input type="text" class="signDate" value="2020-11-11" readonly>
-									<input type="text" class="signDate" value="09:50E" readonly>
-								</li>
-								<li class="resultBox4">
-									<input type="text" class="signDate" value="2020-11-11" readonly>
-									<input type="text" class="signDate" value="10:50S" readonly>
-								</li>
-								<li class="resultBox3">
-									<button class="signSee">
-										<img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="imgSize">
-									</button>
-								</li>
-								<li class="resultBox3">
-									<button class="signJoin">
-										<img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="imgSize">
-									</button>
-								</li>
-								<li class="imgBox2">
-									<input type="text" class="signCount" value="4" readonly>
-								</li>
-								<li class="resultBox2">
-									<input type="text" class="signWriter" value="작성자" readonly>
-									<input type="text" class="signWriter" value="직위" readonly>
-								</li>
-								<li class="imgBox1">
-									<img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1">
-								</li>
-								<li class="resultBox1">
-									<input type="text" class="signType"  value="기안문서" readonly>
-									<input type="text" class="signTitle"  value="기안 바랍니다아아아아앙아아아아아sfdsdfs앙아아앙앙" readonly>
-								</li>
-							</ul>
-						</div>
-					</div>
+			<div class="content">
+			<!--1개의 건 시작 -->
+				<div class="signBar1">
+					<ul>
+						<li class="resultBox4">
+							<input type="text" class="signDate" value="2020-11-11" readonly>
+							<input type="text" class="signDate" value="09:50E" readonly>
+						</li>
+						<li class="resultBox4">
+							<input type="text" class="signDate" value="2020-11-11" readonly>
+							<input type="text" class="signDate" value="10:50S" readonly>
+						</li>
+						<li class="resultBox3">
+							<button class="signSee">
+								<img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="imgSize">
+							</button>
+						</li>
+						<li class="resultBox3">
+							<button class="signJoin">
+								<img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="imgSize">
+							</button>
+						</li>
+						<li class="imgBox2">
+							<input type="text" class="signCount" value="4" readonly>
+						</li>
+						<li class="resultBox2">
+							<input type="text" class="signWriter" value="작성자" readonly>
+							<input type="text" class="signWriter" value="직위" readonly>
+						</li>
+						<li class="imgBox1">
+							<img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1">
+						</li>
+						<li class="resultBox1">
+							<input type="text" class="signType"  value="기안문서" readonly>
+							<input type="text" class="signTitle"  value="기안 바랍니다아아아아앙아아아아아sfdsdfs앙아아앙앙" readonly>
+						</li>
+					</ul>
+				</div>
+			<!--1개의 건 시작 -->
 				<div class="formArea">
 					<div class="formBox">
 						<table>
@@ -106,10 +109,10 @@
 									</ul>
 								</td>
 							</tr>
-<!-- 						결재가 완료되었으면 메세지 변경 및 버튼 비활성화	
-							<tr>
-								<td class="formBox7" colspan="2"><button class="formBtn3" disabled>결재가 완료되었습니다</button></td>
-							</tr> -->
+<!-- 					결재가 완료되었으면 메세지 변경 및 버튼 비활성화	
+						<tr>
+							<td class="formBox7" colspan="2"><button class="formBtn3" disabled>결재가 완료되었습니다</button></td>
+						</tr> -->
 						</table>
 						<table class="formResult5">
 							<tr>
@@ -139,7 +142,7 @@
 									<button class="formBtn0">전송</button>
 								</td>
 							</tr>
-<!-- 							<tr>
+<!-- 						<tr>
 								<td class="formBox10" colspan="2"><button class="formBtn2">결재</button></td>
 							</tr> -->
 						</table>
@@ -161,10 +164,8 @@
 						</table>
 					</div>				
 				</div>
-
 			</div>
 		</div>
-	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>    
     <script>
