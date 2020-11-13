@@ -22,17 +22,19 @@
             	var base = "${pageContext.request.contextPath}";
             	
             	//목록 불러오기
-            	$.ajax({
-            		url:base+"/schedule/schMain",
+ /*            	$.ajax({
+            		url:base+"/schAjax/id",
             		async:false,//blocking처리
             		type:"get",
+            		data:{id : "200101090031"},
             		dataType:"json",
-            		success:function(result){
-            			list = result;
-            			console.log("list");
+            		success:function(json){
+						list = json;
+            			console.log(list)
+
             		}
             	});
-            	
+   */          	
             	//풀캘린더 로드
                 $("#calendar").fullCalendar({
                 	defaultView			: 'month',	//기본 뷰 설정
@@ -60,56 +62,34 @@
 					                			lovation.href = info.url;
 					                	  }
                 	},
-                	events				: [
-					                		{
-					                			title:"프로젝트",
-					                			start:"2020-11-03",
-					                			end:"2020-12-15",
-					                			backgroundColor:"skyblue"
-					                		},
-					                		{
-					                			title:"통합 구현 평가",
-					                			start:"2020-11-03",
-					                			backgroundColor:"#FE9A2E"
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"프로젝트 피드백",
-					                			start:"2020-11-12T09:10:00",
-					                			allDay:false
-					                		},
-					                		{
-					                			title:"취업상담",
-					                			start:"2020-11-16T14:30:00",
-					                			end	 :"2020-11-16T13:20:00",
-					                			allDay:false
-					                		}
-					                	 ],
-
+                /* 	events				: list, */
+                 	events				: function(start, end, timezone, callback) {
+                 								
+						                    	$.ajax({
+						                    		url:base+"/schAjax/id",
+						                    		type:"get",
+						                    		data: {id 	: "200101090031"
+						                    			 /*  ,start : start.format(),
+						                    			  end	: end.format() */
+						                    		},
+						                    		dataType:"json",
+						                    		success:function(json){
+						        						var events = [];
+						        						$(json).each(function() {
+						        							events.push({
+						        								id	  : $(this).attr('id'),
+						        								title : $(this).attr('title'),
+						        								start : $(this).attr('start'),
+						        								end	  : $(this).attr('end'),
+						        								allDay: $(this).attr('allDay')
+						        							});
+						        						});
+														callback(events);
+														console.log(events)
+						                    		}
+                 							});
+                 	},
+                		
                 });
             });
             

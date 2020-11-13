@@ -21,6 +21,8 @@
 		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
     
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
+		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
+		<typeAlias type="com.kh.circle.schedule.entity.SchAjax_min" alias="schAjax_min"/>
 
 	</typeAliases>
 
@@ -61,7 +63,6 @@
 
 		 <mapper resource="mybatis/mapper/postFile-mapper.xml" />
 		 
-		 <mapper resource="mybatis/mapper/schedule-mapper.xml" />
 	
 	</mappers>
 	
