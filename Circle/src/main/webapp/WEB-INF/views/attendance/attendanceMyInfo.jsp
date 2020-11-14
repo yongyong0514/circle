@@ -132,13 +132,13 @@
 							<table class="detailCareerTable">
 								<tr>
 									<th class="titleCell">순서</th>
-									<th class="titleCell">시작일</td>
-									<th class="titleCell">종료일</td>
-									<th class="titleCell">부서명</td>
-									<th class="titleCell">직위/직책명</td>
-									<th class="titleCell">근속기간</td>
-									<th class="titleCell">담당업무</td>
-									<th class="titleCell">비고</td>
+									<th class="titleCell">시작일</th>
+									<th class="titleCell">종료일</th>
+									<th class="titleCell">부서명</th>
+									<th class="titleCell">직위/직책명</th>
+									<th class="titleCell">근속기간</th>
+									<th class="titleCell">담당업무</th>
+									<th class="titleCell">비고</th>
 								</tr>
 								<c:forEach var="이력" items="이력s">
 									<tr>
