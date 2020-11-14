@@ -18,7 +18,7 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
-			<jsp:include page="components/attendanceLeftBar.jsp" />
+			<jsp:include page="common/attendanceLeftBar.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">

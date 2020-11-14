@@ -17,4 +17,9 @@ public class AttendanceController {
 	public String myInfo() {
 		return "attendance/attendanceMyInfo";
 	}
+	
+	@GetMapping("/myVacation")
+	public String myVacation() {
+		return "attendance/attendanceMyVacation";
+	}
 }

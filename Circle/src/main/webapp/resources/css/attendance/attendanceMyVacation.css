@@ -45,12 +45,13 @@ a{
 	color: inherit;
 }
 
-td {
+td{
 	vertical-align: middle;
 }
 
 .content{
 	padding: 1rem;
+	font-size:small;
 	vertical-align: middle;
 }
 
@@ -59,18 +60,14 @@ td {
 	width:100%;
 }
 
-.title > h3{
-	display: table-cell;
-}
-
-.title > h3:last-of-type{
-	text-align: right;
+.summary{
+	text-align: center;
 }
 
 .summaryTable{
 	font-size: small;
 	width: 100%;
-	text-align: center;
+	padding: 1rem;
 }
 
 .summaryTable td{
@@ -80,38 +77,63 @@ td {
 	border-right: 1px dashed rgba(0,0,0,0.5);
 }
 
+.summaryTable th{
+	padding-bottom: 0.5rem;
+}
+
 .summaryTable td:last-of-type{
 	border-right: 0;
 }
 
-.historyTable{
+.vacationHistory,
+.vacationHistoryTable,
+.vacationApplyTable{
 	width: 100%;
+	font-size:small;
 }
 
-.historyTable{
-	font-size: small;
-	padding: 1rem;
-	border: 1px solid rgba(0,0,0,0.1);
-	border-right: 1px solid rgba(0,0,0,0.5);
-	border-bottom: 1px solid rgba(0,0,0,0.5);
-}
-
-.week td{
-	font-size: medium;
-	color: #0072C6;
+.vacationHistoryTable th,
+.vacationHistoryTable td{
+	padding: 0.5rem;
 	text-align: center;
 }
 
-.historyTable th{
-	padding: 1rem;
-	font-weight: bold;
+.vacationHistoryTable td{
+	border:1px solid rgba(0,0,0,0.1);
 }
 
-.historyTable td{
-	padding: 1rem;
-	border-top: 1px solid lightgrey;
+.vacationHistoryTable th{
+	border:1px solid rgba(0,0,0,0.1);
+	border-bottom:1px solid rgba(0,0,0,0.5);
 }
 
+.vacationApplyTable td{
+	border-top:1px solid rgba(0,0,0,0.1);
+	border-bottom:1px solid rgba(0,0,0,0.1);
+	padding: 0.5rem;
+}
 
+#calcDate{
+	width:30px;
+}
 
+#permissionStatus{
+	width: 80px;
+	text-align: center;
+}
 
+.vacationApplyTable td textarea{
+	width: 100%;
+	height: 50px;
+	resize: none;
+	overflow: auto;
+}
+
+.vacationApplyTable td textarea:focus{
+	outline: none;
+}
+
+.selectBtn{
+	text-align: right;
+	padding-right: 1rem;
+}

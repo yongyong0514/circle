@@ -45,9 +45,14 @@ a{
 	color: inherit;
 }
 
+td {
+	vertical-align: middle;
+}
+
 .content{
 	padding: 1rem;
 }
+
 
 .infoMainTable,
 .changeListTable{
