@@ -32,7 +32,6 @@ html, body {
 	float: left;
 	width:180px;
 	HEIGHT:100%;
-	background-color: orange !important;
 }
 
 
@@ -43,6 +42,14 @@ html, body {
 	padding : 10px;
 	overflow: auto;
 }
+/
+.modal-dialog 		{ position: relative; width:450px; margin:100px auto; }
+
+div.modal-content 	{ box-shadow: none; border-radius: 5px; border: 1px solid black;}
+
+.modal-header 		{ background-color:#91b9ed; border-radius: 4px 4px 0 0; }
+.modal-title 		{ color:white; }
+
 
 
 

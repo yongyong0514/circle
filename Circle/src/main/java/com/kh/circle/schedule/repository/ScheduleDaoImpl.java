@@ -26,9 +26,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<SchAjax_min> list(String id) {
-		List<SchAjax_min> list =  sqlSession.selectList("sch.selectMap_min",id);
-		log.info("list : {}", list);
+	public List<SchAjax_min> list(Map<String, Object> map) {
+		List<SchAjax_min> list =  sqlSession.selectList("sch.selectMap_min",map);
 		
 		return list;
 	}

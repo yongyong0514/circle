@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common/menu/menuScrollList.css">
+
 </head>
 <body>
 	<div class="menuBox">
@@ -20,7 +21,7 @@
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/120-diskette.png" class="menuIcon"><br>자료실</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/041-folder.png" class="menuIcon"><br>문서관리</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/165-menu.png" class="menuIcon"><br>프로젝트</button></div>
-			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/163-calendar.png" class="menuIcon"><br>일정</button></div>
+			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/schedule/schMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/163-calendar.png" class="menuIcon"><br>일정</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/167-wall-clock.png" class="menuIcon"><br>예약</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/121-paste.png" class="menuIcon"><br>설문</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/109-smartphone.png" class="menuIcon"><br>주소록</button></div>
