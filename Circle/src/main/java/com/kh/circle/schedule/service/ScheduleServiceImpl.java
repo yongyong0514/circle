@@ -2,6 +2,7 @@ package com.kh.circle.schedule.service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,8 +23,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleDao scheduleDao;
 
 	@Override
-	public List<SchAjax_min> list(String id) {
-		List<SchAjax_min> list = scheduleDao.list(id);
+	public List<SchAjax_min> list(Map<String, Object> map) {
+		List<SchAjax_min> list = scheduleDao.list(map);
 		
 		return list;
 	}

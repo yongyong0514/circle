@@ -1,7 +1,9 @@
 package com.kh.circle.schedule.controller;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +32,18 @@ public class SchAjaxController  {
 	private ScheduleService scheduleService;
 	
 	@GetMapping("/id")
-	public List<SchAjax_min> schMain(String id) {
+	public List<SchAjax_min> schMain(String id, Date start, Date end) {
 		
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("start", start);
+		map.put("end", end);
 		
-		log.info("model : {}", id );
+		log.info("map : {}", map);
 		
 //		String id = "200101090031";
 		
-		List<SchAjax_min> list = scheduleService.list(id);
+		List<SchAjax_min> list = scheduleService.list(map);
 		log.info("list : {} " , list);
 		
 		return list;

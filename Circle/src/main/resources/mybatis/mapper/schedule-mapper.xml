@@ -56,7 +56,7 @@
 		
 	</resultMap>
 	
-	<select id="selectMap_min" parameterType="String" resultMap="selectMapList_min">
+	<select id="selectMap_min" parameterType="map" resultMap="selectMapList_min">
 		select sch_unit_code,
 			   sch_unit_name,
 			   decode(sch_unit_aday, 'Y', 'true', 'false') as sch_unit_aday,
@@ -66,6 +66,8 @@
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
  		 where sch_join_emp = #{id}
  		   and sch_unit_stat = 'Y'
+ 		   and (sch_unit_sdat between #{start} and #{end}
+ 		   or sch_unit_edat between #{start} and #{end})
  		   	
 	</select>
 	
