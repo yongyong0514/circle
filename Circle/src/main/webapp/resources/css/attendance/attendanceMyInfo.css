@@ -1,0 +1,135 @@
+body {
+	overflow-x:hidden;
+}
+
+.container {
+	position: absolute;
+	left: 180px;
+	width: calc(100% - 180px);
+}
+
+.homeListBar {
+	width: auto;
+	min-width: 900px;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #F7F7F7, #FFFFFF);
+	background: linear-gradient(to top, #F7F7F7, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.homeListBtn {
+	margin-left: 20px;
+	margin-top: 2px;
+	float: left;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.homeListBtn:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+/* 추가 css 영역 */
+a{
+	text-decoration: none;
+	color: inherit;
+}
+
+td {
+	vertical-align: middle;
+}
+
+.content{
+	padding: 1rem;
+}
+
+
+.infoMainTable,
+.changeListTable{
+	width: 100%;
+}
+
+.infoMainTable td,
+.changeListTable td{
+	font-size:small;
+	vertical-align: middle;
+	border: 1px solid rgba(0,0,0,0.2);
+	padding: 0.5rem;
+}
+
+.photoCell{
+	text-align: center;
+}
+
+.infoMainTable img{
+	background: blue;
+	width: 100px;
+	height: 100px;
+}
+
+.titleCell{
+	width:10%;
+	background: rgba(0,0,0,0.1);
+	text-align: center;
+	font-weight: bold;
+}
+
+.detailInfo{
+	width:100%;
+}
+
+.detailInfo li{
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+.detailInfo table{
+	word-break: break-all;
+	width:100%;
+	margin-top:1rem;
+	margin-bottom:1rem;
+}
+
+.detailInfo table th,
+.detailInfo table td,
+.changeListTable th,
+.changeListTable td{
+	font-size:small;
+	vertical-align: middle;
+	border: 1px solid rgba(0,0,0,0.2);
+	padding: 0.5rem;
+}
+
+.detailCareerTable tr td,
+.detailRewordDisciplineTable tr td,
+.changeList tr td{
+	text-align: center;
+}
+
+.detailCareerTable tr th:nth-of-type(-n+6),
+.detailRewordDisciplineTable tr th:nth-of-type(-n+3),
+.changeListTable tr th:nth-of-type(-n+3){
+	width: 5%;
+}
+
+.detailCareerTable tr th:first-of-type,
+.detailRewordDisciplineTable tr th:first-of-type,
+.changeListTable tr th:first-of-type{
+	width: 2%;
+}
+
+.changeList{
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
