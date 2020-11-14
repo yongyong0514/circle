@@ -15,6 +15,8 @@
 
 </head>
 <body>
+
+<!-- 
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
@@ -26,7 +28,7 @@
 				<div>
 					<jsp:include page="../post/postHomebar.jsp" />
 				</div>
-				<!-- 내용 -->
+				
 
 
 				<div class="wrapper">
@@ -110,8 +112,6 @@
 
 
 
-
-						<!--  grid -->
 						<div class="view_wrap grid-view" style="display: none;">
 							<div class="view_item">
 								<div class="vi_left"></div>
@@ -170,7 +170,7 @@
 				</div>
 
 			</div>
-			<!-- grid end -->
+			
 
 
 		</div>
@@ -179,12 +179,8 @@
 
 
 
-	<!-- - end  -->
-	</div>
-	</div>
-	</div>
-	</div>
-
+	
+-->
 
 	<script src="<c:url value="/resources/js/post/postMain.js" />"></script>
 	<script>
@@ -211,5 +207,6 @@
 		
 	});
 	</script>
+	 -->
 </body>
 </html>
