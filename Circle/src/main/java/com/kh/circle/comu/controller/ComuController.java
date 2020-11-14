@@ -25,4 +25,4 @@ public class ComuController {
 	public String comuJoin() {
 		return "community/comuJoin";
 	}
-}
+}//주석입니당
