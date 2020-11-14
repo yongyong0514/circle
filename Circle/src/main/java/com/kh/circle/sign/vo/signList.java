@@ -13,6 +13,9 @@ public class signList {
 	private String sign_type_name;
 	private String sign_title;
 	private String emp_info_name;
+	private String job_info_name;
 	private String sign_wdat;
+	private String sign_whour;
 	private String sign_edat;
+	private String sign_ehour;
 }

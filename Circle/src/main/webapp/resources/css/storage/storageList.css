@@ -1,0 +1,32 @@
+body {
+	overflow-x: hidden;
+}
+
+.container {
+	position: absolute;
+	left: 180px;
+	width: calc(100% - 180px);	
+}
+
+.content {
+}
+
+.resultArea1 {
+	width: 100%;
+	min-width: 1000px;
+	height: 400px;
+}
+
+#listArea {
+	width: 100%;
+	min-width: 1100px;
+}
+
+#result {
+	border: 1px solid #D8D8D8;
+}
+
+#result:hover {
+	background: #F1F9FF;
+	cursor: pointer;
+}
