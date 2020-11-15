@@ -8,7 +8,8 @@
 <mapper namespace="sign">
 
 	<select id="list" resultType="signList">
-		SELECT ST.SIGN_TYPE_NAME
+		SELECT SI.SIGN_CODE
+			 , ST.SIGN_TYPE_NAME
     		 , SI.SIGN_TITLE
     		 , EI.EMP_INFO_NAME
     		 , JI.JOB_INFO_NAME
@@ -23,5 +24,41 @@
  		 WHERE SI.SIGN_EMP_CODE = '199207220001'
  		 ORDER BY SI.SIGN_CODE DESC
 	</select>
-
+	
+	<select id="count" resultType="int" parameterType="string">
+		 SELECT COUNT(*)
+  		   FROM (SELECT SI.SIGN_CODE
+     				  , SJ.SIGN_JOIN_TYPE
+     				  , SJ.SIGN_JOIN_CHECK
+  				   FROM SIGN SI
+  				   JOIN SIGN_JOIN SJ ON(SJ.SIGN_CODE = SI.SIGN_CODE)
+ 				  WHERE SJ.SIGN_JOIN_TYPE = 'Y'
+   					AND SJ.SIGN_JOIN_CHECK = 'N'
+   					AND SI.SIGN_CODE = #{signCode})
+	</select>
+	
+<!-- 	<select id="signListJoiner" resultType="signListJoiner" >
+		SELECT EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_NAME
+  		  FROM SIGN SI
+ 		  JOIN SIGN_JOIN SJ ON(SJ.SIGN_CODE = SI.SIGN_CODE)
+  		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SJ.SIGN_JOIN_EMP_CODE)
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 		 WHERE SJ.SIGN_JOIN_TYPE = 'Y'
+   		   AND SJ.SIGN_JOIN_CHECK = 'N'
+   		   AND SI.SIGN_CODE = #{signCode}
+ 		 ORDER BY JI.JOB_INFO_CODE ASC;
+	</select> -->
+	
+<!-- 	<select id="signListWatcher" resultType="signListWatcher" >
+		SELECT EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_NAME
+  		  FROM SIGN SI
+ 		  JOIN SIGN_JOIN SJ ON(SJ.SIGN_CODE = SI.SIGN_CODE)
+  		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SJ.SIGN_JOIN_EMP_CODE)
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 		 WHERE SJ.SIGN_JOIN_TYPE = 'N'
+   		   AND SI.SIGN_CODE = #{signCode}
+ 		 ORDER BY JI.JOB_INFO_CODE ASC;
+	</select> -->	
 </mapper>

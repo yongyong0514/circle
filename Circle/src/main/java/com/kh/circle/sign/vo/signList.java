@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class signList {
+	private String sign_code;
 	private String sign_type_name;
 	private String sign_title;
 	private String emp_info_name;
