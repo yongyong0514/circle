@@ -18,7 +18,7 @@
  		 where sch_join_emp = #{id}
 	</select>
 	
-	<select id="selectMap" parameterType="String" resultMap="selectMapList">
+	<select id="selectMap" parameterType="map" resultMap="selectMapList">
 		select sch_unit_code,
 			   sch_unit_name,
 			   decode(sch_unit_aday, 'Y', 'true', 'false') as sch_unit_aday,
@@ -29,14 +29,17 @@
 			   SCH_UNIT_CONT,
 			   SCH_UNIT_SEC,
 			   SCH_UNIT_STAT,
-			   SCH_UNIT_EMP,
+			   SCH_UNIT_WRTR,
 			   SCH_UNIT_WDAT,
 			   SCH_UNIT_MDAT,
+			   SCH_UNIT_HUE,
 			   sch_join_emp
  		  from sch_unit
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
  		 where sch_join_emp = #{id}
  		   and sch_unit_stat = 'Y'
+ 		   and (sch_unit_sdat between #{start} and #{end}
+ 		   or sch_unit_edat between #{start} and #{end}) 		   
 	</select>
 	
 	<resultMap type="schAjax" id="selectMapList">
@@ -45,14 +48,15 @@
 		<result column="sch_unit_aday" property="allDay"/>
 		<result column="sch_unit_sdat" property="start"/>
 		<result column="sch_unit_edat" property="end"/>
-		<result column="SCH_UNIT_RPT" property="SCH_UNIT_RPT"/>
-		<result column="SCH_UNIT_ERPT" property="SCH_UNIT_ERPT"/>
-		<result column="SCH_UNIT_CONT" property="SCH_UNIT_CONT"/>
-		<result column="SCH_UNIT_SEC" property="SCH_UNIT_SEC"/>
-		<result column="SCH_UNIT_STAT" property="SCH_UNIT_STAT"/>
-		<result column="SCH_UNIT_EMP" property="SCH_UNIT_EMP"/>
-		<result column="SCH_UNIT_WDAT" property="SCH_UNIT_WDAT"/>
-		<result column="SCH_UNIT_MDAT" property="SCH_UNIT_MDAT"/>
+		<result column="SCH_UNIT_RPT" property="repeat"/>
+		<result column="SCH_UNIT_ERPT" property="endRepeat"/>
+		<result column="SCH_UNIT_CONT" property="content"/>
+		<result column="SCH_UNIT_SEC" property="security"/>
+		<result column="SCH_UNIT_STAT" property="stat"/>
+		<result column="SCH_UNIT_WRTR" property="writer"/>
+		<result column="SCH_UNIT_WDAT" property="writeDate"/>
+		<result column="SCH_UNIT_MDAT" property="modifyDate"/>
+		<result column="SCH_UNIT_HUE" property="backgroundColor"/>
 		
 	</resultMap>
 	

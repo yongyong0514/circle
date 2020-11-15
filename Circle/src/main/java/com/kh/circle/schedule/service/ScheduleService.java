@@ -14,7 +14,7 @@ import com.kh.circle.schedule.entity.Sch_unit;
 
 public interface ScheduleService {
 
-	List<SchAjax_min> list(Map<String, Object> map);
+	List<SchAjax> list(Map<String, Object> map);
 	
 	//일정 전체 리스트 출력기능
 }

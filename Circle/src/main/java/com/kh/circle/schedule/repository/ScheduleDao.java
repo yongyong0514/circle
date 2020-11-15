@@ -11,6 +11,6 @@ import com.kh.circle.schedule.entity.Sch_unit;
 
 public interface ScheduleDao {
 	
-	List<SchAjax_min> list(Map<String, Object> map);
+	List<SchAjax> list(Map<String, Object> map);
 	
 }
