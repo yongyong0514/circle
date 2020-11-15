@@ -43,13 +43,13 @@ html, body {
 	overflow: auto;
 }
 /
-.modal-dialog 		{ position: relative; width:450px; margin:100px auto; }
+.modal-dialog 		{ position:relative; width:450px; margin:100px auto; }
 
-div.modal-content 	{ box-shadow: none; border-radius: 5px; border: 1px solid black;}
+div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black;}
 
-.modal-header 		{ background-color:#91b9ed; border-radius: 4px 4px 0 0; }
+.modal-header 		{ background-color:#91b9ed; border-radius:4px 4px 0 0; }
 .modal-title 		{ color:white; }
-
-
+.row 				{ margin:10px;}
+label.col-xs-4		{ width:100px; }
 
 

@@ -23,8 +23,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private ScheduleDao scheduleDao;
 
 	@Override
-	public List<SchAjax_min> list(Map<String, Object> map) {
-		List<SchAjax_min> list = scheduleDao.list(map);
+	public List<SchAjax> list(Map<String, Object> map) {
+		List<SchAjax> list = scheduleDao.list(map);
 		
 		return list;
 	}

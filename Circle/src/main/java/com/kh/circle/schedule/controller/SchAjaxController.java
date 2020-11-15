@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,7 @@ public class SchAjaxController  {
 	private ScheduleService scheduleService;
 	
 	@GetMapping("/id")
-	public List<SchAjax_min> schMain(String id, Date start, Date end) {
+	public List<SchAjax> schMain(String id, Date start, Date end) {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
@@ -43,10 +44,17 @@ public class SchAjaxController  {
 		
 //		String id = "200101090031";
 		
-		List<SchAjax_min> list = scheduleService.list(map);
+		List<SchAjax> list = scheduleService.list(map);
 		log.info("list : {} " , list);
 		
 		return list;
-	}
+	};
+	
+	@PostMapping("/schInsert")
+	public void schInsert(Map<String, String> insertEvent) {
+		
+		
+		log.info("json insert data : {}", insertEvent);
+	};
 	
 }

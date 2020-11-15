@@ -14,14 +14,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SchAjax {
-	private String id, title, SCH_UNIT_RPT;
-	private String SCH_UNIT_ERPT;
+	private String id; 
+	private String title;
+	private String repeat;
+	private String endRepeat;
 	private String allDay;
-	private String SCH_UNIT_CONT;
-	private String SCH_UNIT_SEC;
-	private String SCH_UNIT_STAT;
-	private String SCH_UNIT_EMP;
-	private String start, end,SCH_UNIT_WDAT,SCH_UNIT_MDAT;
+	private String content;
+	private String security;
+	private String stat;
+	private String writer;
+	private String start;
+	private String end;
+	private String writeDate;
+	private String modifyDate;
+	private String backgroundColor;
 	
 }
 
