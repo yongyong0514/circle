@@ -29,14 +29,22 @@
 					<table id="listArea">
 						<c:forEach var="sign" items="${list}">
 							<tr id="result">
-								<th class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1"></th>
-								<th class="textBox1"><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
-								<th class="textBox4"><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
-								<th class="textBox4"><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="img1"></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="img1"></th>
-								<th class="textBox31"><br>남은결재</th>
-								<th class="textBox2"><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
+								<th><input type="text" style="display: none" value="${sign.sign_code}" id="signCode"></th>
+								<th class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></th>
+								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
+								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
+								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher"></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
+									<div id="signListJoinerForm">
+										<table id="signListJoiner">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</th>				
+								<th class="textBox3"><input type="text" id="signCount" readonly></th>
+								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
 							</tr>
 						</c:forEach>
 					</table>
@@ -55,8 +63,6 @@
     		var leftBar = $(".leftBar").offset().top;
     			$(window).scroll(function() {
     		var window = $(this).scrollTop();
-    		console.log(leftBar+"left");
-    		console.log(window+"window");
     		if(leftBar <= window) {
     			$(".leftBar").addClass("fixed");
     		} else {
@@ -67,13 +73,53 @@
     </script>
 <!-- ajax 구간 -->
 	<script>
+		
 	</script>
 <!-- 1. 남은 결재 카운트 -->
 	<script>
+		$(function() {
+			var base = "${pageContext.request.contextPath}";
+			var signCode = $("#signCode").val();
+			$.ajax({
+				url: base + "/signResult/signListJoinerCount",
+				type: "get",
+				data: {signCode : signCode},
+				dataType: "json",
+				success: function(json) {
+					$('#signCount').val(json.count);
+				}
+			});
+		});
 	</script>
 <!-- 2. 결재자 카운트 및 조회 -->
-	<script>
-	</script>
+<!-- 	<script>
+		$("#signJoiner").mouseenter(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = $("#signCode").val();
+			$.ajax({
+				url: base + "/signResult/signListJoiner",
+				type: "get",				
+				data: {signCode : signCode},
+				dataType: "json",
+				success: function(data) {
+ 					var $signListJoiner = $("#signListJoiner tbody");
+					$signListJoiner.html('');
+					
+					for(var key in data) {
+						var $tr = $("<tr>");
+						var $JoinerNameTd = $("<td class='tName'>").text(data[key].JoinerName);
+						var $JoinerClassTd = $("<td class='tClass'>").text(data[key].JoinerClass);
+						
+						$tr.append($JoinerNameTd);
+						$tr.append($JoinerClassTd);
+						
+						$signListJoiner.append($tr);
+					}
+					console.log("success");
+				},
+			});
+		});
+	</script> -->
 <!-- 3. 참조자 카운트 및 조회 -->
 	<script>
 	</script>
