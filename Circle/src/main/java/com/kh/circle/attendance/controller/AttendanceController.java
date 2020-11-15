@@ -22,4 +22,9 @@ public class AttendanceController {
 	public String myVacation() {
 		return "attendance/attendanceMyVacation";
 	}
+	
+	@GetMapping("/attendanceAllList")
+	public String attendanceAllList() {
+		return "attendance/attendanceAllList";
+	}
 }
