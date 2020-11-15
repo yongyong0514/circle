@@ -2,7 +2,6 @@ package com.kh.circle.project.entity;
 
 import java.sql.Date;
 
-import com.kh.circle.issue.entity.Iss;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

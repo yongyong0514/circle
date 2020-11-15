@@ -45,6 +45,7 @@ public class PostServiceImp implements PostService{
 					.file_oname(insert.getOriginalFilename())
 					.file_type(insert.getContentType())
 					.file_size(insert.getSize())
+					.file_code(no)
 					.build();
 			
 			String file_no = postFileDao.add(postFile);
