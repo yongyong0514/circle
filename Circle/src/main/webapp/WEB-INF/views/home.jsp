@@ -200,7 +200,7 @@ margin-left:20px;
 		location.href='/circle/sign/signList';
 		//http://localhost:8888/circle/sign/signList
 	}
-	//주석주석
+	//주석주석주석
 	</script>
 
 </body>
