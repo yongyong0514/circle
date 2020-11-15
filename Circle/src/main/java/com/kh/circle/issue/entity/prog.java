@@ -1,6 +1,5 @@
 package com.kh.circle.issue.entity;
 
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

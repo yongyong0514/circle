@@ -11,12 +11,9 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/post/postMain.css">
 
-<script scr="http://kit.fontawesome.com/b00e675b6e.js"></script>
 
 </head>
 <body>
-
-<!-- 
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
@@ -28,7 +25,7 @@
 				<div>
 					<jsp:include page="../post/postHomebar.jsp" />
 				</div>
-				
+				<!-- 내용 -->
 
 
 				<div class="wrapper">
@@ -112,6 +109,8 @@
 
 
 
+
+						<!--  grid -->
 						<div class="view_wrap grid-view" style="display: none;">
 							<div class="view_item">
 								<div class="vi_left"></div>
@@ -170,7 +169,7 @@
 				</div>
 
 			</div>
-			
+			<!-- grid end -->
 
 
 		</div>
@@ -179,8 +178,8 @@
 
 
 
-	
--->
+	<!-- - end  -->
+
 
 	<script src="<c:url value="/resources/js/post/postMain.js" />"></script>
 	<script>
@@ -207,6 +206,5 @@
 		
 	});
 	</script>
-	 -->
 </body>
 </html>
