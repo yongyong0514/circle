@@ -12,5 +12,7 @@ import com.kh.circle.schedule.entity.Sch_unit;
 public interface ScheduleDao {
 	
 	List<SchAjax> list(Map<String, Object> map);
+
+	void insert(Map<String, String> insertEvent);
 	
 }

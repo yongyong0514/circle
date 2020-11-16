@@ -124,21 +124,36 @@
         //event insert script
         
         $(function () {
-        	$.fn.serializeObject = function () {
-                var o = {};
-                this.find("[name]").each(function () {
-                     o[this.name] = this.value;
-                });
-                return o;
-            };
+        	jQuery.fn.serializeObject = function() {
+        	    var obj = null;
+        	    try {
+        	        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+        	            var arr = this.serializeArray();
+        	            if (arr) {
+        	                obj = {};
+        	                jQuery.each(arr, function() {
+        	                    obj[this.name] = this.value;
+        	                });
+        	            }//if ( arr ) {
+        	        }
+        	    } catch (e) {
+        	        alert(e.message);
+        	    } finally {
+        	    }
+        	 
+        	    return obj;
+        	};
         	
             $('#save-event').on('click', function (e) {
                 console.log("button click success");
-                console.log($("form[name=insert-event]"))
+                console.log(events[0].id);
                 e.preventDefault();
                 
+                $("#insertId").val("200101090031");
+                
                 var insertEvent = $("form[name=insert-event]").serializeObject();
-                console.log("object" + insertEvent);
+                
+                console.log(insertEvent);
                 console.log(JSON.stringify(insertEvent));
                 
                 $.ajax({
@@ -147,15 +162,15 @@
                 	url 		: base+"/schAjax/schInsert", 
                 	data		: JSON.stringify(insertEvent),
                 	dataType	: 'json',
-                	contentType	:"application/json",
+                	contentType	:"application/json; charset=utf-8;",
                 	error		: function(error){
-                		alert(error);
+                		console.log("funcking error");
                 	},
                 	success		: function(insertEvent){
                 		alert(insertEvent);
                 	}
                 })
-                
+                $("#add-eventModal").hide();
             });
 
         });
@@ -238,17 +253,18 @@
                 </div>
                 <div class="modal-body">
                 	<form method="post" name="insert-event">
+                		<input type="hidden" name="id" id="insertId" value=""/>
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-title">일정명</label>
-	                            <input class="inputModal" type="text" name="edit-title" id="edit-title"
+	                            <input class="inputModal" type="text" name="title" id="edit-title"
 	                                required="required" />
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-type">구분</label>
-	                            <select class="inputModal" type="text" name="edit-type" id="edit-type">
+	                            <select class="inputModal" type="text" name="type" id="edit-type">
 	                                <option value="카테고리1">내 일정</option>
 	                                <option value="카테고리2">부서 일정</option>
 	                                <option value="카테고리3">프로젝트 일정</option>
@@ -259,27 +275,27 @@
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-start">시작</label>
-	                            <input class="inputModal" type="date" name="edit-start" id="edit-start" />
+	                            <input class="inputModal" type="date" name="start" id="edit-start" />
 	                            <input type="time" class="inputModal select time" name="start-time" id="start-time"/>
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-end">끝</label>
-	                            <input class="inputModal" type="date" name="edit-end" id="edit-end" />
+	                            <input class="inputModal" type="date" name="end" id="edit-end" />
 	                            <input type="time" class="inputModal select time" name="end-time" id="end-time"/>
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-allDay">하루종일</label>
-	                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" onchange='allDayCheck();'>
+	                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" name="allDay">
 	                        </div>
 	                    </div>
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-color">색상</label>
-	                            <select class="inputModal" name="color" id="edit-color">
+	                            <select class="inputModal" name="backgroundColor" id="edit-color">
 	                                <option value="#000080" style="color:#000080;">남색</option>
 	                                <option value="#0080ff" style="color:#0080ff;">바다색</option>
 	                                <option value="#50bcdf" style="color:#50bcdf;">하늘색</option>
@@ -295,7 +311,7 @@
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-desc">설명</label>
-	                            <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+	                            <textarea rows="4" cols="50" class="inputModal" name="content"
 	                                id="edit-desc"></textarea>
 	                        </div>
 	                    </div>

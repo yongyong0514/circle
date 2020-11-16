@@ -20,13 +20,19 @@ import com.kh.circle.schedule.repository.ScheduleDao;
 public class ScheduleServiceImpl implements ScheduleService {
 
 	@Autowired
-	private ScheduleDao scheduleDao;
+	private ScheduleDao schDao;
 
 	@Override
 	public List<SchAjax> list(Map<String, Object> map) {
-		List<SchAjax> list = scheduleDao.list(map);
+		List<SchAjax> list = schDao.list(map);
 		
 		return list;
+	}
+
+	@Override
+	public void insert(Map<String, String> insertEvent) {
+		schDao.insert(insertEvent);
+		
 	}
 
 }
