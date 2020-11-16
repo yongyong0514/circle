@@ -38,7 +38,7 @@
 				<jsp:include page="../post/postHomebar.jsp" />
 			</div>
 
-			<!-- 내용  dd-->
+			<!-- 내용  1dd-->
 			<form action="add" method="post">
 			<div class="wrapper">
 				<div class="title">
