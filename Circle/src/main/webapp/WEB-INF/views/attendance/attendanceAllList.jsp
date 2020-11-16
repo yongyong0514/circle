@@ -37,7 +37,7 @@
 								</c:if>
 							<span class="arrowBtn"> ▶ </span>
 						</div>
-						
+						<br><br>
 						<button class="selectBtn" value="today">오늘</button>
 						&nbsp;
 						<button class="selectBtn" value="week">주간</button>
@@ -69,6 +69,7 @@
 							<!-- 값 불러오기 시작 -->
 							<c:forEach var="행" items="행s">
 								<tr>
+									<td>가나다</td>
 									
 								</tr>
 							</c:forEach>
