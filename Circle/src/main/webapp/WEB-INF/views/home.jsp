@@ -153,10 +153,8 @@ margin-left:20px;
 </head>
 <body>
 	
-	
+	<form name="homeForm" method="post" action="/common/mainPage">
 	<section id="container">
-
-		
 			<aside id="aside" >
 			
 			<div id="rectangle354">
@@ -188,6 +186,11 @@ margin-left:20px;
 		</aside>
 		
 	</section>
+		</form>
+	
+	
+	
+	
 	
 		<script>
 	
@@ -200,7 +203,7 @@ margin-left:20px;
 		location.href='/circle/sign/signList';
 		//http://localhost:8888/circle/sign/signList
 	}
-	//주석주석주석
+	
 	</script>
 
 </body>

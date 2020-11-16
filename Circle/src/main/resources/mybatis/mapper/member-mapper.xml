@@ -11,6 +11,6 @@
 -->
 <mapper namespace="member">
 	<select id="login" resultType="member" parameterType="member">
-		select * from member where ISS_CODE=#{ISS_CODE}
+		select * from EMP_INFO where EMP_INFO_NAME=#{EMP_INFO_NAME}
 	</select>
 </mapper>
