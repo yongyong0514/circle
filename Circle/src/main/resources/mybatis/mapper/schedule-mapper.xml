@@ -60,6 +60,36 @@
 		
 	</resultMap>
 	
+	<select id="seq" resultType="String">
+		select schn_seq.nextval from dual
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		Insert into SCH_UNIT (SCH_UNIT_CODE
+							 ,SCH_UNIT_NAME
+							 ,SCH_UNIT_SDAT
+							 ,SCH_UNIT_EDAT
+							 ,SCH_UNIT_ADAY
+							 ,SCH_UNIT_CONT
+							 ,SCH_UNIT_WDAT
+							 ,SCH_UNIT_STAT
+							 ,SCH_UNIT_WRTR
+							 ,SCH_UNIT_HUE) values ('SCHN'||TRIM(TO_CHAR(#{seq},'000000'))
+							 					   ,#{title}
+							 					   ,to_date(#{start},'RR/MM/DD')
+							 					   ,to_date(#{end},'RR/MM/DD')
+							 					   ,#{allDay}
+							 					   ,#{content}
+							 					   ,sysdate
+							 					   ,'Y'
+							 					   ,#{id}
+							 					   ,#{backgroundColor})
+	</insert>
+	<insert id="insert2" parameterType="map">
+		insert into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{id})
+	
+	</insert>
+	
 	<select id="selectMap_min" parameterType="map" resultMap="selectMapList_min">
 		select sch_unit_code,
 			   sch_unit_name,

@@ -16,5 +16,7 @@ public interface ScheduleService {
 
 	List<SchAjax> list(Map<String, Object> map);
 	
+	void insert(Map<String, String> mapinsertEvent);
+	
 	//일정 전체 리스트 출력기능
 }

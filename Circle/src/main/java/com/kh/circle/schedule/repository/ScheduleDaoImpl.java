@@ -26,4 +26,18 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		return list;
 	}
 
+	@Override
+	public void insert(Map<String, String> insertEvent) {
+
+		String seq = sqlSession.selectOne("sch.seq");
+		insertEvent.put("seq", seq);
+		
+		log.info("seq confirm : {}" , insertEvent.get("seq"));
+		log.info("final insert data : {}" , insertEvent);
+		
+		sqlSession.insert("sch.insert", insertEvent);
+		sqlSession.insert("sch.insert2", insertEvent);
+		
+	}
+
 }

@@ -8,9 +8,11 @@ import java.util.Map;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,7 @@ public class SchAjaxController  {
 	//jsp 없이 데이터만 전송할 예정
 	
 	@Autowired
-	private ScheduleService scheduleService;
+	private ScheduleService schService;
 	
 	@GetMapping("/id")
 	public List<SchAjax> schMain(String id, Date start, Date end) {
@@ -40,21 +42,23 @@ public class SchAjaxController  {
 		map.put("start", start);
 		map.put("end", end);
 		
-		log.info("map : {}", map);
+		log.info("firstList - id, date import : {}", map);
 		
 //		String id = "200101090031";
 		
-		List<SchAjax> list = scheduleService.list(map);
-		log.info("list : {} " , list);
+		List<SchAjax> list = schService.list(map);
+		log.info("firstList - month events callback : {} " , list);
 		
 		return list;
-	};
+	}
 	
 	@PostMapping("/schInsert")
-	public void schInsert(Map<String, String> insertEvent) {
+	public void schInsert(@RequestBody Map<String, String> insertEvent) {
 		
+		log.info("insert - info map : {} " ,insertEvent.get("allDay"));
 		
-		log.info("json insert data : {}", insertEvent);
-	};
+		schService.insert(insertEvent);
+		
+	}
 	
 }
