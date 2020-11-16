@@ -30,6 +30,7 @@ public class SchAjax {
 	private String writeDate;
 	private String modifyDate;
 	private String backgroundColor;
+	private String writerName;
 	
 }
 
