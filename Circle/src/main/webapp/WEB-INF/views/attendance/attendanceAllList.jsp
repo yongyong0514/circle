@@ -27,7 +27,7 @@
 				<form action="#" method="POST">
 					<div class="attendanceListTitle">
 						<div class="dateType">
-							<span class="arrowBtn"> ◀ <span>	
+							<span class="arrowBtn"> ◀ </span>	
 								<c:if test="true">	<!-- 주 선택 시 -->
 									<span class="currentDate">2020-11-08 ~ 2020-11-14</span>
 								</c:if>
