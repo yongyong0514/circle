@@ -11,8 +11,9 @@ import com.kh.circle.post.entity.Post;
 
 public interface PostService {
 
-	  void add(Post post, MultipartFile insert) throws IllegalStateException, IOException;
 
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
+
+	void postAdd(Post post, MultipartFile insert) throws IllegalStateException, IOException;
 
 }

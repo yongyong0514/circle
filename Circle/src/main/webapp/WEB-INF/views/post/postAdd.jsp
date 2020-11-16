@@ -39,7 +39,7 @@
 			</div>
 
 			<!-- 내용  1dd-->
-			<form action="add" method="post">
+			<form action="postMain" method="POST">
 			<div class="wrapper">
 				<div class="title">
 					<h1>게시글쓰기</h1>
