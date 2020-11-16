@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Member {
-	private String ISS_CODE;
-	private String EMP_PER_INFO_EMP_NO;
+	private String EMP_INFO_EMP_NO;
+	private String EMP_INFO_PWD;
+	private String EMP_INFO_NAME;
 }
