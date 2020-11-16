@@ -21,7 +21,7 @@
 	<select id="selectMap" parameterType="map" resultMap="selectMapList">
 		select sch_unit_code,
 			   sch_unit_name,
-			   decode(sch_unit_aday, 'Y', 'true', 'false') as sch_unit_aday,
+			   sch_unit_aday,
 			   sch_unit_sdat,
 			   sch_unit_edat,
 			   SCH_UNIT_RPT,
@@ -33,9 +33,11 @@
 			   SCH_UNIT_WDAT,
 			   SCH_UNIT_MDAT,
 			   SCH_UNIT_HUE,
-			   sch_join_emp
+			   sch_join_emp,
+			   emp_info_name
  		  from sch_unit
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
+		  join emp_info on (sch_unit_wrtr = emp_info_emp_no)
  		 where sch_join_emp = #{id}
  		   and sch_unit_stat = 'Y'
  		   and (sch_unit_sdat between #{start} and #{end}
@@ -57,6 +59,7 @@
 		<result column="SCH_UNIT_WDAT" property="writeDate"/>
 		<result column="SCH_UNIT_MDAT" property="modifyDate"/>
 		<result column="SCH_UNIT_HUE" property="backgroundColor"/>
+		<result column="emp_info_name" property="writerName"/>
 		
 	</resultMap>
 	

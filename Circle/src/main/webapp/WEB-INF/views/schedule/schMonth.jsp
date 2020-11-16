@@ -42,6 +42,8 @@
             	 							//input 값 비우기
             	 							$('#edit-title').empty();
             	 							
+            	 							$('.time').removeClass();						
+            	 	
             	 							//현재 시간 넣기
             	 							$('#edit-start').val(date.format());
             	 							$('#edit-end').val(date.format());
@@ -60,12 +62,21 @@
                 							$('#view-title').empty();
                 							$('#view-start').empty();
                 							$('#view-end').empty();
+                							$('#view-type').empty();
+                							$('#view-writer').empty();
+                							$('#view-desc').empty();
                 		
                 							$('#view-title').text(event.title);
                 							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
                 							if(event.end != null) {
                 								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
                 							}; 
+                							$('#view-type').text(event.type);
+                							$('#view-writer').text(event.writerName);
+                							$('#view-desc').text(event.content);
+                							
+                							console.log(event.start.format('YYYY-MM-DD HH:mm').substr(0,10))
+                							
                 							$('#eventModal').modal();
            			},
                 	//이벤트 목록 불러오기
@@ -86,10 +97,15 @@
 						        						$(json).each(function() {
 						        							
 						        							//true false 를 boolean 타입으로 변환
-						        							var yn = true;
+						        							var yn = false;
+						        							if($(this).attr('allDay') == "on"){
+						        								yn = true;
+						        							}
 						        							
-						        							if($(this).attr('allDay') == "false"){
-						        								yn = false
+						        							//type grouping
+						        							var type = "미분류";
+						        							if($(this).attr('id').substr(0,4) == "SCHN") {
+						        								type = "내 일정";
 						        							}
 						        							
 						        							//events 객체에 주입
@@ -107,7 +123,9 @@
 						        								writer 			: $(this).attr('writer'),
 						        								writeDate		: $(this).attr('writeDate'),
 						        								modifyDate		: $(this).attr('modifyDate'),
-						        								backgroundColor	: $(this).attr('backgroundColor')
+						        								backgroundColor	: $(this).attr('backgroundColor'),
+						        								writerName		: $(this).attr('writerName'),
+						        								type			: type
 						        							});
 						        						});
 						        						
@@ -122,8 +140,9 @@
             });
             
         //event insert script
-        
         $(function () {
+        	
+        	//insert form-data serialize transform
         	jQuery.fn.serializeObject = function() {
         	    var obj = null;
         	    try {
@@ -144,11 +163,13 @@
         	    return obj;
         	};
         	
+        	//save button ckick function
             $('#save-event').on('click', function (e) {
                 console.log("button click success");
                 console.log(events[0].id);
                 e.preventDefault();
                 
+                // input emp.no 
                 $("#insertId").val("200101090031");
                 
                 var insertEvent = $("form[name=insert-event]").serializeObject();
@@ -170,7 +191,11 @@
                 		alert(insertEvent);
                 	}
                 })
-                $("#add-eventModal").hide();
+                //modal close
+                $("#add-eventModal").modal("hide");
+                
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');
             });
 
         });
@@ -219,14 +244,18 @@
                             <label class="col-xs-4" for="view-type">구분</label>
                             <span class="inputModal" id="view-type">부서 일정</span>
                         </div>
-
-
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="view-writer">작성자</label>
+                            <span class="inputModal" id="view-writer"></span>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="view-desc">설명</label>
                             <textarea rows="4" cols="50" class="inputModal" name="view-desc"
-                                id="view-desc">주말 등산 회식</textarea>
+                                id="view-desc" readonly="readonly">내용 삭제가 안됐을때 나오는 내용</textarea>
                         </div>
                     </div>
                 </div>
@@ -289,7 +318,7 @@
 	                    <div class="row">
 	                        <div class="col-xs-12">
 	                            <label class="col-xs-4" for="edit-allDay">하루종일</label>
-	                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" name="allDay">
+	                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" name="allDay" checked="checked">
 	                        </div>
 	                    </div>
 	                    <div class="row">
