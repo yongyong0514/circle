@@ -47,7 +47,7 @@ public class PostController {
 			@RequestParam MultipartFile insert
 			) throws IllegalStateException, IOException {
 			
-			postService.add(post, insert);
+			postService.postAdd(post, insert);
 		
 				return "post/postMain";
 	}
@@ -75,7 +75,7 @@ public class PostController {
 	
 	@GetMapping("/download")
 	public void download(HttpServletResponse response,
-							@RequestParam int no) throws IOException {
+							@RequestParam String no) throws IOException {
 		
 		PostFile file = sqlSession.selectOne("post_file.find", no);
 		

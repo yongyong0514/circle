@@ -33,26 +33,6 @@ public class PostServiceImp implements PostService{
 	
 	
 	
-	@Transactional
-	@Override
-	public void add(Post post, MultipartFile insert) throws IllegalStateException, IOException {
-
-		String no = postDao.add(post);
-		
-		if(!insert.isEmpty()) {
-			
-			PostFile postFile = PostFile.builder()
-					.file_oname(insert.getOriginalFilename())
-					.file_type(insert.getContentType())
-					.file_size(insert.getSize())
-					.file_code(no)
-					.build();
-			
-			String file_no = postFileDao.add(postFile);
-			
-			postSaveDao.save(insert, file_no);
-		}
-	}
 
 
 
@@ -79,5 +59,29 @@ public class PostServiceImp implements PostService{
 		
 		
 		return entity;
+	}
+
+
+
+	@Transactional
+	@Override
+	public void postAdd(Post post, MultipartFile insert) throws IllegalStateException, IOException {
+
+String no = postDao.add(post);
+		
+		if(!insert.isEmpty()) {
+			
+			PostFile postFile = PostFile.builder()
+					.file_oname(insert.getOriginalFilename())
+					.file_type(insert.getContentType())
+					.file_size(insert.getSize())
+					.file_code(no)
+					.build();
+			
+			String file_no = postFileDao.add(postFile);
+			
+			postSaveDao.save(insert, file_no);
+		}
+		
 	}
 	}
