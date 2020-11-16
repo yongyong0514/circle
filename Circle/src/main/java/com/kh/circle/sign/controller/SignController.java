@@ -36,6 +36,9 @@ public class SignController {
 	public String signList(Model model) {
 		List<signList> list = sqlSession.selectList("sign.list");
 		model.addAttribute("list", list);
+		
+		List<signList> list2 = sqlSession.selectList("sign.listComplete");
+		model.addAttribute("list2", list2);
 
 		return "sign/signList";
 	}
