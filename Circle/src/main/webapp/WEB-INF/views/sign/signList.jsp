@@ -53,6 +53,28 @@
 					<jsp:include page="../sign/signHomeListBar2.jsp" />
 				</div>
 				<div class="resultArea1">
+					<table id="listArea">
+						<c:forEach var="sign" items="${list2}">
+							<tr id="result">
+								<th><input type="text" style="display: none" value="${sign.sign_code}" id="signCode2"></th>
+								<th class="imgBox2"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></th>
+								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
+								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
+								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher"></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
+									<div id="signListJoinerForm">
+										<table id="signListJoiner">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</th>				
+								<th class="textBox3"><input type="text" id="signCount2" readonly></th>
+								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
+							</tr>
+						</c:forEach>
+					</table>					
 				</div>
 			</div>
 		</div>
@@ -92,7 +114,7 @@
 		});
 	</script>
 <!-- 2. 결재자 카운트 및 조회 조희 -->
-<!-- 	<script>
+<!--  	<script>
 		$("#signJoiner").mouseenter(function(){
 			var base = "${pageContext.request.contextPath}";
 			var signCode = $("#signCode").val();

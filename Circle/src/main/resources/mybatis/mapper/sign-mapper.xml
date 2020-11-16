@@ -21,7 +21,27 @@
  		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
   		  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
- 		 WHERE SI.SIGN_EMP_CODE = '199207220001'
+ 		 WHERE SI.SIGN_EDAT IS NULL
+ 		   AND SI.SIGN_EMP_CODE = '199207220001'
+ 		 ORDER BY SI.SIGN_CODE DESC
+	</select>
+		
+	<select id="listComplete" resultType="signList">
+		SELECT SI.SIGN_CODE
+			 , ST.SIGN_TYPE_NAME
+    		 , SI.SIGN_TITLE
+    		 , EI.EMP_INFO_NAME
+    		 , JI.JOB_INFO_NAME
+    		 , TO_CHAR(SI.SIGN_WDAT, 'yyyy-mm-dd') AS SIGN_WDAT
+             , TO_CHAR(SI.SIGN_WDAT, 'hh:dd') AS SIGN_WHOUR
+    		 , TO_CHAR(SI.SIGN_EDAT, 'yyyy-mm-dd') AS SIGN_EDAT
+             , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR 
+ 		  FROM SIGN SI
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+  		  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+ 		 WHERE SI.SIGN_EDAT IS NOT NULL
+ 		   AND SI.SIGN_EMP_CODE = '199207220001'
  		 ORDER BY SI.SIGN_CODE DESC
 	</select>
 	
@@ -37,7 +57,7 @@
    					AND SI.SIGN_CODE = #{signCode})
 	</select>
 	
-<!-- 	<select id="signListJoiner" resultType="signListJoiner" >
+<!--  	<select id="signListJoiner" resultType="signListJoiner" >
 		SELECT EI.EMP_INFO_NAME
      		 , JI.JOB_INFO_NAME
   		  FROM SIGN SI
