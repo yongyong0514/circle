@@ -36,5 +36,5 @@ public class SignResultController {
 //	@GetMapping("/signListJoiner")
 
 //	@GetMapping("/singListWatcher")
-									
+//	주석								
 }
