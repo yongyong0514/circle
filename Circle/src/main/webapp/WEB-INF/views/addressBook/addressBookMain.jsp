@@ -37,10 +37,11 @@
 					&nbsp;
 					<!-- 주소록 출력설정 시작-->
 					<button value="field">필드설정</button>
-					&nbsp; <label>페이지 당 출력개수</label> <select>
+					&nbsp; <label>페이지 당 출력개수</label>
+					<select>
 						<option value="20">20</option>
+						<option value="30">30</option>
 						<option value="50">50</option>
-						<option value="100">100</option>
 					</select>
 					<!-- 주소록 출력설정 끝 -->
 

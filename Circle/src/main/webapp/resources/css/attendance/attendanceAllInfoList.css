@@ -54,60 +54,26 @@ td {
 	vertical-align: middle;
 }
 
-.monthAttendanceList,
-.weekAttendanceList{
-	width: 100%;
+.title{
+	width:100%;
+}
+
+.infoList{
 	font-size: small;
 }
 
-.monthttendanceListTable,
-.weekAttendanceListTable{
+.infoListTable{
 	width: 100%;
 }
-.monthAttendanceListTable th,
-.weekAttendanceListTable th{
-	border:1px solid rgba(0,0,0,0.1);
-	border-bottom:1px solid rgba(0,0,0,0.5);
-	padding: 1rem;
-}
 
-.monthAttendanceListTable td,
-.weekAttendanceListTable td{
+.infoListTable th,
+.infoListTable td{
 	border:1px solid rgba(0,0,0,0.1);
 	padding: 0.5rem;
 	vertical-align: middle;
+	text-align: center;
 }
 
-.monthAttendanceListTable td .titleInfo,
-.weekAttendanceListTable td .titleInfo{
+.infoListTable th{
 	font-weight: bold;
-	font-size: medium;
-	padding-bottom: 0.5rem;
-}
-
-.monthAttendanceListTable td img,
-.weekAttendanceListTable td img{
-	width: 50px;
-	height: 50px;
-	background: blue;
-}
-
-.weekAttendanceListTable .empInfo,
-.monthAttendanceListTable .empInfo{
-	display: table;
-}
-
-.weekAttendanceListTable .empInfo .left,
-.monthAttendanceListTable .empInfo .left,
-.weekAttendanceListTable .empInfo .right,
-.monthAttendanceListTable .empInfo .right{
-	display: table-cell;
-	vertical-align: middle;
-	padding: 0.5rem;
-}
-
-.monthAttendanceListTable span,
-.weekAttendanceListTable span{
-	display: block;
-	padding-bottom: 0.2rem;
 }

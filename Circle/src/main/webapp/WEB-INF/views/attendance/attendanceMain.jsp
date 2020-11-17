@@ -24,7 +24,7 @@
 			<div class="content">
 				<h1>근태현황(메뉴명)</h1>
 				<br><br>
-				<!-- 현재(이번주) 근태현황 시작 -->
+				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
 					<div class="title">
 						<h3>기준일: 2020-11-13(금)</h3>
