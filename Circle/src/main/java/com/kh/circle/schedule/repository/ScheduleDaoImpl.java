@@ -40,4 +40,10 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		
 	}
 
+	@Override
+	public void delete(String id) {
+		
+		sqlSession.update("sch.delete", id);
+	}
+
 }

@@ -25,14 +25,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List<SchAjax> list(Map<String, Object> map) {
 		List<SchAjax> list = schDao.list(map);
-		
 		return list;
 	}
 
 	@Override
 	public void insert(Map<String, String> insertEvent) {
 		schDao.insert(insertEvent);
-		
+	}
+
+	@Override
+	public void delete(String id) {
+		schDao.delete(id);
 	}
 
 }

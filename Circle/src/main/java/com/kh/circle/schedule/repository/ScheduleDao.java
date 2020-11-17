@@ -14,5 +14,7 @@ public interface ScheduleDao {
 	List<SchAjax> list(Map<String, Object> map);
 
 	void insert(Map<String, String> insertEvent);
+
+	void delete(String id);
 	
 }
