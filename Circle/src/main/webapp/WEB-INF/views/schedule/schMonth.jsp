@@ -34,15 +34,18 @@
                	    						right  	: 'month,agendaWeek,agendaDay'
                							    
                		},
-               	 fixedWeekCount            : 'variable',
+               		fixedWeekCount            : 'variable',
                 	defaultDate			: moment(),//현재를 기준으로 생성
+                	nextDayThreshold	: "00:00:00",
+                	defaultAllDay		: false,
                 	editable			: true,
                 	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
             	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
             	 							//input 값 비우기
-            	 							$('#edit-title').empty();
+            	 							$('#edit-title').val("");
+            	 							$('#edit-desc').val("");
             	 							
-            	 							$('.time').removeClass();						
+            	 							$('.time').css({'display' : 'none'});						
             	 	
             	 							//현재 시간 넣기
             	 							$('#edit-start').val(date.format());
@@ -59,23 +62,31 @@
        				},
        				//event 클릭시 실행코드
                 	eventClick			: function(event, jsEvent, view) {
+                							
+                							//empty input value
                 							$('#view-title').empty();
                 							$('#view-start').empty();
                 							$('#view-end').empty();
                 							$('#view-type').empty();
                 							$('#view-writer').empty();
                 							$('#view-desc').empty();
-                		
+                							
+                							//fill input value
                 							$('#view-title').text(event.title);
-                							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
-                							if(event.end != null) {
-                								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
-                							}; 
+                							if(event.allDay) {
+                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
+                    							}	
+                							} else {
+                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
+                    							}               								
+                							}
                 							$('#view-type').text(event.type);
                 							$('#view-writer').text(event.writerName);
                 							$('#view-desc').text(event.content);
-                							
-                							console.log(event.start.format('YYYY-MM-DD HH:mm').substr(0,10))
                 							
                 							$('#eventModal').modal();
            			},
@@ -85,6 +96,7 @@
 						                    	$.ajax({
 						                    		url			:base+"/schAjax/id",
 						                    		type		:"get",
+						                    		async		: false,
 						                    		traditional : true,
 						                    		data: {id 		: "200101090031"
 						                    			  ,start	: start.format()
@@ -96,10 +108,16 @@
 						        						events = [];
 						        						$(json).each(function() {
 						        							
-						        							//true false 를 boolean 타입으로 변환
+						        							//allDay data processing
 						        							var yn = false;
+						        							var end = $(this).prop('end');
+						        							var	start = $(this).prop('start');
+						        							
 						        							if($(this).attr('allDay') == "on"){
 						        								yn = true;
+						        								if (start !== end) {
+								                    	              end = moment(end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+								                    	        }
 						        							}
 						        							
 						        							//type grouping
@@ -112,8 +130,8 @@
 						        							events.push({
 						        								id	  			: $(this).attr('id'),
 						        								title 			: $(this).attr('title'),
-						        								start 			: $(this).attr('start'),
-						        								end	  			: $(this).attr('end'),
+						        								start 			: start,
+						        								end	  			: end,
 						        								allDay			: yn,
 						        								repeat 			: $(this).attr('repeat'),
 						        								endRepeat 		: $(this).attr('endRepeat'),
@@ -172,6 +190,13 @@
                 // input emp.no 
                 $("#insertId").val("200101090031");
                 
+                //concat date time
+                if($('edit-allDay').is('checked')) {
+                	var date = $('#edit-start').substr(0,10);
+        			$('#edit-start').prop(date);
+                	
+                }
+                
                 var insertEvent = $("form[name=insert-event]").serializeObject();
                 
                 console.log(insertEvent);
@@ -197,6 +222,22 @@
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');
             });
+        	
+        	//allDay checked click function
+        	$('#edit-allDay').on('change', function(){
+        		if($(this).is(':checked')) {
+        			$('.time').hide();		
+        			
+        			console.log($('#start-time').val());
+        			console.log($('#end-time').val());
+        			
+        		/* 	$('#start-time').val("");
+        			$('#end-time').val(""); */
+        		} else {
+        			$('.time').show();
+        		}
+        	});
+        	
 
         });
         </script>
