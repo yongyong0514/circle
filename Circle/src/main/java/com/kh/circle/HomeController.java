@@ -112,6 +112,7 @@ public class HomeController {
 	public String normal() {
 		return "normal";///WEB-INF/views/normal.jsp
 	}
+	//석주석주
 	
 }
 /*
