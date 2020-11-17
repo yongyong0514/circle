@@ -34,7 +34,14 @@
 								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
 								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
 								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher"></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher">
+									<div id="signListWatcherForm">
+										<table id="signListWatcher">
+											<tbody>
+											</tbody>
+										</table>
+									</div>								
+								</th>
 								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
 									<div id="signListJoinerForm">
 										<table id="signListJoiner">
@@ -43,7 +50,14 @@
 										</table>
 									</div>
 								</th>				
-								<th class="textBox3"><input type="text" id="signCount" readonly></th>
+								<th class="textBox3"><input type="text" id="signCount" readonly>
+									<div id="signListJoinerCheckForm">
+										<table id="signListJoinerCheck">
+											<tbody>
+											</tbody>
+										</table>
+									</div>								
+								</th>
 								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
 							</tr>
 						</c:forEach>
@@ -61,7 +75,14 @@
 								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
 								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
 								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher"></th>
+								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher">
+									<div id="signListWatcherForm">
+										<table id="signListWatcher">
+											<tbody>
+											</tbody>
+										</table>
+									</div>								
+								</th>
 								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
 									<div id="signListJoinerForm">
 										<table id="signListJoiner">
@@ -70,7 +91,14 @@
 										</table>
 									</div>
 								</th>				
-								<th class="textBox3"><input type="text" id="signCount2" readonly></th>
+								<th class="textBox3"><input type="text" id="signCount2" readonly>
+									<div id="signListWatcherForm">
+										<table id="signListWatcher">
+											<tbody>
+											</tbody>
+										</table>
+									</div>								
+								</th>
 								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
 							</tr>
 						</c:forEach>
@@ -97,7 +125,7 @@
 	<script>
 		
 	</script>
-<!-- 1. 남은 결재 카운트 -->
+<!-- 1. 남은 결재 카운트-->
 	<script>
 		$(function() {
 			var base = "${pageContext.request.contextPath}";
@@ -113,37 +141,131 @@
 			});
 		});
 	</script>
+	
+<!-- 1.1 남은 미결재자 조회 -->
+  	<script>
+		$(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = $("#signCode").val();
+			$.ajax({
+				url: base + "/signResult/signListJoinerCheck",
+				type: "get",				
+				data: {signCode : signCode},
+				success: function(data) {
+					
+					if(data != null) {
+						var $signListJoinerCheck = $("#signListJoinerCheck tbody");
+						$signListJoinerCheck.html('');
+						
+						for(var key in data) {
+							var $tr = $("<tr>");
+							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
+							var $JoinerClassTd = $("<td class='tClass'>").text(data[key].job_info_name);
+							
+							$tr.append($JoinerNameTd);
+							$tr.append($JoinerClassTd);
+							
+							$signListJoinerCheck.append($tr);
+						}
+					} else {
+					}
+				},
+			});
+		});
+	</script>
+    <script>
+    	$("#signCount").mouseenter(function(){
+    		$("#signListJoinerCheckForm").fadeIn(100);
+    	});
+    </script>
+    <script>
+    	$("#signCount").mouseleave(function(){
+    		$("#signListJoinerCheckForm").fadeOut(100);
+    	});
+    </script>
+	
 <!-- 2. 결재자 카운트 및 조회 조희 -->
-<!--  	<script>
-		$("#signJoiner").mouseenter(function(){
+  	<script>
+		$(function(){
 			var base = "${pageContext.request.contextPath}";
 			var signCode = $("#signCode").val();
 			$.ajax({
 				url: base + "/signResult/signListJoiner",
 				type: "get",				
 				data: {signCode : signCode},
-				dataType: "json",
 				success: function(data) {
- 					var $signListJoiner = $("#signListJoiner tbody");
-					$signListJoiner.html('');
 					
-					for(var key in data) {
-						var $tr = $("<tr>");
-						var $JoinerNameTd = $("<td class='tName'>").text(data[key].JoinerName);
-						var $JoinerClassTd = $("<td class='tClass'>").text(data[key].JoinerClass);
+					if(data != null) {
+						var $signListJoiner = $("#signListJoiner tbody");
+						$signListJoiner.html('');
 						
-						$tr.append($JoinerNameTd);
-						$tr.append($JoinerClassTd);
-						
-						$signListJoiner.append($tr);
+						for(var key in data) {
+							var $tr = $("<tr>");
+							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
+							var $JoinerClassTd = $("<td class='tClass'>").text(data[key].job_info_name);
+							
+							$tr.append($JoinerNameTd);
+							$tr.append($JoinerClassTd);
+							
+							$signListJoiner.append($tr);
+						}
+					} else {
 					}
-					console.log("success");
 				},
 			});
 		});
-	</script> -->
-<!-- 3. 참조자 카운트 및 조회 -->
-	<script>
 	</script>
+    <script>
+    	$("#signJoiner").mouseenter(function(){
+    		$("#signListJoinerForm").fadeIn(100);
+    	});
+    </script>
+    <script>
+    	$("#signJoiner").mouseleave(function(){
+    		$("#signListJoinerForm").fadeOut(100);
+    	});
+    </script>
+    
+<!-- 3. 참조자 카운트 및 조회 -->
+  	<script>
+		$(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = $("#signCode").val();
+			$.ajax({
+				url: base + "/signResult/signListWatcher",
+				type: "get",				
+				data: {signCode : signCode},
+				success: function(data) {
+					
+					if(data != null) {
+						var $signListWatcher = $("#signListWatcher tbody");
+						$signListWatcher.html('');
+						
+						for(var key in data) {
+							var $tr = $("<tr>");
+							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
+							var $JoinerClassTd = $("<td class='tClass'>").text(data[key].job_info_name);
+							
+							$tr.append($JoinerNameTd);
+							$tr.append($JoinerClassTd);
+							
+							$signListWatcher.append($tr);
+						}
+					} else {
+					}
+				},
+			});
+		});
+	</script>
+    <script>
+    	$("#signWatcher").mouseenter(function(){
+    		$("#signListWatcherForm").fadeIn(100);
+    	});
+    </script>
+    <script>
+    	$("#signWatcher").mouseleave(function(){
+    		$("#signListWatcherForm").fadeOut(100);
+    	});
+    </script>
 </body>
 </html>
