@@ -56,17 +56,17 @@
 
 								<div class="option">
 									<input type="radio" class="radio" id="notice" name="category" />
-									<label for="film">공지 게시판</label>
+									<label for="notice">공지 게시판</label>
 								</div>
 
 								<div class="option">
 									<input type="radio" class="radio" id="company" name="category" />
-									<label for="science">전사 게시판</label>
+									<label for="company">전사 게시판</label>
 								</div>
 
 								<div class="option">
 									<input type="radio" class="radio" id="employee" name="category" />
-									<label for="art">사원 게시판</label>
+									<label for="employee">사원 게시판</label>
 								</div>
 
 
@@ -98,7 +98,7 @@
 					</div>
 					<div class="msg">
 						<textarea placeholder="내용을 작성하세요"></textarea>
-						<input type="submit" class="btn" value="send" />
+						<input type="submit" class="btn" value="글쓰기" />
 					</div>
 				</div>
 			</div>

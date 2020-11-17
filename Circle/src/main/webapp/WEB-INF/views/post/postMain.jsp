@@ -44,7 +44,7 @@
 
 						<!--  list -->
 						<div class="view_wrap list-view" style="display: block;">
-							<c:forEach var="post" items="${list}">
+							<c:forEach var="post" items="${post}">
 						<div class="view_item">
 								<div class="vi_left">${post.post_code}</div>
 								<div class="vi_right">
