@@ -27,4 +27,14 @@ public class AttendanceController {
 	public String attendanceAllList() {
 		return "attendance/attendanceAllList";
 	}
+	
+	@GetMapping("/attendanceAllStatistic")
+	public String attendanceAllStatistic() {
+		return "attendance/attendanceAllStatistic";
+	}
+	
+	@GetMapping("/attendanceAllInfoList")
+	public String attendanceAllInfoList() {
+		return "attendance/attendanceAllInfoList";
+	}
 }

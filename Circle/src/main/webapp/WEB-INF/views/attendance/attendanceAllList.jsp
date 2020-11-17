@@ -51,31 +51,189 @@
 							<option value="jobName">직급명</option>
 						</select>
 					</div>
+					<!-- 주간 근태현황 리스트 시작 -->
 					<br>
-					<!-- 근태현황 리스트 시작 -->
-					<div class="attendanceList">
-						<table class="attendanceListTable">
+					<div class="weekAttendanceList">
+						<table class="weekAttendanceListTable">
 							<tr>
 								<th>이름</th>
 								<th>누적근무시간</th>
-								<th>일</th>
-								<th>월</th>
-								<th>화</th>
-								<th>수</th>
-								<th>목</th>
-								<th>금</th>
-								<th>토</th>
+								<th>8(일)</th>
+								<th>9()월)</th>
+								<th>10(화)</th>
+								<th>11(수)</th>
+								<th>12(목)</th>
+								<th>13(금)</th>
+								<th>14(토)</th>
 							</tr>
 							<!-- 값 불러오기 시작 -->
 							<c:forEach var="행" items="행s">
 								<tr>
-									<td>가나다</td>
-									<!-- 커밋용 -->
+									<td>
+										<div class="empInfo">
+											<div class="left">
+												<img src="#">
+											</div>
+											<div class="right">
+												<span class="titleInfo">가나다</span>
+												<span>대리</span>
+												<span>영업팀</span>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									
+									<!-- 요일 반복 시작 -->
+									<c:forEach var="day" items="doys">
+									</c:forEach>
+									
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<td>
+										<div class="dayAttendanceTime">
+											<span class="titleInfo">08:59 - 18:00</span>
+											<span>9h 1m</span>
+										</div>
+									</td>
+									<!-- 요일 반복 끝 -->
 								</tr>
 							</c:forEach>
 							<!-- 값 불러오기 끝 -->
 						</table>
 					</div>
+					<!-- 주간 근태현황 리스트 끝 -->
+					
+					<!-- 월간 근태현황 리스트 시작 -->
+					<br>
+					<div class="monthAttendanceList">
+						<table class="monthAttendanceListTable">
+							<tr>
+								<th>이름</th>
+								<th>누적근무시간</th>
+								<th>1주차</th>
+								<th>2주차</th>
+								<th>3주차</th>
+								<th>4주차</th>
+								<th>5주차</th>
+								<th>6주차</th>
+							</tr>
+							<!-- 값 불러오기 시작 -->
+							<c:forEach var="행" items="행s">
+								<tr>
+									<td>
+										<div class="empInfo">
+											<div class="left">
+												<img src="#">
+											</div>
+											<div class="right">
+												<span class="titleInfo">가나다</span>
+												<span>대리</span>
+												<span>영업팀</span>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeMonthAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									
+									<!-- 요일 반복 시작 -->
+									<c:forEach var="day" items="doys">
+									</c:forEach>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<td>
+										<div class="accumulativeWeekAttendanceTime">
+											<span class="titleInfo">18h 2m</span>
+											<span>기본: 18h 2m</span>
+											<span>초과: 0h 0m</span>
+										</div>
+									</td>
+									<!-- 요일 반복 끝 -->
+								</tr>
+							</c:forEach>
+							<!-- 값 불러오기 끝 -->
+						</table>
+					</div>
+					
+					<!-- 월간 근태현황 리스트 끝 -->
+					
 				</form>
 			</div>
 		</div>
