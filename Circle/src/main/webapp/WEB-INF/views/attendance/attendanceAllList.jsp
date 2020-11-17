@@ -70,7 +70,7 @@
 							<c:forEach var="행" items="행s">
 								<tr>
 									<td>가나다</td>
-									
+									<!-- 커밋용 -->
 								</tr>
 							</c:forEach>
 							<!-- 값 불러오기 끝 -->
