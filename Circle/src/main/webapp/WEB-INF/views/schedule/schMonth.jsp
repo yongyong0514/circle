@@ -18,8 +18,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
 
       <script>
-      
-      		var base = "${pageContext.request.contextPath}";
+      		
+      		var loginId = "200101090031";						//login id
+      		var nowEvent = "";									//clicked event data keeping
+      		var base = "${pageContext.request.contextPath}";	//rootdirectory save
       
       		//fullcalendar onload function
             $(function() {
@@ -40,56 +42,7 @@
                 	defaultAllDay		: false,
                 	editable			: true,
                 	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
-            	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
-            	 							//input 값 비우기
-            	 							$('#edit-title').val("");
-            	 							$('#edit-desc').val("");
-            	 							
-            	 							$('.time').css({'display' : 'none'});						
-            	 	
-            	 							//현재 시간 넣기
-            	 							$('#edit-start').val(date.format());
-            	 							$('#edit-end').val(date.format());
-            	 							
-            	 							//모달 띄우기
-            	 							$('#add-eventModal').modal('show');
-            	 							
-            	 							//일정명에 오토포커스
-            	 							$(".modal").on("shown.bs.modal", function () {
-            	 								$('#edit-title').focus();
-            	 							});
-
-       				},
-       				//event 클릭시 실행코드
-                	eventClick			: function(event, jsEvent, view) {
-                							
-                							//empty input value
-                							$('#view-title').empty();
-                							$('#view-start').empty();
-                							$('#view-end').empty();
-                							$('#view-type').empty();
-                							$('#view-writer').empty();
-                							$('#view-desc').empty();
-                							
-                							//fill input value
-                							$('#view-title').text(event.title);
-                							if(event.allDay) {
-                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
-                    							}	
-                							} else {
-                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
-                    							}               								
-                							}
-                							$('#view-type').text(event.type);
-                							$('#view-writer').text(event.writerName);
-                							$('#view-desc').text(event.content);
-                							
-                							$('#eventModal').modal();
-           			},
+                	
                 	//이벤트 목록 불러오기
                  	events				: function(start, end, timezone, callback) {
                  								
@@ -98,7 +51,7 @@
 						                    		type		:"get",
 						                    		async		: false,
 						                    		traditional : true,
-						                    		data: {id 		: "200101090031"
+						                    		data: {id 		: loginId
 						                    			  ,start	: start.format()
 						                    			  ,end		: end.format() 
 						                    		},
@@ -153,10 +106,86 @@
 						                    		}
                  							});
                  	},
+            	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
+            	 							//input 값 비우기
+            	 							$('#edit-title').val("");
+            	 							$('#edit-desc').val("");
+            	 							$('#edit-allDay').prop('checked', true);
+            	 							
+            	 							$('.time').css({'display' : 'none'});						
+            	 	
+            	 							//현재 시간 넣기
+            	 							$('#edit-start').val(date.format());
+            	 							$('#edit-end').val(date.format());
+            	 							$('#start-time').val(moment());
+            	 							$('#end-time').val(moment());
+            	 							
+            	 							//modify-save button hide
+            	 							$('.modalBtnContainer-modifyEvent').hide();
+            	 							//add button show
+            	 							$('modalBtnContainer-addEvent').show();
+            	 							
+            	 							//모달 띄우기
+            	 							$('#add-eventModal').modal('show');
+            	 							
+            	 							//title check hide
+            	 							$('#title-check').hide();
+            	 							
+            	 							//일정명에 오토포커스
+            	 							$(".modal").on("shown.bs.modal", function () {
+            	 								$('#edit-title').focus();
+            	 							});
+
+       				},
+       				//event 클릭시 실행코드
+                	eventClick			: function(event, jsEvent, view) {
+                												
+                							nowEvent = event;
+                							console.log(nowEvent);
+                		
+                							//empty input value
+                							$('#view-sch-id').val("");
+                							$('#view-title').empty();
+                							$('#view-start').empty();
+                							$('#view-end').empty();
+                							$('#view-type').empty();
+                							$('#view-writer').empty();
+                							$('#view-desc').empty();
+                							
+                							//fill input value
+                							$('#view-sch-id').val(event.id);
+                							$('#view-title').text(event.title);
+                							if(event.allDay) {
+                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
+                    							}	
+                							} else {
+                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
+                    							}               								
+                							}
+                							$('#view-type').text(event.type);
+                							$('#view-writer').text(event.writerName);
+                							$('#view-desc').text(event.content);
+                							
+                							//autority check
+                							if(event.writer != loginId) {
+												console.log("wrong id");
+												
+												$(".modalBtnContainer-viewEvent").hide();
+                							} else {
+                								$(".modalBtnContainer-viewEvent").show();
+                							}
+                							
+                							//modal on
+                							$('#eventModal').modal();
+           			},
                 		
                 });
             });
-            
+      		
         //event insert script
         $(function () {
         	
@@ -183,62 +212,157 @@
         	
         	//save button ckick function
             $('#save-event').on('click', function (e) {
-                console.log("button click success");
-                console.log(events[0].id);
-                e.preventDefault();
+				
+            	//input title check
+            	if($('#edit-title').val() == '' ) {
+					$('#edit-title').focus();
+					return;
+				}
+            	
+                var startDateTime = $('#edit-start').val();
+                var endDateTime = $('#edit-end').val();
                 
+            	console.log("button click success");
+            	
                 // input emp.no 
-                $("#insertId").val("200101090031");
+                $("#insertId").val(loginId);
                 
                 //concat date time
                 if($('edit-allDay').is('checked')) {
                 	var date = $('#edit-start').substr(0,10);
         			$('#edit-start').prop(date);
                 	
+                } else {
+                	startDateTime = startDateTime.concat(" ", $('#start-time').val());
+                	endDateTime = endDateTime.concat(" ", $('#end-time').val());
+                	
+                	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
+                	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
+                	
+                	if($('#end-time') == null) {
+                		console.log('end is null');
+                	}
+                	
                 }
                 
                 var insertEvent = $("form[name=insert-event]").serializeObject();
                 
-                console.log(insertEvent);
-                console.log(JSON.stringify(insertEvent));
+                console.log("insertEvent : " + JSON.stringify(insertEvent));
                 
                 $.ajax({
                 	type 		: 'post',
                 	traditional : true,
                 	url 		: base+"/schAjax/schInsert", 
                 	data		: JSON.stringify(insertEvent),
-                	dataType	: 'json',
+                	dataType	: 'text',
                 	contentType	:"application/json; charset=utf-8;",
-                	error		: function(error){
-                		console.log("funcking error");
+                	error		: function(request,status,error){
+                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                 	},
-                	success		: function(insertEvent){
-                		alert(insertEvent);
+                	success		: function(){
+                        //modal close
+                        $("#add-eventModal").modal("hide");
+                        
+                        //refresh calendar
+                        $('#calendar').fullCalendar('refetchEvents');
                 	}
                 })
-                //modal close
-                $("#add-eventModal").modal("hide");
-                
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');
+
             });
         	
         	//allDay checked click function
         	$('#edit-allDay').on('change', function(){
         		if($(this).is(':checked')) {
         			$('.time').hide();		
-        			
-        			console.log($('#start-time').val());
-        			console.log($('#end-time').val());
-        			
-        		/* 	$('#start-time').val("");
-        			$('#end-time').val(""); */
         		} else {
         			$('.time').show();
         		}
         	});
         	
-
+        	//title-insert-check blur function
+        	$(document).ready(function() {
+        		$('#edit-title').blur(function(){
+        			if($('#edit-title').val() == '') {
+        				$('#title-check').show();
+        			} else {
+        				$('#title-check').hide();
+        			}
+        		});
+        	});
+        	
+        	//delete button click function
+        	$('#deleteEvent').on('click', function(){
+				
+        		var id = $('#view-sch-id').val();
+        		
+        		console.log(id);
+				
+				var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
+				if(deleteConfirm) {
+					console.log('delete ajax on');
+					
+					$.ajax({
+						url			: base+'/schAjax/schDelete',
+						type		: 'post',
+						async		: false,
+						data		: id,
+						dataType	: 'text',
+						contentType	: "application/json; charset=utf-8;",
+	                	error		: function(request,status,error){
+	                					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	                				  },
+	                	success		: function(){
+	                        //refresh calendar
+	                        $('#calendar').fullCalendar('refetchEvents');	 
+	                        
+	                        //close modal
+	                		$('#eventModal').modal("hide");
+	                	},
+					});
+				} else {
+					console.log('delete cancle');
+				}
+        	})
+        	
+        	//modify button click function
+        	$('#updateEvent').on('click', function() {
+        		
+        		//view-modal close
+        		$('#eventModal').modal('hide');
+        		
+        		//input modal view controll
+        		$('.modalBtnContainer-addEvent').hide();
+        		$('.modalBtnContainer-modifyEvent').show();
+        		
+        		//data input
+				$('#edit-title').val(nowEvent.title);
+				$('#edit-desc').val(nowEvent.content);
+				$('#edit-allDay').prop('checked', true);
+				
+				$('.time').css({'display' : 'none'});						
+				$('#edit-start').val(nowEvent.start);
+				$('#edit-end').val(nowEvent.end);
+				$('#start-time').val(moment());
+				$('#end-time').val(moment());
+				
+				//modify-save button show
+				$('.modalBtnContainer-modifyEvent').show();
+				//add button hide
+				$('modalBtnContainer-addEvent').hide();
+				
+				//title check hide
+				$('#title-check').hide();
+				
+				//일정명에 오토포커스
+				$(".modal").on("shown.bs.modal", function () {
+					$('#edit-title').focus();
+				});
+        		        		
+        		//input modal on
+        		$('#add-eventModal').modal();
+        		
+        	})
+        	
         });
         </script>
 
@@ -262,6 +386,7 @@
                     </h4>
                 </div>
                 <div class="modal-body">
+                	<input type="hidden" name="id" id="view-sch-id"/>
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="view-title">일정명</label>
@@ -312,6 +437,7 @@
     <!-- 일정 추가 MODAL -->
     <div class="modal fade" tabindex="-1" role="dialog" id="add-eventModal">
         <div class="modal-dialog" role="document">
+        	
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -321,75 +447,92 @@
                     	일정
                     </h4>
                 </div>
-                <div class="modal-body">
-                	<form method="post" name="insert-event">
-                		<input type="hidden" name="id" id="insertId" value=""/>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-title">일정명</label>
-	                            <input class="inputModal" type="text" name="title" id="edit-title"
-	                                required="required" />
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-type">구분</label>
-	                            <select class="inputModal" type="text" name="type" id="edit-type">
-	                                <option value="카테고리1">내 일정</option>
-	                                <option value="카테고리2">부서 일정</option>
-	                                <option value="카테고리3">프로젝트 일정</option>
-	                                <option value="카테고리4">동호회 일정</option>
-	                            </select>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-start">시작</label>
-	                            <input class="inputModal" type="date" name="start" id="edit-start" />
-	                            <input type="time" class="inputModal select time" name="start-time" id="start-time"/>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-end">끝</label>
-	                            <input class="inputModal" type="date" name="end" id="edit-end" />
-	                            <input type="time" class="inputModal select time" name="end-time" id="end-time"/>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-allDay">하루종일</label>
-	                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" name="allDay" checked="checked">
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-color">색상</label>
-	                            <select class="inputModal" name="backgroundColor" id="edit-color">
-	                                <option value="#000080" style="color:#000080;">남색</option>
-	                                <option value="#0080ff" style="color:#0080ff;">바다색</option>
-	                                <option value="#50bcdf" style="color:#50bcdf;">하늘색</option>
-	                                <option value="#3e91b5" style="color:#3e91b5;">담청색</option>
-	                                <option value="#4aa8d8" style="color:#4aa8d8;">밝은파랑</option>
-	                                <option value="#437299" style="color:#437299;">셰필드 스틸</option>
-	                                <option value="#5e7e9b" style="color:#5e7e9b;">아쿠아마린</option>
-	                                <option value="#00498c" style="color:#00498c;">코발트블루</option>
-	                                <option value="#003458" style="color:#003458;">프러시안블루</option>
-	                            </select>
-	                        </div>
-	                    </div>
-	                    <div class="row">
-	                        <div class="col-xs-12">
-	                            <label class="col-xs-4" for="edit-desc">설명</label>
-	                            <textarea rows="4" cols="50" class="inputModal" name="content"
-	                                id="edit-desc"></textarea>
-	                        </div>
-	                    </div>
-                    </form>
-                </div>
+                
+                <form method="post" name="insert-event">
+	                <div class="modal-body">
+		                    <div class="row">
+		                    	<input type="hidden" name="id" id="insertId"/>
+		                        <div class="col-xs-12" id="insert-title-div">
+		                            <label class="col-xs-4" for="edit-title">일정명</label>
+		                            <input class="inputModal" type="text" name="title" id="edit-title"
+		                                required="required" placeholder="일정 제목을 입력해주세요."/>
+		                            <span type="hidden"style="color:red;" id="title-check">일정명은 필수 입력사항입니다.</span>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-type">구분</label>
+		                            <select class="inputModal" type="text" name="type" id="edit-type">
+		                                <option value="카테고리1">내 일정</option>
+		                                <option value="카테고리2">부서 일정</option>
+		                                <option value="카테고리3">프로젝트 일정</option>
+		                                <option value="카테고리4">동호회 일정</option>
+		                            </select>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-start">시작</label>
+		                            <input class="inputModal" type="date" name="edit-start" id="edit-start" />
+		                            <input type="time" class="inputModal select time" name="start-time" id="start-time"/>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-end">끝</label>
+		                            <input class="inputModal" type="date" name="edit-end" id="edit-end" />
+		                            <input type="time" class="inputModal select time" name="end-time" id="end-time"/>
+		                        </div>
+		                    </div>
+	                        <div class="row">
+							    <div class='col-xs-12'>
+							        <input type='hidden' class="inputModal select time" name='start' id='start-dateTime' />
+						        </div>
+						    </div>
+	                        <div class="row">
+							    <div class='col-xs-12'>
+							        <input type='hidden' class="inputModal select time" name='end' id='end-dateTime' />
+						        </div>
+						    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-allDay">하루종일</label>
+		                            <input class='allDayNewEvent' id="edit-allDay" type="checkbox" name="allDay" checked="checked">
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-color">색상</label>
+		                            <select class="inputModal" name="backgroundColor" id="edit-color">
+		                                <option value="#000080" style="color:#000080;">남색</option>
+		                                <option value="#0080ff" style="color:#0080ff;">바다색</option>
+		                                <option value="#50bcdf" style="color:#50bcdf;">하늘색</option>
+		                                <option value="#3e91b5" style="color:#3e91b5;">담청색</option>
+		                                <option value="#4aa8d8" style="color:#4aa8d8;">밝은파랑</option>
+		                                <option value="#437299" style="color:#437299;">셰필드 스틸</option>
+		                                <option value="#5e7e9b" style="color:#5e7e9b;">아쿠아마린</option>
+		                                <option value="#00498c" style="color:#00498c;">코발트블루</option>
+		                                <option value="#003458" style="color:#003458;">프러시안블루</option>
+		                            </select>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="edit-desc">설명</label>
+		                            <textarea rows="4" cols="50" class="inputModal" name="content"
+		                                id="edit-desc"></textarea>
+		                        </div>
+		                    </div>
+	                    
+	                </div>
+                </form>
                 <div class="modal-footer modalBtnContainer-addEvent">
                     <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                     <button type="submit" class="btn btn-primary" id="save-event" name="save-event">저장</button>
+                </div>
+                <div class="modal-footer modalBtnContainer-modifyEvent">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+                    <button type="submit" class="btn btn-primary" id="modify-save-event" name="modify-save-event">저장</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

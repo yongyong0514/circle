@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,12 +43,12 @@ public class SchAjaxController  {
 		map.put("start", start);
 		map.put("end", end);
 		
-		log.info("firstList - id, date import : {}", map);
+		log.info("server received data - id, date import : {}", map);
 		
 //		String id = "200101090031";
 		
 		List<SchAjax> list = schService.list(map);
-		log.info("firstList - month events callback : {} " , list);
+		log.info("server received data - month events callback : {} " , list);
 		
 		return list;
 	}
@@ -55,10 +56,17 @@ public class SchAjaxController  {
 	@PostMapping("/schInsert")
 	public void schInsert(@RequestBody Map<String, String> insertEvent) {
 		
-		log.info("insert - info map : {} " ,insertEvent.get("allDay"));
+		log.info("server received insert data : {} " ,insertEvent);
 		
 		schService.insert(insertEvent);
 		
+	}
+	
+	@PostMapping("/schDelete")
+	public void schDelete(@RequestBody String id) {
+		log.info("server received delete data : {} ", id);
+		
+		schService.delete(id);
 	}
 	
 }

@@ -79,8 +79,8 @@
 							 ,SCH_UNIT_WRTR
 							 ,SCH_UNIT_HUE) values ('SCHN'||TRIM(TO_CHAR(#{seq},'000000'))
 							 					   ,#{title}
-							 					   ,to_date(#{start},'RR/MM/DD')
-							 					   ,to_date(#{end},'RR/MM/DD')
+							 					   ,to_date(#{start},'RRMMDDHH24MISS')
+							 					   ,to_date(#{end},'RRMMDDHH24MISS')
 							 					   ,#{allDay}
 							 					   ,#{content}
 							 					   ,sysdate
@@ -92,6 +92,10 @@
 		insert into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{id})
 	
 	</insert>
+
+	<update id="delete" parameterType="String">
+		update sch_unit set sch_unit_stat = 'N' where sch_unit_code = #{value}
+	</update>	
 	
 	<select id="selectMap_min" parameterType="map" resultMap="selectMapList_min">
 		select sch_unit_code,
