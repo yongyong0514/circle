@@ -18,15 +18,18 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public Member login(Member member) {
-		Member find = sqlSession.selectOne("member.login", member);
-		if(encoder.matches(member.getEMP_INFO_EMP_NO(), find.getEMP_INFO_PWD())) {//성공
+		
+		return sqlSession.selectOne("member.login", member);
+									
+		
+	/*	if(encoder.matches(member.getEMP_INFO_EMP_NO(), find.getEMP_INFO_PWD())) {//성공
 			return find;
 		}
 		else {//실패
 			return null;
 		}
-	}
-	
+	*/
+		}
 }
 
 

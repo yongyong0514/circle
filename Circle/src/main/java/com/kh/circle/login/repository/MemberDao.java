@@ -3,6 +3,9 @@
  
  import com.kh.circle.login.entity.Member;
  
- public interface MemberDao { public Member login(Member member) throws
- Exception; }
+ public interface MemberDao { 
+	 
+	 public Member login(Member member) throws Exception;
+	 
+ }
  
