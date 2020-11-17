@@ -33,8 +33,27 @@ public class SignResultController {
 		return map;
 	}
 	
-//	@GetMapping("/signListJoiner")
+	@GetMapping("/signListJoinerCheck")
+	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {
+		
+		List<SignListJoiner> list = sqlSession.selectList("sign.signJoinerCheck", signCode);
+		
+		return list;
+	}
+	
+	@GetMapping("/signListJoiner")
+	public List<SignListJoiner> signJoiner(@RequestParam String signCode) {
+		
+		List<SignListJoiner> list = sqlSession.selectList("sign.signJoiner", signCode);
+		
+		return list;
+	}
 
-//	@GetMapping("/singListWatcher")
-//	주석								
+	@GetMapping("/signListWatcher")
+	public List<SignListJoiner> signWatcher(@RequestParam String signCode) {
+		
+		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
+		
+		return list;
+	}
 }

@@ -25,8 +25,8 @@
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax_min" alias="schAjax_min"/>
 
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
-		
-		<typeAlias type="com.kh.circle.sign.vo.signList" alias="signList"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>
 	</typeAliases>
 
 	<!-- 

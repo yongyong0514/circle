@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.kh.circle.sign.vo.signList;
+import com.kh.circle.sign.vo.SignList;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,10 +34,10 @@ public class SignController {
 	
 	@GetMapping("/signList")
 	public String signList(Model model) {
-		List<signList> list = sqlSession.selectList("sign.list");
+		List<SignList> list = sqlSession.selectList("sign.list");
 		model.addAttribute("list", list);
 		
-		List<signList> list2 = sqlSession.selectList("sign.listComplete");
+		List<SignList> list2 = sqlSession.selectList("sign.listComplete");
 		model.addAttribute("list2", list2);
 
 		return "sign/signList";
