@@ -29,11 +29,16 @@ body{
 	color: #b3b9b9;
 }
 
+.write{
+	float: right;
+}
+
 
 .container{
   max-width: 800px;
   margin: auto;
   padding: 10px;
+  <!---->
 }
 
 .txtb{
