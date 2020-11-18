@@ -30,6 +30,12 @@ public class MemberDaoImpl implements MemberDao{
 		}
 	*/
 		}
+
+	@Override
+	public Member logIn(Member member) {
+
+		return sqlSession.selectOne("member.login",member);
+	}
 }
 
 

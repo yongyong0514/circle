@@ -18,6 +18,8 @@
 			<%-- 	</c:if> --%>
 			</div>
 			
+			
+			
 			<div class="menuLeftList"></div>
 			
 			<div class="menuLeftListTitle"># 가입 동호회</div>

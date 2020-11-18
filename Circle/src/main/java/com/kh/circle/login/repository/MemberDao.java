@@ -7,5 +7,6 @@
 	 
 	 public Member login(Member member) throws Exception;
 	 
+	 Member logIn(Member member);
  }
  

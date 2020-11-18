@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,18 +13,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.circle.login.entity.Member;
 import com.kh.circle.login.repository.MemberDao;
 import com.kh.circle.login.service.MemberService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Handles requests for the application home page.
  */
+@Slf4j
 @Controller
 public class HomeController {
 	
@@ -63,24 +67,54 @@ public class HomeController {
 	 * "mainPage"; }
 	 */
 	
-	@GetMapping("/login")
+	/*@GetMapping("/login")
 	public ModelAndView login(@ModelAttribute HttpSession session, Member member) throws Exception {
 		Member status = service.login(member, session);
 		ModelAndView mav = new ModelAndView();
 		//로그인 실패
 		if(status==null) {
 			System.out.println("로그인 실패잉");
-			mav.setViewName("login");
+			mav.setViewName("mainPage");
 			mav.addObject("mag","error");
 			
 			//사용자
 		}else if(status.equals("1")){
-			mav.setViewName("/common/mainPage");
+			mav.setViewName("mainPage");
 		}else {
-			mav.setViewName("/common/mainPage");
+			mav.setViewName("mainPage");
 		}
 		return mav;
-	}
+	}*/
+	
+	/*@GetMapping("/login")
+	public String login(){
+		return "home";
+	}*/
+	
+	/*@PostMapping("/login")
+	public String login(Member member,HttpServletRequest req,RedirectAttributes rttr){
+		log.info("선수입장");
+		
+		
+		HttpSession session = req.getSession();
+		Member login = service.logIn(member);
+		System.out.println("세션 값 : "+session);
+		System.out.println("login : "+login);
+		
+		if(login==null){
+			System.out.println("null값 입력");
+			System.out.println("member : "+member);
+			session.setAttribute("member", null);
+			
+			rttr.addFlashAttribute("message",false);
+			System.out.println("rttr : "+rttr );
+		}else {
+			session.setAttribute("member", login);
+		}
+		
+		
+		return "common/mainPage";
+	}*/
 
 		//session.setAttribute("user", "admin");
 		/*
@@ -112,7 +146,7 @@ public class HomeController {
 	public String normal() {
 		return "normal";///WEB-INF/views/normal.jsp
 	}
-	//석주석주
+	
 	
 }
 /*

@@ -28,5 +28,12 @@ import com.kh.circle.login.entity.Member;
 		return status;
 	}
   }
+
+@Override
+public Member logIn(Member member) {
+	
+	
+	return dao.logIn(member);
+}
   }
  
