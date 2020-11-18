@@ -88,14 +88,28 @@
 							 					   ,#{id}
 							 					   ,#{backgroundColor})
 	</insert>
-	<insert id="insert2" parameterType="map">
+	
+	
+	<insert id="insertJoinTable" parameterType="map">
 		insert into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{id})
 	
 	</insert>
-
+	
+	<!-- 삭제를 담당하는 update -->
 	<update id="delete" parameterType="String">
 		update sch_unit set sch_unit_stat = 'N' where sch_unit_code = #{value}
 	</update>	
+	
+	<update id="update" parameterType="map">
+		update sch_unit set sch_unit_name = #{title}
+						  , sch_unit_sdat = to_date(#{start},'RRMMDDHH24MISS')
+						  , sch_unit_edat = to_date(#{end},'RRMMDDHH24MISS')
+						  , sch_unit_aday = #{allDay}
+						  , sch_unit_hue  = #{backgroundColor}
+						  , sch_unit_cont = #{content}
+						  , sch_unit_mdat = default
+					  where sch_unit_code = #{code}
+	</update>
 	
 	<select id="selectMap_min" parameterType="map" resultMap="selectMapList_min">
 		select sch_unit_code,

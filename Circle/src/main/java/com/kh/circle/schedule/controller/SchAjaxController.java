@@ -43,12 +43,12 @@ public class SchAjaxController  {
 		map.put("start", start);
 		map.put("end", end);
 		
-		log.info("server received data - id, date import : {}", map);
+		log.info("calendar data(id,date) received indto server controller : {}", map);
 		
 //		String id = "200101090031";
 		
 		List<SchAjax> list = schService.list(map);
-		log.info("server received data - month events callback : {} " , list);
+		log.info("month events callback data received into server controller : {} " , list);
 		
 		return list;
 	}
@@ -56,7 +56,7 @@ public class SchAjaxController  {
 	@PostMapping("/schInsert")
 	public void schInsert(@RequestBody Map<String, String> insertEvent) {
 		
-		log.info("server received insert data : {} " ,insertEvent);
+		log.info("insert data received into server controller : {} " ,insertEvent);
 		
 		schService.insert(insertEvent);
 		
@@ -64,9 +64,16 @@ public class SchAjaxController  {
 	
 	@PostMapping("/schDelete")
 	public void schDelete(@RequestBody String id) {
-		log.info("server received delete data : {} ", id);
+		log.info("delete data received into server controller : {} ", id);
 		
 		schService.delete(id);
+	}
+	
+	@PostMapping("/schUpdate")
+	public void schUpdate(@RequestBody Map<String, String> updateEvent) {
+		log.info("update date received into server controller : {}", updateEvent);
+		
+		schService.update(updateEvent);
 	}
 	
 }

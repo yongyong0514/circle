@@ -38,4 +38,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		schDao.delete(id);
 	}
 
+	@Override
+	public void update(Map<String, String> updateEvent) {
+		schDao.update(updateEvent);
+	}
+
 }
