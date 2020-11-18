@@ -153,7 +153,8 @@ margin-left:20px;
 </head>
 <body>
 	
-	<form name="homeForm" method="post" action="/common/mainPage">
+	<form name="homeForm" action="${pageContext.request.contextPath}/member/login" method="POST" >
+	<c:if test="${member == null }">
 	<section id="container">
 			<aside id="aside" >
 			
@@ -168,12 +169,12 @@ margin-left:20px;
 			<a class="group1" id="group2">간편하고 깔끔하게 circle<br>(환영 메세지)</a>
 			
 				</div>
-			<label id="id">UserName</label><br><input type="text" name="id"  class="id">
+			<label id="id">UserName</label><br><input type="text" name="EMP_INFO_EMP_NO"  class="id">
 			<br><br>
-			<label id="password">PassWord</label><br> <input type="password" name="pwd"  class="pwd">
+			<label id="password">PassWord</label><br> <input type="password" name="EMP_INFO_PWD"  class="pwd">
 			<br><br>
-			
-				<a href="login" type="submit" id="login">로그인</a>
+				<input type="submit" value="로그인">
+				<!-- <a href="login" type="submit" id="login">로그인</a> -->
 				<br><br><br>	
 			<label id="pwdfind" onclick="pwdfind();">비밀번호를 잊었습니다.</label>
 			
@@ -184,19 +185,24 @@ margin-left:20px;
 			<label id="foot">서비스 이용</label>&nbsp;&nbsp;<label id="" onclick="join();">약관보기</label> 
 			</div>
 		</aside>
-		
-		
-		
 	</section>
+	 </c:if>
+		
+		<c:if test="${message == false }">
+			<p style="color:red;">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
+			</c:if>
+	</form>
+	
+		<c:if test="${ member != null}">
+		<form name="logout" action="logout" method="GET">
+		<p>${member.EMP_INFO_NAME }님 환영합니다.</p>
+			
+			<button class="logout">로그아웃</button>
 		</form>
+		</c:if>
+		<!-- <script>
 	
-	
-	
-	
-	
-		<script>
-	
-		/* function login(){
+		/function login(){
 		//var login = document.getElementById("login").setAttribute("onclick","login()")
 		location.href='/views/community/comuList.jsp';
 		
@@ -206,7 +212,7 @@ margin-left:20px;
 		//http://localhost:8888/circle/sign/signList
 	}
 	
-	</script>
+	</script> -->
 
 </body>
 </html>
