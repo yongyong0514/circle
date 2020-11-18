@@ -24,7 +24,7 @@
 			<div class="content">
 				<h1>인사정보</h1>
 				<br><br>
-				<span>전체 n명</span>
+				<span class="totalNumber">전체 n명</span>
 				<select>
 					<option value="20">20</option>
 					<option value="30">30</option>
