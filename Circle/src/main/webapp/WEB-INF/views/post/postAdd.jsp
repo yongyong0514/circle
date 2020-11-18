@@ -39,7 +39,7 @@
 			</div>
 
 			<!-- 내용 -->
-			<form action="postMain" method="POST">
+			<form action="postMain" method="post">
 			<div class="wrapper">
 				<div class="title">
 					<h1>게시글쓰기</h1>

@@ -42,11 +42,11 @@
 			<!-- 내용 -->
 	
     <div class="container">
-      <input type="text" class="txtb" placeholder="Add a task">
+     <div>
+     <input type="text" class="txtb" placeholder="Add a task">
+     </div> 
       <div class="notcomp">
         <h3>Not Completed</h3>
-
-
 
       </div>
 
