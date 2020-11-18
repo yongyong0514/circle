@@ -37,4 +37,9 @@ public class AttendanceController {
 	public String attendanceAllInfoList() {
 		return "attendance/attendanceAllInfoList";
 	}
+	
+	@GetMapping("/attendanceAllVacationList")
+	public String attendanceAllVacationList() {
+		return "attendance/attendanceAllVacationList";
+	}
 }

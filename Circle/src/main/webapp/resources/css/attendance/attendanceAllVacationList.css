@@ -54,37 +54,41 @@ td {
 	vertical-align: middle;
 }
 
-.title{
-	width:100%;
+.searchArea{
+	font-size: small;
+	width: 100%;
+	border-top: 1px solid rgba(0,0,0,0.1);
+	border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-.content > .totalNumber{
-	display:inline-block;
-	float: left;
-}
-
-.content > select{
+.searchArea > div{
 	display: inline-block;
+	padding: 1rem;
+}
+
+.searchArea > div > input[type=text]{
+	width: 5rem;
+}
+
+.vacationOption{
+	width:100%;
+	border: 2px solid red;
+	padding: 1rem;
+}
+
+.vacationOption > div{
+	display: inline-block;
+	
+}
+
+.vacationOption > .initOption{
+	float:left;
+}
+
+.vacationOption > .downloadOption,
+.vacationOption > .listMaxNumber{
 	float: right;
 }
 
-.infoList{
-	font-size: small;
-}
 
-.infoListTable{
-	width: 100%;
-}
-
-.infoListTable th,
-.infoListTable td{
-	border:1px solid rgba(0,0,0,0.1);
-	padding: 0.5rem;
-	vertical-align: middle;
-	text-align: center;
-}
-
-.infoListTable th{
-	font-weight: bold;
-}
 
