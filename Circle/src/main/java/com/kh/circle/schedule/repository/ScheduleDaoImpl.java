@@ -36,7 +36,7 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		log.info("final insert data : {}" , insertEvent);
 		
 		sqlSession.insert("sch.insert", insertEvent);
-		sqlSession.insert("sch.insert2", insertEvent);
+		sqlSession.insert("sch.insertJoinTable", insertEvent);
 		
 	}
 
@@ -44,6 +44,11 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	public void delete(String id) {
 		
 		sqlSession.update("sch.delete", id);
+	}
+
+	@Override
+	public void update(Map<String, String> updateEvent) {
+		sqlSession.update("sch.update", updateEvent);
 	}
 
 }

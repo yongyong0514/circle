@@ -16,5 +16,7 @@ public interface ScheduleDao {
 	void insert(Map<String, String> insertEvent);
 
 	void delete(String id);
+
+	void update(Map<String, String> updateEvent);
 	
 }

@@ -109,10 +109,12 @@
             	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
             	 							//input 값 비우기
             	 							$('#edit-title').val("");
-            	 							$('#edit-desc').val("");
+            	 							$('#edit-type option:eq(0)').prop('selected', 'selected');
             	 							$('#edit-allDay').prop('checked', true);
+            	 							$('#edit-color option:eq(0)').prop('selected', 'selected');
+            	 							$('#edit-desc').val("");
             	 							
-            	 							$('.time').css({'display' : 'none'});						
+            	 							$('.time').hide();						
             	 	
             	 							//현재 시간 넣기
             	 							$('#edit-start').val(date.format());
@@ -123,7 +125,7 @@
             	 							//modify-save button hide
             	 							$('.modalBtnContainer-modifyEvent').hide();
             	 							//add button show
-            	 							$('modalBtnContainer-addEvent').show();
+            	 							$('.modalBtnContainer-addEvent').show();
             	 							
             	 							//모달 띄우기
             	 							$('#add-eventModal').modal('show');
@@ -335,15 +337,31 @@
         		$('.modalBtnContainer-modifyEvent').show();
         		
         		//data input
+        		$('#insertCode').val(nowEvent.id);
 				$('#edit-title').val(nowEvent.title);
 				$('#edit-desc').val(nowEvent.content);
-				$('#edit-allDay').prop('checked', true);
 				
-				$('.time').css({'display' : 'none'});						
-				$('#edit-start').val(nowEvent.start);
-				$('#edit-end').val(nowEvent.end);
-				$('#start-time').val(moment());
-				$('#end-time').val(moment());
+					//allDay process	
+				if(nowEvent.allDay == true){
+					$('#edit-allDay').prop('checked', true);
+					$('.time').hide();
+				} else {
+					$('#edit-allDay').prop('checked', false);
+					$('#start-time').val(nowEvent.start.format('HH:mm'));
+					$('#end-time').val(nowEvent.end.format('HH:mm'));		
+					$('.time').show();
+				};
+				
+				$('#edit-start').val(nowEvent.start.format('YYYY-MM-DD'));
+				
+				if(nowEvent.end != null) {
+					$('#edit-end').val(nowEvent.end.format('YYYY-MM-DD'));
+				} else {
+					$('#edit-end').val(nowEvent.start.format('YYYY-MM-DD'));
+				}
+				
+				$('#edit-color').val(nowEvent.backgroundColor);
+				$('#edit-desc').val(nowEvent.content);
 				
 				//modify-save button show
 				$('.modalBtnContainer-modifyEvent').show();
@@ -362,6 +380,66 @@
         		$('#add-eventModal').modal();
         		
         	})
+        	
+        	//modify-save button click function
+        	$('#modify-save-event').on('click', function(){
+                	
+        			//input title check
+                	if($('#edit-title').val() == '' ) {
+    					$('#edit-title').focus();
+    					return;
+    				}
+                	
+                    var startDateTime = $('#edit-start').val();
+                    var endDateTime = $('#edit-end').val();
+                    
+                	console.log("button click success");
+                	
+                    // input emp.no 
+                    $("#insertId").val(loginId);
+                    
+                    //concat date time
+                    if($('edit-allDay').is('checked')) {
+                    	var date = $('#edit-start').substr(0,10);
+            			$('#edit-start').prop(date);
+                    	
+                    } else {
+                    	startDateTime = startDateTime.concat(" ", $('#start-time').val());
+                    	endDateTime = endDateTime.concat(" ", $('#end-time').val());
+                    	
+                    	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
+                    	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
+                    	
+                    	if($('#end-time') == null) {
+                    		console.log('end is null');
+                    	}
+                    	
+                    }
+                    
+                    var updateEvent = $("form[name=insert-event]").serializeObject();
+                    
+                    console.log("updateEvent : " + JSON.stringify(updateEvent));
+                    
+                     $.ajax({
+                    	type 		: 'post',
+                    	traditional : true,
+                    	url 		: base+"/schAjax/schUpdate", 
+                    	data		: JSON.stringify(updateEvent),
+                    	dataType	: 'text',
+                    	contentType	:"application/json; charset=utf-8;",
+                    	error		: function(request,status,error){
+                    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    	},
+                    	success		: function(){
+                            //modal close
+                            $("#add-eventModal").modal("hide");
+                            
+                            //refresh calendar
+                            $('#calendar').fullCalendar('refetchEvents');
+                    	}
+                    }) 
+        	});
+        	
         	
         });
         </script>
@@ -452,6 +530,7 @@
 	                <div class="modal-body">
 		                    <div class="row">
 		                    	<input type="hidden" name="id" id="insertId"/>
+		                    	<input type="hidden" name="code" id="insertCode">
 		                        <div class="col-xs-12" id="insert-title-div">
 		                            <label class="col-xs-4" for="edit-title">일정명</label>
 		                            <input class="inputModal" type="text" name="title" id="edit-title"
@@ -463,7 +542,7 @@
 		                        <div class="col-xs-12">
 		                            <label class="col-xs-4" for="edit-type">구분</label>
 		                            <select class="inputModal" type="text" name="type" id="edit-type">
-		                                <option value="카테고리1">내 일정</option>
+		                                <option value="카테고리1" select="selected">내 일정</option>
 		                                <option value="카테고리2">부서 일정</option>
 		                                <option value="카테고리3">프로젝트 일정</option>
 		                                <option value="카테고리4">동호회 일정</option>

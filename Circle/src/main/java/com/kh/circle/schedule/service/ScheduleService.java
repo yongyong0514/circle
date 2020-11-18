@@ -19,6 +19,8 @@ public interface ScheduleService {
 	void insert(Map<String, String> mapinsertEvent);
 
 	void delete(String id);
+
+	void update(Map<String, String> updateEvent);
 	
 	//일정 전체 리스트 출력기능
 }
