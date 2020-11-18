@@ -28,78 +28,95 @@
 				<div class="resultArea1">
 					<table id="listArea">
 						<c:forEach var="sign" items="${list}">
-							<tr id="result">
-								<th><input type="text" style="display: none" value="${sign.sign_code}" id="signCode"></th>
-								<th class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></th>
-								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
-								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
-								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher">
-									<div id="signListWatcherForm">
-										<table id="signListWatcher">
-											<tbody>
-											</tbody>
-										</table>
-									</div>								
-								</th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
-									<div id="signListJoinerForm">
-										<table id="signListJoiner">
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</th>				
-								<th class="textBox3"><input type="text" id="signCount" readonly>
-									<div id="signListJoinerCheckForm">
-										<table id="signListJoinerCheck">
-											<tbody>
-											</tbody>
-										</table>
-									</div>								
-								</th>
-								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
+							<tr class="result">
+ 								<td class="textBox0"><c:out value="${sign.sign_code}"/></td>
+								<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
+									<c:choose>
+ 										<c:when test ="${sign.sign_step eq 'SIPC000001'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
+ 										</c:when>
+										<c:when test ="${sign.sign_step eq 'SIPC000002'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_run.png" class="img1"></td>
+ 										</c:when>
+ 										<c:when test ="${sign.sign_step eq 'SIPC000003'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_end.png" class="img1"></td>
+ 										</c:when>
+  										<c:when test ="${sign.sign_step eq 'SIPC000004'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_cancel.png" class="img1"></td>
+ 										</c:when>									 										
+ 									</c:choose>										
+								<td class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></td>
+								<td class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></td>
+								<td class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></td>
+								<td class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="signWatcher">
+									<table>
+										<tbody>
+										</tbody>
+									</table>						
+								</td>
+								<td class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="signJoiner">
+									<table>
+										<tbody>
+										</tbody>
+									</table>
+								</td>				
+								<td class="textBox5"><br><img src="${pageContext.request.contextPath}/resources/img/sign/count.png" class="signCount"><c:out value="${sign.sign_count}"/>
+									<table>
+										<tbody>
+										</tbody>
+									</table>
+								</td>
+								<td class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></td>	
 							</tr>
 						</c:forEach>
 					</table>
 				</div>
+				
 				<div>
 					<jsp:include page="../sign/signHomeListBar2.jsp" />
 				</div>
 				<div class="resultArea1">
 					<table id="listArea">
 						<c:forEach var="sign" items="${list2}">
-							<tr id="result">
-								<th><input type="text" style="display: none" value="${sign.sign_code}" id="signCode2"></th>
-								<th class="imgBox2"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></th>
-								<th class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></th>
-								<th class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></th>
-								<th class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" id="signWatcher">
-									<div id="signListWatcherForm">
-										<table id="signListWatcher">
-											<tbody>
-											</tbody>
-										</table>
-									</div>								
-								</th>
-								<th class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" id="signJoiner">
-									<div id="signListJoinerForm">
-										<table id="signListJoiner">
-											<tbody>
-											</tbody>
-										</table>
-									</div>
-								</th>				
-								<th class="textBox3"><input type="text" id="signCount2" readonly>
-									<div id="signListWatcherForm">
-										<table id="signListWatcher">
-											<tbody>
-											</tbody>
-										</table>
-									</div>								
-								</th>
-								<th class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></th>	
+							<tr class="result">
+ 								<td class="textBox0"><c:out value="${sign.sign_code}"/></td>
+								<td class="imgBox2"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
+									<c:choose>
+ 										<c:when test ="${sign.sign_step eq 'SIPC000001'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
+ 										</c:when>
+										<c:when test ="${sign.sign_step eq 'SIPC000002'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_run.png" class="img1"></td>
+ 										</c:when>
+ 										<c:when test ="${sign.sign_step eq 'SIPC000003'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_end.png" class="img1"></td>
+ 										</c:when>
+  										<c:when test ="${sign.sign_step eq 'SIPC000004'}">
+ 											<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_cancel.png" class="img1"></td>
+ 										</c:when>									 										
+ 									</c:choose>		
+								<td class="textBox1"><br><c:out value="${sign.sign_type_name}"/><br><br><c:out value="${sign.sign_title}"/></td>
+								<td class="textBox4"><br><c:out value="${sign.sign_edat}"/><br><br><c:out value="${sign.sign_ehour}"/></td>
+								<td class="textBox4"><br><c:out value="${sign.sign_wdat}"/><br><br><c:out value="${sign.sign_whour}"/></td>
+								<td class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/share.png" class="signWatcher">
+									<table>
+										<tbody>
+										</tbody>
+									</table>						
+								</td>
+								<td class="textBox3"><img src="${pageContext.request.contextPath}/resources/img/sign/add-contact.png" class="signJoiner">
+									<table>
+										<tbody>
+										</tbody>
+									</table>
+								</td>				
+								<td class="textBox5"><br><img src="${pageContext.request.contextPath}/resources/img/sign/count.png" class="signCount"><c:out value="${sign.sign_count}"/>
+									<table>
+										<tbody>
+										</tbody>
+									</table>
+								</td>
+								<td class="textBox2"><br><c:out value="${sign.emp_info_name}"/><br><br><c:out value="${sign.job_info_name}"/></td>	
 							</tr>
 						</c:forEach>
 					</table>					
@@ -121,42 +138,34 @@
     		})
     	});
     </script>
-<!-- ajax 구간 -->
+
+<!-- 0. 한 건 클릭 조회 페이지로 이동 -->
 	<script>
-		
-	</script>
-<!-- 1. 남은 결재 카운트-->
-	<script>
-		$(function() {
-			var base = "${pageContext.request.contextPath}";
-			var signCode = $("#signCode").val();
-			$.ajax({
-				url: base + "/signResult/signListJoinerCount",
-				type: "get",
-				data: {signCode : signCode},
-				dataType: "json",
-				success: function(json) {
-					$('#signCount').val(json.count);
-				}
-			});
+		$(".result").click(function(){
+			var signCode =$(this).children().eq(0).text();
+			location.href = "../sign/signSelectOne?signCode=" + signCode;
 		});
 	</script>
-	
+    
 <!-- 1.1 남은 미결재자 조회 -->
-  	<script>
-		$(function(){
+   	<script>
+		$(".signCount").mouseenter(function(){
 			var base = "${pageContext.request.contextPath}";
-			var signCode = $("#signCode").val();
+			var tag1 = $(this);
+			var tag2 = tag1.parent();
+			var tag3 = tag2.prev().prev().prev().prev().prev().prev().prev().prev();
+			var tag4 = tag1.next();
+			var signCode = tag3.eq(0).text();
+			var tableJArea = tag4.eq(0).children();
 			$.ajax({
 				url: base + "/signResult/signListJoinerCheck",
 				type: "get",				
 				data: {signCode : signCode},
 				success: function(data) {
 					
-					if(data != null) {
-						var $signListJoinerCheck = $("#signListJoinerCheck tbody");
-						$signListJoinerCheck.html('');
-						
+					if(data != 0) {
+						var $signListJoinerCheck = tableJArea;
+						$signListJoinerCheck.html('').addClass("box");						
 						for(var key in data) {
 							var $tr = $("<tr>");
 							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
@@ -168,36 +177,41 @@
 							$signListJoinerCheck.append($tr);
 						}
 					} else {
+						var $signListJoinerCheck = tableJArea;
+						$signListJoinerCheck.html('').removeClass("box");
 					}
 				},
 			});
 		});
 	</script>
-    <script>
-    	$("#signCount").mouseenter(function(){
-    		$("#signListJoinerCheckForm").fadeIn(100);
-    	});
-    </script>
-    <script>
-    	$("#signCount").mouseleave(function(){
-    		$("#signListJoinerCheckForm").fadeOut(100);
-    	});
-    </script>
+   	<script>
+		$(".signCount").mouseleave(function(){
+			var tag1 = $(this);
+			var tag4 = tag1.next();
+			var tableJArea = tag4.eq(0).children();
+			var $signListJoinerCheck = tableJArea;
+				$signListJoinerCheck.html('').removeClass("box");
+		});
+	</script>
 	
 <!-- 2. 결재자 카운트 및 조회 조희 -->
-  	<script>
-		$(function(){
+   	<script>
+		$(".signJoiner").mouseenter(function(){
 			var base = "${pageContext.request.contextPath}";
-			var signCode = $("#signCode").val();
-			$.ajax({
+			var tag1 = $(this);
+			var tag2 = tag1.parent();
+			var tag3 = tag2.prev().prev().prev().prev().prev().prev().prev();
+			var tag4 = tag1.next();
+			var signCode = tag3.eq(0).text();
+			var tableJArea = tag4.eq(0).children();		
+ 			$.ajax({
 				url: base + "/signResult/signListJoiner",
 				type: "get",				
 				data: {signCode : signCode},
 				success: function(data) {
-					
 					if(data != null) {
-						var $signListJoiner = $("#signListJoiner tbody");
-						$signListJoiner.html('');
+						var $signListJoiner = tableJArea;
+						$signListJoiner.html('').addClass("box");
 						
 						for(var key in data) {
 							var $tr = $("<tr>");
@@ -210,27 +224,32 @@
 							$signListJoiner.append($tr);
 						}
 					} else {
+						console.log("error");
 					}
 				},
 			});
 		});
 	</script>
-    <script>
-    	$("#signJoiner").mouseenter(function(){
-    		$("#signListJoinerForm").fadeIn(100);
-    	});
-    </script>
-    <script>
-    	$("#signJoiner").mouseleave(function(){
-    		$("#signListJoinerForm").fadeOut(100);
-    	});
-    </script>
-    
+   	<script>
+		$(".signJoiner").mouseleave(function(){
+			var tag1 = $(this);
+			var tag4 = tag1.next();
+			var tableJArea = tag4.eq(0).children();
+			var $signListJoiner = tableJArea;
+				$signListJoiner.html('').removeClass("box");
+		});
+		</script>
+		  
 <!-- 3. 참조자 카운트 및 조회 -->
-  	<script>
-		$(function(){
+   	<script>
+		$(".signWatcher").mouseenter(function(){
 			var base = "${pageContext.request.contextPath}";
-			var signCode = $("#signCode").val();
+			var tag1 = $(this);
+			var tag2 = tag1.parent();
+			var tag3 = tag2.prev().prev().prev().prev().prev().prev();
+			var tag4 = tag1.next();
+			var signCode = tag3.eq(0).text();
+			var tableJArea = tag4.eq(0).children();		
 			$.ajax({
 				url: base + "/signResult/signListWatcher",
 				type: "get",				
@@ -238,8 +257,8 @@
 				success: function(data) {
 					
 					if(data != null) {
-						var $signListWatcher = $("#signListWatcher tbody");
-						$signListWatcher.html('');
+						var $signListWatcher = tableJArea;
+						$signListWatcher.html('').addClass("box");
 						
 						for(var key in data) {
 							var $tr = $("<tr>");
@@ -257,15 +276,14 @@
 			});
 		});
 	</script>
-    <script>
-    	$("#signWatcher").mouseenter(function(){
-    		$("#signListWatcherForm").fadeIn(100);
-    	});
-    </script>
-    <script>
-    	$("#signWatcher").mouseleave(function(){
-    		$("#signListWatcherForm").fadeOut(100);
-    	});
-    </script>
+   	<script>
+		$(".signWatcher").mouseleave(function(){
+			var tag1 = $(this);
+			var tag4 = tag1.next();
+			var tableJArea = tag4.eq(0).children();
+			var $signListWatcher = tableJArea;
+				$signListWatcher.html('').removeClass("box");
+		});
+	</script>	
 </body>
 </html>

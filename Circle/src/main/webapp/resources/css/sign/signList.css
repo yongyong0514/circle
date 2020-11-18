@@ -19,28 +19,36 @@ body {
 
 .resultArea1 {
 	width: 100%;
-	min-width: 1000px;
+	min-width: 1100px;
 	height: 350px;
 }
 
 #listArea {
 	width: 100%;
-	min-width: 1100px;
+	min-width: 1200px;
 }
 
-#result {
+.result {
 	border: 1px solid #D8D8D8;
 }
 
-#result:hover {
+.result:hover {
 	background: #F1F9FF;
 	cursor: pointer;
 }
 
 .img0 {
-	margin-top: 10px;
+	padding-left: 0.6rem;
+	padding-top: 0.6rem;
 	width: 35px;
 	height: 35px;
+}
+
+.img1 {
+	margin-left: 5px;
+	margin-bottom: 15px;
+	width: 60px;
+	height: 30px;
 }
 
 .imgBox1 {
@@ -59,44 +67,22 @@ body {
 	background: #D8D8D8;
 }
 
-#signJoiner {
+.signJoiner {
 	margin-left: 10px;
 	margin-top: 14px;
 	width: 30px;
 	height: 30px;	
 }
 
-#signWatcher {
+.signWatcher {
 	margin-left: 10px;
 	margin-top: 14px;
 	width: 30px;
 	height: 30px;	
 }
 
-#signCount {
-	margin-left: 10px;
-	margin-top: 14px;
-	width: 30px;
-	height: 30px;
-	border: none;
-	outline: none;
-	background: none;
-	font-size: 22px;
-	font-weight: bolder;
-	text-align: center;
-}
-
-#signCount2 {
-	margin-left: 10px;
-	margin-top: 14px;
-	width: 30px;
-	height: 30px;
-	border: none;
-	outline: none;
-	background: none;
-	font-size: 22px;
-	font-weight: bolder;
-	text-align: center;
+.textBox0 {
+	display: none;
 }
 
 .textBox1 {
@@ -114,8 +100,7 @@ body {
 	text-align: center;
 	width: 120px;
 	height: 60px;
-	font-size: 18px;
-	font-weight: bolder;
+	font-size: 17px;
 }
 
 .textBox3 {
@@ -125,6 +110,24 @@ body {
 	height: 60px;
 	font-size: 18px;
 	font-weight: bolder;
+}
+
+.textBox5 {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 26px;
+	font-weight: bolder;
+}
+
+.signCount {
+	margin-left: -16px;
+	margin-top: -6px;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	opacity: 0.3;
 }
 
 .textBox31 {
@@ -141,45 +144,33 @@ body {
 	text-align: center;
 	width: 120px;
 	height: 60px;
-	font-size: 18px;
-	font-weight: bolder;
-}
-
-#signListJoinerForm, #signListWatcherForm, #signListJoinerCheckForm {
-	display: none;
-	position: absolute;
-	margin-left: -40px;
-	width: 160px;
-	height: 210px;
-	background: #D8D8D8;
-	border-radius: 10px;
-	text-align: center;
-}
-
-#signListJoiner, #signListWatcher, #signListJoinerCheck {
-	margin-left: 5px;
-	margin-top: 5px;
-	width: 150px;
-	height: 200px;
-	background: white;
-	border-radius: 10px;
+	font-size: 16px;
 }
 
 .tName {
-	position: absolute;
 	padding-top: 0.5rem;
+	padding-left: 0.5rem;
 	width:70px;
 	height: 30px;
-	text-align: center;
-	color: black;
+	text-align: left;
+	font-size: 18px;
 }
 
 .tClass {
-	position: absolute;
 	padding-top: 0.5rem;
 	left: 80px;
 	width:70px;
 	height: 30px;
-	text-align: center;
-	color: black;
+	font-size: 18px;
+}
+
+.box {
+	position: absolute;
+	margin-left: -40px;
+	width: 160px;
+	height: auto;
+	background: white;
+	border: 2px solid #D8D8D8;
+	border-radius: 10px;
+	z-index: 1;
 }

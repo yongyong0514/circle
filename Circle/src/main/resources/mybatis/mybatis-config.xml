@@ -27,6 +27,8 @@
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignSelectOne" alias="signSelectOne"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignWrite" alias="signWrite"/>	
 	</typeAliases>
 
 	<!-- 
