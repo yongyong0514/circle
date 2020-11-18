@@ -1,12 +1,10 @@
 package com.kh.circle.sign.service;
 
-import java.util.List;
-
-import com.kh.circle.sign.entity.Sign;
+import com.kh.circle.sign.vo.SignWrite;
 
 public interface SignService {
-
-//	signList
-	List<Sign> list();
 	
+//	signWrite
+	public void write(SignWrite signWrite) throws Exception;
+
 }

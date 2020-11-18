@@ -81,6 +81,7 @@
         var editor = new toastui.Editor({
             el:document.querySelector("#editor"),
             height: "630px",
+            initialEditType:"wysiwyg",
             hooks:{
                 "addImageBlobHook":function(blob, callback){
                     var fd = new FormData();

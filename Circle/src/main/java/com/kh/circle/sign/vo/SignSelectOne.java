@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignList {
+public class SignSelectOne {
 	private String sign_code;
 	private String sign_type_name;
 	private String sign_title;
@@ -21,4 +21,5 @@ public class SignList {
 	private String sign_ehour;
 	private String sign_step;
 	private String sign_count;
+	private String sign_note;
 }
