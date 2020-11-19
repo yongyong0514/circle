@@ -31,7 +31,7 @@ public class SchAjax {
 	private String modifyDate;
 	private String backgroundColor;
 	private String writerName;
-	
+	private String groupName;
 }
 
 

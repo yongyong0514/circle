@@ -34,10 +34,13 @@
 			   SCH_UNIT_MDAT,
 			   SCH_UNIT_HUE,
 			   sch_join_emp,
-			   emp_info_name
+			   emp_info_name,
+			   sch_unit_group_code,
+			   sch_group_name
  		  from sch_unit
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
 		  join emp_info on (sch_unit_wrtr = emp_info_emp_no)
+		  join sch_group on (sch_unit_group_code = sch_group_code)
  		 where sch_join_emp = #{id}
  		   and sch_unit_stat = 'Y'
  		   and (sch_unit_sdat between #{start} and #{end}
@@ -60,6 +63,7 @@
 		<result column="SCH_UNIT_MDAT" property="modifyDate"/>
 		<result column="SCH_UNIT_HUE" property="backgroundColor"/>
 		<result column="emp_info_name" property="writerName"/>
+		<result column="sch_group_name" property="groupName"/>
 		
 	</resultMap>
 	
