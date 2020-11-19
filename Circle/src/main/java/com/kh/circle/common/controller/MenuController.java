@@ -12,6 +12,10 @@ public class MenuController {
 	public String menuScrollList() {
 		return "common/menuScrollList";
 	}
+	@GetMapping("/mainPage")
+	public String mainPage() {
+		return "common/mainPage";
+	}
 }
 
 //메뉴 합병 완료 삭제 예정

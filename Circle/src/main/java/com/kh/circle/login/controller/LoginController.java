@@ -39,14 +39,15 @@ public class LoginController {
 	
 	
 	@PostMapping("/login")
-	public String login(Member member,JoinMember joinmember,HttpServletRequest req,RedirectAttributes rttr) throws Exception{
+	public String login(Member member,
+			/* JoinMember joinmember, */HttpServletRequest req,RedirectAttributes rttr) throws Exception{
 		log.info("선수입장");
 		
 		
 		HttpSession session = req.getSession();
 		Member login = service.login(member, session);
 		
-		JoinMember joinlogin = joinservice.login(joinmember, session);
+		/* JoinMember joinlogin = joinservice.login(joinmember, session); */
 		
 		System.out.println("세션 값 : "+session);
 		System.out.println("login : "+login);
@@ -57,7 +58,7 @@ public class LoginController {
 			
 			session.setAttribute("member", null);
 			
-			session.setAttribute("joinmember", null);
+			/* session.setAttribute("joinmember", null); */
 			
 			rttr.addFlashAttribute("message",false);
 			System.out.println("rttr : "+rttr );
@@ -65,7 +66,7 @@ public class LoginController {
 			System.out.println("login 값알려주세요 : "+login);
 			session.setAttribute("member", login);
 
-			session.setAttribute("joinmember", joinlogin);
+			/* session.setAttribute("joinmember", joinlogin); */
 			System.out.println("session "+session);
 		}
 		
@@ -77,7 +78,7 @@ public class LoginController {
 	public String logout(HttpSession session){
 		
 		session.invalidate();
-		
-		return "home";
+		//주석
+		return "home.jsp";
 	}
 }
