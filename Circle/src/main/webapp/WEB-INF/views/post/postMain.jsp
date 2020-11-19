@@ -22,6 +22,7 @@
 				<jsp:include page="../post/postSidebar.jsp" />
 			</div>
 			<div class="content">
+			<!--  -->
 				<div>
 					<jsp:include page="../post/postHomebar.jsp" />
 				</div>
