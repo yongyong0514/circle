@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
 <script src='http://fullcalendar.io/js/fullcalendar-2.3.2/fullcalendar.min.js'></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>       
 <script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
-
+<!-- 주석커밋 -->
       <script>
       		
       		var loginId = "200101090031";						//login id
@@ -73,12 +73,6 @@
 								                    	        }
 						        							}
 						        							
-						        							//type grouping
-						        							var type = "미분류";
-						        							if($(this).attr('id').substr(0,4) == "SCHN") {
-						        								type = "내 일정";
-						        							}
-						        							
 						        							//events 객체에 주입
 						        							events.push({
 						        								id	  			: $(this).attr('id'),
@@ -96,7 +90,7 @@
 						        								modifyDate		: $(this).attr('modifyDate'),
 						        								backgroundColor	: $(this).attr('backgroundColor'),
 						        								writerName		: $(this).attr('writerName'),
-						        								type			: type
+						        								groupName		: $(this).attr('groupName')
 						        							});
 						        						});
 						        						
@@ -168,7 +162,7 @@
                     								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
                     							}               								
                 							}
-                							$('#view-type').text(event.type);
+                							$('#view-type').text(event.groupName);
                 							$('#view-writer').text(event.writerName);
                 							$('#view-desc').text(event.content);
                 							
@@ -328,6 +322,8 @@
         	
         	//modify button click function
         	$('#updateEvent').on('click', function() {
+        		
+        		console.log(nowEvent.backgroundColor)
         		
         		//view-modal close
         		$('#eventModal').modal('hide');
@@ -544,8 +540,9 @@
 		                            <select class="inputModal" type="text" name="type" id="edit-type">
 		                                <option value="카테고리1" select="selected">내 일정</option>
 		                                <option value="카테고리2">부서 일정</option>
-		                                <option value="카테고리3">프로젝트 일정</option>
 		                                <option value="카테고리4">동호회 일정</option>
+		                                <option value="카테고리3">프로젝트 일정</option>
+		                                <option value="카테고리3">내 휴가</option>
 		                            </select>
 		                        </div>
 		                    </div>
