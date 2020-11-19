@@ -11,6 +11,7 @@
 -->
 <mapper namespace="member">
 	<select id="login" resultType="member" >
-		select * from EMP_INFO where EMP_INFO_EMP_NO=#{EMP_INFO_EMP_NO} and EMP_INFO_PWD=#{EMP_INFO_PWD}
+	<!-- 	select * from EMP_INFO where EMP_INFO_EMP_NO=#{EMP_INFO_EMP_NO} and EMP_INFO_PWD=#{EMP_INFO_PWD} -->
+		select * from EMP_INFO join JOB_INFO ON(JOB_INFO_CODE = EMP_INFO_JOB_CODE) where EMP_INFO_EMP_NO=#{EMP_INFO_EMP_NO} and EMP_INFO_PWD=#{EMP_INFO_PWD}
 	</select>
 </mapper>

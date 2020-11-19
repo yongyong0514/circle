@@ -10,7 +10,7 @@ import com.kh.circle.login.entity.Member;
 	 public Member login(Member member, HttpSession session) throws Exception;
 	 
 	 //임의로 설계
-	public Member logIn(Member member); 
+		/* public Member logIn(Member member); */
  
  }
  
