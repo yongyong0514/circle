@@ -81,7 +81,8 @@
 							 ,SCH_UNIT_WDAT
 							 ,SCH_UNIT_STAT
 							 ,SCH_UNIT_WRTR
-							 ,SCH_UNIT_HUE) values ('SCHN'||TRIM(TO_CHAR(#{seq},'000000'))
+							 ,SCH_UNIT_HUE
+							 ,SCH_UNIT_GROUP_CODE) values ('SCHN'||TRIM(TO_CHAR(#{seq},'000000'))
 							 					   ,#{title}
 							 					   ,to_date(#{start},'RRMMDDHH24MISS')
 							 					   ,to_date(#{end},'RRMMDDHH24MISS')
@@ -90,7 +91,8 @@
 							 					   ,sysdate
 							 					   ,'Y'
 							 					   ,#{id}
-							 					   ,#{backgroundColor})
+							 					   ,#{backgroundColor}
+							 					   ,#{groupCode})
 	</insert>
 	
 	

@@ -90,6 +90,7 @@
 						        								modifyDate		: $(this).attr('modifyDate'),
 						        								backgroundColor	: $(this).attr('backgroundColor'),
 						        								writerName		: $(this).attr('writerName'),
+						        								//캘린더에서 데이터를 받을때는 groupName으로 받고 서버로 보낼때는 groupCode로 보냄
 						        								groupName		: $(this).attr('groupName')
 						        							});
 						        						});
@@ -103,7 +104,7 @@
             	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
             	 							//input 값 비우기
             	 							$('#edit-title').val("");
-            	 							$('#edit-type option:eq(0)').prop('selected', 'selected');
+            	 							$('#edit-groupCode option:eq(0)').prop('selected', 'selected');
             	 							$('#edit-allDay').prop('checked', true);
             	 							$('#edit-color option:eq(0)').prop('selected', 'selected');
             	 							$('#edit-desc').val("");
@@ -144,7 +145,7 @@
                 							$('#view-title').empty();
                 							$('#view-start').empty();
                 							$('#view-end').empty();
-                							$('#view-type').empty();
+                							$('#view-groupCode').empty();
                 							$('#view-writer').empty();
                 							$('#view-desc').empty();
                 							
@@ -162,7 +163,7 @@
                     								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
                     							}               								
                 							}
-                							$('#view-type').text(event.groupName);
+                							$('#view-groupCode').text(event.groupName);
                 							$('#view-writer').text(event.writerName);
                 							$('#view-desc').text(event.content);
                 							
@@ -323,8 +324,6 @@
         	//modify button click function
         	$('#updateEvent').on('click', function() {
         		
-        		console.log(nowEvent.backgroundColor)
-        		
         		//view-modal close
         		$('#eventModal').modal('hide');
         		
@@ -336,6 +335,7 @@
         		$('#insertCode').val(nowEvent.id);
 				$('#edit-title').val(nowEvent.title);
 				$('#edit-desc').val(nowEvent.content);
+				/* $('#edit-groupCode option[value='+ nowEvent.groupName +']').attr('selected', true); */
 				
 					//allDay process	
 				if(nowEvent.allDay == true){
@@ -481,8 +481,8 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-type">구분</label>
-                            <span class="inputModal" id="view-type">부서 일정</span>
+                            <label class="col-xs-4" for="view-groupCode">구분</label>
+                            <span class="inputModal" id="view-groupCode">부서 일정</span>
                         </div>
                     </div>
                     <div class="row">
@@ -536,13 +536,13 @@
 		                    </div>
 		                    <div class="row">
 		                        <div class="col-xs-12">
-		                            <label class="col-xs-4" for="edit-type">구분</label>
-		                            <select class="inputModal" type="text" name="type" id="edit-type">
-		                                <option value="카테고리1" select="selected">내 일정</option>
-		                                <option value="카테고리2">부서 일정</option>
-		                                <option value="카테고리4">동호회 일정</option>
-		                                <option value="카테고리3">프로젝트 일정</option>
-		                                <option value="카테고리3">내 휴가</option>
+		                            <label class="col-xs-4" for="edit-groupCode">구분</label>
+		                            <select class="inputModal" type="text" name="groupCode" id="edit-groupCode">
+		                                <option value="SCHG000001" select="selected">내 일정</option>
+		                                <option value="SCHG000002">부서 일정</option>
+		                                <option value="SCHG000003">동호회 일정</option>
+		                                <option value="SCHG000004">프로젝트 일정</option>
+		                                <option value="SCHG000005">내 휴가</option>
 		                            </select>
 		                        </div>
 		                    </div>
