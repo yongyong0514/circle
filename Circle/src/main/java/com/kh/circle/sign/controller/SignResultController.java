@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.sign.vo.SignListJoiner;
+import com.kh.circle.sign.vo.SignType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,15 +24,15 @@ public class SignResultController {
 	@Autowired
 	private SqlSession sqlSession;
 
-	@GetMapping("/signListJoinerCount")
-	public Map<String, Object> signListJoinerCount(@RequestParam String signCode) {
-		int count = sqlSession.selectOne("sign.count", signCode);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("count", count);
-
-		return map;
-	}
+	/*
+	 * @GetMapping("/signListJoinerCount") public Map<String, Object>
+	 * signListJoinerCount(@RequestParam String signCode) { int count =
+	 * sqlSession.selectOne("sign.count", signCode);
+	 * 
+	 * Map<String, Object> map = new HashMap<>(); map.put("count", count);
+	 * 
+	 * return map; }
+	 */
 	
 	@GetMapping("/signListJoinerCheck")
 	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {
@@ -53,7 +54,6 @@ public class SignResultController {
 	public List<SignListJoiner> signWatcher(@RequestParam String signCode) {
 		
 		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
-		
 		
 		return list;
 	}

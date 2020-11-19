@@ -59,13 +59,13 @@
 								<tr>
 									<th class="formBox1">문서 유형</th>
 									<th class="formBox4" colspan="3">
-										
 										<select class="formSelect2" id="signType" name="signType">
 												<option value="0">문서 유형을 선택하세요</option>
 											<c:forEach var="item" items="${list}">
 												<option value="${item.sign_type_code}">${item.sign_type_name}</option>
 											</c:forEach>
 										</select>
+										<textarea id="typeContent" style="display: none;"></textarea>
 									</th>
 								</tr>
 								<tr>
@@ -143,14 +143,11 @@
     </script>
 <!-- 문서 종류 옵션 시작 -->
 	<script>
-		$(function() {
-			$("#signType").on("change", function(){
-				var select = $("#signType").val();
+			$("#signType").on("change", function() {
+				var base = "${pageContext.request.contextPath}";				
+				var typeCode = $("#signType").val();
 				
-				var select2 = $("#signType").length;
-				console.log(select2);
-			});
-		});
+				console.log(typeCode);
 	</script>
 </body>
 </html>
