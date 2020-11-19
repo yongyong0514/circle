@@ -29,11 +29,11 @@ import com.kh.circle.login.entity.Member;
 	}
   }
 
-@Override
-public Member logIn(Member member) {
-	
-	
-	return dao.logIn(member);
-}
+	/*
+	 * @Override public Member logIn(Member member) {
+	 * 
+	 * 
+	 * return dao.logIn(member); }
+	 */
   }
  

@@ -11,13 +11,24 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="wrap">
+		<jsp:include page="../common/menuTopBar.jsp" />
+		<jsp:include page="../common/menuAlertBar.jsp" />
+		<div class="container">
+			<div class="navLeft">
+				<jsp:include page="../common/menuLeftBar.jsp" />
+			</div>
+			<div class="content">
+	
 	<c:if test="${member != null}">
 			<div>
-				<p>${member.EMP_INFO_NAME}님 환영 합니다.</p>
+				<p>${member.EMP_INFO_NAME}님 환영 합니다잉.</p>
 				  <a href="#" id="logout">로그아웃</a>
 			</div>
 	</c:if>	
-	
+		</div>
+			</div>
+			 	</div>
 	<script>
 	 $(function(){
 			$("#logout").click(function(){

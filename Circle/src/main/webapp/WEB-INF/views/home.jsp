@@ -153,6 +153,7 @@ margin-left:20px;
 </head>
 <body>
 	
+	
 	<form name="homeForm" action="${pageContext.request.contextPath}/member/login" method="POST" >
 	<c:if test="${member == null }">
 	<section id="container">
@@ -189,13 +190,13 @@ margin-left:20px;
 	 </c:if>
 		
 		<c:if test="${message == false }">
-			<p style="color:red;">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
+			<p style="color:red">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
 			</c:if>
 	</form>
 	
 		<c:if test="${ member != null}">
 		<form name="logout" action="logout" method="GET">
-		<p>${member.EMP_INFO_NAME }님 환영합니다.</p>
+		<p>${member.EMP_INFO_NAME }<%--  ${joinmember.JOB_INFO_NAME }  --%>님 환영합니다.</p>
 			
 			<button class="logout">로그아웃</button>
 		</form>
