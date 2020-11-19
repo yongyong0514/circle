@@ -51,7 +51,7 @@
 				<a href="#"><div class="menuLeftList">전사 근태통계</div></a>
 				<a href="#"><div class="menuLeftList">전사 인사정보</div></a>
 				<a href="#"><div class="menuLeftList">전사 연차현황</div></a>
-				<a href="#"><div class="menuLeftList">전사 연차통계</div></a>
+				<a href="#"><div class="menuLeftList">전사 연차 사용내역</div></a>
 			<!-- 근태/인사관리 메뉴 끝 -->
 					
 			<!-- 메뉴 끝 -->
