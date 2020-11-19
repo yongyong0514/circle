@@ -54,6 +54,8 @@ public class SignResultController {
 		
 		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
 		
+		
 		return list;
 	}
+
 }

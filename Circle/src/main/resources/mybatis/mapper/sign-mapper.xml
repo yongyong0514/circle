@@ -124,5 +124,14 @@
 <!-- signSelectOne page mapper end -->
 
 <!-- signWrite page mapper start -->
+	<select id="seq" resultType="String">
+		SELECT SIGN_SEQ.NEXTVAL FROM DUAL
+	</select>
+
+	<select id="signTypeList" resultType="signType">
+		SELECT * FROM SIGN_TYPE
+	</select>
 <!-- signWrite page mapper end -->
+
+
 </mapper>

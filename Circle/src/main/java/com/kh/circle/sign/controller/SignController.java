@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignList;
+import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWrite;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,12 +43,16 @@ public class SignController {
 	
 	
 //	결재 작성 화면
-	@RequestMapping(value = "/sign/signWrite", method = RequestMethod.GET)
-	public void writing() throws Exception {
+	@GetMapping("/signWrite")
+	public String signWrite(Model model) {
+		List<SignType> list = sqlSession.selectList("sign.signTypeList");
+		model.addAttribute("list", list);
+		
+		return "sign/signWrite";
 	}
 	
 //	결재 작성
-	@RequestMapping(value = "/sign/signWrite", method = RequestMethod.POST)
+	@RequestMapping(value = "/signWrite", method = RequestMethod.POST)
 	public String write(SignWrite signWrite) throws Exception {
 		signService.write(signWrite);
 		
@@ -66,7 +71,6 @@ public class SignController {
 		return "sign/signList";
 	}
 
-	
 	
 //	@RequestMapping(value ="/signListAll", method = RequestMethod.GET)
 //	public String list(Model model) throws Exception {
@@ -96,4 +100,9 @@ public class SignController {
 //	public String signSelectOne() {
 //		return "sign/signSelectOne";
 //	}
+	
+	@GetMapping("/docuList")
+	public String docuList() {
+		return "document/docuList";
+	}
 }
