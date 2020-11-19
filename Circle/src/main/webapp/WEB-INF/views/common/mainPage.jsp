@@ -9,6 +9,9 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signList.css">
 </head>
 <body>
 <div class="wrap">
@@ -16,7 +19,7 @@
 		<jsp:include page="../common/menuAlertBar.jsp" />
 		<div class="container">
 			<div class="navLeft">
-				<jsp:include page="../common/menuLeftBar.jsp" />
+				<%-- <jsp:include page="../common/menuLeftBar.jsp" /> --%>
 			</div>
 			<div class="content">
 	
