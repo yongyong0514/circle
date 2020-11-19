@@ -30,7 +30,6 @@
 					<span class="arrowBtn"> ▶ </span>
 				</div>
 				<br><br>
-
 				<form action="#" method="POST">
 					<!-- 검색조건 시작 -->
 					<span>조건별 상세검색</span>
