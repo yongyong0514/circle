@@ -1,7 +1,6 @@
 package com.kh.circle.post.service;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
