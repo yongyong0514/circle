@@ -10,7 +10,7 @@
 	<div>
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">전자결재</div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn">새 결재 작성</button></div>
+			<div class="menuLeftListBtn"><button class="menuLeftBtn" onclick="location='${pageContext.request.contextPath}/sign/signWrite'">새 결재 작성</button></div>
 			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">진행 중인 결재</div>
 			<div class="menuLeftList">전체</div>

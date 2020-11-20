@@ -66,6 +66,8 @@ body {
 }
 
 .formBtn1 {
+	line-height: 50px;
+	text-align: center;
 	width: 180px;
 	height: 50px;
 	outline: none;
@@ -156,4 +158,40 @@ body {
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
- 
+#joinerSelect {
+	margin-left: -250px;
+	display: none;
+	position: absolute;
+	width: 500px;
+	height: 500px;
+	border-radius: 10px;
+}
+
+#joinerListArrow {
+	margin-left: 320px;
+	margin-top: -10px;
+	width: 500px;
+	height: 23px;
+	opacity: 0.6;
+}
+
+#joinerListArea {
+	margin-top: 100px;
+	width: 500px;
+	height: 420px;
+    background-color: black;
+    border-radius: 20px;
+   	opacity: 0.6;
+}
+
+#joinerListForm {
+	width: 480px;
+	height: 400px;
+	color: white;
+	background: green;	
+    border-radius: 20px;
+}
+
+.form1 {
+	margin-top: 100px;
+}

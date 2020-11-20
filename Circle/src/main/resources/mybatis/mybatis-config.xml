@@ -30,6 +30,7 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignSelectOne" alias="signSelectOne"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignWrite" alias="signWrite"/>	
 		<typeAlias type="com.kh.circle.sign.vo.SignType" alias="signType"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignTypeContent" alias="signTypeContent"/>
 	</typeAliases>
 
 	<!-- 

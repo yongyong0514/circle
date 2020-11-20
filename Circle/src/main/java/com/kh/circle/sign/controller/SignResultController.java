@@ -57,5 +57,22 @@ public class SignResultController {
 		
 		return list;
 	}
+	
+//	@GetMapping("/signTypeContent")
+//	public String signTypeContent(@RequestParam String typeCode) {
+//		
+//		return sqlSession.selectOne("sign.signTypeContent", typeCode);
+//	}
+	
+	@GetMapping("/signTypeContent")
+	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
+		
+		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+		
+		return map;
+	}
 
 }

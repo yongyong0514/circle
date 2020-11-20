@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
-<body>
+<body>		
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
@@ -65,7 +65,6 @@
 												<option value="${item.sign_type_code}">${item.sign_type_name}</option>
 											</c:forEach>
 										</select>
-										<textarea id="typeContent" style="display: none;"></textarea>
 									</th>
 								</tr>
 								<tr>
@@ -80,22 +79,6 @@
 							</div>
 						</div>
 						<div class="formRight">
-							<table>
-								<tr>
-									<th class="formBox6">
-										<button class="formBtn1">결재자 추가</button>
-									</th>
-								</tr>
-							</table>
-							<table class="formResult1" id="signJoiner">
-							</table>
-							<table>
-								<tr>
-									<th class="formBox6"><button class="formBtn1">참조자 추가</button></th>
-								</tr>
-							</table>
-							<table class="formResult1" id="signWatcher">							
-							</table>
 						</div>
 					</div>
 				</div>
@@ -128,6 +111,7 @@
         });        
     </script>
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
+
 	<script>
 		$(function() {
     		var leftBar = $(".leftBar").offset().top;
@@ -142,12 +126,28 @@
     	});
     </script>
 <!-- 문서 종류 옵션 시작 -->
+
 	<script>
 			$("#signType").on("change", function() {
 				var base = "${pageContext.request.contextPath}";				
 				var typeCode = $("#signType").val();
-				
-				console.log(typeCode);
+				$.ajax({
+					url: base + "/signResult/signTypeContent",
+					type : "get",
+					data : {typeCode : typeCode},
+					success : function(data) {
+						editor.setHtml(data.result);
+					}
+				});
+			});
+	</script>
+<!-- 결재자 추가 시작 -->
+	<script>
+		function signJoiner() {
+			$("#joinerSelect").fadeIn(100);
+		};
+	</script>
+	<script>
 	</script>
 </body>
 </html>

@@ -131,6 +131,12 @@
 	<select id="signTypeList" resultType="signType">
 		SELECT * FROM SIGN_TYPE
 	</select>
+	
+	<select id="signTypeContent" resultType="String">
+		SELECT SIGN_TYPE_CONTENT 
+		  FROM SIGN_TYPE 
+		 WHERE SIGN_TYPE_CODE = #{typeCode}
+	</select>
 <!-- signWrite page mapper end -->
 
 
