@@ -1,7 +1,9 @@
 package com.kh.circle.schedule.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,27 +38,56 @@ public class SchAjaxController  {
 	private ScheduleService schService;
 	
 	@GetMapping("/id")
-	public List<SchAjax> schMain(String id, Date start, Date end) {
+	public List<SchAjax> schMain(String id, Date start, Date end, String myCalendarCheck
+								, String pollCheck, String projectCheck,String communityCheck
+								, String vacationCheck) {
+		
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("id", id);
 		map.put("start", start);
 		map.put("end", end);
+		map.put("myCalendarCheck", myCalendarCheck);
+		map.put("pollCheck", pollCheck);
+		map.put("projectCheck", projectCheck);
+		map.put("communityCheck", communityCheck);
 		
-		log.info("calendar data(id,date) received indto server controller : {}", map);
 		
-//		String id = "200101090031";
+		log.info("calendar data(id,date, grouping check data) received into server: {}", map);
 		
-		List<SchAjax> list = schService.list(map);
-		log.info("month events callback data received into server controller : {} " , list);
+		List<SchAjax> MergedList = new ArrayList<SchAjax>();
+		if(myCalendarCheck.length() < 5 ) {
+			List<SchAjax>list = schService.list(map);
+			MergedList.addAll(list);
+		}
+		if(vacationCheck.length() < 5 ) {
+			List<SchAjax>list = schService.vacationList(map);
+			MergedList.addAll(list);
+		}
+		if(pollCheck.length() < 5 ) {
+//			List<SchAjax>list = schService.pollList(map);
+//			MergedList.addAll(list);
+		}
+		if(projectCheck.length() < 5 ) {
+			List<SchAjax>list = schService.projectList(map);
+			MergedList.addAll(list);
+		}
+		if(communityCheck.length() < 5 ) {
+//			List<SchAjax>list = schService.list(map);
+//			MergedList.addAll(list);
+		}
 		
-		return list;
+		
+		
+		
+		log.info("month events callback data send to page: {} " , MergedList);
+		return MergedList;
 	}
 	
 	@PostMapping("/schInsert")
 	public void schInsert(@RequestBody Map<String, String> insertEvent) {
 		
-		log.info("insert data received into server controller : {} " ,insertEvent);
+		log.info("insert data received into server: {} " ,insertEvent);
 		
 		schService.insert(insertEvent);
 		
@@ -64,14 +95,14 @@ public class SchAjaxController  {
 	
 	@PostMapping("/schDelete")
 	public void schDelete(@RequestBody String id) {
-		log.info("delete data received into server controller : {} ", id);
+		log.info("delete data received into server: {} ", id);
 		
 		schService.delete(id);
 	}
 	
 	@PostMapping("/schUpdate")
 	public void schUpdate(@RequestBody Map<String, String> updateEvent) {
-		log.info("update date received into server controller : {}", updateEvent);
+		log.info("update date received into server: {}", updateEvent);
 		
 		schService.update(updateEvent);
 	}

@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/fullcalendar/main.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/fullcalendar/fullcalendar.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -19,12 +19,19 @@
 <!-- 주석커밋 -->
       <script>
       		
-      		var loginId = "200101090031";						//login id
-      		var nowEvent = "";									//clicked event data keeping
-      		var base = "${pageContext.request.contextPath}";	//rootdirectory save
-      
+      		var loginId = "200101090031";						//로그인 아이디
+      		var nowEvent = "";									//클릭한 이벤트 정보 저장
+      		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
+      		
+      		//좌측 메뉴바 일정종류 체크 변수
+      		var myCalendarCheck = $('#myCalendar').prop('checked');
+      		var pollCheck = $('#poll').prop('checked');
+      		var projectCheck = $('#project').prop('checked');
+      		var communityCheck = $('#community').prop('checked');
+			      		
+      		
       		//fullcalendar onload function
-            $(function() {
+            $(document).ready(function() {
             	var base = "${pageContext.request.contextPath}";
             	
             	//풀캘린더 로드
@@ -54,6 +61,11 @@
 						                    		data: {id 		: loginId
 						                    			  ,start	: start.format()
 						                    			  ,end		: end.format() 
+						                    			  ,myCalendarCheck : $('#myCalendar').prop('checked')
+						                      		      ,pollCheck : $('#poll').prop('checked')
+						                      		 	  ,projectCheck : $('#project').prop('checked')
+						                      			  ,communityCheck : $('#community').prop('checked')
+						                      			  ,vacationCheck : $('#vacation').prop('checked')
 						                    		},
 						                    		dataType:"json",
 						                    		success:function(json){
@@ -61,12 +73,32 @@
 						        						events = [];
 						        						$(json).each(function() {
 						        							
-						        							//allDay data processing
+						        							//이벤트 값 변수화
+						        							var groupCode = $(this).prop('id').substr(0,4);
+						        							var allDay = $(this).attr('allDay');
+						        							var title = $(this).attr('title');
+						        							var groupName = $(this).attr('groupName');
+						        							var jobName = $(this).attr('jobName');
+						        							var backgroundColor = $(this).attr('backgroundColor')
+						        							
+						        							//일정 종류에 따라 값 변형
+						        							var randomNumber = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
+						        							switch (groupCode) {
+						        								case 'SCHN' :  break;
+						        								default : allDay = 'on';
+						        										   title = title + " " + jobName + " 휴가"; 
+						        										   groupName = "휴가";
+						        										   backgroundColor = "rgb(245,"+ randomNumber + "," + randomNumber + ")";
+						        										   
+						        										   break;
+						        							}
+						        							
+						        							//allDay 데이터 가공
 						        							var yn = false;
 						        							var end = $(this).prop('end');
 						        							var	start = $(this).prop('start');
 						        							
-						        							if($(this).attr('allDay') == "on"){
+						        							if(allDay == "on"){
 						        								yn = true;
 						        								if (start !== end) {
 								                    	              end = moment(end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
@@ -76,7 +108,7 @@
 						        							//events 객체에 주입
 						        							events.push({
 						        								id	  			: $(this).attr('id'),
-						        								title 			: $(this).attr('title'),
+						        								title 			: title,
 						        								start 			: start,
 						        								end	  			: end,
 						        								allDay			: yn,
@@ -88,10 +120,10 @@
 						        								writer 			: $(this).attr('writer'),
 						        								writeDate		: $(this).attr('writeDate'),
 						        								modifyDate		: $(this).attr('modifyDate'),
-						        								backgroundColor	: $(this).attr('backgroundColor'),
+						        								backgroundColor	: backgroundColor,
 						        								writerName		: $(this).attr('writerName'),
 						        								//캘린더에서 데이터를 받을때는 groupName으로 받고 서버로 보낼때는 groupCode로 보냄
-						        								groupName		: $(this).attr('groupName')
+						        								groupName		: groupName
 						        							});
 						        						});
 						        						
@@ -106,7 +138,7 @@
             	 							$('#edit-title').val("");
             	 							$('#edit-groupCode option:eq(0)').prop('selected', 'selected');
             	 							$('#edit-allDay').prop('checked', true);
-            	 							$('#edit-color option:eq(0)').prop('selected', 'selected');
+            	 							$('#edit-color option:eq(0)').prop('selected', true);
             	 							$('#edit-desc').val("");
             	 							
             	 							$('.time').hide();						
@@ -116,6 +148,9 @@
             	 							$('#edit-end').val(date.format());
             	 							$('#start-time').val(moment());
             	 							$('#end-time').val(moment());
+            	 							
+            	 							//color selector 글자색 변경
+            	 						    $('#edit-color').css('color', $('#edit-color option:eq(0)').val());
             	 							
             	 							//modify-save button hide
             	 							$('.modalBtnContainer-modifyEvent').hide();
@@ -335,7 +370,13 @@
         		$('#insertCode').val(nowEvent.id);
 				$('#edit-title').val(nowEvent.title);
 				$('#edit-desc').val(nowEvent.content);
-				/* $('#edit-groupCode option[value='+ nowEvent.groupName +']').attr('selected', true); */
+					//groupName => groupCode transfer				
+				var groupCode = $('#edit-groupCode option:contains('+ nowEvent.groupName +')').val();
+				$('#edit-groupCode').val(groupCode).prop('selected', true);
+				
+					//color input
+				$('#edit-color').val(nowEvent.backgroundColor);
+				$('#edit-color').css('color',nowEvent.backgroundColor);
 				
 					//allDay process	
 				if(nowEvent.allDay == true){
@@ -355,9 +396,6 @@
 				} else {
 					$('#edit-end').val(nowEvent.start.format('YYYY-MM-DD'));
 				}
-				
-				$('#edit-color').val(nowEvent.backgroundColor);
-				$('#edit-desc').val(nowEvent.content);
 				
 				//modify-save button show
 				$('.modalBtnContainer-modifyEvent').show();
@@ -380,25 +418,24 @@
         	//modify-save button click function
         	$('#modify-save-event').on('click', function(){
                 	
-        			//input title check
+                	console.log("button click success");
+
+                	//input title check
                 	if($('#edit-title').val() == '' ) {
     					$('#edit-title').focus();
     					return;
     				}
                 	
-                    var startDateTime = $('#edit-start').val();
-                    var endDateTime = $('#edit-end').val();
-                    
-                	console.log("button click success");
-                	
                     // input emp.no 
                     $("#insertId").val(loginId);
-                    
-                    //concat date time
+
+    				//date time combine process                
+                    var startDateTime = $('#edit-start').val();
+                    var endDateTime = $('#edit-end').val();
+	                    //concat date time
                     if($('edit-allDay').is('checked')) {
                     	var date = $('#edit-start').substr(0,10);
             			$('#edit-start').prop(date);
-                    	
                     } else {
                     	startDateTime = startDateTime.concat(" ", $('#start-time').val());
                     	endDateTime = endDateTime.concat(" ", $('#end-time').val());
@@ -411,7 +448,7 @@
                     	}
                     	
                     }
-                    
+	                    
                     var updateEvent = $("form[name=insert-event]").serializeObject();
                     
                     console.log("updateEvent : " + JSON.stringify(updateEvent));
@@ -434,6 +471,39 @@
                             $('#calendar').fullCalendar('refetchEvents');
                     	}
                     }) 
+        	});
+        	
+        	//color selector onchange function
+        	$('#edit-color').on('change', function(){
+        		var selectedColor = $('#edit-color option:selected').val();
+        		$('#edit-color').css('color', selectedColor);
+        	});
+        	
+        	//grouping checkbox onchange function
+        	$('#myCalendar').change(function(){
+        		console.log($('#myCalendar').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#poll').change(function(){
+        		console.log($('#poll').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#project').change(function(){
+        		console.log($('#project').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#community').change(function(){
+        		console.log($('#community').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#vacation').change(function(){
+        		console.log($('#vacation').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	
         	
@@ -541,8 +611,8 @@
 		                                <option value="SCHG000001" select="selected">내 일정</option>
 		                                <option value="SCHG000002">부서 일정</option>
 		                                <option value="SCHG000003">동호회 일정</option>
-		                                <option value="SCHG000004">프로젝트 일정</option>
-		                                <option value="SCHG000005">내 휴가</option>
+		                                <option value="SCHG000004" hidden>프로젝트 일정</option>
+		                                <option value="SCHG000005" hidden>내 휴가</option>
 		                            </select>
 		                        </div>
 		                    </div>

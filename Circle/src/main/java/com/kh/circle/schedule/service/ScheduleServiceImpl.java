@@ -16,6 +16,9 @@ import com.kh.circle.schedule.entity.SchAjax_min;
 import com.kh.circle.schedule.entity.Sch_unit;
 import com.kh.circle.schedule.repository.ScheduleDao;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -27,6 +30,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 		List<SchAjax> list = schDao.list(map);
 		return list;
 	}
+	@Override
+	public List<SchAjax> vacationList(Map<String, Object> map) {
+		List<SchAjax> list = schDao.vacationList(map);
+		return list;
+	}
+	@Override
+	public List<SchAjax> projectList(Map<String, Object> map) {
+		List<SchAjax> list = schDao.projectList(map);
+		return list;
+	}
+	
 
 	@Override
 	public void insert(Map<String, String> insertEvent) {

@@ -5,12 +5,9 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-	mapper라는 영역 안에 구문을 작성한다
-	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
--->
-<mapper namespace="sch">
 
+<mapper namespace="sch">
+	<!-- 내 일정 가져오기 -->
 	<select id="selectList" parameterType="String"  resultType="sch_unit">
 		select *
  		  from sch_unit
@@ -67,6 +64,38 @@
 		
 	</resultMap>
 	
+	<!-- 휴가일정 가져오기 -->
+	<select id="selectVacationMap" parameterType="map" resultMap="selectVacationMapList">
+		select emp_info_name
+			  ,(select job_info_name
+				  from job_info
+				 where job_info_code = (select emp_info_job_code
+				 				  	 from emp_info
+				 				  	where emp_info_emp_no = #{id}
+				 				  )
+			   ) as job_info_name
+			  ,ANVA_HSTR_ORDR
+			  ,ANVA_HSTR_TYPE
+			  ,ANVA_HSTR_SDAT
+			  ,ANVA_HSTR_EDAT
+			  ,ANVA_HSTR_CONT
+		  from anva_hstr
+		  join emp_info on (anva_hstr_emp_no = emp_info_emp_no)
+		 where ANVA_HSTR_CONF = 'Y'
+		   and ANVA_HSTR_EMP_NO = #{id}
+ 		   and (ANVA_HSTR_SDAT between #{start} and #{end}
+ 		   or ANVA_HSTR_EDAT between #{start} and #{end}) 			   
+	</select>
+	<resultMap type="schAjax" id="selectVacationMapList">
+		<result column="ANVA_HSTR_ORDR" property="id"/>
+		<result column="emp_info_name" property="title"/>
+		<result column="ANVA_HSTR_SDAT" property="start"/>
+		<result column="ANVA_HSTR_EDAT" property="end"/>
+		<result column="ANVA_HSTR_CONT" property="content"/>
+		<result column="job_info_name" property="jobName"/>
+	</resultMap>
+	
+	<!-- insert -->
 	<select id="seq" resultType="String">
 		select schn_seq.nextval from dual
 	</select>
@@ -114,6 +143,7 @@
 						  , sch_unit_hue  = #{backgroundColor}
 						  , sch_unit_cont = #{content}
 						  , sch_unit_mdat = default
+						  , sch_unit_group_code = #{groupCode}
 					  where sch_unit_code = #{code}
 	</update>
 	
