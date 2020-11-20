@@ -312,20 +312,21 @@
 		</div>
 	</div>
 
-	<!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
+			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
 					$(".leftBar").removeClass("fixed");
 				}
 			})
+			<!-- 왼쪽바 고정 추가 옵션 끝 -->
+
+			
 		});
 	</script>
 </body>
