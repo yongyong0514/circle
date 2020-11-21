@@ -1,48 +1,60 @@
-html, body {
-	margin: none;
-	border: none;
-	padding: none;
-	width: 100%;
-	height: 100%;
+/* layout */
 
+
+body {
+	overflow-x: hidden;
 }
 
-.sch-wrap {
-	margin-top: -10px;
-	border: none;
-	padding: none;
-	width: 100%;
-	height: 100%;
-		
+.sch-wrapping {
+	position:absolute;
+	width:100%;
+	padding:0;
+	margin:0 auto;
 }
-
 .sch-topMenu {
-	width: 100%;
-	height: 7.3%;
+	position:fixed;
+	left:0;
+	right:0;
+	height:70px;
+	pdding: 13px 0 0 18px;
+	border-bottom:1px;
+	overflow:hidden;
+	z-index:80;
 }
-
-
-.sch-container {
-	width: 100%;
-	height: 89%;
-	
+.menuTopBar {
+	position:absolute;
+	top:0;
+	width:100%;
+	z-index:80;
+}
+.menuAlertBar {
+	position:absolute;
+	top:40px;
+	z-index:80;
+}
+.menuBox {
+	top:40px;
 }
 
 .sch-navLeft {
-	float: left;
+	position:fixed;
 	width:180px;
-	HEIGHT:100%;
+	height:100%;
+	top:70px; 
+	left:0; 
 }
-
-
+.sch-container {
+	height:100%;
+	padding:20px;
+	padding-top:70px;
+	margin-left:180px;
+}
 .sch-content {
-	FLOAT:LEFT;
-	width: 85%;
-	HEIGHT:100%;
-	padding : 10px;
-	overflow: auto;
+	top:70px;
+	padding-top: 20px;
 }
-/
+
+/* 모달 뷰 부분 (선택자가 안먹어서 태그에 직접지정한 부분 있음)*/
 .modal-dialog 		{ position:relative; width:450px; margin:100px auto; }
 
 div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black;}
@@ -52,4 +64,5 @@ div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black
 .row 				{ margin:10px;}
 label.col-xs-4		{ width:100px; }
 
-
+.view-modal-header {height:auto; float:left;}
+.view-modal-content {height:auto; display: inline-block;word-wrap: break-word;max-width: 460px}
