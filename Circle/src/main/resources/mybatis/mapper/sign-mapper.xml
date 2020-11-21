@@ -137,7 +137,15 @@
 		  FROM SIGN_TYPE 
 		 WHERE SIGN_TYPE_CODE = #{typeCode}
 	</select>
+	
+	<select id="signEmpList" resultType="signEmpList">
+		SELECT EI.EMP_INFO_EMP_NO 
+     		 , EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_CODE
+     		 , JI.JOB_INFO_NAME
+  		  FROM EMP_INFO EI
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 	     ORDER BY JI.JOB_INFO_CODE ASC
+	</select>
 <!-- signWrite page mapper end -->
-
-
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.circle.sign.service.SignService;
+import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWrite;
@@ -48,6 +49,9 @@ public class SignController {
 		List<SignType> list = sqlSession.selectList("sign.signTypeList");
 		model.addAttribute("list", list);
 		
+		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
+		model.addAttribute("list2", list2);
+		
 		return "sign/signWrite";
 	}
 	
@@ -71,7 +75,7 @@ public class SignController {
 		return "sign/signList";
 	}
 
-	
+
 //	@RequestMapping(value ="/signListAll", method = RequestMethod.GET)
 //	public String list(Model model) throws Exception {
 //		model.addAttribute("list", signService.list());
