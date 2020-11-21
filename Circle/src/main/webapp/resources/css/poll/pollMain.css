@@ -1,0 +1,55 @@
+/* layout */
+
+
+body {
+	overflow-x: hidden;
+}
+
+.poll-wrapping {
+	position:absolute;
+	width:100%;
+	padding:0;
+	margin:0 auto;
+}
+.poll-topMenu {
+	position:fixed;
+	left:0;
+	right:0;
+	height:70px;
+	pdding: 13px 0 0 18px;
+	border-bottom:1px;
+	overflow:hidden;
+	z-index:80;
+}
+.menuTopBar {
+	position:absolute;
+	top:0;
+	width:100%;
+	z-index:80;
+}
+.menuAlertBar {
+	position:absolute;
+	top:40px;
+	z-index:80;
+}
+.menuBox {
+	top:40px;
+}
+
+.poll-navLeft {
+	position:fixed;
+	width:180px;
+	height:100%;
+	top:70px; 
+	left:0; 
+}
+.poll-container {
+	height:100%;
+	padding:20px;
+	padding-top:70px;
+	margin-left:180px;
+}
+.poll-content {
+	top:70px;
+	padding-top: 20px;
+}

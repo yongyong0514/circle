@@ -8,8 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/iss")
 public class IssueController {
 
-	@GetMapping("/issAdd")
-	public String issAdd() {
-		return "iss/issAdd";
+
+	
+	@GetMapping("/issList")
+	public String issList() {
+		return "iss/issList";
+	}
+	
+	@GetMapping("/issInsert")
+	public String issInsert() {
+		return "iss/issInsert";
 	}
 }

@@ -13,10 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SchAjax_min {
-	private String id, title;
-	private String allDay;
-	private String start, end;
+public class SchAjaxEntry {
+	private String empNo;
 	
 }
 

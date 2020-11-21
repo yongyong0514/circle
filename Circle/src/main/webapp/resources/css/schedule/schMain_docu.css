@@ -1,0 +1,23 @@
+body {
+	overflow-x: hidden;
+}
+
+.sch-container {
+	position: absolute;
+	left: 180px;
+	width: calc(100% - 180px);	
+}
+.sch-content {
+}
+
+/* 모달 뷰 부분 */
+.modal-dialog 		{ position:relative; width:450px; margin:100px auto; }
+
+div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black;}
+
+.modal-header 		{ background-color:#91b9ed; border-radius:4px 4px 0 0; }
+.modal-title 		{ color:white; }
+.row 				{ margin:10px;}
+label.col-xs-4		{ width:100px; }
+
+
