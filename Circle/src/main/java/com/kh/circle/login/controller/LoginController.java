@@ -34,7 +34,7 @@ public class LoginController {
 	
 	@GetMapping("/login")
 	public String login(){
-		return "common/mainPage";//home
+		return "home";//home
 	}
 	
 	
@@ -57,28 +57,29 @@ public class LoginController {
 			System.out.println("member : "+member);
 			
 			session.setAttribute("member", null);
-			
 			/* session.setAttribute("joinmember", null); */
 			
 			rttr.addFlashAttribute("message",false);
 			System.out.println("rttr : "+rttr );
+			
 		}else {
 			System.out.println("login 값알려주세요 : "+login);
 			session.setAttribute("member", login);
 
 			/* session.setAttribute("joinmember", joinlogin); */
 			System.out.println("session "+session);
+			return "redirect:/common/mainPage";
 		}
-		
-		
 		return "redirect:/";
+		/* common/mainPage */
+		
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session){
 		
 		session.invalidate();
-		//주석
-		return "home.jsp";
+		
+		return "home";
 	}
 }

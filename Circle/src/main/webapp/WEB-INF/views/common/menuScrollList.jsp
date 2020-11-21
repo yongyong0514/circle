@@ -16,7 +16,7 @@
 		<div class="buttonArea">
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/159-email.png" class="menuIcon"><br>알림</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/049-copy.png" class="menuIcon"><br>게시판</button></div>
-			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/077-menu-1.png" class="menuIcon"><br>커뮤니티</button></div>
+			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/community/comuList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/077-menu-1.png" class="menuIcon"><br>커뮤니티</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/068-pencil.png" class="menuIcon"><br>전자결재</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/120-diskette.png" class="menuIcon"><br>자료실</button></div>
 			<div><button class="buttonSize"><img src="${pageContext.request.contextPath}/resources/img/common/menu/041-folder.png" class="menuIcon"><br>문서관리</button></div>
