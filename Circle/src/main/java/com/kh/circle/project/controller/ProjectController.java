@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/project")
 public class ProjectController {
 
-	
-	@GetMapping("/projMain")
-	public String projMain() {
-		return "project/projMain";
+	@GetMapping("/projList")
+	public String projList() {
+		return "project/projList";
 	}
 	
 	
-	@GetMapping("/projAdd")
-	public String projAdd() {
-		return "project/projAdd";
+	@GetMapping("/projInsert")
+	public String projInsert() {
+		return "project/projInsert";
 	}
+
 	
 	
 	@GetMapping("/projKanban")
@@ -31,5 +31,10 @@ public class ProjectController {
 		return "project/projTodo";
 	}
 	
+
+	@GetMapping("/projView")
+	public String projView() {
+		return "project/projView";
+	}
 	
 }

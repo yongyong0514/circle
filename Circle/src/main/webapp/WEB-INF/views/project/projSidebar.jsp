@@ -10,8 +10,8 @@
 	<div>
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">게시판</div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn"><a href="#">프로젝트 생성</a></button></div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn"><a href="#">업무 생성</a></button></div>
+			<div class="menuLeftListBtn"><button class="menuLeftBtn">프로젝트 생성</button></div>
+			<div class="menuLeftListBtn"><button class="menuLeftBtn">업무 생성</button></div>
 			<div class="menuLeftList"></div>
 			<div class="menuLeftListTitle">개인 프로젝트</div>
 			<div class="menuLeftList"><a href="#">To-Do</a></div>
