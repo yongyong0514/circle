@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignListJoiner;
-import com.kh.circle.sign.vo.SignType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,5 +57,23 @@ public class SignResultController {
 		
 		return list;
 	}
-
+	
+//	@GetMapping("/signTypeContent")
+//	public String signTypeContent(@RequestParam String typeCode) {
+//		
+//		return sqlSession.selectOne("sign.signTypeContent", typeCode);
+//	}
+	
+//	결재 작성 매핑 시작
+	@GetMapping("/signTypeContent")
+	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
+		
+		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+		
+		return map;
+	}
+	
 }

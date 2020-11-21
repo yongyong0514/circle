@@ -173,4 +173,14 @@ body {
 	border: 2px solid #D8D8D8;
 	border-radius: 10px;
 	z-index: 1;
+	animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
