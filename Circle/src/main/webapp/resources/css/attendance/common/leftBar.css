@@ -134,4 +134,92 @@ hr{
 	text-align: center;
 	padding-bottom:0;
 }	
+
+/* 조직도 버튼 */
+.organChartBorder{
+	box-sizing: border-box;
+	position:fixed;
+	bottom:0.5rem;
+	left: 0px;
+	width: 180px;
 	
+	padding: 0.5rem;
+	
+	line-height: 20px;
+	text-align: center;
+	font-size: small;
+	font-weight: bold;
+	color: white;
+	background: rgba(0,0,0,0);
+	
+	text-align: center;
+}
+
+.organChart{
+	display: inline-block;
+	width: 90%;
+	border: 1px solid rgba(255,255,255,0.1);
+	border-radius: 0.5rem;
+}
+
+.activeBtn{
+	border: 1px solid white;
+	border-radius: 0.5rem;
+}
+
+.organPanel{
+	position: fixed;
+	left: 80px;
+	bottom: 2.2rem;
+	width: 15vw;
+	height: 50vh;
+	background: white;
+	border: 1px solid red;
+}
+
+.organPanel .topPanel{
+	box-sizing: border-box;
+	width: 100%;
+	display: table;
+	padding: 0.5rem;
+	padding-top: 1rem;
+}
+
+.organPanel .topPanel .search{
+	display: table-cell;
+}
+
+.search > input[type=text]{
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.search > input[type=text]:focus{
+	outline: none;
+}
+	
+.organPanel .topPanel .closeBtnArea{
+	display: table-cell;
+	text-align: right;
+	padding-right: 1rem;
+}
+
+.organPanel .members{
+	box-sizing: border-box;
+	
+	with: 95%;
+	height:85%;
+	padding-left: 2rem;
+	overflow: auto;
+	border: 1px solid yellow;
+}
+
+.organPanel ul,
+.organPanel li{
+	list-style: none;
+	padding: 0.2rem;
+}
+
+.organPanel ul li ul{
+	padding-left: 2rem;
+}
+

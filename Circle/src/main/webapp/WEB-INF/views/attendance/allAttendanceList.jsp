@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/attendance/attendanceAllList.css">
+	href="${pageContext.request.contextPath}/resources/css/attendance/allAttendanceList.css">
 </head>
 <body>
 	<div class="wrap">
@@ -18,7 +18,7 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
-			<jsp:include page="common/attendanceLeftBar.jsp" />
+			<jsp:include page="common/leftBar.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">

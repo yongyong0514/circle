@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/attendance/attendanceAllVacationList.css">
+	href="${pageContext.request.contextPath}/resources/css/attendance/allVacationHistory.css">
 </head>
 <body>
 	<div class="wrap">
@@ -18,11 +18,11 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
-			<jsp:include page="common/attendanceLeftBar.jsp" />
+			<jsp:include page="common/leftBar.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>전사 연차현황</h1>
+				<h1>전사 연차 사용내역</h1>
 				<br><br>
 				<div class="selectDate">
 					<span class="arrowBtn"> ◀ </span>	
@@ -30,14 +30,13 @@
 					<span class="arrowBtn"> ▶ </span>
 				</div>
 				<br><br>
-
 				<form action="#" method="POST">
 					<!-- 검색조건 시작 -->
 					<span>조건별 상세검색</span>
 					<br><br>
 					<div class="searchArea">
 						<div>
-							<span>입사일</span>
+							<span>기간</span>
 							<br><br>
 							<input type="date" name="sDate"/>~<input type="date" name="eDate"/>
 						</div>
@@ -64,9 +63,6 @@
 					
 					<div class="vacationList">
 						<!-- 옵션 영역 시작 -->
-						<div class="initOption">
-							<button>연차 초기화 설정</button>
-						</div>
 						<div class="downloadOption">
 							<button>목록 다운로드</button>
 						</div>				
@@ -79,148 +75,101 @@
 						</div>
 						<!-- 옵션 영역 끝 -->
 						<br><br>
-						<!-- 연차 리스트 시작 -->
+						<!-- 연차 사용내역 시작 -->
 						<table class="vacationListTable">
 							<tr>
 								<th><input type="checkbox"></th>
+								<th>기간</th>
 								<th>이름</th>
 								<th>부서명</th>
-								<th>입사일</th>
-								<th>퇴사일</th>
-								<th>근속연수</th>
-								<th>총연차</th>
-								<th>사용연차</th>
-								<th>잔여연차</th>
+								<th>사용일수</th>
+								<th>분류</th>
 							</tr>
 							
 							<!-- 예시데이터 시작 -->
 							<tr>
-								<td><input type="checkbox"></td>
+								<td>2020-10-03 ~ 2020-10--4</td>
+								<td>가나다</td>
+								<td>유통팀</td>
+								<td>유통팀</td>
+								<td>1</td>
+								<td>정기휴가</td>
+							</tr>
+							<tr>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
 							<tr>
-								<td><input type="checkbox"></td>
 								<td>가나다</td>
 								<td>유통팀</td>
 								<td>2019-11-12</td>
 								<td>-</td>
 								<td>1</td>
 								<td>18</td>
-								<td>1</td>
+								<td>1<td>
 								<td>17</td>
 							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>2019-11-12</td>
-								<td>-</td>
-								<td>1</td>
-								<td>18</td>
-								<td>1</td>
-								<td>17</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>2019-11-12</td>
-								<td>-</td>
-								<td>1</td>
-								<td>18</td>
-								<td>1</td>
-								<td>17</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>2019-11-12</td>
-								<td>-</td>
-								<td>1</td>
-								<td>18</td>
-								<td>1</td>
-								<td>17</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"></td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>2019-11-12</td>
-								<td>-</td>
-								<td>1</td>
-								<td>18</td>
-								<td>1</td>
-								<td>17</td>
-							</tr>
-							
 							<!-- 예시데이터 끝 -->
 							
 						</table>
 						
-						<!-- 연차 리스트 끝 -->
+						<!-- 연차 사용내역 끝 -->
 					</div>
 				</form>
 			</div>

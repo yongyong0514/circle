@@ -87,6 +87,10 @@ td {
 	vertical-align: middle;
 }
 
+.vacationList > .downloadOption{
+	float: right;
+}
+
 .vacationList > .listMaxNumber{
 	float: right;
 }
@@ -102,30 +106,12 @@ td {
 }
 
 .vacationListTable th{
-	border-top: 1px solid rgba(0,0,0,0.1);
-	border-bottom: 1px solid rgba(0,0,0,0.1);
+	font-weight: bold;
+	border-top: 1px solid rgba(0,0,0,0.2);
+	border-bottom: 1px solid rgba(0,0,0,0.2);
+	padding: 0.5rem;
 }
 
 .vacationListTable td{
 	border-bottom: 1px dashed rgba(0,0,0,0.1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

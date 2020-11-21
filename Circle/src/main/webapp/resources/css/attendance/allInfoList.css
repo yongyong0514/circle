@@ -54,84 +54,36 @@ td {
 	vertical-align: middle;
 }
 
-.selectDate{
-	width: 100%;
-	text-align: center;
-}
-
-.searchArea{
-	font-size: small;
-	width: 100%;
-	border-top: 1px solid rgba(0,0,0,0.1);
-	border-bottom: 1px solid rgba(0,0,0,0.1);
-}
-
-.searchArea > div{
-	display: inline-block;
-	padding: 1rem;
-}
-
-.searchArea > div > input[type=text]{
-	width: 5rem;
-}
-
-.vacationList{
-	width: 100%;
-	padding: 1rem;
-	font-size: small;
-}
-
-.vacationList > div{
-	display: inline-block;
-	margin: 1rem;
-	vertical-align: middle;
-}
-
-.vacationList > .downloadOption{
-	float: right;
-}
-
-.vacationList > .listMaxNumber{
-	float: right;
-}
-
-.vacationListTable{
+.title{
 	width:100%;
 }
 
-.vacationListTable th,
-.vacationListTable td{
+.content > .totalNumber{
+	display:inline-block;
+	float: left;
+}
+
+.content > select{
+	display: inline-block;
+	float: right;
+}
+
+.infoList{
+	font-size: small;
+}
+
+.infoListTable{
+	width: 100%;
+}
+
+.infoListTable th,
+.infoListTable td{
+	border:1px solid rgba(0,0,0,0.1);
+	padding: 0.5rem;
+	vertical-align: middle;
 	text-align: center;
-	padding: 0.5rem;
 }
 
-.vacationListTable th{
+.infoListTable th{
 	font-weight: bold;
-	border-top: 1px solid rgba(0,0,0,0.2);
-	border-bottom: 1px solid rgba(0,0,0,0.2);
-	padding: 0.5rem;
 }
-
-.vacationListTable td{
-	border-bottom: 1px dashed rgba(0,0,0,0.1);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

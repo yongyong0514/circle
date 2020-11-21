@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/attendance/attendanceMain.css">
+	href="${pageContext.request.contextPath}/resources/css/attendance/main.css">
 </head>
 <body>
 	<div class="wrap">
@@ -18,7 +18,7 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
-			<jsp:include page="common/attendanceLeftBar.jsp" />
+			<jsp:include page="common/leftBar.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">
@@ -80,7 +80,7 @@
 						
 						<!-- 일간 근태내역 시작 -->
 						<c:forEach var="일차" items="일자s">
-
+=
 							<!-- 예시용 시작 -->
 							<tr>
 								<td>2020-11-12(목)</td>
@@ -312,20 +312,21 @@
 		</div>
 	</div>
 
-	<!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
+			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
 					$(".leftBar").removeClass("fixed");
 				}
 			})
+			<!-- 왼쪽바 고정 추가 옵션 끝 -->
+
+			
 		});
 	</script>
 </body>
