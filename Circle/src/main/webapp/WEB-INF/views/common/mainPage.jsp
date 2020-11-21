@@ -23,12 +23,15 @@
 			</div>
 			<div class="content">
 	
-	<c:if test="${member != null}">
-			<div>
-				<p>${member.EMP_INFO_NAME}님 환영 합니다잉.</p>
-				  <a href="#" id="logout">로그아웃</a>
-			</div>
-	</c:if>	
+	<c:if test="${ member != null}">
+		 
+		<form name="logout" action="${pageContext.request.contextPath}/member/logout" method="GET">
+		<p>${member.EMP_INFO_NAME } 님 환영합니다.</p>
+			
+			<button class="logout">로그아웃</button>
+		</form>
+		
+		</c:if> 
 		</div>
 			</div>
 			 	</div>

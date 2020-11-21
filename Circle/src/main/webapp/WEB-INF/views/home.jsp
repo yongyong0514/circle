@@ -131,10 +131,10 @@ font-family: Monospace;
  margin-left:20px;
 }
 #login{
-margin-left:20px;
-	font-weight: bold;
-	font-size: 30px;
 	color:#4A5BF9;
+	background:#E8F0FD;
+	width:200px; 
+ 	height:50px;
 }
 
 #pwdfind{
@@ -147,7 +147,11 @@ margin-left:20px;
 	color:#4A5BF9;
 	font-weight: bold;
 }
-
+	#lf{
+	align:center;
+	font-size: 15px;
+	
+	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -174,10 +178,10 @@ margin-left:20px;
 			<br><br>
 			<label id="password">PassWord</label><br> <input type="password" name="EMP_INFO_PWD"  class="pwd">
 			<br><br>
-				<input type="submit" value="로그인">
+				<input type="submit" value="로그인" id="login">
 				<!-- <a href="login" type="submit" id="login">로그인</a> -->
 				<br><br><br>	
-			<label id="pwdfind" onclick="pwdfind();">비밀번호를 잊었습니다.</label>
+			<!-- <label id="pwdfind" onclick="pwdfind();">비밀번호를 잊었습니다.</label> -->
 			
 			</div>
 			
@@ -189,18 +193,20 @@ margin-left:20px;
 	</section>
 	 </c:if>
 		
-		<c:if test="${message == false }">
-			<p style="color:red">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
+		<c:if test="${message == false}">
+			<p style="color:red" id="lf" align="center">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
 			</c:if>
 	</form>
 	
-		<c:if test="${ member != null}">
+		<%--  <c:if test="${ member != null}">
+		 
 		<form name="logout" action="logout" method="GET">
-		<p>${member.EMP_INFO_NAME }<%--  ${joinmember.JOB_INFO_NAME }  --%>님 환영합니다.</p>
+		<p>${member.EMP_INFO_NAME } ${joinmember.JOB_INFO_NAME } 님 환영합니다.</p>
 			
 			<button class="logout">로그아웃</button>
 		</form>
-		</c:if>
+		
+		</c:if>  --%> 
 		<!-- <script>
 	
 		/function login(){
