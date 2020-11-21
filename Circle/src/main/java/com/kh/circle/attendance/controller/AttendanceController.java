@@ -10,36 +10,41 @@ public class AttendanceController {
 
 	@GetMapping("/main")
 	public String main() {
-		return "attendance/attendanceMain";
+		return "attendance/main";
 	}
 	
 	@GetMapping("/myInfo")
 	public String myInfo() {
-		return "attendance/attendanceMyInfo";
+		return "attendance/myInfo";
 	}
 	
 	@GetMapping("/myVacation")
 	public String myVacation() {
-		return "attendance/attendanceMyVacation";
+		return "attendance/myVacation";
 	}
 	
-	@GetMapping("/attendanceAllList")
-	public String attendanceAllList() {
-		return "attendance/attendanceAllList";
+	@GetMapping("/allAttendanceList")
+	public String allAttendanceList() {
+		return "attendance/allAttendanceList";
 	}
 	
-	@GetMapping("/attendanceAllStatistic")
-	public String attendanceAllStatistic() {
-		return "attendance/attendanceAllStatistic";
+	@GetMapping("/allAttendanceStatistic")
+	public String allAttendanceStatistic() {
+		return "attendance/allAttendanceStatistic";
 	}
 	
-	@GetMapping("/attendanceAllInfoList")
-	public String attendanceAllInfoList() {
-		return "attendance/attendanceAllInfoList";
+	@GetMapping("/allInfoList")
+	public String allInfoList() {
+		return "attendance/allInfoList";
 	}
 	
-	@GetMapping("/attendanceAllVacationList")
-	public String attendanceAllVacationList() {
-		return "attendance/attendanceAllVacationList";
+	@GetMapping("/allVacationList")
+	public String allVacationList() {
+		return "attendance/allVacationList";
+	}
+	
+	@GetMapping("/allVacationHistory")
+	public String allVacationHistory() {
+		return "attendance/allVacationHistory";
 	}
 }

@@ -22,7 +22,7 @@
     
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
-		<typeAlias type="com.kh.circle.schedule.entity.SchAjax_min" alias="schAjax_min"/>
+		<typeAlias type="com.kh.circle.schedule.entity.SchAjaxEntry" alias="schAjaxEntry"/>
 
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
@@ -30,6 +30,8 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignSelectOne" alias="signSelectOne"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignWrite" alias="signWrite"/>	
 		<typeAlias type="com.kh.circle.sign.vo.SignType" alias="signType"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignTypeContent" alias="signTypeContent"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignEmpList" alias="signEmpList"/>
 	</typeAliases>
 
 	<!-- 

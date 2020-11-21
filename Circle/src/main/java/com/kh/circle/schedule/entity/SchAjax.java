@@ -32,6 +32,7 @@ public class SchAjax {
 	private String backgroundColor;
 	private String writerName;
 	private String groupName;
+	private String jobName;
 }
 
 

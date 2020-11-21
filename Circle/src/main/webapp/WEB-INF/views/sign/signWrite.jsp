@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
-<body>
+<body>		
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
@@ -65,7 +65,6 @@
 												<option value="${item.sign_type_code}">${item.sign_type_name}</option>
 											</c:forEach>
 										</select>
-										<textarea id="typeContent" style="display: none;"></textarea>
 									</th>
 								</tr>
 								<tr>
@@ -80,22 +79,73 @@
 							</div>
 						</div>
 						<div class="formRight">
-							<table>
-								<tr>
-									<th class="formBox6">
-										<button class="formBtn1">결재자 추가</button>
-									</th>
-								</tr>
-							</table>
-							<table class="formResult1" id="signJoiner">
-							</table>
-							<table>
-								<tr>
-									<th class="formBox6"><button class="formBtn1">참조자 추가</button></th>
-								</tr>
-							</table>
-							<table class="formResult1" id="signWatcher">							
-							</table>
+							<div>
+								<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();">결재자 등록</div>
+								<div class="joinForm1">
+									<div>
+										<img src="${pageContext.request.contextPath}/resources/img/sign/arrow2.png" class="joinArrow">
+									</div>
+									<div class="joinForm2">
+										<div class="joinForm3">
+											<input type="text" class="joinerSearchBox" placeholder="&nbsp;사번/이름/직급/부서 검색"><input type="text" class="searchTitle" value="결재자를 등록하세요" readonly>
+										</div>
+										<div class="joinForm4">
+											<div class="joinForm5">
+												<div class="joinForm7">
+													<div class="joinForm8">
+														<input type="text" class="joinInput1" value="구성원 목록" readonly>
+													</div>
+													<div class="joinForm9">
+													<!-- 구성원 출력될 자리 -->
+														<table>
+															<c:forEach var="emp" items="${list2}">
+																<tr class="resultBox">
+																	<td class="result0"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="resultImg"></td>
+																	<td class="result1"><c:out value="${emp.emp_info_emp_no}"></c:out></td>
+																	<td class="result2"><c:out value="${emp.emp_info_name}"/></td>
+																	<td class="result3"><c:out value="${emp.job_info_name}"/></td>
+																</tr>
+															</c:forEach>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="joinForm6">
+												<div class="joinBtn1">>></div>
+												<div class="joinBtn1"><<</div>
+											</div>
+											<div class="joinForm5">
+												<div class="joinForm7">
+													<div class="joinForm8">
+														<input type="text" class="joinInput1" value="결재자 목록" readonly>
+													</div>
+													<div class="joinForm9">
+													<!-- 구성원 출력될 자리 -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="formResult1">
+								<table>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							<div>
+								<br>
+							</div>
+							<div>
+								<div class="formBtn1">참조자 등록</div>
+							</div>
+							<div class="formResult1">
+								<table>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -128,6 +178,7 @@
         });        
     </script>
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
+
 	<script>
 		$(function() {
     		var leftBar = $(".leftBar").offset().top;
@@ -142,12 +193,38 @@
     	});
     </script>
 <!-- 문서 종류 옵션 시작 -->
+
 	<script>
 			$("#signType").on("change", function() {
 				var base = "${pageContext.request.contextPath}";				
 				var typeCode = $("#signType").val();
-				
-				console.log(typeCode);
+				$.ajax({
+					url: base + "/signResult/signTypeContent",
+					type : "get",
+					data : {typeCode : typeCode},
+					success : function(data) {
+						editor.setHtml(data.result);
+					}
+				});
+			});
+	</script>
+<!-- 결재자 추가 시작 -->
+	<script>
+		function signJoiner() {
+			$(".joinForm1").fadeIn(100);
+		};
+	</script>
+	<script>
+		$(".joinForm1").mouseleave(function() {
+			
+		});
+	</script>
+	<script>
+		$(".resultBox").click(function() {
+			$(this).addClass("select");
+			var empNo = $(this).children().eq(1).text();
+			
+		});
 	</script>
 </body>
 </html>
