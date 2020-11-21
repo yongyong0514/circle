@@ -61,16 +61,15 @@
 			</div>
 			<!-- 조직도 버튼 끝 -->
 		</div>
-	</div>
-	
-	<!-- 조직도 패널 시작-->
+		
+		<!-- 조직도 패널 시작-->
 	<div class="organPanel">
 		<div class="topPanel">
 			<div class="search">
 				<input type="text" name="searchValue" placeholder="사번/이름/부서/직위/이메일"/>
 			</div>
-			<div class="closeBtn">
-				<span>X</span>
+			<div class="closeBtnArea">
+				<button name="closeBtn">X</button>
 			</div>
 		</div>
 		<div class="members">
@@ -148,6 +147,7 @@
 		</div>
 	</div>
 	<!-- 조직도 버튼 끝 -->
+	</div>
 </body>
 
 <!-- 조직도 스크립트 시작 -->

@@ -175,9 +175,6 @@ hr{
 	height: 50vh;
 	background: white;
 	border: 1px solid red;
-	z-index: 99;
-
-	display: none;	
 }
 
 .organPanel .topPanel{
@@ -193,7 +190,6 @@ hr{
 }
 
 .search > input[type=text]{
-	border: none;
 	border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -201,7 +197,7 @@ hr{
 	outline: none;
 }
 	
-.organPanel .topPanel .closeBtn{
+.organPanel .topPanel .closeBtnArea{
 	display: table-cell;
 	text-align: right;
 	padding-right: 1rem;
