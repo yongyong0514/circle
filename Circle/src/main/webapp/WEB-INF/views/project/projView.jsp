@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/project/projKanban.css">
+	href="${pageContext.request.contextPath}/resources/css/project/projView.css">
 
 
 
