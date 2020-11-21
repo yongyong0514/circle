@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.schedule.entity.SchAjax;
-import com.kh.circle.schedule.entity.SchAjax_min;
+import com.kh.circle.schedule.entity.SchAjaxEntry;
 import com.kh.circle.schedule.entity.Sch_unit;
 import com.kh.circle.schedule.service.ScheduleService;
 
@@ -77,11 +78,18 @@ public class SchAjaxController  {
 //			MergedList.addAll(list);
 		}
 		
-		
-		
-		
 		log.info("month events callback data send to page: {} " , MergedList);
 		return MergedList;
+	}
+	
+	@PostMapping("/entry")
+	public List<HashMap<String, String>> entryList(@RequestBody String id){
+		
+		log.info("id : {}", id);
+		
+		List<HashMap<String, String>> list = schService.entryList(id);
+		
+		return list;
 	}
 	
 	@PostMapping("/schInsert")

@@ -95,6 +95,17 @@
 		<result column="job_info_name" property="jobName"/>
 	</resultMap>
 	
+	<!-- 일정 참여자 가져오기 -->
+ 	<select id="selectEntryList" parameterType="String" resultMap="selectEntryMap">
+		select emp_info_name
+			  ,emp_info_emp_no
+		  from sch_unit_join
+		  join emp_info on (sch_join_emp = emp_info_emp_no)
+		 where sch_join_code = #{id} 
+	</select>
+	<resultMap type="hashMap" id="selectEntryMap">
+	</resultMap>
+	
 	<!-- insert -->
 	<select id="seq" resultType="String">
 		select schn_seq.nextval from dual
@@ -147,27 +158,4 @@
 					  where sch_unit_code = #{code}
 	</update>
 	
-	<select id="selectMap_min" parameterType="map" resultMap="selectMapList_min">
-		select sch_unit_code,
-			   sch_unit_name,
-			   decode(sch_unit_aday, 'Y', 'true', 'false') as sch_unit_aday,
-			   sch_unit_sdat,
-			   sch_unit_edat
- 		  from sch_unit
-		  join sch_unit_join on (sch_unit_code = sch_join_code)
- 		 where sch_join_emp = #{id}
- 		   and sch_unit_stat = 'Y'
- 		   and (sch_unit_sdat between #{start} and #{end}
- 		   or sch_unit_edat between #{start} and #{end})
- 		   	
-	</select>
-	
-	<resultMap type="schAjax_min" id="selectMapList_min">
-		<result column="sch_unit_code" property="id"/>
-		<result column="sch_unit_name" property="title"/>
-		<result column="sch_unit_aday" property="allDay"/>
-		<result column="sch_unit_sdat" property="start"/>
-		<result column="sch_unit_edat" property="end"/>
-		
-	</resultMap>
 </mapper>

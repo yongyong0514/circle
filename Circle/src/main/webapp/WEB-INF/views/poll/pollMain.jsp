@@ -6,15 +6,14 @@
 <meta charset="UTF-8">
 <title>Circle</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/schMain.css">
-<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/schMain_docu.css"> --%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollMain.css">
 </head>
 <body>
 
 	<!-- 전체 래핑 -->
-	<div class="sch-wrap">
+	<div class="poll-wrap">
 		
-		<div class="sch-topMenu">
+		<div class="poll-topMenu">
 			<!-- 상단 메뉴바 -->
 			<jsp:include page="../common/menuTopBar.jsp" />
 			<!-- /상단 메뉴바 종료-->
@@ -25,20 +24,20 @@
 		</div>
 		
 		<!-- 좌측 메뉴바 시작 -->
-		<div class="sch-navLeft">
-			<jsp:include page="../schedule/schMainLeftBar.jsp" />
+		<div class="poll-navLeft">
+			<jsp:include page="../poll/pollLeftBar.jsp" />
 		</div>
 		
 		<!-- 컨텐츠 구현부분 -->
-		<div class="sch-container">
+		<div class="poll-container">
 		
 
 			<!-- 좌측 메뉴바 종료 -->
 			
 			<!-- 캘린더 구현부분 시작-->
-			<div class="sch-content">
+			<div class="poll-content">
 				<div>
-					<jsp:include page="../schedule/schMonth.jsp"/>
+					<jsp:include page="../poll/pollHome.jsp"/>
 				</div>
 			</div>
 			<!-- 캘린더 구현부분 종료-->
@@ -48,23 +47,5 @@
 		
 	</div>
 	<!-- /전체 래핑 종료 -->
-	
-	
-	<!-- 왼쪽바 고정 추가 옵션 시작-->
-<!-- 	<script>
-		$(function() {
-    		var leftBar = $(".leftBar").offset().top;
-    			$(window).scroll(function() {
-    		var window = $(this).scrollTop();
-    		console.log(leftBar+"left");
-    		console.log(window+"window");
-    		if(leftBar <= window) {
-    			$(".leftBar").addClass("fixed");
-    		} else {
-    			$(".leftBar").removeClass("fixed");
-    			}
-    		})
-    	});
-    </script> -->
 </body>
 </html>

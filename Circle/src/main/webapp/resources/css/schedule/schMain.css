@@ -54,7 +54,7 @@ body {
 	padding-top: 20px;
 }
 
-/* 모달 뷰 부분 */
+/* 모달 뷰 부분 (선택자가 안먹어서 태그에 직접지정한 부분 있음)*/
 .modal-dialog 		{ position:relative; width:450px; margin:100px auto; }
 
 div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black;}
@@ -64,4 +64,5 @@ div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black
 .row 				{ margin:10px;}
 label.col-xs-4		{ width:100px; }
 
-
+.view-modal-header {height:auto; float:left;}
+.view-modal-content {height:auto; display: inline-block;word-wrap: break-word;max-width: 460px}

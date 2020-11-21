@@ -7,7 +7,9 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/fullcalendar/fullcalendar.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/jQuery/jquery-ui.css"> --%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/bootstrap/bootstrap.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src='http://fullcalendar.io/js/fullcalendar-2.3.2/lib/moment.min.js'></script>
@@ -16,6 +18,7 @@
 <script src='http://fullcalendar.io/js/fullcalendar-2.3.2/fullcalendar.min.js'></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>       
 <script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/schedule/jquery-ui.js"></script> --%>
 <!-- 주석커밋 -->
       <script>
       		
@@ -83,12 +86,13 @@
 						        							
 						        							//일정 종류에 따라 값 변형
 						        							var randomNumber = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
+						        							var randomNumber2 = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
 						        							switch (groupCode) {
 						        								case 'SCHN' :  break;
 						        								default : allDay = 'on';
 						        										   title = title + " " + jobName + " 휴가"; 
 						        										   groupName = "휴가";
-						        										   backgroundColor = "rgb(245,"+ randomNumber + "," + randomNumber + ")";
+						        										   backgroundColor = "rgb(245,"+ randomNumber + "," + randomNumber2 + ")";
 						        										   
 						        										   break;
 						        							}
@@ -174,6 +178,28 @@
                 												
                 							nowEvent = event;
                 							console.log(nowEvent);
+                							var entry=[];
+                							
+                							//참여자 데이터 불러오기
+                							$.ajax({
+                								url			: base + "/schAjax/entry",
+                								type		: 'post',
+                								data		: nowEvent.id,
+                								dataType	: 'json',
+                								contentType : "application/json; charset=utf-8;",
+                   			                	error		: function(request,status,error){
+                			                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                			                	},
+                			                	success		: function(json){
+                			                		
+                			                		console.log(json);
+                        							$(json).each(function(){
+                        								$('#view-entry').append("<span style=display:inline-block>" + $(this).prop('EMP_INFO_NAME') + "<span>&nbsp");
+                        							});
+                			                	} 
+                							});
+                							
+                							console.log(entry);
                 		
                 							//empty input value
                 							$('#view-sch-id').val("");
@@ -183,6 +209,7 @@
                 							$('#view-groupCode').empty();
                 							$('#view-writer').empty();
                 							$('#view-desc').empty();
+                							$('#view-entry').empty();
                 							
                 							//fill input value
                 							$('#view-sch-id').val(event.id);
@@ -199,6 +226,8 @@
                     							}               								
                 							}
                 							$('#view-groupCode').text(event.groupName);
+                							
+
                 							$('#view-writer').text(event.writerName);
                 							$('#view-desc').text(event.content);
                 							
@@ -508,17 +537,23 @@
         	
         	
         });
+        
+/*         $(document).ready(function(){
+        	$('#mydate').datepicker();
+        }); */
+        
         </script>
 
 
         
 </head>
 <body>
-	<div id='datepicker'></div>
+	<!-- <div id='mydate' style="height:200px;"></div> --> <!-- 사이드바용 datepicker (jquery-ui 사용) --> 
 	<div id="calendar"></div>
 		
-	<!-- 간단 일정보기 MoDal -->	
-    <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
+	<!-- 간단 일정보기 MoDal -->
+		
+     <div class="modal fade" tabindex="-1" role="dialog" id="eventModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -533,37 +568,52 @@
                 	<input type="hidden" name="id" id="view-sch-id"/>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-title">일정명</label>
-                            <span class="inputModal" id="view-title"></span>
+							<div>
+								<label class="col-xs-4" for="view-title">[일정명]</label>
+							</div>
+							<div>
+								 <span class="inputModal" id="view-title"></span>
+							</div>                        	
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-start">시작</label>
+                            <label class="col-xs-4" for="view-start">[시작]</label>
                             <span class="inputModal" id="view-start" ></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-end">끝</label>
+                            <label class="col-xs-4" for="view-end">[끝]</label>
                             <span class="inputModal" id="view-end" ></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-groupCode">구분</label>
+                            <label class="col-xs-4" for="view-groupCode">[구분]</label>
                             <span class="inputModal" id="view-groupCode">부서 일정</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-writer">작성자</label>
+                        	<div class="view-modal-header">
+                        		<label class="col-xs-4" for="view-entry" id="entry">[참가자]</label>
+                        	</div>
+                        	<div class="view-modal-content">
+                        		<span class="inputModal" id="view-entry"></span>
+                        	</div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="view-writer">[작성자]</label>
                             <span class="inputModal" id="view-writer"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="view-desc">설명</label>
+                            <label class="col-xs-4" for="view-desc">[설명]</label>
                             <textarea rows="4" cols="50" class="inputModal" name="view-desc"
                                 id="view-desc" readonly="readonly">내용 삭제가 안됐을때 나오는 내용</textarea>
                         </div>
@@ -576,7 +626,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    
     		
     <!-- 일정 추가 MODAL -->
     <div class="modal fade" tabindex="-1" role="dialog" id="add-eventModal">
