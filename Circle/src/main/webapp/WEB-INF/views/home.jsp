@@ -33,6 +33,7 @@ background:#C5D4E7;
 	background: white;
 	border: 1px solid #4486AB;
 	box-sizing: border-box;
+	
 	}
 #rectangle355{
 	margin:0 auto; 
@@ -44,6 +45,7 @@ background:#C5D4E7;
 	background:#DBE5F1;
 	border: 1px solid #4486AB;
 	box-sizing: border-box;
+	
 	}
 
 body{
@@ -85,6 +87,7 @@ font-family: 맑은고딕;
 	font-weight: bold;
 	font-size: 15px;
 	margin-left:30px;
+	 border-radius: 10px;
 	
 }
 #password{
@@ -93,6 +96,7 @@ font-family: 맑은고딕;
 	font-weight: bold;
 	font-size: 15px;
 	margin-left:30px;
+	 border-radius: 10px;
 	
 }
 #login{
@@ -100,6 +104,7 @@ font-family: 맑은고딕;
 margin-left:150px;
 width: 200px;
 height:80px;
+ border-radius: 15px;
 }
 #makeId{
 	
@@ -123,12 +128,14 @@ font-family: Monospace;
  width:450px; 
  height:45px;
  margin-left:20px;
+  border-radius: 10px;
 }
 .pwd{
  background:#E8F0FD;
  width:450px; 
  height:45px;
  margin-left:20px;
+  border-radius: 10px;
 }
 #login{
 	color:#4A5BF9;

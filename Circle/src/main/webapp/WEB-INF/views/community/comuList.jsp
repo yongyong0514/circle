@@ -41,7 +41,7 @@
 			<table align="center" id="listArea">
 				<tr>
 					<th width="100px">글번호</th>
-					<th width="100px">카테고리</th>
+					<th width="100px">동호회</th>
 					<th width="300px">글제목</th>
 					<th width="100px">작성자</th>
 					<th width="100px">조회수</th>
@@ -49,12 +49,12 @@
 				</tr>
 				<c:forEach var="b" items="${ requestScope.list }">
 					<tr>
-						<td><c:out value="${ b.qNo }"/></td>
-						<td><c:out value="${ b.qCategory }"/></td>
-						<td><c:out value="${ b.qTitle }"/></td>
-						<td><c:out value="${ b.memberShipNumber }"/></td>
-						<td><c:out value="${ b.qPageView }"/></td>
-						<td><c:out value="${ b.qWriteDate }"/></td>
+						<td><c:out value="${ b.COMU_POST_ORDR }"/></td>
+						<td><c:out value="${ b.COMU_POST_COMU_CODE }"/></td>
+						<td><c:out value="${ b.COMU_POST_TITLE }"/></td>
+						<td><c:out value="${ b.COMU_POST_WRTR_EMP_NO }"/></td>
+						<td><c:out value="${ b.COMU_POST_VIEW }"/></td>
+						<td><c:out value="${ b.COMU_POST_DAT }"/></td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -64,6 +64,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- 주주 -->
+
 </body>
 </html>
