@@ -145,7 +145,8 @@
             	 							$('#edit-color option:eq(0)').prop('selected', true);
             	 							$('#edit-desc').val("");
             	 							
-            	 							$('.time').hide();						
+            	 							$('.time').hide();	
+            	 							$('.input-check').hide();
             	 	
             	 							//현재 시간 넣기
             	 							$('#edit-start').val(date.format());
@@ -210,6 +211,7 @@
                 							$('#view-writer').empty();
                 							$('#view-desc').empty();
                 							$('#view-entry').empty();
+                							$('.input-check').hide();
                 							
                 							//fill input value
                 							$('#view-sch-id').val(event.id);
@@ -280,8 +282,19 @@
 					return;
 				}
             	
+				if(!dateTimeCheck()){
+					return;          	
+				}
+            	
                 var startDateTime = $('#edit-start').val();
                 var endDateTime = $('#edit-end').val();
+                
+                //input date check
+                if(startDateTime > endDateTime){
+                	$('#date-check').show();
+                	return;
+                }
+                
                 
             	console.log("button click success");
             	
@@ -351,6 +364,40 @@
         		});
         	});
         	
+        	//dateTime check function
+        	$('.input-date-time').change( function(){
+        		dateTimeCheck();
+        	});
+        	
+        	function dateTimeCheck() {
+        		var startDate = $('#edit-start').val();
+        		var startTime = $('#start-time').val();
+        		var endDate = $('#edit-end').val();
+        		var endTime = $('#end-time').val();
+        		
+        		if(startDate > endDate) {
+        			$('#date-check').show();	
+        			return false;
+        		} else	if(startDate < endDate){
+        			$('#date-check').hide();
+            		$('#time-check').hide();  
+            		return true;
+        		} else {
+            		$('#date-check').hide();
+            		$('#time-check').hide(); 
+					if(startTime != '' && endTime != ''){
+					
+	        			if(startTime > endTime) {
+	        				$('#time-check').show();
+	        				return false;
+	        			}       		
+					}
+        		}
+        		
+
+        		
+        	};
+        	
         	//delete button click function
         	$('#deleteEvent').on('click', function(){
 				
@@ -394,6 +441,7 @@
         		//input modal view controll
         		$('.modalBtnContainer-addEvent').hide();
         		$('.modalBtnContainer-modifyEvent').show();
+        		$('.input-check').hide();
         		
         		//data input
         		$('#insertCode').val(nowEvent.id);
@@ -414,7 +462,9 @@
 				} else {
 					$('#edit-allDay').prop('checked', false);
 					$('#start-time').val(nowEvent.start.format('HH:mm'));
-					$('#end-time').val(nowEvent.end.format('HH:mm'));		
+					if($('#end-time').val() != ''){
+						$('#end-time').val(nowEvent.end.format('HH:mm'));		
+					}
 					$('.time').show();
 				};
 				
@@ -454,6 +504,11 @@
     					$('#edit-title').focus();
     					return;
     				}
+                	
+					if(!dateTimeCheck()){
+						return;          	
+					}
+                	
                 	
                     // input emp.no 
                     $("#insertId").val(loginId);
@@ -650,7 +705,7 @@
 		                            <label class="col-xs-4" for="edit-title">일정명</label>
 		                            <input class="inputModal" type="text" name="title" id="edit-title"
 		                                required="required" placeholder="일정 제목을 입력해주세요."/>
-		                            <span type="hidden"style="color:red;" id="title-check">일정명은 필수 입력사항입니다.</span>
+		                            <span type="hidden" style="color:red;" class="input-check"id="title-check">일정명은 필수 입력사항입니다.</span>
 		                        </div>
 		                    </div>
 		                    <div class="row">
@@ -668,15 +723,22 @@
 		                    <div class="row">
 		                        <div class="col-xs-12">
 		                            <label class="col-xs-4" for="edit-start">시작</label>
-		                            <input class="inputModal" type="date" name="edit-start" id="edit-start" />
-		                            <input type="time" class="inputModal select time" name="start-time" id="start-time"/>
+		                            <input class="inputModal input-date-time" type="date" name="edit-start" id="edit-start" />
+		                            <input class="inputModal input-date-time time" type="time" name="start-time" id="start-time"/>
 		                        </div>
 		                    </div>
 		                    <div class="row">
 		                        <div class="col-xs-12">
 		                            <label class="col-xs-4" for="edit-end">끝</label>
-		                            <input class="inputModal" type="date" name="edit-end" id="edit-end" />
-		                            <input type="time" class="inputModal select time" name="end-time" id="end-time"/>
+		                            <input class="inputModal input-date-time" type="date" name="edit-end" id="edit-end" />
+		                            <input class="inputModal input-date-time time" type="time" name="end-time" id="end-time"/>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
+		                        	<label class="input-check hide-label"></label>
+			                        <div id="date-check" class="input-check" style="color:red;">시작일은 종료일보다 작거나 같아야합니다</div>
+			                        <div id="time-check" class="input-check" style="color:red;">시작시간은 종료시간보다 작거나 같아야합니다</div>
 		                        </div>
 		                    </div>
 	                        <div class="row">

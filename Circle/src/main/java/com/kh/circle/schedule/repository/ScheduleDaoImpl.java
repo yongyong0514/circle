@@ -34,8 +34,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	}
 	@Override
 	public List<SchAjax> projectList(Map<String, Object> map) {
-//		List<SchAjax> list = sqlSession.seletList("sch.selecProjecttMap", map);
-		return null;
+		List<SchAjax> list = sqlSession.selectList("sch.selecProjecttMap", map);
+		return list;
 	}
 	
 	@Override
