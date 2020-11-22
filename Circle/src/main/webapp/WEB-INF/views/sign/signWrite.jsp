@@ -81,13 +81,15 @@
 						<div class="formRight">
 							<div>
 								<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();">결재자 등록</div>
+								<div class="joinAlert">결재자가 저장되었습니다</div>
 								<div class="joinForm1">
 									<div>
 										<img src="${pageContext.request.contextPath}/resources/img/sign/arrow2.png" class="joinArrow">
 									</div>
 									<div class="joinForm2">
 										<div class="joinForm3">
-											<input type="text" class="joinerSearchBox" placeholder="&nbsp;사번/이름/직급/부서 검색"><input type="text" class="searchTitle" value="결재자를 등록하세요" readonly>
+											<!-- <input type="text" class="joinerSearchBox" placeholder="&nbsp;사번/이름/직급/부서 검색"> -->
+											<input type="text" class="searchTitle" value="결재자를 왼쪽으로 드래그해서 등록하세요" readonly>
 										</div>
 										<div class="joinForm4">
 											<div class="joinForm5">
@@ -97,13 +99,17 @@
 													</div>
 													<div class="joinForm9">
 													<!-- 구성원 출력될 자리 -->
-														<table>
+														<table class="resultArea0">
 															<c:forEach var="emp" items="${list2}">
-																<tr class="resultBox">
-																	<td class="result0"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="resultImg"></td>
-																	<td class="result1"><c:out value="${emp.emp_info_emp_no}"></c:out></td>
-																	<td class="result2"><c:out value="${emp.emp_info_name}"/></td>
-																	<td class="result3"><c:out value="${emp.job_info_name}"/></td>
+																<tr>
+																	<td id="resultBox1" class="connectedSortable">
+																		<ul id="resultBackground">
+																			<li class="result0"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="resultImg"></li>
+																			<li class="result1"><c:out value="${emp.emp_info_emp_no}"></c:out></li>
+																			<li class="result2"><c:out value="${emp.emp_info_name}"/></li>
+																			<li class="result3"><c:out value="${emp.job_info_name}"/></li>
+																		</ul>
+																	</td>
 																</tr>
 															</c:forEach>
 														</table>
@@ -111,8 +117,8 @@
 												</div>
 											</div>
 											<div class="joinForm6">
-												<div class="joinBtn1">>></div>
-												<div class="joinBtn1"><<</div>
+<!-- 												<div class="joinBtn1">>></div>
+												<div class="joinBtn1"><<</div> -->
 											</div>
 											<div class="joinForm5">
 												<div class="joinForm7">
@@ -121,6 +127,12 @@
 													</div>
 													<div class="joinForm9">
 													<!-- 구성원 출력될 자리 -->
+														<table class="resultArea1">
+															<tr>
+																<td id="resultBox2" class="connectedSortable">
+																</td>
+															</tr>
+														</table>
 													</div>
 												</div>
 											</div>
@@ -153,6 +165,7 @@
 		</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         var editor = new toastui.Editor({
             el:document.querySelector("#editor"),
@@ -208,6 +221,7 @@
 				});
 			});
 	</script>
+
 <!-- 결재자 추가 시작 -->
 	<script>
 		function signJoiner() {
@@ -215,16 +229,48 @@
 		};
 	</script>
 	<script>
-		$(".joinForm1").mouseleave(function() {
+		$(function() {
+		    $( "#resultBox1, #resultBox2" ).sortable({
+		      connectWith: ".connectedSortable"
+		    }).disableSelection();
+		  });
+	</script>
+   	<script>
+	 $(document).on('click', function() {
+		 if($(".joinForm1").css("display") != "none") {
+			 $(".joinForm1").mouseleave(function(e) {
+				if(!$(e.target).is(".joinForm1")) {
+					var tag1 = $(".resultArea1").children().children();
+					var joinerLength = tag1.length;
+					var tag2 = tag1.eq(0).children().children().children().eq(1).text();
+					var joiner = "";
+						for(var i = 0; i <= joinerLength; i++) {
+							joiner += tag1.eq(i).children().children().children().eq(1).text() + ","
+						}
+					console.log(joiner);
+					$(".joinForm1").fadeOut(100);
+					$(".joinAlert").fadeIn(1000);
+					$(".joinAlert").fadeOut(1000);
+					location.redirect();
+				 }
+			 });
+		 };
+	 });
+	</script>
+<!-- 	<script>
+		$(function(){	
+			var tag1 = $(".resultArea1").children().children();
+			var joinerLength = tag1.length;
+			var tag2 = tag1.eq(0).children().children().children().eq(1).text();
+			var joiner = "";
+				for(var i = 0; i <= joinerLength; i++) {
+					joiner += tag1.eq(i).children().children().children().eq(1).text() + ","
+				}
+			console.log(joiner);
 			
 		});
-	</script>
-	<script>
-		$(".resultBox").click(function() {
-			$(this).addClass("select");
-			var empNo = $(this).children().eq(1).text();
-			
-		});
-	</script>
+	</script> -->
+
+<!-- 참여자 추가 시작 -->
 </body>
 </html>

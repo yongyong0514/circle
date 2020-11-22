@@ -167,24 +167,26 @@ br {
 .joinForm1 {
 	display: none;
 	margin-top: -10px;
-	margin-left: -350px;
+	margin-left: -400px;
 	position: absolute;
 	width: 620px;
 	height: 510px;
 }
 
 .joinArrow {
-	margin-left: 420px;
-	opacity: 0.8;
+	margin-left: 470px;
 }
 
 .joinForm2 {
 	margin-top: -1px;
 	width: 600px;
 	height: 475px;
-	background: black;
-	opacity: 0.8;
 	border-radius: 20px;
+	background: #F7F7F7;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #F7F7F7);
+	background: linear-gradient(to top, #FFFFFF, #F7F7F7);
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
 }
 
 .joinForm3 {
@@ -205,13 +207,14 @@ br {
 }
 
 .searchTitle {
+	width: 600px;
+	margin-left: 20px;
 	margin-top: 10px;
-	float: right;
 	border: none;
 	outline: none;
 	background: none;
-	color: white;
 	font-size: 18px;
+	font-weight: bolder;
 }
 
 .joinForm4 {
@@ -229,7 +232,7 @@ br {
 .joinForm6 {
 	margin-top: 10px;
 	float: left;
-	width: 60px;
+	width: 40px;
 	height: 415px;
 	border-radius: 10px;
 }
@@ -260,7 +263,7 @@ br {
 .joinForm7 {	
 	margin-top: 5px;
 	margin-left: 5px;
-	width: 250px;
+	width: 270px;
 	height: 415px;
 	background: white;
 	border-radius: 10px;
@@ -272,37 +275,54 @@ br {
 }
 
 .joinInput1 {
-	background: none;
+	width: 265px;
 	border: none;
 	outline: none;
 	font-size: 18px;
 	font-weight: bolder;
 	text-align: center;
 	line-height: 40px;
+	color: white;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
+	background: linear-gradient(to right, #0072C6, #5DA6DC);
+
 }
 
 .joinForm9 {
+	margin-top: 2px;
 	margin-left: 1px;
-	width: 244px;
+	width: 269px;
 	height: 370px;
 	overflow: auto;
 }
 
-.resultBox {
+.resultArea0 {
+	width: 250px;
+	height: 370px;
+}
+
+.resultArea1 {
+	width: 250px;
+	height: 370px;
+}
+
+#resultBox1, #resultBox2 {
+	
+}
+
+#resultBackground {
+	width: 250px;
 	height: 50px;
-	border-radius: 10px;
 	cursor: pointer;
-}
-
-.resultBox:hover {
-	background: #E8F0FD;
-}
-
-.resultBox.select {
-	background: #E8F0FD;
+	background: #F7F7F7;
+	background: -webkit-linear-gradient(to left, #FFFFFF, #F6F6F6);
+	background: linear-gradient(to left, #FFFFFF, #F6F6F6);
+	border: 1px solid #f7f7f7;
 }
 
 .resultImg {
+	margin-top: 5px;
 	width: 40px;
 	height: 40px;
 }
@@ -311,8 +331,8 @@ br {
 	vertical-align: top;	
 	width: 50px;
 	height: 50px;
-	padding-top: 8px;
-	padding-left: 8px;
+	padding-left: 0.5rem;
+	display: inline;
 }
 
 .result1 {
@@ -320,18 +340,40 @@ br {
 }
 
 .result2 {
+	padding-left: 0.5rem;
 	width: 110px;
 	height: 50px;
 	font-size: 16px;
 	font-weight: bolder;
 	line-height: 50px;
+	display: inline;	
 }
 
 .result3 {
+	padding-left: 0.7rem;
+	width: 90px;
+	display: inline;
 }
 
 
 
 .form1 {
 	margin-top: 100px;
+}
+
+.joinAlert {
+	display: none;
+	position: fixed;
+  	margin: 0 auto;
+   	left: 0;
+   	right: 0;
+	width: 400px;
+	height: 80px;
+	background: black;
+	opacity: 0.8;
+	border-radius: 10px;
+	color: white;
+	font-size: 24px;
+	text-align: center;
+	line-height: 80px;
 }
