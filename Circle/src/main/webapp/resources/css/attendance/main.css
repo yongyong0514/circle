@@ -2,7 +2,13 @@ body {
 	overflow-x:hidden;
 }
 
+.organChart{
+	position:absolute;
+	z-index:99;
+}
+
 .container {
+	opacity: 0.9;
 	position: absolute;
 	left: 180px;
 	width: calc(100% - 180px);
@@ -114,6 +120,3 @@ td {
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 }
-
-
-

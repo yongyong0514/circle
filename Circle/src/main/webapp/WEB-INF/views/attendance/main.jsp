@@ -20,6 +20,10 @@
 		<div class="leftBar">
 			<jsp:include page="common/leftBar.jsp" />
 		</div>
+		<div class="organChart">
+			<jsp:include page="../common/menuOrganChart.jsp"/>
+		</div>
+		
 		<div class="container">
 			<div class="content">
 				<h1>근태현황(메뉴명)</h1>
@@ -50,9 +54,7 @@
 					</table>
 				</div>
 				<!-- 현재(이번주) 근태현황 끝 -->
-				
 				<br><br>
-				
 				<!-- 근태이력(리스트) 시작 -->
 				<table class="historyTable">
 					<tr>
@@ -80,7 +82,7 @@
 						
 						<!-- 일간 근태내역 시작 -->
 						<c:forEach var="일차" items="일자s">
-=
+
 							<!-- 예시용 시작 -->
 							<tr>
 								<td>2020-11-12(목)</td>
