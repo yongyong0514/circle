@@ -65,18 +65,18 @@ public class SchAjaxController  {
 			List<SchAjax>list = schService.vacationList(map);
 			MergedList.addAll(list);
 		}
-		if(pollCheck.length() < 5 ) {
+//		if(pollCheck.length() < 5 ) {
 //			List<SchAjax>list = schService.pollList(map);
 //			MergedList.addAll(list);
-		}
-		if(projectCheck.length() < 5 ) {
-			List<SchAjax>list = schService.projectList(map);
-			MergedList.addAll(list);
-		}
-		if(communityCheck.length() < 5 ) {
+//		}
+//		if(projectCheck.length() < 5 ) {
+//			List<SchAjax>list = schService.projectList(map);
+//			MergedList.addAll(list);
+//		}
+//		if(communityCheck.length() < 5 ) {
 //			List<SchAjax>list = schService.list(map);
 //			MergedList.addAll(list);
-		}
+//		}
 		
 		log.info("month events callback data send to page: {} " , MergedList);
 		return MergedList;

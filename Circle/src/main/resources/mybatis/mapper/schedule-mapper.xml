@@ -95,6 +95,19 @@
 		<result column="job_info_name" property="jobName"/>
 	</resultMap>
 	
+	<!-- 프로젝트 일정 가져오기 -->
+<!-- 	<select id="selectProjectMap" parameterType="map" resultMap="selectProjectMapList">
+	
+	</select>
+	<resultMap type="schAjax" id="selectProjectMapList">
+		<result column="ANVA_HSTR_ORDR" property="id"/>
+		<result column="emp_info_name" property="title"/>
+		<result column="ANVA_HSTR_SDAT" property="start"/>
+		<result column="ANVA_HSTR_EDAT" property="end"/>
+		<result column="ANVA_HSTR_CONT" property="content"/>
+		<result column="job_info_name" property="jobName"/>
+	</resultMap> -->
+	
 	<!-- 일정 참여자 가져오기 -->
  	<select id="selectEntryList" parameterType="String" resultMap="selectEntryMap">
 		select emp_info_name
