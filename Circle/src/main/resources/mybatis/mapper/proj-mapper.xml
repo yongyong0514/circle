@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper라는 영역 안에 구문을 작성한다 - namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수) -->
+<mapper namespace="project">
+
+	<select id="projList" resultType="project">
+	select pr.pro_code, pr.pro_title, i.iss_title, e.emp_info_name, p.prog_title, s.situ_title
+		from project pr
+		join iss i on (i.iss_pro_code = pr.pro_code)
+		join emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		join prog p on (i.iss_prog_code = p.prog_code)
+		join situ s on (i.iss_situ_code = s.situ_code)
+		order by pr.pro_code desc
+	</select>
+
+	<select id="projKanban" resultType="project">
+	select *
+		from project pr
+		join iss i on (i.iss_pro_code = pr.pro_code)
+		join emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		join prog p on (i.iss_prog_code = p.prog_code)
+		join situ s on (i.iss_situ_code = s.situ_code)
+		order by pr.pro_code desc
+	
+	</select>
+
+
+<select id="projTodo" resultType="project">
+	select *
+		from project pr
+		join iss i on (i.iss_pro_code = pr.pro_code)
+		join emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		join prog p on (i.iss_prog_code = p.prog_code)
+		join situ s on (i.iss_situ_code = s.situ_code)
+		order by pr.pro_code desc
+	
+	</select>
+</mapper>

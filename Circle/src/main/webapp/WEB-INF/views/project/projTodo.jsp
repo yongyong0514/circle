@@ -47,11 +47,20 @@
      </div> 
       <div class="notcomp">
         <h3>Not Completed</h3>
-
+     <c:forEach   var="projTodo" items="${projTodo}">
+<c:if test="${projTodo.prog_code != 'PROG000003'}"/>
+        
+       <div> ${projTodo.iss_title}</div>
+</c:forEach>
       </div>
-
       <div class="comp">
         <h3>Completed</h3>
+<c:forEach   var="projTodo" items="${projTodo}">
+        <c:if test="${projTodo.prog_code == 'PROG000003'}"/>
+        <div>
+        ${projTodo.iss_title}
+        </div>
+      </c:forEach>
       </div>
     </div>
 </div>

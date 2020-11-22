@@ -17,6 +17,20 @@
 		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
 		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/> 
    		<typeAlias type="com.kh.circle.post.entity.PostType" alias="postType"/>
+   		<typeAlias type="com.kh.circle.post.entity.PostPlus" alias="postPlus"/>
+
+
+
+   		<typeAlias type="com.kh.circle.project.entity.Project" alias="project"/>
+
+
+
+   		
+   		<typeAlias type="com.kh.circle.issue.entity.Iss" alias="iss"/>
+   		<typeAlias type="com.kh.circle.issue.entity.IssRepl" alias="issRepl"/>
+   		<typeAlias type="com.kh.circle.issue.entity.Prog" alias="prog"/>
+   		<typeAlias type="com.kh.circle.issue.entity.Situ" alias="situ"/>
+   		<typeAlias type="com.kh.circle.issue.entity.JoinMem" alias="joinMem"/>
     
 		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
     
