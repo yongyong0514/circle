@@ -16,7 +16,7 @@
 	background: rgba(0,0,0,0);
 }
 
-.organChartBorder .organChart{
+.organChartBorder .organChartBtn{
 	display: table;
 	width: 80%;
 	height: 55%;
@@ -28,20 +28,25 @@
 	text-align: center;
 }
 
-.organChartBorder .organChart:hover{
+.organChartBorder .organChartBtn:hover{
 	border: 1px solid rgba(255,255,255,1);
 }
 
 /* 패널영역 */
 
 .organPanel{
+	display: none;
 	position: fixed;
 	left: 80px;
 	bottom: 2.2rem;
 	width: 15vw;
 	height: 50vh;
 	background: white;
-	border: 1px solid red;
+	border: 1px solid #0072C6;
+	border-radius: 0.2rem;
+	box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+	
+	font-size: small;
 }
 
 .organPanel .topPanel{
@@ -57,7 +62,7 @@
 }
 
 .search > input[type=text]{
-	width: auto;
+	width: 90%;
 	border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
@@ -68,7 +73,6 @@
 .organPanel .topPanel .closeBtnArea{
 	display: table-cell;
 	text-align: right;
-	padding-right: 1rem;
 }
 
 .organPanel .members{
@@ -78,7 +82,6 @@
 	height:85%;
 	padding-left: 2rem;
 	overflow: auto;
-	border: 1px solid yellow;
 }
 
 .organPanel ul,

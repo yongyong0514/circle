@@ -2,6 +2,11 @@ body {
 	overflow-x:hidden;
 }
 
+.organChart{
+	position:absolute;
+	z-index:99;
+}
+
 .container {
 	position: absolute;
 	left: 180px;

@@ -20,6 +20,9 @@
 		<div class="leftBar">
 			<jsp:include page="common/leftBar.jsp" />
 		</div>
+		<div class="organChart">
+			<jsp:include page="../common/menuOrganChart.jsp"/>
+		</div>
 		<div class="container">
 			<div class="content">
 				<h1>전사 연차현황</h1>
