@@ -10,12 +10,59 @@
 	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
 -->
 <mapper namespace="post">
+
+<resultMap type="com.kh.circle.post.entity.Post" id="postMap">
+	<id property="post_code" column="post_code"/>
+	<id property="post_type" column="post_type"/>
+	<id property="post_emp" column="post_emp"/>
+	<id property="post_title" column="post_title"/>
+	<id property="post_comt" column="post_comt"/>
+	<id property="post_wdat" column="post_wdat"/>
+	<id property="post_mdat" column="post_mdat"/>
+	<id property="post_stat" column="post_stat"/>
+	<id property="post_sec" column="post_sec"/>
+	<id property="post_noti" column="post_noti"/>
+	<id property="post_cvp" column="post_cvp"/>
+	<id property="post_code_ref" column="post_code_ref"/>
+</resultMap>
+
+<resultMap type="com.kh.circle.post.entity.PostType" id="postTypeMap">
+	<id property="post_type_code" column="post_type_code"/>
+	<id property="post_type_title" column="post_type_title"/>
+	<id property="post_type_auth_lev" column="post_type_auth_lev"/>
+	
+</resultMap>
+
+<resultMap type="com.kh.circle.post.entity.PostEmp" id="postEmpMap">
+	<id property="emp_info_emp_no" column="emp_info_emp_no"/>
+	<id property="emp_info_name" column="emp_info_name"/>
+	<id property="emp_info_dept_code" column="emp_info_dept_code"/>
+	<id property="emp_info_job_code" column="emp_info_job_code"/>
+	<id property="emp_info_email" column="emp_info_email"/>
+	<id property="emp_info_mtel" column="emp_info_mtel"/>
+	<id property="emp_info_etel" column="emp_info_etel"/>
+	
+</resultMap>
+<resultMap type="com.kh.circle.post.entity.PostPlus" id="postPlusMap">
+<collection property="postTypeMap" resultMap="postTypeMap"/>
+<collection property="postMap" resultMap="postMap"/>
+<collection property="postEmpMap" resultMap="postEmpMap"></collection>
+</resultMap>
+
+	<select id="postList" resultType="postPlus">
+select * 
+from post p, emp_info e, post_type t
+where p.post_emp = e.emp_info_emp_no 
+and p.post_type = t.post_type_code
+order by post_code desc
+	</select>
+	
 	
 <select id="seq" resultType="String">
 		select post_seq.nextval from dual
 	</select>
 	
-	<insert id="add" parameterType="post">
+	<insert id="insert" parameterType="post">
 	INSERT INTO POST(
 	POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT, POST_WDAT, POST_MDAT, POST_CVP,
 	 POST_SEC, POST_NOTI, POST_CODE_REF, POST_STAT)
@@ -27,9 +74,9 @@
     , DEFAULT , '', 0, 'Y', 'N', '', 'N');
 	</insert>
 	
-	<select id="list" resultType="post">
-		select * from post where post_code = #{post_code}
-	</select>
 	
+	
+	
+
 
 </mapper>

@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
+import com.kh.circle.post.entity.PostPaging;
 
 public interface PostService {
 
 
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
-	void postAdd(Post post, MultipartFile insert) throws IllegalStateException, IOException;
+	Object getList(PostPaging paging);
+
 
 }

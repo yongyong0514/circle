@@ -40,81 +40,60 @@
             <div class="row">
                 <div class="col-sm-6"><h2>Project List</h2></div>
                 <div class="col-sm-6">
+                
+                <!-- radio button part  -->
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-info active">
                             <input type="radio" name="status" value="all" checked="checked"> All
                         </label>
                         <label class="btn btn-success">
-                            <input type="radio" name="status" value="active"> Active
+                            <input type="radio" name="status" value="to do"> To-Do
                         </label>
                         <label class="btn btn-warning">
-                            <input type="radio" name="status" value="inactive"> Inactive
+                            <input type="radio" name="status" value="doing"> Doing
                         </label>
                         <label class="btn btn-danger">
-                            <input type="radio" name="status" value="expired"> Expired
+                            <input type="radio" name="status" value="done"> Done
                         </label>       
                     </div>
                 </div>
             </div>
         </div>
+        
+        <!-- table part -->
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>project</th>
                     <th>issue</th>
-                    <th>issue date</th>
-                    <th>progress</th>
                     <th>writer</th>
-                    <th>Action</th>
+                    <th>progress</th>
+                    <th>situration</th>
+                    <th>Detail</th>
                 </tr>
             </thead>
+            <c:forEach  var="projList" items="${projList}">
             <tbody>
-                <tr data-status="active">
-                    <td>1</td>
-                    <td><a href="soengsouy.com">soengsouy.com</a></td>
-                    <td>04/10/2019</td>
-                    <td><span class="label label-success">Active</span></td>
-                    <td>Khmer</td>
-                    <td><a href="soengsouy.com" class="btn btn-sm manage">Manage</a></td>
+                <tr data-status="active" class="item">
+                    <td>${projList.pro_code}</td>
+                    <td>${projList.iss_title}</td>
+                    <td>${projList.emp_info_name}</td>
+                    <td><span class="label label-success">${projList.prog_title}</span></td>
+                    <td>${projList.situ_title}</td>
+                    <td><a href="#" class="btn btn-sm manage">Detail</a></td>
                 </tr>
-                <tr data-status="inactive">
-                    <td>2</td>
-                    <td><a href="soengsouy.com">soengsouy.net</a></td>
-                    <td>05/08/2018</td>
-                    <td><span class="label label-warning">Inactive</span></td>
-                    <td>Pursat</td>
-                    <td><a href="#" class="btn btn-sm manage">Manage</a></td>
-                </tr>
-                <tr data-status="active">
-                    <td>3</td>
-                    <td><a href="soengsouy.com">webdesign.com</a></td>
-                    <td>11/05/2020</td>
-                    <td><span class="label label-success">Active</span></td>
-                    <td>United Kingdom</td>
-                    <td><a href="#" class="btn btn-sm manage">Manage</a></td>
-                </tr>
-                <tr data-status="expired">
-                    <td>4</td>
-                    <td><a href="soengsouy.com">soengsouy.org</a></td>
-                    <td>06/09/2019</td>
-                    <td><span class="label label-danger">Expired</span></td>
-                    <td>USA</td>
-                    <td><a href="#" class="btn btn-sm manage">Manage</a></td>
-                </tr>
-                <tr data-status="inactive">
-                    <td>5</td>
-                    <td><a href="soengsouy.com">khmer.com</a></td>
-                    <td>12/08/2020</td>
-                    <td><span class="label label-warning">Inactive</span></td>
-                    <td>Cambodai</td>
-                    <td><a href="#" class="btn btn-sm manage">Manage</a></td>
-                </tr>
+              
+               
             </tbody>
+                </c:forEach>
         </table>
     </div> 
 				</div>
 				</div>
 				</div>
+				
+				
+				
 <script> 
 $(document).ready(function()
 {
@@ -132,6 +111,8 @@ $(document).ready(function()
             $("table tbody tr").fadeIn();
         } 
     });
+    
+    
     // Changeing the class of status label to support bootstrap 4
     var bs  =  $.fn.tooltip.Constructor.VERSION;
     var support =   bs.split(".");

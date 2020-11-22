@@ -2,6 +2,7 @@ package com.kh.circle.post.service;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostFile.PostFileBuilder;
+import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
@@ -62,25 +64,19 @@ public class PostServiceImp implements PostService{
 
 
 
-	@Transactional
-	@Override
-	public void postAdd(Post post, MultipartFile insert) throws IllegalStateException, IOException {
 
-String no = postDao.add(post);
+
+
+
+	@Override
+	public List<Post> getList(PostPaging paging) {
+
 		
-		if(!insert.isEmpty()) {
-			
-			PostFile postFile = PostFile.builder()
-					.file_oname(insert.getOriginalFilename())
-					.file_type(insert.getContentType())
-					.file_size(insert.getSize())
-					.file_code(no)
-					.build();
-			
-			String file_no = postFileDao.add(postFile);
-			
-			postSaveDao.save(insert, file_no);
-		}
 		
+		return postDao.getListWithPaging(paging);
 	}
+
+
+
+	
 	}

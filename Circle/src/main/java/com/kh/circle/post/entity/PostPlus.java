@@ -8,8 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class Post {
-	
+
+public class PostPlus {
+
+private Post postMain;
+private PostType postType;
+private PostEmp postEmp;
 
 /*posttype*/
 private String post_type_code;
@@ -40,6 +44,4 @@ private String emp_info_job_code;
 private String emp_info_email;
 private String emp_info_mtel;
 private String emp_info_etel;
-	
-
 }

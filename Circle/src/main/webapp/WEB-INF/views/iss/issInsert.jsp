@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,152 +23,12 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
 	src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<style>
 
-    *{
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
-    }
-    body{
-      background: #fec107;
-      padding: 0 10px;
-    }
-    .wrapper{
-      max-width: 800px;
-      width: 100%;
-      background: #fff;
-      margin: 50px auto;
-      box-shadow: 2px 2px 4px rgba(0,0,0,0.125);
-      padding: 30px;
-    }
-    
-    .wrapper .title{
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #fec107;
-      text-transform: uppercase;
-      text-align: center;
-    }
-    
-    .wrapper .form{
-      width: s;
-    }
-    
-    .wrapper .form .inputfield{
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .wrapper .form .inputfield label{
-       width: 200px;
-       color: #757575;
-       margin-right: 10px;
-      font-size: 14px;
-    }
-    
-    .wrapper .form .inputfield .input,
-    .wrapper .form .inputfield .textarea{
-      width: 100%;
-      outline: none;
-      border: 1px solid #d5dbd9;
-      font-size: 15px;
-      padding: 8px 10px;
-      border-radius: 3px;
-      transition: all 0.3s ease;
-    }
-    
-    .wrapper .form .inputfield .textarea{
-      width: 100%;
-      height: 260px;
-      resize: none;
-    }
-    
-    .wrapper .form .inputfield .open_select{
-      position: relative;
-      width: 100%;
-      height: 37px;
-    }
-    
-    .wrapper .form .inputfield .open_select:before{
-      content: "";
-      position: absolute;
-      top: 12px;
-      right: 10px;
-      border: 8px solid;
-      border-color: #d5dbd9 transparent transparent transparent;
-      pointer-events: none;
-    }
-    
-    .wrapper .form .inputfield .open_select select{
-      -webkit-appearance: none;
-      -moz-appearance:   none;
-      appearance:        none;
-      outline: none;
-      width: 100%;
-      height: 100%;
-      border: 0px;
-      padding: 8px 10px;
-      font-size: 15px;
-      border: 1px solid #d5dbd9;
-      border-radius: 3px;
-    }
-    
-    
-    .wrapper .form .inputfield .input:focus,
-    .wrapper .form .inputfield .textarea:focus,
-    .wrapper .form .inputfield .open_select select:focus{
-      border: 1px solid #fec107;
-    }
-    
-    .wrapper .form .inputfield p{
-       font-size: 14px;
-       color: #757575;
-    }
-    
-    
-    .wrapper .form .inputfield .btn{
-      width: 100%;
-       padding: 8px 10px;
-      font-size: 15px; 
-      border: 0px;
-      background:  #fec107;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 3px;
-      outline: none;
-    }
-    
-    .wrapper .form .inputfield .btn:hover{
-      background: #ffd658;
-    }
-    
-    .wrapper .form .inputfield:last-child{
-      margin-bottom: 0;
-    }
-    
-    @media (max-width:420px) {
-      .wrapper .form .inputfield{
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .wrapper .form .inputfield label{
-        margin-bottom: 5px;
-      }
-      .wrapper .form .inputfield.terms{
-        flex-direction: row;
-      }
-    }
-    
-    
-    </style>
 </head>
 <body>
 
 <!--  common part -->
+<form:form CommendName="insert"  name="iss" action="issInsert" method="POST" ModelAttribute="iss">
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
@@ -188,22 +50,21 @@
         <div class="form">
            <div class="inputfield">
               <label>업무 명</label>
-              <input type="text" class="input">
+              <input path="iss" id="iss_title" type="text" value="">
            </div>  
             <div class="inputfield">
-              <label>공개 여부</label>
+              <label>프로젝트</label>
               <div class="open_select">
-                <select>
-                  <option value="public">공개</option>
-                  <option value="private">개인</option>
-                  <option value="project">프로젝트</option>
+                <label path="Iss">
+                <select id="pro_code" items="${iss_pro_code}" path="Iss" name="iss_pro_code">
+                  <options  items="${iss_pro_code}"/>
                 </select>
               </div>
            </div>
            <div class="inputfield">
             <label>업무상황</label>
             <div class="open_select">
-              <select>
+              <select id="prog_code" items="${iss_prog_code}" name="iss_prog_code">
                 <option value="midle">보통</option>
                 <option value="low">낮음</option>
                 <option value="very_low">최하</option>
@@ -246,11 +107,11 @@
           </div>
         </div>
     </div>
-
 <!--  write form end -->
 		</div>
 
 </div>
+</form:form>
 
 
 		<script src="<c:url value="/resources/js/iss/issInsert.js" />"></script>

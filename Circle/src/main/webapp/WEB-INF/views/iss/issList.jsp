@@ -37,7 +37,7 @@
       <div class="search_box">
         <input type="text" id="search_input" placeholder="Fliter Table Using Names">
       </div>
-      <div class="table_header ">
+      <div class="table_header">
         <ul>
           <li>
             <div class="item">
@@ -45,13 +45,13 @@
                 <span>프로젝트</span>
               </div>
               <div class="phone">
-                <span>작성자</span>
+                <span>작성일</span>
               </div>
               <div class="issue">
                 <span>ISSUE</span>
               </div>
               <div class="status">
-                <span>STATUS</span>
+                <span>SITU</span>
               </div>
             </div>
           </li>
@@ -59,103 +59,26 @@
       </div>
       <div class="table_body">
         <ul>
+      <c:forEach  var="issList" items="${issList}">
           <li>
             <div class="item">
               <div class="name">
-                <span>Alex</span>
+                <span>${issList.pro_title}</span>
               </div>
-              <div class="phone">
-                <span>+1 111 222 333</span>
+              <div class="wdat">
+                <span>${issList.iss_wdat}</span>
               </div>
               <div class="issue">
-                <span>Lorem ipsum dolor sit amet.</span>
+                <span>${issList.iss_title}</span>
               </div>
-              <div class="status">
-                <span class="open">Open</span>
+              <div class="status" id="situ">
+                <span class="situration" id="situ">${issList.situ_title}</span>
               </div>
             </div>
           </li>
-          <li>
-            <div class="item">
-              <div class="name">
-                <span>scarlett johansson</span>
-              </div>
-              <div class="phone">
-                <span>+1 341 242 336</span>
-              </div>
-              <div class="issue">
-                <span>Lorem, ipsum dolor.</span>
-              </div>
-              <div class="status">
-                <span class="fixed">Fixed</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <div class="name">
-                <span>Rosey</span>
-              </div>
-              <div class="phone">
-                <span>+1 331 442 436</span>
-              </div>
-              <div class="issue">
-                <span>Lorem ipsum dolor sit amet consectetur.</span>
-              </div>
-              <div class="status">
-                <span class="closed">Closed</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <div class="name">
-                <span>Rosey</span>
-              </div>
-              <div class="phone">
-                <span>+1 331 442 436</span>
-              </div>
-              <div class="issue">
-                <span>Lorem, ipsum.</span>
-              </div>
-              <div class="status">
-                <span class="hold">Hold</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <div class="name">
-                <span>Rosey</span>
-              </div>
-              <div class="phone">
-                <span>+1 331 442 436</span>
-              </div>
-              <div class="issue">
-                <span>Lorem, ipsum dolor sit amet consectetur adipisicing.</span>
-              </div>
-              <div class="status">
-                <span class="reopened">Reopened</span>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <div class="name">
-                <span>scarlett johansson lorem</span>
-              </div>
-              <div class="phone">
-                <span>+1 331 442 436</span>
-              </div>
-              <div class="issue">
-                <span>Lorem ipsum dolor sit.</span>
-              </div>
-              <div class="status">
-                <span class="canceled">Canceled</span>
-              </div>
-            </div>
-          </li>
-        </ul>
+              </c:forEach>
+          </ul>
+    
       </div>
       <div class="table_footer"></div>
     </div>

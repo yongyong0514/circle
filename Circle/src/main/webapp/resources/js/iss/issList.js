@@ -16,3 +16,6 @@ search_input.addEventListener("keyup", function(e){
   
 });
 
+var situ = document.querySelector("#situ");
+
+

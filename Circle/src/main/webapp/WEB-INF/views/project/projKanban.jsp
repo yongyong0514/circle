@@ -46,22 +46,14 @@
 					<div>추가하기</div>
 				</header>
 				<div class="lists">
+				<c:forEach   var="projKanban" items="${projKanban}">
 					<div class="list">
-						<div class="title">할 일</div>
-						<div class="list-item" draggable="true">List item 1</div>
-						<div class="list-item" draggable="true">List item 2</div>
-						<div class="list-item" draggable="true">List item 3</div>
+						<div class="title">${projKanban.prog_title}</div>
+						<div class="list-item" draggable="true">${projKanban.iss_title}</div>
+						
 					</div>
-					<div class="list">
-						<div class="title">하는 중</div>
-					</div>
-					<div class="list">
-						<div class="title">완료</div>
-					</div>
-					<div class="list add">
-						<div class="title">+ 추가하기</div>
-					</div>
-				</div>
+					</c:forEach>
+								</div>
 			</div>
 </div>
 		</div>

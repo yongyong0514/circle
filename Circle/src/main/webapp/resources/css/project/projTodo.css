@@ -1,75 +1,138 @@
-*{
-	list-style: none;
-	
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+$dark-gray: #455a64;
+$light-gray: #90a4ae;
+$white: #eceff1;
+$red: #ff5252;
+$green: #69f0ae;
+$white-border: 1px solid $white;
+
+body {
+  background: $dark-gray;
+  color: $white;
+  font: {
+    family: 'Lato', sans-serif;
+    weight: 300;
+  }
 }
 
-html, body {
-	margin: 0;
-	width: 100%;
-	height: 100%;
+h1 {
+  font: 72px 'Oswald', Arial, sans-serif;
+  margin: 50px 0;
+  text-align: center;
 }
 
 .container {
+  margin: 0 auto;
+  width: 95%;
+  @media (min-width: 600px) {
+    width: 75%;
+  }
+  @media (min-width: 900px) {
+    width: 65%;
+  }
 }
 
-.navLeft {
-	float: left;
+input {
+  background: transparent;
+  border: none {
+    bottom: $white-border;
+  }
+  font-size: 24px;
+  height: 50px;
+  padding-bottom: 15px;
+  &:focus {
+    outline: 0;
+  }
+  @media (min-width: 900px) {
+    font-size: 32px;
+  }
 }
 
-.content {
-	width: 100%;
-	height: 100%;
+.input-buttons {
+  height: 50px;
+  border-bottom: $white-border;
+  padding: 0;
+  i {
+    padding: 0 12px;
+    color: $white;
+    float: right;
+  }
+  .fa-plus {
+    border-right: $white-border;
+  }
+  @media (min-width: 600px) {
+    .fa-trash-o:hover {
+      color: $red;
+    }
+    .fa-plus:hover {
+      color: #69f0ae;
+    }
+  }
 }
 
-body{
-	background: #ebecf1;
-	color: #b3b9b9;
+.error {
+  color: $red;
+  display: none;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+  .fa-times{
+    color: $white;
+    padding: 5px 15px;
+    float: right;
+    &:hover {
+      color: #fafafa;
+    }
+  }
+  p {
+    margin: 20px 0;
+    @media (min-width: 600px ){
+      font-size: 20px;
+    }
+  }
 }
 
-.write{
-	float: right;
+.todo-list{
+  padding: 0;
+  margin: 20px 0 50px;
+  .todo {
+    background: $white;
+    border-bottom: 1px dotted $dark-gray;
+    color: $dark-gray;
+    font-size: 20px;
+    list-style: none;
+    padding: 20px 130px 20px 15px;
+    position: relative;
+    white-space: normal;
+  }
+}
+
+span {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  a {
+    color: $dark-gray;
+  }
+  i{
+    padding: 10px 15px;
+  }
+  .fa-check {
+    border-right: 1px solid $dark-gray;
+    &:hover {
+      color: $green;
+    }
+  }
+  .fa-trash-o:hover {
+    color: $red;
+  }
+}
+
+.complete {
+  color: $light-gray;
+  text-decoration: line-through;
+  .check {
+    color: $green;
+  }
 }
 
 
-.container{
-  max-width: 800px;
-  margin: auto;
-  padding: 10px;
-  
-}
-
-.txtb{
-  width: 100%;
-  border: none;
-  border-bottom: 2px solid #000;
-  background: none;
-  padding: 10px;
-  outline: none;
-  font-size: 18px;
-}
-
-h3{
-  margin: 10px 0;
-}
-
-.task{
-  width: 100%;
-  background: rgba(255,255,255,0.5);
-  padding: 18px;
-  margin: 6px 0;
-  overflow: hidden;
-}
-
-.task i{
-  float: right;
-  margin-left: 20px;
-  cursor: pointer;
-}
-
-.comp .task{
-  background: rgba(0,0,0,.5);
-  color: #fff;
-}

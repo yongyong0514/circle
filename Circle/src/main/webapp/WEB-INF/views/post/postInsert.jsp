@@ -41,24 +41,27 @@
 			
     
     <div class="wrapper">
+          <form action='<c:url value='/post/postList'/>' method="post">
         <div class="form">
+
             <div class="title">
                 게시글 작성
               </div>
               <div class="form">
                  <div class="inputfield">
-                    <label>제목</label>
-                    <input type="text" class="input">
+                    <label for="inputForm">제목</label>
+                    <input type="text" class="input" id="inputForm" name="post_title" placeholder="제목을 작성해주세요">
                  </div>  
+                 <c:forEach  var="post" items="${post}">
            <div class="inputfield">
             <label>공개</label>
             <div class="open_select">
               <select>
-                <option value="open">공개</option>
-                <option value="close">비공개</option>
+                <option value="open">${post.post_sec}</option>
               </select>
             </div>
            </div>
+              </c:forEach>
            <div class="inputfield">
             <label>게시판 선택</label>
             <div class="open_select">
@@ -85,8 +88,8 @@
         </div>
     </div>
 
+</form>
 		</div>
-
 </div>
 
 
