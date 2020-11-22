@@ -63,12 +63,22 @@ td {
 	width:100%;
 }
 
-.content > .totalNumber{
+form{
+	vertical-align: middle;
+}
+
+form > .totalNumber{
 	display:inline-block;
 	float: left;
 }
 
-.content > select{
+form > .insertInfo{
+	margin-left: 1rem;
+	display: inline-block;
+	transform: translateY(-3px);
+}
+
+form > select{
 	display: inline-block;
 	float: right;
 }
