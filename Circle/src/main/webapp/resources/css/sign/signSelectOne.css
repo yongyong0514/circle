@@ -44,13 +44,13 @@ body {
 }
 
 .formBox2 {
+	vertical-align: top;
 	width: 80px;
 	height: 60px;
-	background: blue;
 }
 
 .img2 {
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-left: 10px;
 	width: 60px;
 	height: 60px;

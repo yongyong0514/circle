@@ -102,7 +102,7 @@
 	
 
 <!-- signSelectOne page mapper start -->
-	<select id="signSelectOne" parameterType="String" resultType="signSelectOne">
+	<select id="signSelectOne" parameterType="string" resultType="signSelectOne">
 		SELECT ST.SIGN_TYPE_NAME
     		 , SI.SIGN_TITLE
              , SI.SIGN_NOTE
@@ -124,9 +124,59 @@
 <!-- signSelectOne page mapper end -->
 
 <!-- signWrite page mapper start -->
-	<select id="seq" resultType="String">
+	<!-- create one sign case start -->
+	<select id="seqSign" resultType="String">
 		SELECT SIGN_SEQ.NEXTVAL FROM DUAL
 	</select>
+	
+	<insert id="signWriteAdd" parameterType="map">
+		INSERT INTO SIGN VALUES('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
+     	          , #{sign_type_code}
+      		      , SYSDATE+#{sign_keep}
+               	  , #{sign_emp_code}
+              	  , #{sign_acc}
+                  , #{sign_title}
+          	      , #{sign_note}
+          	      , #{sign_status}
+           	      , SYSDATE
+           	      , NULL
+                  , 'SIPC000001'
+                  , #{sign_count})
+	</insert>
+	
+	
+	<select id="seqSignJoiner" resultType="String">
+		SELECT SIJC_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="signJoinerAdd" parameterType="map">
+		INSERT INTO SIGN_JOIN VALUES('SIJC'||TRIM(TO_CHAR(#{seqSignJoiner},'000000'))
+				  , #{sign_join_emp_code}
+				  , #{sign_join_type}
+				  , #{sign_join_check}
+				  , NULL
+				  , #{sign_code})
+	</insert>
+
+	<insert id="signProcessAdd1" parameterType="map">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000001'
+				  , #{sign_code}
+				  , SYSDATE)
+	</insert>
+	
+	<insert id="signProcessAdd2" parameterType="map">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000002'
+				  , #{sign_code}
+				  , SYSDATE)
+	</insert>	
+	
+	<insert id="signProcessAdd3" parameterType="map">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000003'
+				  , #{sign_code}
+				  , SYSDATE)
+	</insert>	
+	<!-- create one sign case end -->
+
 
 	<select id="signTypeList" resultType="signType">
 		SELECT * FROM SIGN_TYPE
@@ -139,13 +189,17 @@
 	</select>
 	
 	<select id="signEmpList" resultType="signEmpList">
-		SELECT EI.EMP_INFO_EMP_NO 
-     		 , EI.EMP_INFO_NAME
-     		 , JI.JOB_INFO_CODE
-     		 , JI.JOB_INFO_NAME
-  		  FROM EMP_INFO EI
-  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
- 	     ORDER BY JI.JOB_INFO_CODE ASC
+	 	 SELECT EI.EMP_INFO_EMP_NO 
+      	 	  , EI.EMP_INFO_NAME
+     		  , JI.JOB_INFO_CODE
+     		  , JI.JOB_INFO_NAME
+              , DI.DEPT_INFO_NAME
+              , FI.FILES_ROUTE
+  		   FROM EMP_INFO EI
+  		   JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+           JOIN DEPT_INFO DI ON(DI.DEPT_INFO_CODE = EI.EMP_INFO_DEPT_CODE)
+LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
+ 	      ORDER BY JI.JOB_INFO_CODE ASC
 	</select>
 <!-- signWrite page mapper end -->
 </mapper>

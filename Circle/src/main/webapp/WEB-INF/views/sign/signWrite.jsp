@@ -31,9 +31,13 @@
 							<table>
 								<tr>
 									<th class="formBox1">작성자</th>
-									<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" name="emp_info_name" value="" readonly></th>
+									<th class="formBox2">
+									<input type="text" class="formInput1" id="emp_info_name" value="${member.EMP_INFO_NAME}" readonly>
+									<input type="text" class="formInput1" id="sign_emp_code" value="${member.EMP_INFO_EMP_NO}" readonly>
+									<input type="text" class="formInput1" id="sign_count" value="" readonly>
+									</th>
 									<th class="formBox1">직급</th>
-									<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" name="job_info_name" readonly></th>
+									<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${member.EMP_INFO_JOB_CODE}" readonly></th>
 								</tr>
 								<tr>
 									<th class="formBox1">보존 연한</th>
@@ -99,20 +103,16 @@
 													</div>
 													<div class="joinForm9">
 													<!-- 구성원 출력될 자리 -->
-														<table class="resultArea0">
+														<div id="resultBox1" class="connectedSortable">
 															<c:forEach var="emp" items="${list2}">
-																<tr>
-																	<td id="resultBox1" class="connectedSortable">
-																		<ul id="resultBackground">
-																			<li class="result0"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="resultImg"></li>
-																			<li class="result1"><c:out value="${emp.emp_info_emp_no}"></c:out></li>
-																			<li class="result2"><c:out value="${emp.emp_info_name}"/></li>
-																			<li class="result3"><c:out value="${emp.job_info_name}"/></li>
-																		</ul>
-																	</td>
-																</tr>
+																	<ul class="resultBackground">
+																		<li class="result0"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="resultImg"></li>
+																		<li class="result1"><c:out value="${emp.emp_info_emp_no}"/></li>
+																		<li class="result2"><c:out value="${emp.emp_info_name}"/></li>
+																		<li class="result3"><c:out value="${emp.job_info_name}"/>/<c:out value="${emp.dept_info_name}"/></li>
+																	</ul>
 															</c:forEach>
-														</table>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -127,12 +127,12 @@
 													</div>
 													<div class="joinForm9">
 													<!-- 구성원 출력될 자리 -->
-														<table class="resultArea1">
-															<tr>
-																<td id="resultBox2" class="connectedSortable">
-																</td>
-															</tr>
-														</table>
+														<div id="resultBox2" class="connectedSortable">
+															<table>
+																<tbody>
+																</tbody>
+															</table>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -141,7 +141,7 @@
 								</div>
 							</div>
 							<div class="formResult1">
-								<table>
+								<table id="joiner">
 									<tbody>
 									</tbody>
 								</table>
@@ -165,7 +165,7 @@
 		</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         var editor = new toastui.Editor({
             el:document.querySelector("#editor"),
@@ -191,7 +191,6 @@
         });        
     </script>
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
-
 	<script>
 		$(function() {
     		var leftBar = $(".leftBar").offset().top;
@@ -206,7 +205,6 @@
     	});
     </script>
 <!-- 문서 종류 옵션 시작 -->
-
 	<script>
 			$("#signType").on("change", function() {
 				var base = "${pageContext.request.contextPath}";				
@@ -221,7 +219,6 @@
 				});
 			});
 	</script>
-
 <!-- 결재자 추가 시작 -->
 	<script>
 		function signJoiner() {
@@ -230,24 +227,34 @@
 	</script>
 	<script>
 		$(function() {
-		    $( "#resultBox1, #resultBox2" ).sortable({
+		    $("#resultBox1, #resultBox2").sortable({
 		      connectWith: ".connectedSortable"
-		    }).disableSelection();
+		    		}).disableSelection();
 		  });
 	</script>
-   	<script>
+<script>
 	 $(document).on('click', function() {
 		 if($(".joinForm1").css("display") != "none") {
 			 $(".joinForm1").mouseleave(function(e) {
 				if(!$(e.target).is(".joinForm1")) {
-					var tag1 = $(".resultArea1").children().children();
+					var tag1 = $("#resultBox2").children();
 					var joinerLength = tag1.length;
-					var tag2 = tag1.eq(0).children().children().children().eq(1).text();
-					var joiner = "";
-						for(var i = 0; i <= joinerLength; i++) {
-							joiner += tag1.eq(i).children().children().children().eq(1).text() + ","
+					
+					var joiner = new Array();
+					
+						for(var i = 1; i < joinerLength; i++) {
+							var data = new Object();
+							data.jCode = tag1.eq(i).children().eq(1).text();
+							data.jName = tag1.eq(i).children().eq(2).text();
+							data.jJob = tag1.eq(i).children().eq(3).text();
+
+							joiner.push(data);
 						}
-					console.log(joiner);
+					
+					sessionStorage.setItem('joiner', JSON.stringify(joiner));
+					
+					showList();
+					
 					$(".joinForm1").fadeOut(100);
 					$(".joinAlert").fadeIn(1000);
 					$(".joinAlert").fadeOut(1000);
@@ -256,21 +263,51 @@
 			 });
 		 };
 	 });
-	</script>
-<!-- 	<script>
-		$(function(){	
-			var tag1 = $(".resultArea1").children().children();
-			var joinerLength = tag1.length;
-			var tag2 = tag1.eq(0).children().children().children().eq(1).text();
-			var joiner = "";
-				for(var i = 0; i <= joinerLength; i++) {
-					joiner += tag1.eq(i).children().children().children().eq(1).text() + ","
-				}
-			console.log(joiner);
+</script>
+<script>
+	function showList() {
+		var jsonData = sessionStorage.getItem("joiner");
+		var data = JSON.parse(jsonData);
+		console.log(data);
+		console.log(jsonData);
+		var $joiner = $("#joiner tbody");
+		$joiner.html('');
+		
+		for(var key in data) {
+			var $tr = $("<tr class='resultList'>");
+			var $jCode = $("<td class='jCode'>").text(data[key].jCode);
+			var $jName = $("<td class='jName'>").text(data[key].jName); 
+			var $jJob = $("<td class='jJob'>").text(data[key].jJob); 
 			
+			/* $tr.append($jCode); */
+			$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+			$tr.append($jName);
+			$tr.append($jJob);
+			
+			$joiner.append($tr);
+		}
+	}
+</script>
+<!--   	<script>
+		$(function() {	
+			var tag1 = $("#resultBox1").children();
+			var joinerLength = tag1.length;
+			var joinerCode = new Array();
+			var joinerName = new Array();
+			var joinerLevel = new Array();
+			
+				for(var i = 0; i < joinerLength; i++) {
+					joinerCode[i] = tag1.eq(i).children().eq(1).text();
+					joinerName[i] = tag1.eq(i).children().eq(2).text();
+					joinerLevel[i] = tag1.eq(i).children().eq(3).text();
+					
+				}
+			console.log(joinerCode);
+			console.log(joinerName);
+			console.log(joinerLevel);
 		});
-	</script> -->
-
+	</script>
+ -->
 <!-- 참여자 추가 시작 -->
 </body>
 </html>

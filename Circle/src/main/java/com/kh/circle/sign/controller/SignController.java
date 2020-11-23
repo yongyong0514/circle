@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignList;
+import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWrite;
 
@@ -100,10 +102,14 @@ public class SignController {
 //		return "sign/signWriteForm";
 //	}
 //	
-//	@GetMapping("/signSelectOne")
-//	public String signSelectOne() {
-//		return "sign/signSelectOne";
-//	}
+	@GetMapping("/signSelectOne")
+	public String signSelectOne(@RequestParam String signCode, Model model) {
+		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
+		
+		model.addAttribute("signSelectOne", signSelectOne);
+		
+		return "sign/signSelectOne";
+	}
 	
 	@GetMapping("/docuList")
 	public String docuList() {
