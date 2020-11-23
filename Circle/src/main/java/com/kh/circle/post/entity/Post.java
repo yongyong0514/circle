@@ -14,7 +14,6 @@ public class Post {
 /*posttype*/
 private String post_type_code;
 private String post_type_title;
-private String post_type_auth_lev;
 
 /*post*/
 private String post_code;
