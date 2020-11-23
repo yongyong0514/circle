@@ -13,10 +13,6 @@ public class ComuController {
 		return "community/comuList";
 	}
 	
-	@GetMapping("/comuAdd")
-	public String comuAdd() {
-		return "community/comuAdd";
-	}
 	@GetMapping("/comuInfoList")
 	public String comuInfoList() {
 		return "community/comuInfoList";
@@ -24,5 +20,9 @@ public class ComuController {
 	@GetMapping("/comuJoin")
 	public String comuJoin() {
 		return "community/comuJoin";
+	}
+	@GetMapping("/comuAdd")
+	public String comuAdd() {
+		return "community/comuAdd";
 	}
 }//주석입니당
