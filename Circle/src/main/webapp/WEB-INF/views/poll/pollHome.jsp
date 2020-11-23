@@ -8,16 +8,69 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>설문 메인화면</h3>
-	<div style="height:2000px;">
-		<table>
-			<tbody>
-				<tr>
-					<th></th>
-					<td>ddd</td>
-				</tr>
-			</tbody>
-		</table>	
+	<div class="poll-content-container">
+		<div class="poll-content-bar">
+			<jsp:include page="pollHomeBar.jsp"/>
+		</div>
+		<div class="poll-list-bar">
+			<jsp:include page="pollHomeListBar.jsp"/>		
+		</div>
+		<div class="poll-list-area-container">
+			<table class="poll-list">
+				<tbody>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>ddd</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+		<div class="poll-list-bar">
+			<jsp:include page="pollHomeListBar2.jsp"/>		
+		</div>
+		<div class="poll-list-area-container">
+			<table class="poll-list">
+				<tbody>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th>ddd</th>
+						<td>ddd</td>
+					</tr>
+					<tr>
+						<th></th>
+						<td>ddd</td>
+					</tr>
+				</tbody>
+			</table>	
+		</div>
+
 	</div>
 
 </body>

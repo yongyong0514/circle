@@ -1,0 +1,17 @@
+.pollHomeBar {
+	width: auto;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.pollHomeTitle {
+	display:inline-block;
+	margin-top: 5px;
+	margin-left: 10px;
+	height: 30px;
+	font-size: 17px;
+	font-weight: bolder;
+}
