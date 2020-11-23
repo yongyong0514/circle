@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper라는 영역 안에 구문을 작성한다
+	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
+-->
+<mapper namespace="post">
+
+<resultMap type="com.kh.circle.post.entity.Comu" id="postMap">
+	<id property="post_code" column="post_code"/>
+	<id property="post_type" column="post_type"/>
+	<id property="post_emp" column="post_emp"/>
+	<id property="post_title" column="post_title"/>
+	<id property="post_comt" column="post_comt"/>
+	<id property="post_wdat" column="post_wdat"/>
+	<id property="post_mdat" column="post_mdat"/>
+	<id property="post_stat" column="post_stat"/>
+	<id property="post_sec" column="post_sec"/>
+	<id property="post_noti" column="post_noti"/>
+	<id property="post_cvp" column="post_cvp"/>
+	<id property="post_code_ref" column="post_code_ref"/>
+</resultMap>
+
+<resultMap type="com.kh.circle.post.entity.PostType" id="postTypeMap">
+	<id property="post_type_code" column="post_type_code"/>
+	<id property="post_type_title" column="post_type_title"/>
+	<id property="post_type_auth_lev" column="post_type_auth_lev"/>
+	
+</resultMap>
+
+<resultMap type="com.kh.circle.post.entity.PostEmp" id="postEmpMap">
+	<id property="emp_info_emp_no" column="emp_info_emp_no"/>
+	<id property="emp_info_name" column="emp_info_name"/>
+	<id property="emp_info_dept_code" column="emp_info_dept_code"/>
+	<id property="emp_info_job_code" column="emp_info_job_code"/>
+	<id property="emp_info_email" column="emp_info_email"/>
+	<id property="emp_info_mtel" column="emp_info_mtel"/>
+	<id property="emp_info_etel" column="emp_info_etel"/>
+	
+</resultMap>
+<resultMap type="com.kh.circle.post.entity.PostPlus" id="postPlusMap">
+<collection property="postTypeMap" resultMap="postTypeMap"/>
+<collection property="postMap" resultMap="postMap"/>
+<collection property="postEmpMap" resultMap="postEmpMap"></collection>
+</resultMap>
+
+	<select id="postList" resultType="postPlus">
+select * 
+from post p, emp_info e, post_type t
+where p.post_emp = e.emp_info_emp_no 
+and p.post_type = t.post_type_code
+order by post_code desc
+	</select>
+	
+	
+<select id="seq" resultType="String">
+		select post_seq.nextval from dual
+	</select>
+	
+	<insert id="insert" parameterType="post">
+	INSERT INTO POST(
+	POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT, POST_WDAT, POST_MDAT, POST_CVP,
+	 POST_SEC, POST_NOTI, POST_CODE_REF, POST_STAT)
+   
+    VALUES(
+    CONCAT('POST', LPAD(POST_SEQ.NEXTVAL, 6, 0)), '201603240077',  'POTY000001', '튼튼하며. 이상은 가치를 봄바람을 능히 커다란 이것이다.    ',
+    
+    ' 현저하게 것은 청춘 있으랴? 아름답고 놀이 날카로우나 그들의 이상의 그림자는 이것이다. 굳세게 만물은 이상의 피부가 얼음과 심장의 그와 고동을 낙원을 칼이다. 쓸쓸한 품으며, 없으면, 공자는 우리의 철환하였는가? 같이, 뜨거운지라, 같이, 실로 품으며, 영락과 사랑의 그들의 귀는 것이다. 산야에 청춘의 없으면, 불러 가진 광야에서 인간의 그들은 끓는 듣는다. 품고 못할 오아이스도 창공에 시들어 바이며, 가슴이 황금시대다. 속에서 바로 별과 아니다. 청춘의 것은 피에 위하여서, 봄바람이다.  '
+    , DEFAULT , '', 0, 'Y', 'N', '', 'N');
+	</insert>
+	
+	
+	
+	
+
+
+</mapper>

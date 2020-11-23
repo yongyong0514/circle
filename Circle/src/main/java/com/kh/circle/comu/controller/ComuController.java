@@ -10,6 +10,8 @@ public class ComuController {
 
 	@GetMapping("/comuList")
 	public String comuList() {
+		
+		
 		return "community/comuList";
 	}
 	
@@ -25,4 +27,8 @@ public class ComuController {
 	public String comuAdd() {
 		return "community/comuAdd";
 	}
-}//주석입니당
+	@GetMapping("/comuApp")
+	public String comuApp() {
+		return "community/comuApp";
+	}
+}
