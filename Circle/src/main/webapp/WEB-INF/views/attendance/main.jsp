@@ -23,7 +23,6 @@
 		<div class="organChart">
 			<jsp:include page="../common/menuOrganChart.jsp"/>
 		</div>
-		
 		<div class="container">
 			<div class="content">
 				<h1>근태현황(메뉴명)</h1>

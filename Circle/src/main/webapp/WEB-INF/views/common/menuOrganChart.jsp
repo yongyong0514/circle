@@ -11,7 +11,7 @@
 <body>
 	<!-- 조직도 버튼 시작 -->
 	<div class="organChartBorder">
-		<div class="organChart">조직도</div>
+		<div class="organChartBtn">조직도</div>
 	</div>
 	<!-- 조직도 버튼 끝 -->
 
@@ -22,16 +22,16 @@
 				<input type="text" name="searchValue" placeholder="사번/이름/부서/직위/이메일"/>
 			</div>
 			<div class="closeBtnArea">
-				<button name="closeBtn">X</button>
+				<input type="button" onclick="close();" name="closeBtn" value="X"/>
 			</div>
 		</div>
 		<div class="members">
 			<ul>
-				<li>
+				<li>대표이사
 					<ul>
-						<li>대표이사
+						<li>김대표
 							<ul>
-								<li>김대표</li>
+								<li></li>
 							</ul>
 						</li>
 					</ul>
@@ -100,12 +100,25 @@
 		</div>
 	</div>
 	<!-- 조직도 버튼 끝 -->
+	
+	<!-- 개인 인적사항 시작 -->
+	
+	<!-- 개인 인적사항 끝 -->
 </body>
 
 
 <!-- 조직도 스크립트 시작 -->
 <script>
-
+	$(function(){
+		$(".organChart").click(function(){
+			console.log("clicked");
+			$(".organPanel").toggle();
+		});
+	});
+	
+	function close(){
+		$(".organPanel").hide();
+	}
 </script>
 <!-- 조직도 스크립트 끝 -->
 
