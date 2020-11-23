@@ -25,12 +25,33 @@
 				<button class="homeListBtn">작성하기</button>
 			</div>			
 			<div class="content">
-				<div class="test">
-				1234567891011121314151617181920
+				<div>
+					<div id="sortable1" class="connectedSortable">
+						<ul class="test">
+						  	<li>Item 1</li>
+ 							<li>Item 2</li>
+  							<li>Item 3</li>
+  							<li>Item 4</li>
+  							<li>Item 5</li>
+						</ul>
+						<ul class="test">
+						  	<li>Item 1</li>
+ 							<li>Item 2</li>
+  							<li>Item 3</li>
+  							<li>Item 4</li>
+  							<li>Item 5</li>
+						</ul>
+ 					</div>
+ 				</div>
+ 				<div>
+ 					<div id="sortable2" class="connectedSortable">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
@@ -47,5 +68,12 @@
     		})
     	});
     </script>
+  	<script>
+  		$( function() {
+   	 		$( "#sortable1, #sortable2" ).sortable({
+      			connectWith: ".connectedSortable"
+    				}).disableSelection();
+  		});
+  </script>
 </body>
 </html>

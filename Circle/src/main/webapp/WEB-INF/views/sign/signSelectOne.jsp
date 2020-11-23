@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 		<jsp:include page="../common/menuAlertBar.jsp" />
 	</div>
 		<div class="leftBar">
-			<jsp:include page="../sign/signSelectOneLeftBar.jsp" />
+			<jsp:include page="../sign/signLeftBar.jsp" />
 		</div>
 		<div class="container">
 			<div class="contentBar">
@@ -38,12 +39,12 @@
 				<div class="signOneList">
 					<ul>
 						<li class="resultBox4">
-							<input type="text" class="signDate" value="2020-11-11" readonly>
-							<input type="text" class="signDate" value="09:50E" readonly>
+							<input type="text" class="signDate" value="${signSelectOne.sign_edat}" readonly>
+							<input type="text" class="signDate" value="${signSelectOne.sign_ehour}" readonly>
 						</li>
 						<li class="resultBox4">
-							<input type="text" class="signDate" value="2020-11-11" readonly>
-							<input type="text" class="signDate" value="10:50S" readonly>
+							<input type="text" class="signDate" value="${signSelectOne.sign_wdat}" readonly>
+							<input type="text" class="signDate" value="${signSelectOne.sign_whour}" readonly>
 						</li>
 						<li class="resultBox3">
 							<button class="signSee">
@@ -56,18 +57,18 @@
 							</button>
 						</li>
 						<li class="imgBox2">
-							<input type="text" class="signCount" value="4" readonly>
+							<input type="text" class="signCount" value="${signSelectOne.sign_count}" readonly>
 						</li>
 						<li class="resultBox2">
-							<input type="text" class="signWriter" value="작성자" readonly>
-							<input type="text" class="signWriter" value="직위" readonly>
+							<input type="text" class="signWriter" value="${signSelectOne.emp_info_name}" readonly>
+							<input type="text" class="signWriter" value="${signSelectOne.job_info_name}" readonly>
 						</li>
 						<li class="imgBox1">
 							<img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img1">
 						</li>
 						<li class="resultBox1">
-							<input type="text" class="signType"  value="기안문서" readonly>
-							<input type="text" class="signTitle"  value="기안 바랍니다아아아아앙" readonly>
+							<input type="text" class="signType"  value="${signSelectOne.sign_type_name}" readonly>
+							<input type="text" class="signTitle"  value="${signSelectOne.sign_title}" readonly>
 						</li>
 					</ul>
 				</div>
@@ -79,25 +80,25 @@
 								<td class="formBox0" colspan="2"></td>
 							</tr>
 							<tr>
-								<td class="formBox2" rowspan="2"><%-- <img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img2"> --%></td>
+								<td class="formBox2" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="img2"></td>
 								<td class="formBox3">
-									<input type="text" class="formResult2" value="이름공간" readonly>
-									<input type="text" class="formResult2" value="직위" readonly>
+									<input type="text" class="formResult2" value="${signSelectOne.emp_info_name}" readonly>
+									<input type="text" class="formResult2" value="${signSelectOne.job_info_name}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<td class="formBox3">
-									<input type="text" class="formResult4" value="2020-11-11 09:50" readonly>
+									<input type="text" class="formResult4" value="${signSelectOne.sign_wdat}&nbsp;${signSelectOne.sign_whour}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<td class="formBox4" colspan="2">
-									<input type="text" class="formResult3" value="제목공간" readonly>
+									<input type="text" class="formResult3" value="${signSelectOne.sign_title}" readonly>
 								</td>
 							</tr>
 							<tr>
 								<td class="formBox5" colspan="2">
-									<div id="viewer" data-content="test<br>출력영역 최소크기test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>est<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>test<br>내용이 추가되면 늘어남test<br>test<br>test<br>test<br>test<br>"></div>
+									<div id="viewer" data-content="${signSelectOne.sign_note}"></div>
 								</td>
 							</tr>
 							<tr>
