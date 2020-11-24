@@ -12,7 +12,7 @@
 
 <mapper namespace="comu">
 
-<!-- <resultMap type="com.kh.circle.comu.entity.Comu" id="comuMap">
+<resultMap type="com.kh.circle.comu.entity.Comu" id="comuMap">
 	<id property="comu_post_ordr" column="comu_post_ordr"/>
 	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
 	<id property="comu_post_title" column="comu_post_title"/>
@@ -47,20 +47,20 @@
 <collection property="comu_repl_content" resultMap="comu_repl_content"/>
 <collection property="comu_repl_date" resultMap="comu_repl_date"/>
 <collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
-</resultMap> -->
+</resultMap>
 
 
-<!-- 주석 -->
-	<!-- <select id="postList" resultType="postPlus">
+
+	<!-- <select id="comuList" resultType="comuPlus">
 select * 
 from post p, emp_info e, post_type t
 where p.post_emp = e.emp_info_emp_no 
 and p.post_type = t.post_type_code
 order by post_code desc
-	</select>
+	</select> -->
 	
 	
-<select id="seq" resultType="String">
+<!--  <select id="seq" resultType="String">
 		select post_seq.nextval from dual
 	</select>
 	
