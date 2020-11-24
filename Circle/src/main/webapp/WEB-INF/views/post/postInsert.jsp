@@ -41,7 +41,8 @@
 			
     
     <div class="wrapper">
-          <form action='<c:url value='/post/postList'/>' method="post">
+    <div></div>
+          <form action='<c:url value='/post/postInsert'/>' method="post" var="post" items="${post}">
         <div class="form">
 
             <div class="title">
@@ -49,24 +50,23 @@
               </div>
               <div class="form">
                  <div class="inputfield">
-                    <label for="inputForm">제목</label>
+                    <label for="post_title">제목</label>
                     <input type="text" class="input" id="inputForm" name="post_title" placeholder="제목을 작성해주세요">
                  </div>  
-                 <c:forEach  var="post" items="${post}">
+                 
            <div class="inputfield">
-            <label>공개</label>
+            <label for="post_sec">공개</label>
             <div class="open_select">
-              <select>
-                <option value="open">${post.post_sec}</option>
+              <select name="post_sec">
+                <option value="open" name="post_sec">${post.post_sec}</option>
               </select>
             </div>
            </div>
-              </c:forEach>
            <div class="inputfield">
             <label>게시판 선택</label>
             <div class="open_select">
-              <select>
-                <option value="notice">공지 게시판</option>
+              <select name="post_type">
+                <option name="post_type" value="notice">공지 게시판</option>
                 <option value="employee">전사 게시판</option>
                 <option value="part">부서 게시판</option>
               </select>
@@ -74,16 +74,16 @@
             
        </div> 
       <div class="inputfield">
-          <label>파일</label>
-          <input type="file" class="input" multiple="multiple">
+          <label for="post_file">파일</label>
+          <input name="post_file" type="file" class="input" multiple="multiple">
        </div> 
       <div class="inputfield">
-          <label>본문</label>
-          <textarea class="textarea"></textarea>
+          <label for="post_comt">본문</label>
+          <textarea class="textarea" name="post_comt"></textarea>
        </div> 
           
-          <div class="inputfield">
-            <input type="submit" value="글쓰기" class="btn">
+          <div class="inputfield" for="submit">
+            <input type="submit" value="글쓰기" class="btn" name="submit">
           </div>
         </div>
     </div>

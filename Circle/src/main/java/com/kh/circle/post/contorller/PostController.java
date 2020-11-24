@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.circle.post.entity.Post;
@@ -24,6 +25,18 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	
+	@GetMapping("/post")
+	public String postSidebar(Model model) {
+		
+		
+		List<Post> postDeptInfo = sqlSession.selectList("post.postDeptInfo");
+		model.addAttribute("postDeptInfo", postDeptInfo);
+		
+		return "/postSidebar";
+	}
+	
+	
 	@GetMapping("/postList")
 	public String postList( Model model) {
 		
@@ -38,7 +51,11 @@ public class PostController {
 
 	
 	@GetMapping("/postInsert")
-	public String postInsert() {
+	public String postInsert(Model model, @ModelAttribute("post.postList") Post post) {
+		
+		
+		model.addAttribute("post", post);
+		
 		return "post/postInsert";
 	}
 	

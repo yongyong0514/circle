@@ -6,10 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class PostType {
+public class PostSidebar {
 
-	private String post_type_code;
-	private String post_type_title;
+	private String dept_info_code;
+	private String dept_info_name;
+	private String dept_info_levl;
+	private String dept_info_uper;
 	
 	
 }

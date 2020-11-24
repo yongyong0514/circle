@@ -14,9 +14,7 @@
 			<div class="menuLeftList"></div>
 			<div class="menuLeftListTitle">전체 게시판</div>
 			<div class="menuLeftList"><a href="#">공지 사항</a></div>
-			<div class="menuLeftListTitle">전사 게시판</div>
-			<div class="menuLeftList"><a href="#">인사 발령</a></div>
-			<div class="menuLeftList"><a href="#">일반 게시판</a></div>
+			<div class="menuLeftList"><a href="#">전사 게시판</a></div>
 			<div class="menuLeftListTitle">부서 게시판</div>
 			<div class="menuLeftList"><a href="#">인사과</a></div>
 			<div class="menuLeftList"><a href="#">홍보부</a></div>															
