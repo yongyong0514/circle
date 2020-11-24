@@ -45,11 +45,9 @@ body {
 }
 .poll-container {
 	height:100%;
-	padding:20px;
-	padding-top:70px;
+	padding:70px 0 0 0;
 	margin-left:180px;
 }
 .poll-content {
 	top:70px;
-	padding-top: 20px;
 }
