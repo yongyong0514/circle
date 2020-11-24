@@ -7,6 +7,17 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollHome.css">
 <title>Insert title here</title>
 </head>
+<script>
+	$(document).ready(function(){
+		$('.poll-title-td').on('click', function(){
+			console.log($(this) + ": clicked");
+			console.log("it's working");
+			location.replace("${pageContext.request.contextPath}/poll/pollPost");
+		});		
+	});
+
+</script>
+
 <body>
 	<div class="poll-content-container">
 		<div class="poll-content-bar">
@@ -18,40 +29,26 @@
 			</div>
 			<table class="poll-list">
 					<tr>
-						<th>상태</th>
+						<th><p>상태</p></th>
 						<th>설문제목</th>
 						<th>설문기간</th>
 						<th>작성자</th>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-no-attendance">미참여</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
-					</tr>
-					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
-					</tr>
-					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
-					</tr>
-					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-attendance">참여 완료</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 			</table>	
 			</div>
@@ -68,34 +65,44 @@
 						<th>작성자</th>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-no-attendance">미참여</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-attendance">참여 완료</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-attendance">참여 완료</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-attendance">참여 완료</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<td>미참여</td>
-						<td>설문제목 적는 공간</td>
-						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
-						<td>작성자 이름 직책</td>
+						<td class="poll-state-td">
+							<span class="poll-state-span-no-attendance">미참여</span>
+						</td>
+						<td class="poll-title-td">설문제목 적는 공간</td>
+						<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td class="poll-writer-td">작성자 이름 직책</td>
 					</tr>
 				</tbody>
 			</table>	
