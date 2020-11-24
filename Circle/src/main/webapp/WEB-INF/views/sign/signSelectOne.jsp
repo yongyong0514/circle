@@ -154,15 +154,23 @@
 								<th class="formBox6"><button class="formBtn1">결재자</button></th>
 							</tr>
 						</table>
-						<table class="formResult1" id="signJoiner">
+					<div class="formResult1" id="signListJoiner">
+						<table>
+							<tbody>
+							</tbody>
 						</table>
+					</div>
 						<table>
 							<tr>
 								<th class="formBox6"><button class="formBtn1">참조자</button></th>
 							</tr>
 						</table>
-						<table class="formResult1" id="signWatcher">							
+					<div class="formResult1" id="signListWatcher">
+						<table>		
+							<tbody>
+							</tbody>					
 						</table>
+					</div>	
 					</div>				
 				</div>
 			</div>
@@ -170,10 +178,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>    
     <script>
-        $(function(){
-
-            var content = $("#viewer").data("content"); //data-content의 값을 불러와라
-            $("#viewer").data("content", ""); //data-content의 값을 삭제(불러왔기 때문에)
+    	$(function(){
+    		var content = $("#viewer").data("content"); //data-content의 값을 불러와라
+    		$("#viewer").data("content", ""); //data-content의 값을 삭제(불러왔기 때문에)
 
             var viewer = toastui.Editor.factory({
                 el:document.getElementById("viewer"),
@@ -183,24 +190,87 @@
             });
         });
     </script>
+    
     <script>
     	$("#formBtn3").click(function(){
     		$("#signSelect").fadeIn(100);
     	});
     </script>
+    
     <script>
     	$("#signSelect").mouseleave(function(){
     		$("#signSelect").fadeOut(100);
     	});
     </script>
+    
+	<!-- 결재자 리스트 -->
+	<script>
+		$(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			$.ajax({
+				url: base + "/signResult/signListJoiner",
+				type: "get",
+				data: {signCode : signCode[1]},
+				success: function(data) {
+					if(data != null) {
+						var $signListJoiner = $("#signListJoiner tbody");
+						$signListJoiner.html('');
+						
+						for(var key in data) {
+							var $tr = $("<tr class='resultBox5'>");
+							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
+							var $JoinerClassTd = $("<td class='tClass'>").text(data[key].job_info_name);
+							
+							$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+							$tr.append($JoinerNameTd);
+							$tr.append($JoinerClassTd);
+							
+							$signListJoiner.append($tr);
+						}
+					}
+				}
+			});
+		});
+	</script>
+	
+	<!-- 참조자 리스트 -->
+	<script>
+		$(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			$.ajax({
+				url: base + "/signResult/signListWatcher",
+				type: "get",
+				data: {signCode : signCode[1]},
+				success: function(data) {
+					if(data != null) {
+						var $signListWatcher = $("#signListWatcher tbody");
+						$signListWatcher.html('');
+						
+						for(var key in data) {
+							var $tr = $("<tr class='resultBox5'>");
+							var $JoinerNameTd = $("<td class='tName'>").text(data[key].emp_info_name);
+							var $JoinerClassTd = $("<td class='tClass'>").text(data[key].job_info_name);
+							
+							$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+							$tr.append($JoinerNameTd);
+							$tr.append($JoinerClassTd);
+							
+							$signListWatcher.append($tr);
+						}
+					}
+				}
+			});
+		});
+	</script>
+	
     <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
     		var leftBar = $(".leftBar").offset().top;
     			$(window).scroll(function() {
     		var window = $(this).scrollTop();
-    		console.log(leftBar+"left");
-    		console.log(window+"window");
     		if(leftBar <= window) {
     			$(".leftBar").addClass("fixed");
     		} else {

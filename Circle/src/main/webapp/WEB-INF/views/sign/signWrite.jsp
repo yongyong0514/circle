@@ -20,7 +20,7 @@
 				<jsp:include page="../sign/signLeftBar.jsp" />
 			</div>
 			<div class="container">
-				<form role="form" method="post" action="/sign/signWrite">
+				<form id="form" method="get" action="">
 					<div class="contentBar">
 						<jsp:include page="../sign/signWriteBar.jsp" />
 						<div class="signHomeListBar">
@@ -171,23 +171,6 @@
             el:document.querySelector("#editor"),
             height: "630px",
             initialEditType:"wysiwyg",
-            hooks:{
-                "addImageBlobHook":function(blob, callback){
-                    var fd = new FormData();
-                    fd.append("im", blob);
-
-                    $.ajax({
-                        url:"http://localhost:8089/spring18/toast/upload",
-                        type:"post",
-                        data:fd,
-                        processData:false,
-                        contentType:false,
-                        success:function(result){
-                            callback(result);
-                        }
-                    });
-                }
-            },
         });        
     </script>
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
@@ -309,5 +292,18 @@
 	</script>
  -->
 <!-- 참여자 추가 시작 -->
+
+<!-- 전송시작 -->
+	<script>
+		$('#form').submit(function(e) { 
+			
+			e.preventDefault();
+			
+			var isSubmit = false;
+		
+			var editorValue = document.querySelector("#editor").getHtml();
+			alert(editorValue);
+		});
+	</script>
 </body>
 </html>
