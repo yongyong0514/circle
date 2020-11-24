@@ -9,7 +9,9 @@
 	mapper라는 영역 안에 구문을 작성한다
 	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
 -->
-<mapper namespace="post">
+
+<!-- namespace 오류로 임의 변경 -->
+<mapper namespace="comu">
 
 <!-- <resultMap type="com.kh.circle.post.entity.Comu" id="postMap">
 	<id property="post_code" column="post_code"/>
