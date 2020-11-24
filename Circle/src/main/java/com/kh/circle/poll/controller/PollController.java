@@ -12,4 +12,9 @@ public class PollController {
 	public String pollMain() {
 		return "/poll/pollMain";
 	}
+	
+	@GetMapping("/pollPost")
+	public String pollPost() {
+		return "/poll/pollPost";
+	}
 }

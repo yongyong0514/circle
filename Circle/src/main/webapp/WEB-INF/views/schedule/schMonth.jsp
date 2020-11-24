@@ -7,22 +7,22 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/fullcalendar/fullcalendar.css">
-<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/jQuery/jquery-ui.css"> --%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/bootstrap/bootstrap.css">
+<%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/jQuery/jquery-ui.css"> --%>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src='http://fullcalendar.io/js/fullcalendar-2.3.2/lib/moment.min.js'></script>
-<script src='http://fullcalendar.io/js/fullcalendar-2.3.2/lib/jquery.min.js'></script>
-<script src="http://fullcalendar.io/js/fullcalendar-2.3.2/lib/jquery-ui.custom.min.js"></script>
-<script src='http://fullcalendar.io/js/fullcalendar-2.3.2/fullcalendar.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js" integrity="sha256-ivk71nXhz9nsyFDoYoGf2sbjrR9ddh+XDkCcfZxjvcM=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>       
+<script src='${pageContext.request.contextPath}/resources/js/schedule/fullcalendar.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
 <%-- <script src="${pageContext.request.contextPath}/resources/js/schedule/jquery-ui.js"></script> --%>
+        
 <!-- 주석커밋 -->
       <script>
-      		
-      		var loginId = "200101090031";						//로그인 아이디
+      		var loginId = '200101090031'//${member.EMP_INFO_EMP_NO}	;//로그인 아이디
       		var nowEvent = "";									//클릭한 이벤트 정보 저장
       		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
       		
@@ -50,6 +50,7 @@
                 	defaultDate			: moment(),//현재를 기준으로 생성
                 	nextDayThreshold	: "00:00:00",
                 	defaultAllDay		: false,
+                	fixedWeekCount		: false,//6주 보기 고정 해제
                 	editable			: true,
                 	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
                 	
