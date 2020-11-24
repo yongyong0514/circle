@@ -12,60 +12,90 @@
 		<div class="poll-content-bar">
 			<jsp:include page="pollHomeBar.jsp"/>
 		</div>
-		<div class="poll-list-bar">
-			<jsp:include page="pollHomeListBar.jsp"/>		
-		</div>
-		<div class="poll-list-area-container">
+		<div class="my-poll-list-container">
+			<div class="poll-list-bar">
+				<h1>나의 설문(제목 바)</h1>
+			</div>
 			<table class="poll-list">
-				<tbody>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<th>상태</th>
+						<th>설문제목</th>
+						<th>설문기간</th>
+						<th>작성자</th>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th></th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
-				</tbody>
+					<tr>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
+					</tr>
 			</table>	
-		</div>
-		<div class="poll-list-bar">
-			<jsp:include page="pollHomeListBar2.jsp"/>		
-		</div>
-		<div class="poll-list-area-container">
+			</div>
+		<div class="recent-poll-list-container">
+			<div class="poll-list-bar">
+				<h1>최근 생성된 설문(제목 바)</h1>
+			</div>
 			<table class="poll-list">
 				<tbody>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<th>상태</th>
+						<th>설문제목</th>
+						<th>설문기간</th>
+						<th>작성자</th>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th>ddd</th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 					<tr>
-						<th></th>
-						<td>ddd</td>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
+					</tr>
+					<tr>
+						<td>미참여</td>
+						<td>설문제목 적는 공간</td>
+						<td>xxxx/xx/xx ~ xxxx/xx/xx</td>
+						<td>작성자 이름 직책</td>
 					</tr>
 				</tbody>
 			</table>	
