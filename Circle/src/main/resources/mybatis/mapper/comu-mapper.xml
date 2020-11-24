@@ -11,7 +11,7 @@
 -->
 <mapper namespace="post">
 
-<resultMap type="com.kh.circle.post.entity.Comu" id="postMap">
+<!-- <resultMap type="com.kh.circle.post.entity.Comu" id="postMap">
 	<id property="post_code" column="post_code"/>
 	<id property="post_type" column="post_type"/>
 	<id property="post_emp" column="post_emp"/>
@@ -24,7 +24,7 @@
 	<id property="post_noti" column="post_noti"/>
 	<id property="post_cvp" column="post_cvp"/>
 	<id property="post_code_ref" column="post_code_ref"/>
-</resultMap>
+</resultMap> -->
 
 <resultMap type="com.kh.circle.post.entity.PostType" id="postTypeMap">
 	<id property="post_type_code" column="post_type_code"/>

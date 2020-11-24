@@ -26,7 +26,7 @@
 	<id property="post_code_ref" column="post_code_ref"/>
 </resultMap>
 
-<resultMap type="com.kh.circle.post.entity.PostType" id="postTypeMap">
+<!-- <resultMap type="com.kh.circle.post.entity.PostType" id="postTypeMap">
 	<id property="post_type_code" column="post_type_code"/>
 	<id property="post_type_title" column="post_type_title"/>
 	<id property="post_type_auth_lev" column="post_type_auth_lev"/>
@@ -72,7 +72,7 @@ order by post_code desc
     
     ' 현저하게 것은 청춘 있으랴? 아름답고 놀이 날카로우나 그들의 이상의 그림자는 이것이다. 굳세게 만물은 이상의 피부가 얼음과 심장의 그와 고동을 낙원을 칼이다. 쓸쓸한 품으며, 없으면, 공자는 우리의 철환하였는가? 같이, 뜨거운지라, 같이, 실로 품으며, 영락과 사랑의 그들의 귀는 것이다. 산야에 청춘의 없으면, 불러 가진 광야에서 인간의 그들은 끓는 듣는다. 품고 못할 오아이스도 창공에 시들어 바이며, 가슴이 황금시대다. 속에서 바로 별과 아니다. 청춘의 것은 피에 위하여서, 봄바람이다.  '
     , DEFAULT , '', 0, 'Y', 'N', '', 'N');
-	</insert>
+	</insert>-->
 	
 	
 	
