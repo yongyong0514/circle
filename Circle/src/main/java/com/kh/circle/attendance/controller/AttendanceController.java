@@ -1,50 +1,83 @@
 package com.kh.circle.attendance.controller;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.YamlMapFactoryBean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.circle.attendance.service.AttendanceService;
+import com.kh.circle.login.entity.EmpInfo;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
 
+	@Autowired
+	private AttendanceService attendanceService;
+	
 	@GetMapping("/main")
-	public String main() {
-		return "attendance/main";
+	public String main(HttpSession session,
+						@RequestParam(defaultValue="") String date,
+						Model model) {
+		
+		if("".equals(date)) {
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+			date = sdFormat.format(System.currentTimeMillis());
+		} 
+
+		EmpInfo empInfo = (EmpInfo) session.getAttribute("empInfo");
+		
+		if(empInfo != null) {
+			
+			Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
+			
+			return "attendance/main";
+		} else {
+			model.addAttribute("msg", "로그인 후 사용 가능합니다.");
+			
+			return "common/error.jsp";
+		}
 	}
 	
 	@GetMapping("/myInfo")
 	public String myInfo() {
+		
 		return "attendance/myInfo";
 	}
 	
 	@GetMapping("/myVacation")
 	public String myVacation() {
-		return "attendance/myVacation";
+		return "attendance/attendanceMyVacation";
+	}
+
+	public String attendanceAllList() {
+		return "attendance/attendanceAllList";
 	}
 	
-	@GetMapping("/allAttendanceList")
-	public String allAttendanceList() {
-		return "attendance/allAttendanceList";
+	@GetMapping("/attendanceAllStatistic")
+	public String attendanceAllStatistic() {
+		return "attendance/attendanceAllStatistic";
 	}
 	
-	@GetMapping("/allAttendanceStatistic")
-	public String allAttendanceStatistic() {
-		return "attendance/allAttendanceStatistic";
+	@GetMapping("/attendanceAllInfoList")
+	public String attendanceAllInfoList() {
+		return "attendance/attendanceAllInfoList";
 	}
 	
-	@GetMapping("/allInfoList")
-	public String allInfoList() {
-		return "attendance/allInfoList";
-	}
-	
-	@GetMapping("/allVacationList")
-	public String allVacationList() {
-		return "attendance/allVacationList";
-	}
-	
-	@GetMapping("/allVacationHistory")
-	public String allVacationHistory() {
-		return "attendance/allVacationHistory";
+	@GetMapping("/attendanceAllVacationList")
+	public String attendanceAllVacationList() {
+		return "attendance/attendanceAllVacationList";
 	}
 }
