@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="attendance">
+	
+	<select id="list" parameterType="map" resultType="attendance">
+		select atdc_hstr_ordr
+			 , atdc_hstr_emp_no
+			 , atdc_hstr_dat
+			 , atdc_hstr_writ_type
+			 , atdc_hstr_stim
+			 , atdc_hstr_etim
+			 , atdc_hstr_type
+		  from atdc_hstr
+		 where atdc_hstr_emp_no = #{emp_no}
+		   and atdc_hstr_dat <![CDATA[ < ]]>= to_date(#{date}, 'yyyy-MM-dd')
+	</select>
+		
+</mapper>

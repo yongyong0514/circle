@@ -56,7 +56,10 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignTypeContent" alias="signTypeContent"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignEmpList" alias="signEmpList"/>
 	
-		<!-- <typeAlias type="com.kh.circle.attendance.entity.EmpInfo" alias="empInfo"/> -->
+		
+		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendance"/>
+	
+	
 	</typeAliases>
 
 	<!-- 
