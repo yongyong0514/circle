@@ -2,9 +2,11 @@ package com.kh.circle.post.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
@@ -15,7 +17,25 @@ public interface PostService {
 
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
-	Object getList(PostPaging paging);
+
+
+	static PostService getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	List<Post> getPostList(int offset, int recordsPerPage);
+
+
+
+
+
+	int getNoOfRecords();
+
+	
+
 
 
 }

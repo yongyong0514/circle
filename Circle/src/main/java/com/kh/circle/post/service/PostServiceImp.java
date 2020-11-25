@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
@@ -33,7 +35,21 @@ public class PostServiceImp implements PostService{
 	private PostSaveDao postSaveDao;
 	
 	
+	@Autowired
+	private SqlSession sqlSession;
+
+
+	static PostService postMainservice = null;
 	
+	
+	
+
+
+
+	@Override
+	public List<Post> getPostList(int offset, int recordsPerPage) {
+		return	postDao.getPostList(offset, recordsPerPage);
+	}
 
 
 
@@ -65,16 +81,25 @@ public class PostServiceImp implements PostService{
 
 
 
-
-
-
 	@Override
-	public List<Post> getList(PostPaging paging) {
-
-		
-		
-		return postDao.getListWithPaging(paging);
+	public int getNoOfRecords() {
+		// TODO Auto-generated method stub
+		return postDao.getNoOfRecords();
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

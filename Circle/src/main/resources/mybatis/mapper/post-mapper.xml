@@ -11,7 +11,45 @@
 -->
 <mapper namespace="post">
 
+<resultMap type="com.kh.circle.comu.entity.Comu" id="comuMap">
+	<id property="comu_post_ordr" column="comu_post_ordr"/>
+	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
+	<id property="comu_post_title" column="comu_post_title"/>
+	<id property="comu_post_cont" column="comu_post_cont"/>
+	<id property="comu_post_dat" column="comu_post_dat"/>
+	<id property="comu_post_view" column="comu_post_view"/>
+	<id property="comu_post_comu_code" column="comu_post_comu_code"/>
+	<id property="comu_post_type" column="comu_post_type"/>
+</resultMap>
 
+<resultMap type="com.kh.circle.comu.entity.ComuInfo" id="comuInfoMap">
+	<id property="comu_info_emp_no" column="comu_info_emp_no"/>
+	<id property="comu_info_comu_code" column="comu_info_comu_code"/>
+	<id property="comu_info_sdat" column="comu_info_sdat"/>
+	<id property="comu_info_edat" column="comu_info_edat"/>
+	<id property="comu_info_comu_job_code" column="comu_info_comu_job_code"/>
+	<id property="comu_info_rm" column="comu_info_rm"/>
+	<id property="comu_info_join" column="comu_info_join"/>
+	<id property="comu_info_join_rqst_dat" column="comu_info_join_rqst_dat"/>
+	
+</resultMap>
+
+<resultMap type="com.kh.circle.comu.entity.ComuList" id="comuListMap">
+	<id property="comu_list_code" column="comu_list_code"/>
+	<id property="comu_list_name" column="comu_list_name"/>
+	
+</resultMap>
+
+<resultMap type="com.kh.circle.comu.entity.ComuRepl" id="comuReplMap">
+<collection property="comu_repl_ordr" resultMap="comu_repl_ordr"/>
+<collection property="comu_repl_post_ordr" resultMap="comu_repl_post_ordr"/>
+<collection property="comu_repl_content" resultMap="comu_repl_content"/>
+<collection property="comu_repl_date" resultMap="comu_repl_date"/>
+<collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
+</resultMap>
+
+
+<!--  postList 호출 -->
 	<select id="postList" resultType="postPlus">
 select * 
 from post p, emp_info e, post_type t
@@ -19,8 +57,33 @@ where p.post_emp = e.emp_info_emp_no
 and p.post_type = t.post_type_code
 order by post_code desc
 	</select>
+	<!--  호출 끝 -->
 	
+	<!-- 페이징 처리 -->
+	<select id="postCount" resultType="int">
 	
+	select count(*) from post
+	
+</select>
+
+<!-- 페이징 처리 후 게시글 조회 -->
+<select id="selectPost" resultType="postPaging">
+	select *
+	from (
+	select rownum rn, a.*
+	) from (
+	select * 
+from post p, emp_info e, post_type t
+where p.post_emp = e.emp_info_emp_no 
+and p.post_type = t.post_type_code
+order by post_code desc
+	) a
+	where rn between #{start} and {end}
+</select>
+
+<!-- 페이징 처리 끝 -->
+
+
 <select id="seq" resultType="String">
 		select post_seq.nextval from dual
 	</select>
@@ -38,11 +101,7 @@ order by post_code desc
 	</insert>
 	
 	
-	<select id="postSidebar" resultType="postSidebar">
-	select *
-	from dept_info
-	where dept_info_levl = 2
-	</select>
+
 
 
 </mapper>
