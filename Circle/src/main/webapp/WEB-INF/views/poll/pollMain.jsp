@@ -41,10 +41,10 @@
 				<div>
 					<c:choose>
 						<c:when test="${url == 'Home'}">
-							<jsp:include page="../poll/pollHome.jsp"/>
+							<jsp:include page="contentArea/pollHome.jsp"/>
 						</c:when>
 						<c:when test="${url == 'Post'}">
-							<jsp:include page="../poll/pollPost.jsp"/>
+							<jsp:include page="contentArea/pollPost.jsp"/>
 						</c:when>
 					</c:choose>
 					

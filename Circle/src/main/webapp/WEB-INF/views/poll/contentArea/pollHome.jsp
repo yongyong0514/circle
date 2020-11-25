@@ -19,7 +19,7 @@
 <body>
 	<div class="poll-content-container">
 		<div class="poll-content-bar">
-			<jsp:include page="pollHomeBar.jsp"/>
+			<jsp:include page="../contentTopBar/pollHomeBar.jsp"/>
 		</div>
 		<div class="my-poll-list-container">
 			<div class="poll-list-bar">
