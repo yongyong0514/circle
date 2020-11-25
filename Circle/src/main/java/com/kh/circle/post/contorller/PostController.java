@@ -88,15 +88,15 @@ public class PostController {
 		return "post/postList";
 	}
 
-	@GetMapping("postList")
-	public String postList(Model model) {
-	
-List<Post> postList = sqlSession.selectList("post.postList");
-		
-		model.addAttribute("postList", postList);
-	
-		return "post/postList";
-	}
+	/*
+	 * @GetMapping("postList") public String postList(Model model) {
+	 * 
+	 * List<Post> postList = sqlSession.selectList("post.postList");
+	 * 
+	 * model.addAttribute("postList", postList);
+	 * 
+	 * return "post/postList"; }
+	 */
 	
 	
 	
