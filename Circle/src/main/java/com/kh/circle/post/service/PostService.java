@@ -10,31 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
-import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.post.repository.PostDao;
 
 public interface PostService {
 
 
+	
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
-
-
-	static PostService getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	PostService getInstance();
 
 	List<Post> getPostList(int offset, int recordsPerPage);
 
-
-
-
-
 	int getNoOfRecords();
-
 	
+
 
 
 

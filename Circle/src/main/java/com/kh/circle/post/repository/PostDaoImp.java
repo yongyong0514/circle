@@ -4,13 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 
 import com.kh.circle.post.entity.Post;
-import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.service.PostService;
 
 @Repository
@@ -59,9 +64,6 @@ public class PostDaoImp implements PostDao{
 		return null;
 	}
 
-	
-	
-	
 	
 	
 }
