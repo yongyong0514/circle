@@ -16,9 +16,18 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<script>
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href = "PostList?nowPage=${paging.nowPage}&cntPerPage=" + sel;
+	}
+</script>
+<head>
+<meta charset="UTF-8">
+
 </head>
 <body>
-	<div class="wrap">
+<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
 		<div class="container">
@@ -26,10 +35,9 @@
 				<jsp:include page="../post/postSidebar.jsp" />
 			</div>
 			<div class="content">
-			<div class="homebar"> 
+
 				<jsp:include page="../post/postHomebar.jsp" />
-				</div>
-			
+			</div>
 			<!-- 내용 -->
 
 			<div class="filter">
@@ -37,43 +45,49 @@
 				<div>
 					<table class="post">
 
-						<tr>
-							<th class="code">글번호</th>
-							<th class="type">분류</th>
-							<th class="title">제목</th>
-							<th class="writer">작성자</th>
-							<th class="date">작성일</th>
-							<th class="cvp">조회수</th>
+						<tr><!-- 헤드 글자 깨짐 -->
+							<th>글번호</th>
+							<th>분류</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
-						<c:forEach var="postList" items="${postList}">
+						<c:forEach var="postNoticeList" items="${postNoticeList}">
 							<tr>
-								<td>${postList.post_code}</td>
-								<td>${postList.post_type_title}</td>
-								<td>${postList.post_title}</td>
-								<td>${postList.emp_info_name}</td>
-								<td>${postList.post_wdat}</td>
-								<td>${postList.post_cvp}</td>
+								<td>${postNoticeList.post_code}</td>
+								<td>${postNoticeList.post_type_title}</td>
+								<td>${postNoticeList.post_title}</td>
+								<td>${postNoticeList.emp_info_name}</td>
+								<td>${postNoticeList.post_wdat}</td>
+								<td>${postNoticeList.post_cvp}</td>
 							</tr>
 						</c:forEach>
 
 					</table>
-			<input type="submit" value="글쓰기">	
+				
 				
 
-			<div>
 			
-			</div>
 			<!-- 옵션선택 끝 -->
 
 		</div>
 	</div>
 </div>
 
+
+
+
 </div>
 
 
-</div>
-
+<script>
+	function goPage(url, pages, lines) {
+		url += '?' + "pages=" + pages + "&lines=" lines;
+		
+		location.href = url;
+	}
+</script>
 
 	<script>
 		$(function() {

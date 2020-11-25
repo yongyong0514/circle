@@ -10,14 +10,14 @@ import com.kh.circle.post.service.PostService;
 
 public interface PostDao {
 
-
-
+/*
+페이징처리
 	int getNoOfRecords();
 
 	List<Post> getPostList(int offset, int recordsPerPage);
 
 	PostDao getInstance();
-
+*/
 
 	
 

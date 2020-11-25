@@ -27,7 +27,7 @@ public class PostDaoImp implements PostDao{
 	int noOfRecords;
 	
 	
-
+/* 페이징처리
 
 	@Override
 	public int getNoOfRecords() {
@@ -64,6 +64,6 @@ public class PostDaoImp implements PostDao{
 		return null;
 	}
 
-	
+	*/
 	
 }
