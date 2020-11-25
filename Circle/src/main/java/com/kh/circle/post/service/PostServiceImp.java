@@ -1,6 +1,7 @@
 package com.kh.circle.post.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostFile.PostFileBuilder;
-import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
@@ -39,18 +39,9 @@ public class PostServiceImp implements PostService{
 	private SqlSession sqlSession;
 
 
-	static PostService postMainservice = null;
+	static PostService postService = null;
 	
 	
-	
-
-
-
-	@Override
-	public List<Post> getPostList(int offset, int recordsPerPage) {
-		return	postDao.getPostList(offset, recordsPerPage);
-	}
-
 
 
 
@@ -81,19 +72,32 @@ public class PostServiceImp implements PostService{
 
 
 
+
 	@Override
-	public int getNoOfRecords() {
+	public List<Post> getPostList(int offset, int recordsPerPage) {
 		// TODO Auto-generated method stub
-		return postDao.getNoOfRecords();
+		return null;
 	}
 
 
 
 
 
+	@Override
+	public int getNoOfRecords() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
 
+
+
+	@Override
+	public PostService getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 

@@ -21,6 +21,7 @@ import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.service.PostService;
 import com.kh.circle.post.service.PostServiceImp;
 
+
 @Controller
 @RequestMapping("/post")
 public class PostController {
@@ -37,14 +38,13 @@ public class PostController {
 	@Autowired 
 	private HttpServletResponse response;
 
-	
-
 	@GetMapping("postList")
 	public String postList(Model model, PostPaging paging) {
 	
 		// pageing calculation
 		int currentPageNo = 1;
 		int recordsPerPage = 0;
+		String url = null;
 		
 		//커넥션 풀 연결 / 인스턴스 생성
 		PostService postService = PostService.getInstance();
@@ -57,13 +57,16 @@ public class PostController {
 		if(request.getParameter("lines") != null)
 			recordsPerPage = Integer.parseInt(request.getParameter("lines"));
 		
+		
 		//Paging 객체 생성(currentPagenNO, recordsPerPage를 인자로 넣고 초기화함)
 		//객체 선언한 뒤 paging 출력하면 recordsPerPage가 5로 출력
 		PostPaging postPaging = new PostPaging(currentPageNo, recordsPerPage);
 		
+		
 		//해당 게시글의 인덱스를 구하는 변수offset
 		
 		int offset = (postPaging.getCurrentPageNo() - 1) * postPaging.getRecordsPerPage();
+		
 		
 		
 		//post 데이터 가져오기
@@ -79,12 +82,19 @@ public class PostController {
 		
 		
 		//list 존재시
-		request.setAttribute("post", post);	
-		request.setAttribute("paging", paging);	
+		request.setAttribute("post", post);
+		request.setAttribute("paging", paging);
 		
-		List<Post> postList = sqlSession.selectList("post.postList");
+		return "post/postList";
+	}
+
+	@GetMapping("postList")
+	public String postList(Model model) {
+	
+List<Post> postList = sqlSession.selectList("post.postList");
+		
 		model.addAttribute("postList", postList);
-		
+	
 		return "post/postList";
 	}
 	

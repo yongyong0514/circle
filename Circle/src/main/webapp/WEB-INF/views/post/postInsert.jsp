@@ -92,7 +92,5 @@
 		</div>
 </div>
 
-
-		<script src="<c:url value="/resources/js/post/postAdd.js" />"></script>
 </body>
 </html>
