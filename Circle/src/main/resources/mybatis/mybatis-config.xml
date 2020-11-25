@@ -34,8 +34,15 @@
    		<typeAlias type="com.kh.circle.issue.entity.Situ" alias="situ"/>
    		<typeAlias type="com.kh.circle.issue.entity.JoinMem" alias="joinMem"/>
     
-		<typeAlias type="com.kh.circle.login.entity.Member" alias="member"/>	
-    
+		<typeAlias type="com.kh.circle.login.entity.EmpInfo" alias="empInfo"/>	
+		<typeAlias type="com.kh.circle.login.entity.JoinMember" alias="joinMember"/>
+
+		<typeAlias type="com.kh.circle.comu.entity.Comu" alias="comu"/>
+		<typeAlias type="com.kh.circle.comu.entity.ComuInfo" alias="comuInfo"/>
+		<typeAlias type="com.kh.circle.comu.entity.ComuList" alias="comuList"/>
+		<typeAlias type="com.kh.circle.comu.entity.ComuRepl" alias="comuRepl"/>
+		
+		
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjaxEntry" alias="schAjaxEntry"/>
@@ -49,7 +56,7 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignTypeContent" alias="signTypeContent"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignEmpList" alias="signEmpList"/>
 	
-		<typeAlias type="com.kh.circle.attendance.entity.EmpInfo" alias="empInfo"/>
+		<!-- <typeAlias type="com.kh.circle.attendance.entity.EmpInfo" alias="empInfo"/> -->
 	</typeAliases>
 
 	<!-- 

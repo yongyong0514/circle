@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.circle.login.entity.JoinMember;
-import com.kh.circle.login.entity.Member;
+import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.login.repository.MemberDao;
 import com.kh.circle.login.service.JoinMemberService;
 import com.kh.circle.login.service.MemberService;
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/empInfo")
 public class LoginController {
 
 	@Autowired
@@ -39,13 +39,15 @@ public class LoginController {
 	
 	
 	@PostMapping("/login")
-	public String login(Member member,
+	public String login(EmpInfo empInfo,
 			/* JoinMember joinmember, */HttpServletRequest req,RedirectAttributes rttr) throws Exception{
 		log.info("선수입장");
 		
 		
+		System.out.println("controller empInfo:" + empInfo);
+		
 		HttpSession session = req.getSession();
-		Member login = service.login(member, session);
+		EmpInfo login = service.login(empInfo, session);
 		
 		/* JoinMember joinlogin = joinservice.login(joinmember, session); */
 		
@@ -54,9 +56,9 @@ public class LoginController {
 		
 		if(login==null){
 			System.out.println("null값 입력");
-			System.out.println("member : "+member);
+			System.out.println("empInfo : "+empInfo);
 			
-			session.setAttribute("member", null);
+			session.setAttribute("empInfo", null);
 			/* session.setAttribute("joinmember", null); */
 			
 			rttr.addFlashAttribute("message",false);
@@ -64,7 +66,7 @@ public class LoginController {
 			
 		}else {
 			System.out.println("login 값알려주세요 : "+login);
-			session.setAttribute("member", login);
+			session.setAttribute("empInfo", login);
 
 			/* session.setAttribute("joinmember", joinlogin); */
 			System.out.println("session "+session);

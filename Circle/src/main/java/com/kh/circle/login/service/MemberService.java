@@ -3,11 +3,11 @@
  
  import javax.servlet.http.HttpSession;
 
-import com.kh.circle.login.entity.Member;
+import com.kh.circle.login.entity.EmpInfo;
  
  public interface MemberService {
  
-	 public Member login(Member member, HttpSession session) throws Exception;
+	 public EmpInfo login(EmpInfo empInfo, HttpSession session) throws Exception;
 	 
 	 //임의로 설계
 		/* public Member logIn(Member member); */

@@ -165,8 +165,8 @@ margin-left:20px;
 <body>
 	
 	
-	<form name="homeForm" action="${pageContext.request.contextPath}/member/login" method="POST" >
-	<c:if test="${member == null }">
+	<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
+	<c:if test="${empInfo == null }">
 	<section id="container">
 			<aside id="aside" >
 			
@@ -181,9 +181,9 @@ margin-left:20px;
 			<a class="group1" id="group2">간편하고 깔끔하게 circle<br>(환영 메세지)</a>
 			
 				</div>
-			<label id="id">UserName</label><br><input type="text" name="EMP_INFO_EMP_NO"  class="id">
+			<label id="id">UserName</label><br><input type="text" name="emp_info_emp_no"  class="id">
 			<br><br>
-			<label id="password">PassWord</label><br> <input type="password" name="EMP_INFO_PWD"  class="pwd">
+			<label id="password">PassWord</label><br> <input type="password" name="emp_info_pwd"  class="pwd">
 			<br><br>
 				<input type="submit" value="로그인" id="login">
 				<!-- <a href="login" type="submit" id="login">로그인</a> -->
