@@ -25,27 +25,7 @@
 				<button class="homeListBtn">작성하기</button>
 			</div>			
 			<div class="content">
-				<div>
-					<div id="sortable1" class="connectedSortable">
-						<ul class="test">
-						  	<li>Item 1</li>
- 							<li>Item 2</li>
-  							<li>Item 3</li>
-  							<li>Item 4</li>
-  							<li>Item 5</li>
-						</ul>
-						<ul class="test">
-						  	<li>Item 1</li>
- 							<li>Item 2</li>
-  							<li>Item 3</li>
-  							<li>Item 4</li>
-  							<li>Item 5</li>
-						</ul>
- 					</div>
- 				</div>
- 				<div>
- 					<div id="sortable2" class="connectedSortable">
-					</div>
+				<div class="test">
 				</div>
 			</div>
 		</div>

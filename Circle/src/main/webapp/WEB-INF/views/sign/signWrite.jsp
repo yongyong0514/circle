@@ -20,7 +20,7 @@
 				<jsp:include page="../sign/signLeftBar.jsp" />
 			</div>
 			<div class="container">
-				<form id="form" method="get" action="">
+ 				<form id="formArea" method="get" action="">
 					<div class="contentBar">
 						<jsp:include page="../sign/signWriteBar.jsp" />
 						<div class="signHomeListBar">
@@ -43,16 +43,18 @@
 									<th class="formBox1">보존 연한</th>
 									<th class="formBox2">
 										<select class="formSelect1" id="sign_keep" name="sign_keep">
+											<option value="0">보존 연한을 선택하세요</option>
 											<option value="365">1 년</option>
 											<option value="1095">3 년</option>
 											<option value="1825">5 년</option>
 											<option value="3650">10 년</option>
-											<option value="null">영구</option>
+											<option value="NULL">영구</option>
 										</select>
 									</th>
 									<th class="formBox1">보안 등급</th>
 									<th class="formBox2">
 										<select class="formSelect1" id="sign_acc" name="sign_acc">
+											<option value="0">보안 등급을 선택하세요</option>
 											<option value="1">S 등급</option>
 											<option value="2">A 등급</option>
 											<option value="3">B 등급</option>
@@ -63,7 +65,7 @@
 								<tr>
 									<th class="formBox1">문서 유형</th>
 									<th class="formBox4" colspan="3">
-										<select class="formSelect2" id="signType" name="signType">
+										<select class="formSelect2" id="sign_type" name="sign_type">
 												<option value="0">문서 유형을 선택하세요</option>
 											<c:forEach var="item" items="${list}">
 												<option value="${item.sign_type_code}">${item.sign_type_name}</option>
@@ -73,7 +75,7 @@
 								</tr>
 								<tr>
 									<th class="formBox1">제목</th>
-									<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title" name="sign_title"></th>
+									<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title"></th>
 								</tr>
 								<tr>
 									<th class="formBox0"></th>
@@ -163,9 +165,12 @@
 				</div>
 			</form>
 		</div>
+<!-- SCRIPT 영역 -->		
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- TUI EDITOR -->    
     <script>
         var editor = new toastui.Editor({
             el:document.querySelector("#editor"),
@@ -173,6 +178,7 @@
             initialEditType:"wysiwyg",
         });        
     </script>
+
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
 	<script>
 		$(function() {
@@ -187,11 +193,12 @@
     		})
     	});
     </script>
+    
 <!-- 문서 종류 옵션 시작 -->
 	<script>
-			$("#signType").on("change", function() {
+			$("#sign_type").on("change", function() {
 				var base = "${pageContext.request.contextPath}";				
-				var typeCode = $("#signType").val();
+				var typeCode = $("#sign_type").val();
 				$.ajax({
 					url: base + "/signResult/signTypeContent",
 					type : "get",
@@ -202,12 +209,16 @@
 				});
 			});
 	</script>
+	
 <!-- 결재자 추가 시작 -->
+	<!-- 결재자 등록 HOVER -->
 	<script>
 		function signJoiner() {
 			$(".joinForm1").fadeIn(100);
 		};
 	</script>
+	
+	<!-- 결재자 추가 목록 표시 -->
 	<script>
 		$(function() {
 		    $("#resultBox1, #resultBox2").sortable({
@@ -215,94 +226,112 @@
 		    		}).disableSelection();
 		  });
 	</script>
-<script>
-	 $(document).on('click', function() {
-		 if($(".joinForm1").css("display") != "none") {
-			 $(".joinForm1").mouseleave(function(e) {
-				if(!$(e.target).is(".joinForm1")) {
-					var tag1 = $("#resultBox2").children();
-					var joinerLength = tag1.length;
+	
+	<!-- 결재자 추가 후 세션 저장 -->
+	<script>
+	 	$(document).on('click', function() {
+			 if($(".joinForm1").css("display") != "none") {
+				 $(".joinForm1").mouseleave(function(e) {
+					if(!$(e.target).is(".joinForm1")) {
+						var tag1 = $("#resultBox2").children();
+						var joinerLength = tag1.length;
+						var joiner = new Array();
 					
-					var joiner = new Array();
+							for(var i = 1; i < joinerLength; i++) {
+								var data = new Object();
+								data.jCode = tag1.eq(i).children().eq(1).text();
+								data.jName = tag1.eq(i).children().eq(2).text();
+								data.jJob = tag1.eq(i).children().eq(3).text();
+	
+								joiner.push(data);
+							}
 					
-						for(var i = 1; i < joinerLength; i++) {
-							var data = new Object();
-							data.jCode = tag1.eq(i).children().eq(1).text();
-							data.jName = tag1.eq(i).children().eq(2).text();
-							data.jJob = tag1.eq(i).children().eq(3).text();
-
-							joiner.push(data);
-						}
+						sessionStorage.setItem('joiner', JSON.stringify(joiner));
 					
-					sessionStorage.setItem('joiner', JSON.stringify(joiner));
+						showList();
 					
-					showList();
-					
-					$(".joinForm1").fadeOut(100);
-					$(".joinAlert").fadeIn(1000);
-					$(".joinAlert").fadeOut(1000);
-					location.redirect();
-				 }
-			 });
-		 };
-	 });
-</script>
-<script>
-	function showList() {
-		var jsonData = sessionStorage.getItem("joiner");
-		var data = JSON.parse(jsonData);
-		console.log(data);
-		console.log(jsonData);
-		var $joiner = $("#joiner tbody");
-		$joiner.html('');
-		
-		for(var key in data) {
-			var $tr = $("<tr class='resultList'>");
-			var $jCode = $("<td class='jCode'>").text(data[key].jCode);
-			var $jName = $("<td class='jName'>").text(data[key].jName); 
-			var $jJob = $("<td class='jJob'>").text(data[key].jJob); 
-			
-			/* $tr.append($jCode); */
-			$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
-			$tr.append($jName);
-			$tr.append($jJob);
-			
-			$joiner.append($tr);
-		}
-	}
-</script>
-<!--   	<script>
-		$(function() {	
-			var tag1 = $("#resultBox1").children();
-			var joinerLength = tag1.length;
-			var joinerCode = new Array();
-			var joinerName = new Array();
-			var joinerLevel = new Array();
-			
-				for(var i = 0; i < joinerLength; i++) {
-					joinerCode[i] = tag1.eq(i).children().eq(1).text();
-					joinerName[i] = tag1.eq(i).children().eq(2).text();
-					joinerLevel[i] = tag1.eq(i).children().eq(3).text();
-					
-				}
-			console.log(joinerCode);
-			console.log(joinerName);
-			console.log(joinerLevel);
-		});
+						$(".joinForm1").fadeOut(100);
+						$(".joinAlert").fadeIn(1000);
+						$(".joinAlert").fadeOut(1000);
+						location.redirect();
+					 }
+				 });
+			 };
+		 });
 	</script>
- -->
+	
+	<!-- 결재자 추가 후 표시 리스트 -->
+	<script>
+		function showList() {
+			var jsonData = sessionStorage.getItem("joiner");
+			var data = JSON.parse(jsonData);
+			var $joiner = $("#joiner tbody");
+			$joiner.html('');
+		
+			for(var key in data) {
+				var $tr = $("<tr class='resultList'>");
+				var $jCode = $("<td class='jCode'>").text(data[key].jCode);
+				var $jName = $("<td class='jName'>").text(data[key].jName); 
+				var $jJob = $("<td class='jJob'>").text(data[key].jJob); 
+				
+				/* $tr.append($jCode); */
+				$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+				$tr.append($jName);
+				$tr.append($jJob);
+				
+				$joiner.append($tr);
+			}
+		}
+	</script>
+
 <!-- 참여자 추가 시작 -->
 
-<!-- 전송시작 -->
+<!-- FORM 전송 시작 전 체크 -->
 	<script>
-		$('#form').submit(function(e) { 
+		$("#formArea").submit(function(e) {
 			
 			e.preventDefault();
 			
+			/*Include field data*/
 			var isSubmit = false;
-		
-			var editorValue = document.querySelector("#editor").getHtml();
-			alert(editorValue);
+			var editorValue = "";
+				editorVAlue = editor.getHtml();
+			
+			/*Load Session Data*/
+			var jsonData = sessionStorage.getItem("joiner");
+			var data = JSON.parse(jsonData);
+			
+			
+			/*Check empty field*/
+			if($("#sign_keep").val()=='0') {
+				alert('보존 연한을 선택해주세요');
+				$("#sign_keep").focus();
+				return false;
+			}
+			
+			if($("#sign_acc").val()=='0') {
+				alert('보안 등급을 선택해주세요');
+				$("#sign_acc").focus();
+				return false;
+			}
+			
+			if($("#sign_type").val()=='0') {
+				alert('문서 유형을 선택해주세요');
+				$("#sign_type").focus();
+				return false;
+			}
+			
+			if($("#sign_title").val()=='0') {
+				alert('문서 제목을 입력해주세요');
+				$("#sign_title").focus();
+				return false;
+			}	
+			
+			if(!editorValue) {
+				alerT('문서 내용을 입력해주세요');
+				return false;
+			}
+			
 		});
 	</script>
 </body>
