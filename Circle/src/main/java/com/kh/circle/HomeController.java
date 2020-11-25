@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.circle.login.entity.Member;
+import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.login.repository.MemberDao;
 import com.kh.circle.login.service.MemberService;
 

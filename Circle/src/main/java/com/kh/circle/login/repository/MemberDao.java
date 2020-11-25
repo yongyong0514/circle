@@ -2,11 +2,11 @@
  package com.kh.circle.login.repository;
  
 
-import com.kh.circle.login.entity.Member;
+import com.kh.circle.login.entity.EmpInfo;
  
  public interface MemberDao { 
 	 
-	 public Member login(Member member) throws Exception;
+	 public EmpInfo login(EmpInfo empInfo) throws Exception;
 	 
 		/* Member logIn(Member member); */
 	 
