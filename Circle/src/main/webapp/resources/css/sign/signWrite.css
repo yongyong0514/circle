@@ -3,6 +3,11 @@ body {
 }
 
 .container {
+	position: absolute;
+	left: 180px;
+	width: 100%;
+	min-width: 1500px;
+	height: 2000px;
 }
 
 br {
@@ -12,11 +17,7 @@ br {
 }
 
 .content {
-	position: absolute;
-	left: 180px;
-	width: 100%;
-	min-width: 1500px;
-	height: 2000px;
+
 }
 
 .formRight {
@@ -38,7 +39,7 @@ br {
 
 .formBox1 {
 	width: 180px;
-	height: 40px;
+	height: 35px;
 	background: #0072C6;
 	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
 	background: linear-gradient(to right, #0072C6, #5DA6DC);
@@ -50,14 +51,12 @@ br {
 
 .formBox2 {
 	width: 280px;
-	height: 40px;
-	background: #F5F5F5;
+	height: 35px;
 	border: 1px solid #D9D9D9;
 }
 
 .formBox4 {
-	height: 30px;
-	background: #F5F5F5;
+	height: 35px;
 	border: 1px solid #D9D9D9;
 }
 
@@ -96,9 +95,9 @@ br {
 }
 
 .formInput1 {
-	margin-top: 10px;
+	margin-top: 7px;
 	width: 260px;
-	height: 35px;
+	height: 30px;
 	border: none;
 	outline: none;
 	font-size: 18px;
@@ -106,9 +105,9 @@ br {
 }
 
 .formInput2 {
-	margin-top: 10px;
+	margin-top: 7px;
 	width: 722px;
-	height: 35px;
+	height: 30px;
 	border: none;
 	outline: none;
 }
