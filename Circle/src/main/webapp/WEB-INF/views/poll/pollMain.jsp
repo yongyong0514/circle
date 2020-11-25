@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,7 @@
 <title>Circle</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollMain.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -37,7 +39,15 @@
 			<!-- 설문 구현부분 시작-->
 			<div class="poll-content">
 				<div>
-					<jsp:include page="../poll/pollHome.jsp"/>
+					<c:choose>
+						<c:when test="${url == 'Home'}">
+							<jsp:include page="../poll/pollHome.jsp"/>
+						</c:when>
+						<c:when test="${url == 'Post'}">
+							<jsp:include page="../poll/pollPost.jsp"/>
+						</c:when>
+					</c:choose>
+					
 				</div>
 			</div>
 			<!-- 설문 구현부분 종료-->

@@ -10,9 +10,7 @@
 <script>
 	$(document).ready(function(){
 		$('.poll-title-td').on('click', function(){
-			console.log($(this) + ": clicked");
-			console.log("it's working");
-			location.replace("${pageContext.request.contextPath}/poll/pollPost");
+			location.replace("${pageContext.request.contextPath}/poll/pollMain?url=Post");
 		});		
 	});
 

@@ -78,6 +78,10 @@
 .menuLeftBtn {
 	width: 130px;
 	height: 35px;
+	line-height:33px;
+	font-size:14px;
+	font-weight:initial;
+	color: black;
 	border: 1px solid black;
 	border-radius: 5px;
 	cursor: pointer;
