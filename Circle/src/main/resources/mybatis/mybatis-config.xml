@@ -56,7 +56,7 @@
 	
 		
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendance"/>
-	
+		<typeAlias type="com.kh.circle.attendance.entity.AttendanceSum" alias="attendanceSum"/>
 	
 	</typeAliases>
 

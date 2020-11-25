@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
+import com.kh.circle.attendance.entity.AttendanceSum;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao{
 
@@ -21,17 +19,32 @@ public class AttendanceDaoImpl implements AttendanceDao{
 	
 	//근태이력 출력
 	@Override
-	public List<AttendanceInfo> list(String emp_no, String date) {
+	public List<AttendanceInfo> attendanceList(String emp_no, String date) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("emp_no", emp_no);
 		map.put("date", date);
 		
+		
 		List<AttendanceInfo> list = sqlSession.selectList("attendance.list", map);
 		
-		log.info("list 결과:" + list);
+		for(AttendanceInfo attendanceInfo : list) {
+			System.out.println("attendanceInfo:" + attendanceInfo);
+		}
 		
 		return list;
+	}
+
+	//주간 누적 출력
+	@Override
+	public AttendanceSum weekSum(String emp_no, String date) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("emp_no", emp_no);
+		map.put("date", date);
+		
+		AttendanceSum atSum = sqlSession.selectOne("attendance.weekSum", map);
+		
+		return atSum;
 	}
 	
 	
