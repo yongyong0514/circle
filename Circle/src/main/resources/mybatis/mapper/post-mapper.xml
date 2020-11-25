@@ -50,13 +50,13 @@
 
 
 <!--  postList 호출 -->
-	<select id="postList" resultType="postPlus">
+<!-- 	<select id="postList" resultType="postPlus">
 select * 
 from post p, emp_info e, post_type t
 where p.post_emp = e.emp_info_emp_no 
 and p.post_type = t.post_type_code
 order by post_code desc
-	</select>
+	</select> -->
 	<!--  호출 끝 -->
 	
 	<!-- 페이징 처리 -->
