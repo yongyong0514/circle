@@ -130,7 +130,7 @@ br {
 	font-size: 18px;
 }
 
-.formResult1 {
+.formResult1, .formResult2 {
 	width: 180px;
 	height: 360px;
 	border: 1px solid #D9D9D9;
@@ -171,8 +171,18 @@ br {
 
 .joinForm1 {
 	display: none;
-	margin-top: -10px;
-	margin-left: -400px;
+	margin-top: 20px;
+	margin-left: -750px;
+	position: absolute;
+	width: 620px;
+	height: 510px;
+}
+
+.watcherForm1 {
+	position: fixed;
+	display: none;
+	margin-top: -400px;
+	margin-left: -750px;
 	position: absolute;
 	width: 620px;
 	height: 510px;
@@ -182,7 +192,7 @@ br {
 	margin-left: 470px;
 }
 
-.joinForm2 {
+.joinForm2, .watcherForm2 {
 	margin-top: -1px;
 	width: 600px;
 	height: 475px;
@@ -194,7 +204,7 @@ br {
 		rgba(0, 0, 0, 0.22);
 }
 
-.joinForm3 {
+.joinForm3, .watcherForm3 {
 	width: 600px;
 	height: 40px;
 }
@@ -222,19 +232,19 @@ br {
 	font-weight: bolder;
 }
 
-.joinForm4 {
+.joinForm4, .watcherForm4 {
 	margin-left: 10px;
 	width: 580px;
 	height: 425px;
 }
 
-.joinForm5 {
+.joinForm5, .watcherForm5 {
 	float: left;
 	width: 260px;
 	height: 425px;
 }
 
-.joinForm6 {
+.joinForm6, .watcherForm6 {
 	margin-top: 10px;
 	float: left;
 	width: 40px;
@@ -265,7 +275,7 @@ br {
 	
 }
 
-.joinForm7 {	
+.joinForm7, .watcherForm7 {	
 	margin-top: 5px;
 	margin-left: 5px;
 	width: 275px;
@@ -274,7 +284,7 @@ br {
 	border-radius: 10px;
 }
 
-.joinForm8 {
+.joinForm8, .watcherForm8 {
 	width: 250px;
 	height: 40px;
 }
@@ -293,7 +303,7 @@ br {
 	background: linear-gradient(to right, #0072C6, #5DA6DC);
 }
 
-.joinForm9 {
+.joinForm9, .watcherForm9 {
 	margin-top: 2px;
 	margin-left: 1px;
 	width: 275px;
@@ -301,7 +311,7 @@ br {
 	overflow: auto;
 }
 	
-#resultBox1, #resultBox2 {
+#resultBox1, #resultBox2, #resultBox3, #resultBox4 {
    	width: 125px;
     min-height:360px;
     margin: 0;
@@ -371,6 +381,24 @@ br {
 	line-height: 80px;
 }
 
+.watcherAlert {
+	display: none;
+	position: fixed;
+	margin: 0 auto;
+	margin-top: -420px;	
+   	left: 0;
+   	right: 0;
+	width: 400px;
+	height: 80px;
+	background: black;
+	opacity: 0.8;
+	border-radius: 10px;
+	color: white;
+	font-size: 24px;
+	text-align: center;
+	line-height: 80px;
+}
+
 .resultList {
 	background: #F7F7F7;
 	background: -webkit-linear-gradient(to left, #FFFFFF, #F6F6F6);
@@ -378,7 +406,7 @@ br {
 	border: 1px solid #f7f7f7;
 }
 
-.jName {
+.jName, .wName {
 	width: 60px;
 	height: 50px;
 	font-size: 16px;
@@ -386,14 +414,14 @@ br {
 	vertical-align:middle;
 }
 
-.jJob {
+.jJob, .wJob {
 	width: 90px;
 	height: 50px;
 	font-size: 12px;
 	vertical-align:middle;
 }
 
-.jImg {
+.jImg, .wImg {
 	vertical-align: top;
 	width: 50px;
 	height: 50px;
