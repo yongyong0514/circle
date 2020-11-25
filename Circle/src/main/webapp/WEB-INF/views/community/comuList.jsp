@@ -48,14 +48,14 @@
 					<th width="100px">조회수</th>
 					<th width="150px">작성일</th>
 				</tr>
-				<c:forEach var="b" items="${ requestScope.list }">
+				<c:forEach var="comuList" items="${comuList}">
 					<tr>
-						<td><c:out value="${ b.COMU_POST_ORDR }"/></td>
-						<td><c:out value="${ b.COMU_POST_COMU_CODE }"/></td>
-						<td><c:out value="${ b.COMU_POST_TITLE }"/></td>
-						<td><c:out value="${ b.COMU_POST_WRTR_EMP_NO }"/></td>
-						<td><c:out value="${ b.COMU_POST_VIEW }"/></td>
-						<td><c:out value="${ b.COMU_POST_DAT }"/></td>
+						<td><c:out value="${ comuList.comu_post_ordr }"/></td>
+						<td><c:out value="${ comuList.comu_post_comu_code }"/></td>
+						<td><c:out value="${ comuList.comu_post_title }"/></td>
+						<td><c:out value="${ comuList.comu_post_wrtr_emp_no }"/></td>
+						<td><c:out value="${ comuList.comu_post_view }"/></td>
+						<td><c:out value="${ comuList.comu_post_dat }"/></td>
 					</tr>
 				</c:forEach>
 			</table>

@@ -13,7 +13,10 @@ public class ComuDaoImp implements ComuDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	/*
-	 * @Override public List<Comu> getList(Comu comuList){ return null; }
-	 */
+	
+	 @Override 
+	 public List<Comu> List() throws Exception{
+		 
+		 return sqlSession.selectList("comu.comuList"); 
+		 }
 }

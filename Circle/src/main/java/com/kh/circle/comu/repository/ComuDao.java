@@ -6,5 +6,5 @@ import com.kh.circle.comu.entity.Comu;
 
 public interface ComuDao {
 	
-	/* List<Comu> getList(Comu comuList); */
+	public List<Comu> List()throws Exception;
 }
