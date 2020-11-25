@@ -9,7 +9,7 @@
 <body>
 	<div class="pollHomeBar">
 		<ul>
-			<li class="pollHomeTitle">설문 홈</li>
+			<li class="pollHomeTitle">설문 상세</li>
 		</ul>
 	</div>
 </body>
