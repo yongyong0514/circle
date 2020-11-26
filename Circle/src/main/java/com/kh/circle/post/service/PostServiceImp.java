@@ -72,6 +72,18 @@ public class PostServiceImp implements PostService{
 
 
 
+
+	@Override
+	public int insertPost(Post post) {
+
+		
+		
+		return postDao.insertPost(post);
+	}
+
+
+
+
 /* 페이징 처리
 	@Override
 	public List<Post> getPostList(int offset, int recordsPerPage) {

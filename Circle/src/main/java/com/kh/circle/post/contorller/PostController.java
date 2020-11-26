@@ -39,6 +39,54 @@ public class PostController {
 	@Autowired
 	private HttpServletResponse response;
 
+	
+	
+	
+	
+/*TEST ZONE*/
+	
+	@GetMapping("/postTestPart")
+	public String postTestPart(Model model) {
+
+		List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
+		List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
+		
+		model.addAttribute("postTestPart", postTestPart);
+		model.addAttribute("postTestPart2", postTestPart2);
+		model.addAttribute("postTestPart2", postTestPart2);
+
+		return "post/postTestPart";
+
+	}
+	
+	@GetMapping("/postTestInsert")
+	public String postTestInsert(Model model) {
+		
+		List<PostType> postType = sqlSession.selectList("post.postType");
+		model.addAttribute("postType", postType);
+		
+		return "post/postTestInsert";
+				
+		
+	}
+	
+	/*
+	@RequestMapping("/postTestInsert")
+	public String postTestInsert2(Model model,  Post post) {
+
+		List<Post> list = sqlSession.selectList("post.postType");
+		model.addAttribute("postList", list);
+		postService.insertPost(post);
+		
+		return "redirect:post/postTestPart";
+	}
+*/
+	
+	
+	
+	
+	
+	
 	/*
 	 * 페이징처리한 파트 실패함
 	 * 
@@ -131,19 +179,6 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("postTestPart")
-	public String postTestPart(Model model) {
-
-		List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
-
-		model.addAttribute("postTestPart", postTestPart);
-
-		return "post/postTestPart";
-
-	}
-	
-	
-	
 	
 
 	@RequestMapping("postType")
@@ -154,13 +189,16 @@ public class PostController {
 		model.addAttribute("postType", postType);
 		return "../post/postType";
 	}
+	
 
 	@RequestMapping("/postInsert")
-	public String postInsert(Model model, @ModelAttribute("post.postList") Post post) {
+	public String postInsert(Model model,  Post post) {
 
-		model.addAttribute("post", post);
-
-		return "post/postInsert";
+		List<Post> list = sqlSession.selectList("post.postType");
+		model.addAttribute("postList", list);
+		postService.insertPost(post);
+		
+		return "redirect:post/postList";
 	}
 
 }

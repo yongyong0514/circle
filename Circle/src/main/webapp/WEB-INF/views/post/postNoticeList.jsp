@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,36 +16,33 @@
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-<script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href = "PostList?nowPage=${paging.nowPage}&cntPerPage=" + sel;
-	}
-</script>
-<head>
-<meta charset="UTF-8">
-
 </head>
 <body>
-<div class="wrap">
-		<jsp:include page="../common/menuTopBar.jsp" />
-		<jsp:include page="../common/menuAlertBar.jsp" />
+	<div class="wrap">
+		<div class="header">
+			<jsp:include page="../common/menuTopBar.jsp" />
+			<jsp:include page="../common/menuAlertBar.jsp" />
+		</div>
+		<div class="leftBar">
+			<jsp:include page="../post/postSidebar.jsp" />
+		</div>
 		<div class="container">
-			<div class="navLeft">
-				<jsp:include page="../post/postSidebar.jsp" />
-			</div>
-			<div class="content">
-
+			<div class="contentBar">
 				<jsp:include page="../post/postHomebar.jsp" />
+				<select type="dropbox">
+						<!-- 게시판 선택용으로 시도 -->
+						<c:forEach var="postTestPart2" items="${postTestPart2}">
+							<option items="postTestPart2">${postTestPart2.post_type_title}</option>
+						</c:forEach>
+					</select>
 			</div>
+	
+		<div class="content">
 			<!-- 내용 -->
 
-			<div class="filter">
-				
-				<div>
-					<table class="post">
+			<table class="post">
 
-						<tr><!-- 헤드 글자 깨짐 -->
+						<tr>
 							<th>글번호</th>
 							<th>분류</th>
 							<th>제목</th>
@@ -63,31 +60,17 @@
 								<td>${postNoticeList.post_cvp}</td>
 							</tr>
 						</c:forEach>
-
 					</table>
-				
-				
+			<input type="submit" value="글쓰기">
 
-			
+
+		
 			<!-- 옵션선택 끝 -->
 
 		</div>
 	</div>
-</div>
+	</div>
 
-
-
-
-</div>
-
-
-<script>
-	function goPage(url, pages, lines) {
-		url += '?' + "pages=" + pages + "&lines=" lines;
-		
-		location.href = url;
-	}
-</script>
 
 	<script>
 		$(function() {

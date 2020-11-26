@@ -65,8 +65,8 @@
 							<label for="post_sec">공개</label>
 							<div class="open_select">
 								<select name="post_sec">
-									 <option id="Y"  value="open" <c:if test="${Name eq 'Y'}">selected</c:if>>공개</option>
-									<option value="N" id="N" name="N">비공개</option>
+									<option value="공개" id="Y" name="Y">공개</option>
+									<option value="비공개" id="N" name="N">비공개</option>
 								</select>
 							</div>
 						</div>
