@@ -1,13 +1,11 @@
 package com.kh.circle.attendance.controller;
 
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.YamlMapFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,16 +30,22 @@ public class AttendanceController {
 						@RequestParam(defaultValue="") String date,
 						Model model) {
 		
+		//date 형식 통일
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		if("".equals(date)) {
-			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
 			date = sdFormat.format(System.currentTimeMillis());
-		} 
+		} else {
+			date = sdFormat.format(date);
+		}
 
 		EmpInfo empInfo = (EmpInfo) session.getAttribute("empInfo");
 		
 		if(empInfo != null) {
 			
-			Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
+			// Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
+			
+			model.addAttribute("map", map);
 			
 			return "attendance/main";
 		} else {
