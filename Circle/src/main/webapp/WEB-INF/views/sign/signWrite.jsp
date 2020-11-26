@@ -453,7 +453,6 @@
 			joiner = JSON.parse(jsonData1);
 			
 			/*Count about joiner and include form field*/
-			var joinerCount = 
 			
 			var jsonData2 = sessionStorage.getItem("watcher");
 			var watcher = "";

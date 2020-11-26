@@ -45,7 +45,7 @@ public class AttendanceController {
 			
 			// Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
 			
-			model.addAttribute("map", map);
+			//model.addAttribute("map", map);
 			
 			return "attendance/main";
 		} else {
