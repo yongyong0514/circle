@@ -218,14 +218,27 @@
 			</div>
 		</form>
 	</div>
-	<!-- SCRIPT 영역 -->
+<!-- SCRIPT 영역 -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script
 		src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- 새로고침 감지 -->
+	<script>
+		window.onbeforeunload = function(e) {
+	 	   var dialogText = 'Dialog text here';
+		    e.returnValue = dialogText;
+		    return dialogText;
+		};
+		
+		window.onunload = function () {
+		    sessionStorage.removeItem('joiner');
+		    sessionStorage.removeItem('watcher');
+		};  
+	</script>
 
-	<!-- TUI EDITOR -->
+<!-- TUI EDITOR -->
 	<script>
 		var editor = new toastui.Editor({
 			el : document.querySelector("#editor"),
@@ -234,7 +247,7 @@
 		});
 	</script>
 
-	<!-- 왼쪽바 고정 추가 옵션 시작 -->
+<!-- 왼쪽바 고정 추가 옵션 시작 -->
 	<script>
 		$(function() {
 			var leftBar = $(".leftBar").offset().top;
@@ -249,7 +262,7 @@
 		});
 	</script>
 
-	<!-- 문서 종류 옵션 시작 -->
+<!-- 문서 종류 옵션 시작 -->
 	<script>
 		$("#sign_type").on("change", function() {
 			var base = "${pageContext.request.contextPath}";
@@ -424,53 +437,70 @@
 		}
 	</script>
 	
-	
 
 	<!-- FORM 전송 시작 전 체크 -->
 	<script>
 		$("#formArea").submit(function(e) {
-
 			e.preventDefault();
 
 			/*Include field data*/
 			var isSubmit = false;
-			var editorValue = "";
-			editorVAlue = editor.getHtml();
+			var editorValue = editor.getHtml();
 
 			/*Load Session Data*/
-			var jsonData = sessionStorage.getItem("joiner");
-			var data = JSON.parse(jsonData);
+			var jsonData1 = sessionStorage.getItem("joiner");
+			var joiner = "";
+			joiner = JSON.parse(jsonData1);
+			
+			/*Count about joiner and include form field*/
+			var joinerCount = 
+			
+			var jsonData2 = sessionStorage.getItem("watcher");
+			var watcher = "";
+			watcher = JSON.parse(jsonData2);
 
 			/*Check empty field*/
-			if ($("#sign_keep").val() == '0') {
+			if($("#sign_keep").val() == '0') {
 				alert('보존 연한을 선택해주세요');
 				$("#sign_keep").focus();
 				return false;
 			}
 
-			if ($("#sign_acc").val() == '0') {
+			if($("#sign_acc").val() == '0') {
 				alert('보안 등급을 선택해주세요');
 				$("#sign_acc").focus();
 				return false;
 			}
 
-			if ($("#sign_type").val() == '0') {
+			if($("#sign_type").val() == '0') {
 				alert('문서 유형을 선택해주세요');
 				$("#sign_type").focus();
 				return false;
 			}
 
-			if ($("#sign_title").val() == '0') {
+			if($("#sign_title").val() == '') {
 				alert('문서 제목을 입력해주세요');
 				$("#sign_title").focus();
 				return false;
 			}
 
-			if (!editorValue) {
-				alerT('문서 내용을 입력해주세요');
+			if(editorValue == "") {
+				alert('문서 내용을 입력해주세요');
 				return false;
 			}
+			
+			if(!joiner) {
+				alert("결재자를 선택해주세요");
+				return false;
+			}
+			
+			if(!watcher) {
+				alert("참조자를 선택해주세요");
+				return false;
+			}
+			
 
+			
 		});
 	</script>
 </body>
