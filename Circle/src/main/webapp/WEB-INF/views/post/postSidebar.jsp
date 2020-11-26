@@ -10,8 +10,6 @@
 	<div>
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">게시판</div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn">게시글 작성</button></div>
-			<div class="menuLeftList"></div>
 			<div class="menuLeftListTitle">전체 게시판</div>
 			<div class="menuLeftList"><a href="#">공지 사항</a></div>
 			<div class="menuLeftList"><a href="#">전사 게시판</a></div>

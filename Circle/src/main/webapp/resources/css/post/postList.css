@@ -8,8 +8,8 @@
 table{
  position: absolute;
  z-index: 2;
- left: 50%;
- top: 50%;
+ left: 55%;
+ top: 100%;
  transform: translate(-50%,-50%);
  width: 60%; 
  border-collapse: collapse;
@@ -31,6 +31,7 @@ th{
  font-family: 'Open Sans',Sans-serif;
  font-weight: 200;
  text-transform: uppercase;
+ width:800px;
 
 }
 tr{
@@ -65,3 +66,20 @@ tr:nth-child(even){
 #paging{
   min-width: 100%;
 }
+
+.type {
+	width: 10%
+}							
+.title{
+	width: 45%;
+}							
+.writer{
+	width:10%
+}	
+.date{
+	width:25%
+}					
+.cvp{
+	width:10%
+}						
+							

@@ -72,7 +72,7 @@ public class PostServiceImp implements PostService{
 
 
 
-
+/* 페이징 처리
 	@Override
 	public List<Post> getPostList(int offset, int recordsPerPage) {
 		// TODO Auto-generated method stub
@@ -93,14 +93,13 @@ public class PostServiceImp implements PostService{
 
 
 
-	@Override
 	public PostService getInstance() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-
+*/
 
 
 

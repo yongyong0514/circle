@@ -36,61 +36,61 @@
 		<div class="content">
 			<div>
 				<jsp:include page="../post/postHomebar.jsp" />
+				<jsp:include page="../post/postType.jsp" />
+
 			</div>
+			<div class="wrapper">
 
-			
-    
-    <div class="wrapper">
-    <div></div>
-          <form action='<c:url value='/post/postInsert'/>' method="post" var="post" items="${post}">
-        <div class="form">
 
-            <div class="title">
-                게시글 작성
-              </div>
-              <div class="form">
-                 <div class="inputfield">
-                    <label for="post_title">제목</label>
-                    <input type="text" class="input" id="inputForm" name="post_title" placeholder="제목을 작성해주세요">
-                 </div>  
-                 
-           <div class="inputfield">
-            <label for="post_sec">공개</label>
-            <div class="open_select">
-              <select name="post_sec">
-                <option value="open" name="post_sec">${post.post_sec}</option>
-              </select>
-            </div>
-           </div>
-           <div class="inputfield">
-            <label>게시판 선택</label>
-            <div class="open_select">
-              <select name="post_type">
-                <option name="post_type" value="notice">공지 게시판</option>
-                <option value="employee">전사 게시판</option>
-                <option value="part">부서 게시판</option>
-              </select>
-            </div>
-            
-       </div> 
-      <div class="inputfield">
-          <label for="post_file">파일</label>
-          <input name="post_file" type="file" class="input" multiple="multiple">
-       </div> 
-      <div class="inputfield">
-          <label for="post_comt">본문</label>
-          <textarea class="textarea" name="post_comt"></textarea>
-       </div> 
-          
-          <div class="inputfield" for="submit">
-            <input type="submit" value="글쓰기" class="btn" name="submit">
-          </div>
-        </div>
-    </div>
+				<form>
+					<div class="form">
 
-</form>
+						<div class="title">게시글 작성</div>
+						<div class="form">
+							<div class="inputfield">
+								<label for="post_title">제목</label> <input type="text"
+									class="input" id="inputForm" name="post_title"
+									placeholder="제목을 작성해주세요">
+							</div>
+
+							<div class="inputfield">
+								<label for="post_file">파일</label> <input name="post_file"
+									type="file" class="input" multiple="multiple">
+							</div>
+							<div class="inputfield">
+								<label for="post_comt">본문</label>
+								<textarea class="textarea" name="post_comt"></textarea>
+							</div>
+
+							<div class="inputfield">
+								<label for="post_sec">공개</label>
+								<div class="open_select">
+									<select name="post_sec">
+										<option value="open">공개</option>
+										<option value="close">비공개</option>
+									</select>
+								</div>
+								<div class="inputfield">
+									<label for="post_type">게시판 선택</label>
+									<div class="type_select">
+										<select name="post_type">
+											<option value="post_type">공개</option>
+											<option value="close">비공개</option>
+										</select>
+									</div>
+
+									<br>
+									<div class="inputfield">
+										<input type="submit" value="글쓰기" class="btn" name="submit"
+											id="submit">
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+				</form>
+			</div>
 		</div>
-</div>
-
+	</div>
 </body>
 </html>

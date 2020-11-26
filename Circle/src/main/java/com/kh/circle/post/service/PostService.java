@@ -18,13 +18,19 @@ public interface PostService {
 	
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
-	PostService getInstance();
+	
+	
+	/* 페이징 처리부분
+	static PostService getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	List<Post> getPostList(int offset, int recordsPerPage);
 
 	int getNoOfRecords();
 	
-
+*/
 
 
 
