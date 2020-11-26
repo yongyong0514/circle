@@ -47,7 +47,9 @@ public class PostController {
 		String url = null;
 		
 		//커넥션 풀 연결 / 인스턴스 생성
+
 //		PostService postService = PostService.getInstance();
+
 		
 		//pages, lines 파라미터를 받아 currnetPageNo, recordsPerpage대입
 		// 처음 페이지 열릴 때에는 당연히 1, 0
