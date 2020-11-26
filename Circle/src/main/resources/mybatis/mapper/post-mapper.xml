@@ -103,12 +103,17 @@ and p.post_type = t.post_type_code
 and p.post_type = 'POTY000004'
 order by post_code desc
 </select>
+
+
+<select id="post_seq" resultType="String">
+select post_seq.nextval from dual
+</select>
 	
-	<insert id="postInsert" parameterType="post">
+	<insert id="postTestInsert" parameterType="post">
 	
    INSERT INTO POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT, POST_WDAT, POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF, POST_STAT)
     VALUES(
-    CONCAT(#{post_code}, #{post_emp}, #{post_type}, #{post_title}, #{post_comt}, DEFAULT , '', 0, #{post_sec}, DEFAULT, '', DEFAULT)
+    #{post_code}, #{post_emp}, #{post_type}, #{post_title}, #{post_comt}, DEFAULT , '', 0, #{post_sec}, DEFAULT, '', DEFAULT)
 	</insert>
 
 <!-- postCollect -->
@@ -145,9 +150,6 @@ order by post_code desc
  페이징 처리 끝 -->
 
 
-<select id="seq" resultType="String">
-		select post_seq.nextval from dual
-	</select>
 	
 
 	

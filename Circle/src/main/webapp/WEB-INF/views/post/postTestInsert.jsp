@@ -45,7 +45,8 @@
 
 					<div class="title">게시글 작성</div>
 
-					<form class=form name="postInsert" action="" id="postInsert" onsubmit = "return validate();">
+					 <form action="postTestInsert" method="post" enctype="multipart/form-data">
+					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="inputfield">
 							<label for="post_title">제목</label> <input type="text"
 								class="input" id="post_title" name="post_title"
@@ -96,6 +97,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="<c:url value="/resources/js/post/postAdd.js" />"></script>
 <script>
 function validate(){
 	  var name = document.getElementById("name").value;

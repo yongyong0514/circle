@@ -97,7 +97,6 @@
 	<mappers>
 		<!-- <mapper resource="mybatis/mapper/example-mapper.xml" /> -->
 
-		 <mapper resource="mybatis/mapper/postFile-mapper.xml" />
 
 <!-- 		 <mapper resource="mybatis/mapper/sign-mapper.xml" /> -->
 	

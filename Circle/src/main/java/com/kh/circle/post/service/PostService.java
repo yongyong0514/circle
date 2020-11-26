@@ -18,7 +18,8 @@ public interface PostService {
 	
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
-	int insertPost(Post post);
+
+	void insertPost(Post post, MultipartFile file) throws IllegalStateException, IOException;
 
 
 	
