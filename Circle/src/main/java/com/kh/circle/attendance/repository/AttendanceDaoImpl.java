@@ -37,8 +37,6 @@ public class AttendanceDaoImpl implements AttendanceDao{
 		//long형으로 반환된 근무시간을 workTime에 저장
 		for(AttendanceInfo attendanceInfo : list) {
 			attendanceInfo.setWorkTime(sdf.format(attendanceInfo.getLongWorkTime()));
-			
-			log.info("dao attendanceInfo: " + attendanceInfo);
 		}
 		
 		return list;
