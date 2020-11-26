@@ -88,6 +88,7 @@
 					<div class="formRight">
 						<div>
 							<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();">결재자 등록</div>
+							<div class="joinCount"><input type="text" id="joinerCount" readonly></div>
 							<div class="joinAlert">결재자가 저장되었습니다</div>
 							<div class="joinForm1">
 								<%-- <div>
@@ -450,9 +451,7 @@
 			/*Load Session Data*/
 			var jsonData1 = sessionStorage.getItem("joiner");
 			var joiner = "";
-			joiner = JSON.parse(jsonData1);
-			
-			/*Count about joiner and include form field*/
+			joiner = JSON.parse(jsonData1);		
 			
 			var jsonData2 = sessionStorage.getItem("watcher");
 			var watcher = "";
@@ -493,12 +492,15 @@
 				return false;
 			}
 			
+			/*Count about joiner and include form field*/
+			var joinerCount ="";
+			joinerCount = joiner.length;
+			$("#joinerCount").val(joinerCount);
+			
 			if(!watcher) {
 				alert("참조자를 선택해주세요");
 				return false;
 			}
-			
-
 			
 		});
 	</script>
