@@ -17,7 +17,7 @@ public class EmpInfo {
 	private String emp_info_email;
 	private String emp_info_mtel;
 	private String emp_info_etel;
-	private String emp_info_comp_code;
+	private String emp_info_cmp_code;
 	private String emp_info_rm;
 	private String emp_info_pwd;
 	private String emp_info_id_no;

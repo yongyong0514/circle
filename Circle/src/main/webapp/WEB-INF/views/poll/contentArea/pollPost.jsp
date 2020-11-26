@@ -62,7 +62,7 @@
 									<td>
 										<span class="photo">
 											<a class="writer-info" data-userid="200101090031">
-												<img alt='김정훈 본부장' title="김정훈 본부장" src="#">								
+												<img alt='사진' title="김정훈 본부장" src="${pageContext.request.contextPath}/resources/img/test/user.png" style="width:20px;height:20px;">								
 											</a>
 										</span>
 										<span class="writer-info txt" data-userid="200101090031">
@@ -293,7 +293,7 @@
 				</div>
 				<div class="poll-reply-container">
 					<div class="poll-reply-wrap">
-						<ul class="reply-count">
+						<ul class="reply-wrap count">
 							<li class="reply-count-view">
 								<span class="reply-count-icon"></span>
 								<span class="reply-count-txt">
@@ -304,22 +304,18 @@
 						</ul>
 					</div>
 					<div class="poll-reply-wrap">
-						<ul class="poll-reply">
+						<ul class="reply-wrap">
 							<li>
 								<div>
 									<span class="photo">
 										<a data="id">
-											<img src="#" alt="김정훈 본부장" title="김정훈 본부장">
+											<img src="${pageContext.request.contextPath}/resources/img/test/user.png" alt="사진" title="김정훈 본부장">
 										</a>
 									</span>
 									<div>
 										<div class="reply-msg-wrap">
 											<div class="reply-msg-info">
 												<span class="name">김정훈 본부장</span>
-												<span class="reply-btn-wrap">
-													<span class="reply-icon"></span>
-													<span class="reply-icon-txt">댓글</span>
-												</span>
 												<span class="reply-date">방금전</span>
 											</div>
 											<p>
@@ -327,7 +323,7 @@
 											</p>
 										</div>
 									</div>
-									<div class="reply-update-wrap" style="disply:">
+									<div class="reply-update-wrap" style="display:inline-block;">
 										<span class="reply-update-btn" id="edit">
 											<span class="reply-edit-btn-icon"></span>
 										</span>
@@ -339,9 +335,9 @@
 							</li>
 							<li>
 								<div>
-									<span class="reply-photo">
+									<span class="photo">
 										<a data="id">
-											<img src="#" alt="김정훈 본부장" title="김정훈 본부장">
+											<img src="${pageContext.request.contextPath}/resources/img/test/user.png" alt="사진" title="김정훈 본부장">
 										</a>
 									</span>
 									<div>
@@ -359,7 +355,7 @@
 											</p>
 										</div>
 									</div>
-									<div class="reply-update-wrap" style="disply:">
+									<div class="reply-update-wrap" style="display:">
 										<span class="reply-update-btn" id="edit">
 											<span class="reply-edit-btn-icon"></span>
 										</span>
@@ -371,20 +367,22 @@
 							</li>
 						</ul>
 						<div class="reply-input-wrap">
-							<span class="reply-photo">
-								<img alt="김정훈 본부장" src="#">
+							<span class="photo">
+								<img alt="사진" src="${pageContext.request.contextPath}/resources/img/test/user.png" style="width:32px;height:32px;">
 							</span>
-							<div class="reply-input-msg-wrap">
+							<div class="reply-msg-wrap">
 								<div class="reply-input-component-wrap">
 									<p class="reply-input-form-wrap">
 										<span class="reply-input-form-textarea">
-											<textarea class="reply-input-textarea-w-max" rows="1"></textarea>
+											<textarea class="reply-input-textarea w-max" rows="1"></textarea>
 										</span>
 									</p>
-									<span class="reply-insert-btn-wrap">
-										<button class="reply-insert-btn">댓글 작성</button>
+									<span class="reply-insert-btn-wrap sub-btn">
+										<span class="txt">댓글 작성</span>
 									</span>
 								</div>
+								<div></div>
+								<div></div>
 							</div>
 						</div>
 					</div>
