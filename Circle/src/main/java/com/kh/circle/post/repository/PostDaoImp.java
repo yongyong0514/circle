@@ -25,6 +25,14 @@ public class PostDaoImp implements PostDao{
 	private SqlSession sqlSession;
 	
 	int noOfRecords;
+
+	@Override
+	public int insertPost(Post post) {
+
+		
+		
+		return sqlSession.insert("postInsert", post);
+	}
 	
 	
 /* 페이징처리

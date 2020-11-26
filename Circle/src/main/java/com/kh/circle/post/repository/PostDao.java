@@ -10,6 +10,8 @@ import com.kh.circle.post.service.PostService;
 
 public interface PostDao {
 
+	int insertPost(Post post);
+
 /*
 페이징처리
 	int getNoOfRecords();

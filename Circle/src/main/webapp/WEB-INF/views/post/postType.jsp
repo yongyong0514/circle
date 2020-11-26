@@ -9,15 +9,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-			<c:forEach var="postType" items="${postType}">
 									<div class="inputfield">
 										<label for="postType">게시판 선택</label>
 										<div class="open_select">
 											<select id="postType" name="postType">
-												<option>${postType.post_type_title}</option>
-											</select>
+				<c:forEach var="postType" items="${postType}">
+					<option>${postType.post_type_title}</option>
+								</c:forEach>
+			</select>
 										</div>
 									</div>
-								</c:forEach>
 </body>
 </html>

@@ -18,6 +18,9 @@ public interface PostService {
 	
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
+	int insertPost(Post post);
+
+
 	
 	
 	/* 페이징 처리부분

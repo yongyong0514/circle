@@ -45,7 +45,7 @@
 
 					<div class="title">게시글 작성</div>
 
-					<form class=form name="postList">
+					<form class=form name="postInsert" action="" id="postInsert" onsubmit = "return validate();">
 						<div class="inputfield">
 							<label for="post_title">제목</label> <input type="text"
 								class="input" id="post_title" name="post_title"
@@ -64,25 +64,62 @@
 						<div class="inputfield">
 							<label for="post_sec">공개</label>
 							<div class="open_select">
-								<select name="post_sec">
-									 <option id="Y"  value="open" <c:if test="${Name eq 'Y'}">selected</c:if>>공개</option>
-									<option value="N" id="N" name="N">비공개</option>
-								</select>
+								<label><input type="radio" name="post_sec" value="Y"
+									checked>공개</label> <label><input type="radio"
+									name="post_sec" value="N">비공개</label>
+
 							</div>
+
+
+
+						</div>
+						<div class="inputfield">
+							<select>
+								<c:forEach var="postType" items="${postType}">
+									<option id="postType" name="postType"
+										value="${postType.post_type_code}">${postType.post_type_title}</option>
+								</c:forEach>
+							</select>
 						</div>
 
 
 						<div class="inputfield">
 							<input type="submit" value="글쓰기" class="btn" name="submit"
-								id="submit"> <input type="cancle" value="돌아가기"
-								class="btn" name="return" id="return">
+								id="submit"> <input type="reset" "value="초기화"	class="btn" name="reset" id="reset"> 
+								<input type="button" value="돌아가기" class="btn" name="return" id="return">
 
 						</div>
 					</form>
 				</div>
+
+					
+				</div>
 			</div>
 		</div>
-	</div>
-
+<script>
+function validate(){
+	  var name = document.getElementById("name").value;
+	  var subject = document.getElementById("subject").value;
+	  var phone = document.getElementById("phone").value;
+	  var email = document.getElementById("email").value;
+	  var message = document.getElementById("message").value;
+	  var error_message = document.getElementById("error_message");
+	  
+	  error_message.style.padding = "10px";
+	  
+	  var text;
+	  if(post_title.length < 0){
+	    text = "Please Enter valid Name";
+	    error_message.innerHTML = text;
+	    return false;
+	  }	  if(post_comt.length <= 0){
+	    text = "Please Enter More Than 140 Characters";
+	    error_message.innerHTML = text;
+	    return false;
+	  }
+	  alert("Form Submitted Successfully!");
+	  return true;
+	}
+</script>
 </body>
 </html>

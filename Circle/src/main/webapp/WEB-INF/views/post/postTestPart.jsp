@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,60 +19,57 @@
 </head>
 <body>
 	<div class="wrap">
-		<jsp:include page="../common/menuTopBar.jsp" />
-		<jsp:include page="../common/menuAlertBar.jsp" />
+		<div class="header">
+			<jsp:include page="../common/menuTopBar.jsp" />
+			<jsp:include page="../common/menuAlertBar.jsp" />
+		</div>
+		<div class="leftBar">
+			<jsp:include page="../post/postSidebar.jsp" />
+		</div>
 		<div class="container">
-			<div class="navLeft">
-				<jsp:include page="../post/postSidebar.jsp" />
-			</div>
-			<div class="content">
-			<div class="homebar"> 
+			<div class="contentBar">
 				<jsp:include page="../post/postHomebar.jsp" />
-				</div>
-			
+				<select type="dropbox">
+						<!-- 게시판 선택용으로 시도 -->
+						<c:forEach var="postTestPart2" items="${postTestPart2}">
+							<option items="postTestPart2">${postTestPart2.post_type_title}</option>
+						</c:forEach>
+					</select>
+			</div>
+	
+		<div class="content">
 			<!-- 내용 -->
 
-			<div class="filter">
-				
-				<div>
-					<table class="post">
+			<table class="post">
 
 						<tr>
-							<th class="code">글번호</th>
-							<th class="type">분류</th>
-							<th class="title">제목</th>
-							<th class="writer">작성자</th>
-							<th class="date">작성일</th>
-							<th class="cvp">조회수</th>
+							<th>글번호</th>
+							<th>분류</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회수</th>
 						</tr>
-						<c:forEach var="postList" items="${postList}">
+						<c:forEach var="postNoticeList" items="${postNoticeList}">
 							<tr>
-								<td>${postList.post_code}</td>
-								<td>${postList.post_type_title}</td>
-								<td>${postList.post_title}</td>
-								<td>${postList.emp_info_name}</td>
-								<td>${postList.post_wdat}</td>
-								<td>${postList.post_cvp}</td>
+								<td>${postNoticeList.post_code}</td>
+								<td>${postNoticeList.post_type_title}</td>
+								<td>${postNoticeList.post_title}</td>
+								<td>${postNoticeList.emp_info_name}</td>
+								<td>${postNoticeList.post_wdat}</td>
+								<td>${postNoticeList.post_cvp}</td>
 							</tr>
 						</c:forEach>
-
 					</table>
-			<input type="submit" value="글쓰기">	
-				
+			<input type="submit" value="글쓰기">
 
-			<div>
-			
-			</div>
+
+		
 			<!-- 옵션선택 끝 -->
 
 		</div>
 	</div>
-</div>
-
-</div>
-
-
-</div>
+	</div>
 
 
 	<script>
