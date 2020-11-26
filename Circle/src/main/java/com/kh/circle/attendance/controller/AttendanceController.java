@@ -1,6 +1,7 @@
 package com.kh.circle.attendance.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -43,9 +44,9 @@ public class AttendanceController {
 		
 		if(empInfo != null) {
 			
-			// Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
+			Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
 			
-			//model.addAttribute("map", map);
+			model.addAttribute("map", map);
 			
 			return "attendance/main";
 		} else {
@@ -66,6 +67,7 @@ public class AttendanceController {
 		return "attendance/attendanceMyVacation";
 	}
 
+	@GetMapping("/attendanceAllList")
 	public String attendanceAllList() {
 		return "attendance/attendanceAllList";
 	}
