@@ -35,7 +35,6 @@
       		
       		//fullcalendar onload function
             $(document).ready(function() {
-            	var base = "${pageContext.request.contextPath}";
             	
             	//풀캘린더 로드
                 $("#calendar").fullCalendar({

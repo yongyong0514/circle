@@ -2,6 +2,7 @@ html body .poll-content-container{
 	width:100%; 
 	height:100%;
 	word-break: break-all;
+	letter-spacing: -0.5px;
 }
 article, aside, figure, footer, header, hgroup, nav, section {
     display: block;
@@ -18,6 +19,9 @@ img{
 	vertical-align: top;
 	border: 0;
 }
+span{
+	color: #333;
+}
 span.txt {
     display: inline-block;
 }
@@ -26,6 +30,8 @@ span.date {
     color: #999;
 }
 table {
+    text-indent: initial;
+    border-spacing: 2px;
     border-collapse: collapse;
     width: 100%;
 }
@@ -47,6 +53,10 @@ tr {
     vertical-align: inherit;
     border-color: inherit;
 }
+th span.title{
+	display: inline-block;
+    font-weight: normal;
+}
 input.text{
 	min-width: 40px;
 	padding: 0 8px;
@@ -63,6 +73,16 @@ input[type="radio"] {
 }
 input[type=radio], input{
 	vertical-align: middle;
+}
+.toolbar-icon {
+	display: inline-block;
+    background: url(../img/poll/ic_toolbar.png) no-repeat 0 0;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+.toolbar-icon.modify {
+    background-position: -300px -200px;
 }
 .main-btn{
 	display: inline-block;
@@ -98,6 +118,7 @@ input[type=radio], input{
 	position: relative;
     min-height: 38px;
     padding: 0 0 8px 0;
+    border-top: 1px solid #ccc;
 }
 .w-max{
 	width: 100%;
@@ -131,11 +152,13 @@ input[type=radio], input{
 .poll-post-article-wrap{
 	float: left;
     width: 100%;
+    border-right: 1px solid #d6d6d6;
 }
 .poll-post-article-header{
     position: relative;
     padding: 24px 24px 0;
     margin: 0!important;
+    border-top: 8px solid #eee!important;
 }
 .poll-post-article-header h1{
     font-size: 24px;
@@ -175,7 +198,15 @@ tbody {
 .poll-post-info-list tr td{
     border-bottom: 0;
 } 
-.normal-info .writer-info-title{
+.normal-info .title{
+    display: inline-block;
+    font-weight: normal;
+    color: #888;
+    text-align: left;
+    margin-top: 2px;
+    font-size: 13px;
+}
+.poll-post-info-list tr th span.title {
     display: inline-block;
     font-weight: normal;
     color: #888;
@@ -256,6 +287,11 @@ span.question {
 }
 .poll-post-question-container .question-list>li span.question{
     display: block;
+}
+.answer-option-wrap{
+    display: inline-block;
+    padding: 4px 0;
+    vertical-align: middle;
 }
 .answer-checkbox {
     display: inline-block;
@@ -344,6 +380,8 @@ textarea.textarea{
     border: 1px solid #d6d6d6;
     border-radius: 5px;
     width: 100%;
+    margin: 0;
+    border: 0;
 }
 .poll-reply-wrap ul.reply-count{
 	margin: 0;
@@ -404,6 +442,7 @@ ul.reply-wrap li span.photo img{
     min-height: 32px;
     box-sizing: border-box;
     padding: 0;
+    
 }
 .reply-msg-wrap p{
 	display: block;
