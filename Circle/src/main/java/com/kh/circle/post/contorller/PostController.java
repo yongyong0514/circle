@@ -50,7 +50,6 @@ public class PostController {
 
 //		PostService postService = PostService.getInstance();
 
-		
 		//pages, lines 파라미터를 받아 currnetPageNo, recordsPerpage대입
 		// 처음 페이지 열릴 때에는 당연히 1, 0
 		if(request.getParameter("pages") != null)

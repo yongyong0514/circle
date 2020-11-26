@@ -6,5 +6,4 @@ public interface AttendanceService {
 	
 	public Map<String, Object> mainList(String emp_no, String date);
 	
-	
 }

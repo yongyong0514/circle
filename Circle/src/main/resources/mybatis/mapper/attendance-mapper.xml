@@ -9,14 +9,40 @@
 	<select id="list" parameterType="map" resultType="attendance">
 		select atdc_hstr_ordr
 			 , atdc_hstr_emp_no
-			 , atdc_hstr_dat
+			 , to_char(atdc_hstr_dat, 'yyyy-MM-dd')
 			 , atdc_hstr_writ_type
-			 , atdc_hstr_stim
-			 , atdc_hstr_etim
+			 , to_char(atdc_hstr_stim, 'yyyy-MM-dd HH24:MI:SS')
+			 , to_char(atdc_hstr_etim, 'yyyy-MM-dd HH24:MI:SS')
 			 , atdc_hstr_type
+			 , (atdc_hstr_etim - atdc_hstr_stim)*24*60*60*1000 as "longWorkTime" 
 		  from atdc_hstr
 		 where atdc_hstr_emp_no = #{emp_no}
 		   and atdc_hstr_dat <![CDATA[ < ]]>= to_date(#{date}, 'yyyy-MM-dd')
+		 order by atdc_hstr_dat desc
 	</select>
+		
+	<select id="weekSum" parameterType="map" resultType="attendanceSum">
+		select sum(AH.atdc_hstr_etim - AH.atdc_hstr_stim) as "weekSumWorktime"
+			 , sum(AH.atdc_hstr_etim - AH.atdc_hstr_stim) - CI.cmp_info_wokt as "weekOverWorktime"
+			 , CI.cmp_info_wokt - sum(AH.atdc_hstr_etim - AH.atdc_hstr_stim) as "weekRemainWorktime"
+			 , CI.cmp_info_wokt
+		  from (select AH.atdc_hstr_ordr
+					 , AH.atdc_hstr_emp_no
+					 , AH.atdc_hstr_dat
+					 , AH.atdc_hstr_writ_type
+					 , AH.atdc_hstr_stim
+					 , AH.atdc_hstr_etim
+					 , AH.atdc_hstr_type
+					 , CI.cmp_info_wokt
+				  from atdc_hstr AH
+				 inner join emp_info EI on (AH.atdc_hstr_emp_no = EI.emp_info_emp_no)
+				 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
+				 where atdc_hstr_emp_no = #{emp_no}
+				   and to_date(#{date}, 'yyyy-MM-dd')
+				   	   between next_day(to_date(#{date}, 'yyyy-MM-dd')-7, 1)
+				   	       and to_date(#{date}, 'yyyy-MM-dd')
+		  		)
+	</select>	
+		
 		
 </mapper>
