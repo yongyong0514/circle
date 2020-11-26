@@ -1,5 +1,6 @@
 package com.kh.circle.attendance.repository;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.circle.attendance.entity.AttendanceInfo;
 import com.kh.circle.attendance.entity.AttendanceSum;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class AttendanceDaoImpl implements AttendanceDao{
 
@@ -28,8 +32,13 @@ public class AttendanceDaoImpl implements AttendanceDao{
 		
 		List<AttendanceInfo> list = sqlSession.selectList("attendance.list", map);
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("hh"+"시간 "+"mm"+"분");
+		
+		//long형으로 반환된 근무시간을 workTime에 저장
 		for(AttendanceInfo attendanceInfo : list) {
-			System.out.println("attendanceInfo:" + attendanceInfo);
+			attendanceInfo.setWorkTime(sdf.format(attendanceInfo.getLongWorkTime()));
+			
+			log.info("dao attendanceInfo: " + attendanceInfo);
 		}
 		
 		return list;
