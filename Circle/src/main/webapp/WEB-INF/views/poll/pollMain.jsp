@@ -38,16 +38,8 @@
 			
 			<!-- 설문 구현부분 시작-->
 			<div class="poll-content">
-				<div>
-					<c:choose>
-						<c:when test="${url == 'Home'}">
-							<jsp:include page="contentArea/pollHome.jsp"/>
-						</c:when>
-						<c:when test="${url == 'Post'}">
-							<jsp:include page="contentArea/pollPost.jsp"/>
-						</c:when>
-					</c:choose>
-					
+				<div id="content-box">
+					<jsp:include page="contentArea/pollHome.jsp"/>
 				</div>
 			</div>
 			<!-- 설문 구현부분 종료-->

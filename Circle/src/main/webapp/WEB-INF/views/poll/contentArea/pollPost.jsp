@@ -15,21 +15,21 @@
 		<div class="poll-post-inner-content-container">
 			<section class="poll-post-toolbar">
 				<ul class="poll-post-manage">
-					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-modify-btn-icon"></span>
+					<li> 
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon modify"></span>
 							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-progress-btn-icon"></span>
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon"></span>
 							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-delete-btn-icon"></span>
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon"></span>
 							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 						</a>
 					</li>
@@ -37,7 +37,7 @@
 				<ul class="poll-post-list">
 					<li>
 						<a class="poll-post-toolbar-list-btn-wrap">
-							<span class="poll-post-toolbar-list-btn-icon" title="목록"></span>
+							<span class="toolbar-icon" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
 					</li>
@@ -56,7 +56,7 @@
 												<span class="toggle-icon">
 												</span>
 											</span>
-											<span class="writer-info-title">작성자 :</span>
+											<span class="title">작성자 :</span>
 										</div>
 									</th>
 									<td>
@@ -77,34 +77,34 @@
 								<tbody>
 									<tr>
 										<th>
-											<span class="sub-info-list-title">작성일 :</span>
+											<span class="title">작성일 :</span>
 										</th>
 										<td>
-											<span class="sub-info-list-date">2020-11-25(수) 12:34</span>
+											<span class="date">2020-11-25(수) 12:34</span>
 										</td>
 									</tr>
 									<tr>
 										<th>
-											<span class="sub-info-list-title">설문기간 :</span>
+											<span class="title">설문기간 :</span>
 										</th>
 										<td>
-											<span class="sub-info-list-date">2020-11-25 ~ 2020-12-31</span>
+											<span class="date">2020-11-25 ~ 2020-12-31</span>
 										</td>
 									</tr>
 									<tr>
 										<th>
-											<span class="sub-info-list-title">참여 후 수정 :</span>
+											<span class="title">참여 후 수정 :</span>
 										</th>
 										<td>
-											<span class="sub-info-list-date">허용</span>
+											<span class="date">허용</span>
 										</td>
 									</tr>
 									<tr>
 										<th>
-											<span class="sub-info-list-title">설문결과 :</span>
+											<span class="title">설문결과 :</span>
 										</th>
 										<td>
-											<span class="sub-info-list-date">공개</span>
+											<span class="date">공개</span>
 										</td>
 									</tr>
 								</tbody>
@@ -217,61 +217,61 @@
 										<ul class="answer-wrap rank">
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id1">
+													<input id="radio-id1" type="radio">
 													<label for="radio-id1">1</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id2">
+													<input id="radio-id2" type="radio">
 													<label for="radio-id2">2</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id3">
+													<input id="radio-id3" type="radio">
 													<label for="radio-id3">3</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id4">
+													<input id="radio-id4" type="radio">
 													<label for="radio-id4">4</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id5">
+													<input id="radio-id5" type="radio">
 													<label for="radio-id5">5</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id6">
+													<input id="radio-id6" type="radio">
 													<label for="radio-id6">6</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id7">
+													<input id="radio-id7" type="radio">
 													<label for="radio-id7">7</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id8">
+													<input id="radio-id8" type="radio">
 													<label for="radio-id8">8</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id9">
+													<input id="radio-id9" type="radio">
 													<label for="radio-id9">9</label>
 												</span>
 											</li>
 											<li>
 												<span class="answer-option-wrap">
-													<input id="radio-id10">
+													<input id="radio-id10" type="radio">
 													<label for="radio-id10">10</label>
 												</span>
 											</li>
@@ -391,20 +391,20 @@
 			<section class="poll-post-toolbar">
 				<ul class="poll-post-manage">
 					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-modify-btn-icon"></span>
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon"></span>
 							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-progress-btn-icon"></span>
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon"></span>
 							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
 						</a>
 					</li>
 					<li>
-						<a href="#" class="poll-post-toolbar-update-btn-wrap">
-							<span class="poll-post-toolbar-delete-btn-icon"></span>
+						<a class="poll-post-toolbar-update-btn-wrap">
+							<span class="toolbar-icon"></span>
 							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 						</a>
 					</li>
@@ -412,7 +412,7 @@
 				<ul class="poll-post-list">
 					<li>
 						<a class="poll-post-toolbar-list-btn-wrap">
-							<span class="poll-post-toolbar-list-btn-icon" title="목록"></span>
+							<span class="toolbar-icon" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
 					</li>
