@@ -19,4 +19,5 @@ public class Comu {
 	private int comu_post_view;
 	private String comu_post_comu_code;
 	private String comu_post_type;
+	private String emp_info_name;
 }

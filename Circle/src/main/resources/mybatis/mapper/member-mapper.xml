@@ -17,4 +17,9 @@
 	where emp_info_emp_no=#{emp_info_emp_no}
 	and emp_info_pwd=#{emp_info_pwd}
  </select>
+ 	
+<!--  <select id="login" parameterType="joinmember" resultType="joinmember" >
+ 	select * from EMP_INFO join JOB_INFO ON(JOB_INFO_CODE = EMP_INFO_JOB_CODE) where EMP_INFO_EMP_NO=#{EMP_INFO_EMP_NO} and EMP_INFO_PWD=#{EMP_INFO_PWD}
+ </select> -->
+ 
 </mapper>

@@ -12,7 +12,7 @@
 
 <mapper namespace="comu">
 
-<resultMap type="com.kh.circle.comu.entity.Comu" id="comuMap">
+<resultMap type="com.kh.circle.comu.entity.Comu" id="comuList">
 	<id property="comu_post_ordr" column="comu_post_ordr"/>
 	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
 	<id property="comu_post_title" column="comu_post_title"/>
@@ -49,7 +49,40 @@
 <collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
 </resultMap>
 
+<!-- 게시글 목록 -->
 
+<select id="comuListarticle" resultType="int">
+	select count(*) from comu_post
+</select>
+
+<select id="comuList" resultType="Comu">
+	<include refid="paging_header"></include>
+		select rownum,
+			comu_post_ordr,
+			comu_post_wrtr_emp_no,
+			comu_post_title,
+			comu_post_cont,
+			comu_post_dat,
+			comu_post_view,
+			comu_post_comu_code,
+			c.comu_post_type,
+			e.emp_info_name
+		from comu_post c,emp_info e
+		order by comu_post_ordr desc
+	<!-- select * from comu_post order by comu_post_ordr desc  -->
+	<include refid="paging_footer"></include>
+</select>
+
+<sql id="paging_header">
+select * 
+from(select rownum as rn,A.*
+from(
+</sql>
+<sql id="paging_footer">
+		)A
+	)
+where rn between #{start} and #{end}
+</sql>
 
 	<!-- <select id="comuList" resultType="comuPlus">
 select * 

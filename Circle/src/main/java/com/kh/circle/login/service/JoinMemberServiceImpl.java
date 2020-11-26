@@ -22,7 +22,7 @@ public class JoinMemberServiceImpl implements JoinMemberService {
 			return null;
 		}else {
 			session.setAttribute("join", join);
-			session.setAttribute("joinName", joinmember.getJOB_INFO_NAME());
+			session.setAttribute("joinName", joinmember.getJob_info_name());
 			
 			return join;
 		}
