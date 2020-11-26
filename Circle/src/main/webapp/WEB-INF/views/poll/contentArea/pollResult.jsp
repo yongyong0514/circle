@@ -4,8 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollPost.css">
-<title>설문 참여하기</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollResult.css">
+<title>설문 결과보기</title>
 </head>
 <body>
 	<div class="poll-post-content-container">
@@ -46,7 +46,7 @@
 			<div class="poll-post-article-main-container">
 				<div class="poll-post-article-wrap">
 					<header class="poll-post-article-header">
-						<h1>미참여 설문 메인 제목</h1>
+						<h1>이미 참여한 설문 메인 제목</h1>
 						<table class="poll-post-info-list">
 							<tbody>
 								<tr>

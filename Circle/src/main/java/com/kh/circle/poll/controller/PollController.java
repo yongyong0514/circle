@@ -21,4 +21,8 @@ public class PollController {
 	public String pollPost() {
 		return "/poll/contentArea/pollPost";
 	}
+	@GetMapping("/pollResult")
+	public String pollResult() {
+		return "/poll/contentArea/pollResult";
+	}
 }
