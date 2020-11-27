@@ -9,8 +9,15 @@
 </head>
 <script>
 	$(document).ready(function(){
-		$('.poll-title-td').on('click', function(){
+		//미참여 설문 클릭
+		$('.poll-state-span-no-attendance').parent().parent().on('click', function(){
 			url = "${pageContext.request.contextPath}/poll/pollPost";
+			$('#content-box').load(url);
+		});	
+		
+		//참여한 설문 클릭
+		$('.poll-state-span-attendance').parent().parent().on('click', function(){
+			url = "${pageContext.request.contextPath}/poll/pollResult";
 			$('#content-box').load(url);
 		});		
 	});
