@@ -91,6 +91,7 @@ public class PostServiceImp implements PostService{
 		
 		String code = postDao.insertPost(post);
 		
+		System.out.println("service code : " + code);
 		
 		if(!file.isEmpty()) {
 			
@@ -105,6 +106,8 @@ public class PostServiceImp implements PostService{
 			String file_no = postFileDao.insert(postFile);
 			
 			postSaveDao.save(file, file_no);
+			
+			System.out.println("sefile : " + file + "/// sefil_no" + file_no);
 		}
 		
 	}

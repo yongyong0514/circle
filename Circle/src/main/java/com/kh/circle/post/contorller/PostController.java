@@ -53,31 +53,39 @@ public class PostController {
 		
 		model.addAttribute("postTestPart", postTestPart);
 		model.addAttribute("postTestPart2", postTestPart2);
-		model.addAttribute("postTestPart2", postTestPart2);
 
 		return "post/postTestPart";
 
 	}
+	
+	@GetMapping("postHomebar")
+	public String postHomebar(Model model){
+		
+		Post postTestPart = sqlSession.selectOne("post.postTestPart2");
+		
+		
+		return "../post/postHomebar.jsp";
+	}
+	
+	
 
 	@GetMapping("/postTestInsert")
-	public String postTestInsert(Model model) {
-		
-		List<PostType> postType = sqlSession.selectList("post.postType");
-		model.addAttribute("postType", postType);
-		
+	public String postTestInsert() {
+
 		return "post/postTestInsert";
 				
 		
 	}
 	
 	
-	@PostMapping("/postTestInsert")
+	@PostMapping("postTestInsert")
 	public String postTestPart(@ModelAttribute Post post, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
 		
 		postService.insertPost(post, file);
 		
-		
-		return "redirect:postTestInsert";
+		System.out.println("postpost : " + post);
+		System.out.println("postfile : " + file);
+		return "redirect:postTestPart";
 		
 		
 	}

@@ -61,7 +61,7 @@ order by post_code desc
 </select>
 
 <select id="postTestPart2" resultType="post">
-select post_type_title
+select *
 from post_type
 </select>
 

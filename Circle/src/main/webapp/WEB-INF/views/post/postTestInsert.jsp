@@ -36,27 +36,31 @@
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../post/postHomebar.jsp" />
+	<script>
+		// 넘어오는 변수으로 페이지 이동하기
+		function moveurl(url) {
+			location.href = url;
+		}
+	</script>
 			</div>
 
 			<div class="content">
-
+<!--  본문 -->
 
 				<div class="form">
 
 					<div class="title">게시글 작성</div>
 
 					 <form action="postTestInsert" method="post" enctype="multipart/form-data">
-					  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<div class="inputfield">
 							<label for="post_title">제목</label> <input type="text"
 								class="input" id="post_title" name="post_title"
 								placeholder="제목을 작성해주세요">
 						</div>
-
 						<div class="inputfield">
 							<label for="post_file">파일</label> <input name="post_file"
-								id="post_file" type="file" class="input" multiple="multiple">
-						</div>
+								id="post_file" type="file" class="input" accept="*.*" multiple="multiple">
+						</div> 
 						<div class="inputfield">
 							<label for="post_comt">본문</label>
 							<textarea class="textarea" id="post_comt" name="post_comt"></textarea>
@@ -64,64 +68,58 @@
 
 						<div class="inputfield">
 							<label for="post_sec">공개</label>
-							<div class="open_select">
-								<label><input type="radio" name="post_sec" value="Y"
-									checked>공개</label> <label><input type="radio"
-									name="post_sec" value="N">비공개</label>
-
+							<div class="post_select">
+								<label><input type="radio" name="post_sec" value="Y"checked>공개</label> 
+								<label><input type="radio"  name="post_sec" value="N">비공개</label>
 							</div>
 
-
-
 						</div>
 						<div class="inputfield">
-							<select>
-								<c:forEach var="postType" items="${postType}">
-									<option id="postType" name="postType"
-										value="${postType.post_type_code}">${postType.post_type_title}</option>
-								</c:forEach>
-							</select>
+							<div class="post_type">
+							<label for="post_type">게시판</label>
+							<label><input type="radio" name="post_type" value="1" checked>1</label>
+							<label><input type="radio" name="post_type" value="2">2</label>
+							<label><input type="radio" name="post_type" value="3">3</label>
+							<label><input type="radio" name="post_type" value="4">4</label>
+							<label><input type="radio" name="post_type" value="5">5</label>
+							</div>
 						</div>
-
-
 						<div class="inputfield">
-							<input type="submit" value="글쓰기" class="btn" name="submit"
-								id="submit"> <input type="reset" "value="초기화"	class="btn" name="reset" id="reset"> 
-								<input type="button" value="돌아가기" class="btn" name="return" id="return">
+							<input type="submit" value="글쓰기" class="btn" name="submit" id="submit" onclick="submit(); return false;">
+							<input type="reset" value="초기화" class="btn" name="reset" id="reset"> 
+							<input type="button" value="돌아가기" class="btn" name="return" id="return">
 
 						</div>
 					</form>
 				</div>
 
-					
+<!-- 본문 종료" -->					
 				</div>
 			</div>
 		</div>
-		<script src="<c:url value="/resources/js/post/postAdd.js" />"></script>
+		<script src="<c:url value="/resources/js/post/postInsert.js" />"></script>
 <script>
-function validate(){
-	  var name = document.getElementById("name").value;
-	  var subject = document.getElementById("subject").value;
-	  var phone = document.getElementById("phone").value;
-	  var email = document.getElementById("email").value;
-	  var message = document.getElementById("message").value;
-	  var error_message = document.getElementById("error_message");
-	  
-	  error_message.style.padding = "10px";
-	  
-	  var text;
-	  if(post_title.length < 0){
-	    text = "Please Enter valid Name";
-	    error_message.innerHTML = text;
-	    return false;
-	  }	  if(post_comt.length <= 0){
-	    text = "Please Enter More Than 140 Characters";
-	    error_message.innerHTML = text;
-	    return false;
-	  }
-	  alert("Form Submitted Successfully!");
-	  return true;
-	}
+
+function submit(){
+	var form = $("post")[0];
+	var formData = new Post(form);
+	
+	$ajax({
+		cache: false,
+		url : "${pageContext.request.contextPath}/post/postTestPart",
+		processData: false,
+		contentType: false,
+		data : postData,
+		sucess : function(data) {
+			var jsonObj = JSON.parse(data);
+		},
+		
+		error : function(data) {
+			alert("다시");
+		}
+		
+	});
+}
 </script>
 </body>
 </html>
