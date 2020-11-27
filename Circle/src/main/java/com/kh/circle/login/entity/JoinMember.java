@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 
 public class JoinMember {
-	private String JOB_INFO_CODE;
-	private String JOB_INFO_NAME;
+	private String job_info_code;
+	private String job_info_name;
 }
