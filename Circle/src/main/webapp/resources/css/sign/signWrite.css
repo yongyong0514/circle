@@ -11,13 +11,13 @@ body {
 }
 
 br {
-    content: " ";
-    display: block;
-    margin: 0.4em 0;
+	content: " ";
+	display: block;
+	margin: 0.4em 0;
 }
 
 .content {
-
+	
 }
 
 .formRight {
@@ -46,6 +46,7 @@ br {
 	border: 1px solid #D9D9D9;
 	color: white;
 	font-size: 16px;
+	font-weight: bolder;
 }
 
 .formBox2 {
@@ -68,6 +69,23 @@ br {
 	height: 50px;
 }
 
+.formBox7 {
+	height: 30px;
+	border: 1px solid #D9D9D9;
+}
+
+.formBox8 {
+	width: 180px;
+	height: auto;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
+	background: linear-gradient(to right, #0072C6, #5DA6DC);
+	border: 1px solid #D9D9D9;
+	color: white;
+	font-size: 16px;
+	font-weight: bolder;
+}
+
 #file {
 	float: left;
 	margin-top: 7px;
@@ -77,7 +95,7 @@ br {
 .addFileBtn:hover {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
-	background: linear-gradient(to top, #FFFFFF, #D8D8D8);	
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
 .formBtn1 {
@@ -98,7 +116,7 @@ br {
 .formBtn1:hover {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
-	background: linear-gradient(to top, #FFFFFF, #D8D8D8);	
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
 #sign_emp_code, #sign_count, #sign_note {
@@ -276,17 +294,16 @@ br {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
-	cursor:pointer;
+	cursor: pointer;
 }
 
 .joinBtn1:hover {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
-	
 }
 
-.joinForm7, .watcherForm7 {	
+.joinForm7, .watcherForm7 {
 	margin-top: 5px;
 	margin-left: 5px;
 	width: 275px;
@@ -321,14 +338,14 @@ br {
 	height: 370px;
 	overflow: auto;
 }
-	
+
 #resultBox1, #resultBox2, #resultBox3, #resultBox4 {
-   	width: 125px;
-    min-height:360px;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
+	width: 125px;
+	min-height: 360px;
+	margin: 0;
+	padding: 5px 0 0 0;
+	float: left;
+	margin-right: 10px;
 }
 
 .resultBackground {
@@ -348,7 +365,7 @@ br {
 }
 
 .result0 {
-	vertical-align: top;	
+	vertical-align: top;
 	width: 50px;
 	height: 50px;
 	display: inline;
@@ -363,7 +380,7 @@ br {
 	font-size: 15px;
 	font-weight: bolder;
 	line-height: 50px;
-	display: inline;	
+	display: inline;
 }
 
 .result3 {
@@ -378,9 +395,9 @@ br {
 .joinAlert {
 	display: none;
 	position: fixed;
-  	margin: 0 auto;
-   	left: 0;
-   	right: 0;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
 	width: 400px;
 	height: 80px;
 	background: black;
@@ -396,9 +413,9 @@ br {
 	display: none;
 	position: fixed;
 	margin: 0 auto;
-	margin-top: -420px;	
-   	left: 0;
-   	right: 0;
+	margin-top: -420px;
+	left: 0;
+	right: 0;
 	width: 400px;
 	height: 80px;
 	background: black;
@@ -422,14 +439,14 @@ br {
 	height: 50px;
 	font-size: 16px;
 	font-weight: bolder;
-	vertical-align:middle;
+	vertical-align: middle;
 }
 
 .jJob, .wJob {
 	width: 90px;
 	height: 50px;
 	font-size: 12px;
-	vertical-align:middle;
+	vertical-align: middle;
 }
 
 .jImg, .wImg {
@@ -444,4 +461,81 @@ br {
 	width: 35px;
 	height: 35px;
 }
-  
+
+/*파일 업로드 css*/
+
+.dragAndDropDiv {
+	border: 2px dashed #92AAB0;
+	width: 727px;
+	height: 30px;
+	color: #92AAB0;
+	vertical-align: middle;
+	padding: 10px 0px 10px 10px;
+	font-size: 100%;
+	display: table-cell;
+}
+
+.progressBar {
+	width: 150px;
+	height: 22px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+	display: inline-block;
+	margin: 0px 10px 5px 5px;
+	vertical-align: top;
+}
+
+.progressBar div {
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	line-height: 22px;
+	/* same as #progressBar height if we want text middle aligned */
+	width: 0;
+	background-color: #0ba1b5;
+	border-radius: 3px;
+}
+
+.statusbar {
+	border-top: 1px solid #A9CCD1;
+	min-height: 25px;
+	width: 97.5%;
+	padding: 10px 10px 0px 10px;
+	vertical-align: top;
+}
+
+.statusbar:nth-child(odd) {
+	background: #EBEFF0;
+}
+
+.filename {
+	display: inline-block;
+	vertical-align: top;
+	width: 250px;
+	float: left;
+}
+
+.filesize {
+	display: inline-block;
+	vertical-align: top;
+	color: #30693D;
+	width: 100px;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+
+.abort {
+	background-color: #A8352F;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
+	color: #fff;
+	font-family: arial;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 4px 15px;
+	cursor: pointer;
+	vertical-align: top
+}
