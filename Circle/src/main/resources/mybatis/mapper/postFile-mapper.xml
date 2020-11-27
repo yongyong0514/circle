@@ -21,7 +21,7 @@
 	)
 	
 	values(
-	#{file_code}, #{files_oname}, #{files_cname}, #{files_route}, sysdate, #{files_type}, #{files_status}, #{files_size}
+	#{file_code}, #{files_oname}, #{files_cname}, #{files_route}, SYSDATE, #{files_type}, #{files_status}, #{files_size}
 	)
 	</insert>
 	

@@ -77,6 +77,8 @@
 		<property name="mapperLocations" value="classpath:/mybatis/mapper/*-mapper.xml"></property>
 	</bean>
 	
+	
+	
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="factory"></constructor-arg>
 	</bean>
