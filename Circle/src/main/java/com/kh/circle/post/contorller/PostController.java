@@ -1,5 +1,6 @@
 package com.kh.circle.post.contorller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.post.entity.Post;
-import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.entity.PostType;
 import com.kh.circle.post.service.PostService;
 import com.kh.circle.post.service.PostServiceImp;
@@ -44,7 +45,6 @@ public class PostController {
 	
 	
 /*TEST ZONE*/
-	
 	@GetMapping("/postTestPart")
 	public String postTestPart(Model model) {
 
@@ -58,7 +58,7 @@ public class PostController {
 		return "post/postTestPart";
 
 	}
-	
+
 	@GetMapping("/postTestInsert")
 	public String postTestInsert(Model model) {
 		
@@ -67,6 +67,18 @@ public class PostController {
 		
 		return "post/postTestInsert";
 				
+		
+	}
+	
+	
+	@PostMapping("/postTestInsert")
+	public String postTestPart(@ModelAttribute Post post, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
+		
+		postService.insertPost(post, file);
+		
+		
+		return "redirect:postTestInsert";
+		
 		
 	}
 	
@@ -196,9 +208,10 @@ public class PostController {
 
 		List<Post> list = sqlSession.selectList("post.postType");
 		model.addAttribute("postList", list);
-		postService.insertPost(post);
 		
-		return "redirect:post/postList";
+		
+		return null;
 	}
 
+	
 }

@@ -47,7 +47,7 @@ public class PostServiceImp implements PostService{
 
 	@Override
 	public ResponseEntity<ByteArrayResource> download(String no) throws IOException {
-		PostFile postFile = postFileDao.find(no);
+	/*	PostFile postFile = postFileDao.find(no);
 		
 		
 		if(postFile == null) {
@@ -64,15 +64,15 @@ public class PostServiceImp implements PostService{
 									.header("Content-Type", "application/octet-stream; charset=UTF-8")
 									.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(postFile.getFile_cname(), "UTF-8"+ "\""))
 									.body(resource);
+		*/
 		
-		
-		return entity;
+		return null;
 	}
 
 
 
 
-
+/*
 	@Override
 	public int insertPost(Post post) {
 
@@ -80,6 +80,37 @@ public class PostServiceImp implements PostService{
 		
 		return postDao.insertPost(post);
 	}
+*/
+
+
+
+
+	@Override
+	public void insertPost(Post post, MultipartFile file) throws IllegalStateException, IOException {
+
+		
+		String code = postDao.insertPost(post);
+		
+		
+		if(!file.isEmpty()) {
+			
+			PostFile postFile = PostFile.builder()
+					
+					.file_oname(file.getOriginalFilename())
+					.file_type(file.getContentType())
+					.file_size(file.getSize())
+					.file_code(code)
+					.build();
+			
+			String file_no = postFileDao.insert(postFile);
+			
+			postSaveDao.save(file, file_no);
+		}
+		
+	}
+
+
+
 
 
 

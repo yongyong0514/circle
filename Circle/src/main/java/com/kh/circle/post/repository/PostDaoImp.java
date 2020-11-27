@@ -27,11 +27,13 @@ public class PostDaoImp implements PostDao{
 	int noOfRecords;
 
 	@Override
-	public int insertPost(Post post) {
+	public String insertPost(Post post) {
 
+		String post_code = sqlSession.selectOne("post_seq");
+		post.setPost_code(post_code);
+		sqlSession.insert("post.postTestInsert", post);
 		
-		
-		return sqlSession.insert("postInsert", post);
+		return post_code;
 	}
 	
 	
