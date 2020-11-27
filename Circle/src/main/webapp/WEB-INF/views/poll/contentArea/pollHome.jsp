@@ -9,17 +9,26 @@
 </head>
 <script>
 	$(document).ready(function(){
+		
+		console.log(history);
+		state = 'home';
+		history.push
+		
 		//미참여 설문 클릭
 		$('.poll-state-span-no-attendance').parent().parent().on('click', function(){
-			url = "${pageContext.request.contextPath}/poll/pollPost";
+			var url = "${pageContext.request.contextPath}/poll/pollPost";
+			history.pushState(state, null, url);
 			$('#content-box').load(url);
+			
 		});	
 		
 		//참여한 설문 클릭
 		$('.poll-state-span-attendance').parent().parent().on('click', function(){
-			url = "${pageContext.request.contextPath}/poll/pollResult";
+			var url = "${pageContext.request.contextPath}/poll/pollResult";
+			history.pushState(state, null, url);
 			$('#content-box').load(url);
-		});		
+		});	
+		
 	});
 
 </script>
