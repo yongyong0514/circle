@@ -24,7 +24,7 @@
 		<jsp:include page="../sign/signLeftBar.jsp" />
 	</div>
 	<div class="container">
-		<form id="formArea" method="get" action="">
+		<form id="formArea" method="post" enctype="multipart/form-data">
 			<div class="contentBar">
 				<jsp:include page="../sign/signWriteBar.jsp" />
 				<div class="signHomeListBar">
@@ -35,11 +35,11 @@
 						<table>
 							<tr>
 								<th class="formBox1">작성자</th>
-								<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" value="${member.EMP_INFO_NAME}" readonly>
-									<input type="text" class="formInput1" id="sign_emp_code" value="${member.EMP_INFO_EMP_NO}" readonly> 
-									<input type="text" class="formInput1" id="sign_count" value="" readonly></th>
+								<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" value="${empInfo.emp_info_name}" readonly>
+									<input type="text" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> 
+									<input type="text" class="formInput1" id="sign_count" name="sign_count" readonly></th>
 								<th class="formBox1">직급</th>
-								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${member.EMP_INFO_JOB_CODE}" readonly></th>
+								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.emp_info_job_code}" readonly></th>
 							</tr>
 							<tr>
 								<th class="formBox1">보존 연한</th>
@@ -67,7 +67,7 @@
 							<tr>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox4" colspan="3">
-									<select class="formSelect2" id="sign_type" name="sign_type">
+									<select class="formSelect2" id="sign_type_code" name="sign_type_code">
 										<option value="0">문서 유형을 선택하세요</option>
 										<c:forEach var="item" items="${list}">
 											<option value="${item.sign_type_code}">${item.sign_type_name}</option>
@@ -77,18 +77,27 @@
 							</tr>
 							<tr>
 								<th class="formBox1">제목</th>
-								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title"></th>
+								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title" name="sign_title"></th>
+							</tr>
+							<tr>
+								<th class="formBox0"></th>
+							</tr>
+							<tr>
+								<th class="formBox1">첨부 파일</th>
+								<th class="formBox4" colspan="3">
+									<input type="file" id="file" name="file">
+								</th>
 							</tr>
 							<tr>
 								<th class="formBox0"></th>
 							</tr>
 						</table>
-						<div class="formBox5" id="editor" class="sign_note"></div>
+						<div class="formBox5" id="editor"></div>
+						<textarea id="sign_note" name="sign_note" readonly></textarea>
 					</div>
 					<div class="formRight">
 						<div>
 							<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();">결재자 등록</div>
-							<div class="joinCount"><input type="text" id="joinerCount" readonly></div>
 							<div class="joinAlert">결재자가 저장되었습니다</div>
 							<div class="joinForm1">
 								<%-- <div>
@@ -236,9 +245,14 @@
 		window.onunload = function () {
 		    sessionStorage.removeItem('joiner');
 		    sessionStorage.removeItem('watcher');
-		};  
+		};
 	</script>
-
+	<script>
+		$(document).submit(function(){
+			onbeforeunload = false;
+		});
+	</script>
+	
 <!-- TUI EDITOR -->
 	<script>
 		var editor = new toastui.Editor({
@@ -265,9 +279,9 @@
 
 <!-- 문서 종류 옵션 시작 -->
 	<script>
-		$("#sign_type").on("change", function() {
+		$("#sign_type_code").on("change", function() {
 			var base = "${pageContext.request.contextPath}";
-			var typeCode = $("#sign_type").val();
+			var typeCode = $("#sign_type_code").val();
 			$.ajax({
 				url : base + "/signResult/signTypeContent",
 				type : "get",
@@ -442,12 +456,14 @@
 	<!-- FORM 전송 시작 전 체크 -->
 	<script>
 		$("#formArea").submit(function(e) {
+			var base = "${pageContext.request.contextPath}";
 			e.preventDefault();
 
 			/*Include field data*/
 			var isSubmit = false;
 			var editorValue = editor.getHtml();
-
+			$("#sign_note").val(editorValue);
+			
 			/*Load Session Data*/
 			var jsonData1 = sessionStorage.getItem("joiner");
 			var joiner = "";
@@ -458,51 +474,77 @@
 			watcher = JSON.parse(jsonData2);
 
 			/*Check empty field*/
-			if($("#sign_keep").val() == '0') {
+			if($("#sign_keep").val() != '0') {
+				
+				if($("#sign_acc").val() != '0') {
+					
+					if($("#sign_type_code").val() != '0') {
+					
+						if($("#sign_title").val() != '') {
+							
+							if(editorValue != "") {
+								
+								if(joiner) {
+									/*Count about joiner and include form field*/
+									var signCount = "";
+									 signCount = joiner.length;
+									$("#sign_count").val(signCount);
+
+									if(watcher) {
+										isSubmit = true;
+									} else {
+										var result = confirm("참조자를 등록하지 않았습니다. 계속하시겠습니까?");
+										
+										if(result == true) {
+											isSubmit = true;
+										} else if(result == false) {
+											return false;
+										}
+									}
+									
+								} else {
+									alert("결재자를 선택해주세요");
+									return false;
+								}
+								
+							} else {
+								alert('문서 내용을 입력해주세요');
+								return false;
+							}
+							
+						} else {
+							alert('문서 제목을 입력해주세요');
+							$("#sign_title").focus();
+							return false;
+						}
+						
+					} else {
+						alert('문서 유형을 선택해주세요');
+						$("#sign_type_code").focus();
+						return false;
+					}
+					
+				} else {
+					alert('보안 등급을 선택해주세요');
+					$("#sign_acc").focus();
+					return false;
+				}
+				
+			} else {
 				alert('보존 연한을 선택해주세요');
 				$("#sign_keep").focus();
 				return false;
 			}
 
-			if($("#sign_acc").val() == '0') {
-				alert('보안 등급을 선택해주세요');
-				$("#sign_acc").focus();
-				return false;
-			}
-
-			if($("#sign_type").val() == '0') {
-				alert('문서 유형을 선택해주세요');
-				$("#sign_type").focus();
-				return false;
-			}
-
-			if($("#sign_title").val() == '') {
-				alert('문서 제목을 입력해주세요');
-				$("#sign_title").focus();
-				return false;
-			}
-
-			if(editorValue == "") {
-				alert('문서 내용을 입력해주세요');
-				return false;
-			}
+ 			if(isSubmit) this.submit();
 			
-			if(!joiner) {
-				alert("결재자를 선택해주세요");
-				return false;
-			}
+/*  			$.ajax({
+				url: base + "/sign/signJoiner",
+				type: "post",
+				data: { joiner : joiner
+					  , watcher: watcher }
+			}); */
 			
-			/*Count about joiner and include form field*/
-			var joinerCount ="";
-			joinerCount = joiner.length;
-			$("#joinerCount").val(joinerCount);
-			
-			if(!watcher) {
-				alert("참조자를 선택해주세요");
-				return false;
-			}
-			
-			/*fksdjfk2l3jr0efuwkfjlwnr32lrjeww0fjwo3irbw3lfk;skdjfa0fujsakfjw3lkbfslf*/
 		});
 	</script>
 </body>
