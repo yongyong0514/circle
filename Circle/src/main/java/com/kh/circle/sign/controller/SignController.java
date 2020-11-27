@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.sign.service.SignService;
@@ -18,7 +19,7 @@ import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
-import com.kh.circle.sign.vo.SignWrite;
+import com.kh.circle.sign.vo.SignWriteInsert;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,13 +58,20 @@ public class SignController {
 		return "sign/signWrite";
 	}
 	
-//	결재 작성
-	@RequestMapping(value = "/signWrite", method = RequestMethod.POST)
-	public String write(SignWrite signWrite) throws Exception {
-		signService.write(signWrite);
-		
-		return "redirect:/";
+// 결재 작성
+	@PostMapping("/signWrite")
+	public String signWrite(@ModelAttribute SignWriteInsert signWriteInsert) {
+		System.out.println(signWriteInsert);
+		return "redirect:signList";
 	}
+	
+////	결재 작성
+//	@RequestMapping(value = "/signWrite", method = RequestMethod.POST)
+//	public String write(SignWrite signWrite) throws Exception {
+//		signService.write(signWrite);
+//		
+//		return "redirect:/";
+//	}
 	
 //	결재 첫화면
 	@GetMapping("/signList")
