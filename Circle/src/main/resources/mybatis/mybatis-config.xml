@@ -61,6 +61,9 @@
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceSum" alias="attendanceSum"/>
 		<typeAlias type="com.kh.circle.empInfo.entity.EmpInfoAll" alias="empInfoAll"/>
 		<typeAlias type="com.kh.circle.empInfo.entity.CertificateInfo" alias="crtfInfo"/>
+		<typeAlias type="com.kh.circle.empInfo.entity.CareerInfo" alias="careerInfo"/>
+		<typeAlias type="com.kh.circle.empInfo.entity.RewardDiscipline" alias="rewardDisciplineInfo"/>
+		<typeAlias type="com.kh.circle.empInfo.entity.HREvaluation" alias="hREvaluation"/>
 	</typeAliases>
 
 	<!-- 

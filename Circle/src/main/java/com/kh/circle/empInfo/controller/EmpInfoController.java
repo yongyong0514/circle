@@ -34,7 +34,7 @@ public class EmpInfoController {
 		} else {
 			model.addAttribute("msg", "로그인 후 사용 가능합니다.");
 			
-			return "common/error.jsp";
+			return "common/error";
 		}
 	}
 	

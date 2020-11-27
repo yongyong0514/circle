@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hREvaluation">
+	<select id="searchWithEmpNo" parameterType="string" resultType="hREvaluation">
+		select HI.hrev_info_ordr
+			 , HI.hrev_info_emp_no
+			 , to_char(HI.hrev_info_dat, 'yyyy-MM-dd') as "hrev_info_dat"
+			 , HI.hrev_info_achv
+			 , HI.hrev_info_eval
+			 , HI.hrev_info_dept_code
+			 , HI.hrev_info_eval_emp_no
+			 , HI.hrev_info_rm
+			 , DI.dept_info_name
+			 , EI.emp_info_name
+		  from hrev_info HI
+		 inner join dept_info DI on (HI.hrev_info_dept_code = DI.dept_info_code)
+		 inner join emp_info EI on (HI.hrev_info_eval_emp_no = EI.emp_info_emp_no)
+		 where hrev_info_emp_no = #{emp_no}
+		 order by hrev_info_dat desc
+	</select>	
+</mapper>

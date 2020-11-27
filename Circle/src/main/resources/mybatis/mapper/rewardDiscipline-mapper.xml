@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rewardDisciplineInfo">
+	<select id="searchWithEmpNo" parameterType="string" resultType="rewardDisciplineInfo">
+		select RH.rwdp_hstr_ordr
+			 , RH.rwdp_hstr_emp_no
+			 , RH.rwdp_hstr_type
+			 , to_char(RH.rwdp_hstr_dat, 'yyyy-MM-dd') as "rwdp_hstr_dat"
+			 , RH.rwdp_hstr_cont
+			 , RH.rwdp_hstr_resn
+			 , RH.rwdp_hstr_rm
+		  from rwdp_hstr RH
+		 where rwdp_hstr_emp_no = #{emp_no}
+		 order by rwdp_hstr_dat desc
+	</select>	
+	
+</mapper>

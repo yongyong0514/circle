@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="careerInfo">
+	<select id="searchWithEmpNo" parameterType="string" resultType="careerInfo">
+		select CH.carr_hstr_ordr
+			 , CH.carr_hstr_emp_no
+			 , to_char(CH.carr_hstr_sdat, 'yyyy-MM-dd') as "carr_hstr_sdat"
+			 , to_char(CH.carr_hstr_edat, 'yyyy-MM-dd') as "carr_hstr_edat"
+			 , CH.carr_hstr_dept_code
+			 , CH.carr_hstr_job_code
+			 , CH.carr_hstr_job_type
+			 , CH.carr_hstr_term
+			 , CH.carr_hstr_rm
+			 , trunc(months_between(carr_hstr_edat+1, carr_hstr_sdat)/12) as "year_term"
+			 , trunc(mod(months_between(carr_hstr_edat+1, carr_hstr_sdat),12)) as "month_term"
+			 , JI.job_info_name
+			 , DI.dept_info_name
+		  from carr_hstr CH
+		 inner join dept_info DI on(CH.carr_hstr_dept_code = DI.dept_info_code)
+		 inner join job_info JI on(CH.carr_hstr_job_code = JI.job_info_code)
+		 where CH.carr_hstr_emp_no = #{emp_no}
+		 order by CH.carr_hstr_sdat desc
+	</select>	
+	
+</mapper>
