@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="crtfInfo">
+	
+	<select id="searchListWithEmpNo" parameterType="string" resultType="crtfInfo">
+		select crtf_info_ordr
+			 , crtf_info_emp_no
+			 , crtf_info_type
+			 , crtf_info_crtf_name
+			 , crtf_info_crtf_no
+			 , crtf_info_crtf_levl
+			 , crtf_info_inst
+			 , to_char(crtf_info_sdat, 'yyyy-MM-dd') as "crtf_info_sdat"
+			 , to_char(crtf_info_edat, 'yyyy-MM-dd') as "crtf_info_edat"
+			 , crtf_info_rm
+		  from crtf_info
+		 where crtf_info_emp_no = #{emp_no}
+		 order by crtf_info_sdat desc
+	</select>
+	
+	
+	
+</mapper>

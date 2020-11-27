@@ -38,7 +38,7 @@
 			<!-- 메뉴 시작 -->
 			<div class="menuLeftListTitle">인사/근태관리</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/main'">내 근태이력</div>
-			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myInfo'">내 인사정보</div>
+			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/empInfo/myInfo'">내 인사정보</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myVacation'">내 연차이력</div>
 			
 			<!--
@@ -48,7 +48,7 @@
 			<div class="menuLeftListTitle">전사근태관리</div>
 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allAttendanceList'">전사 근태현황</div>
 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allAttendanceStatistic'">전사 근태통계</div>
-				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allInfoList'">전사 인사정보</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/empInfo/allInfo'">전사 인사정보</div>
 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allVacationList'">전사 연차현황</div>
 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allVacationHistory'">전사 연차 사용내역</div>
 			<!-- 근태/인사관리 메뉴 끝 -->

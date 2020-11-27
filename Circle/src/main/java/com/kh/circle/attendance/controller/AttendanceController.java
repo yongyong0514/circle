@@ -18,7 +18,6 @@ import com.kh.circle.login.entity.EmpInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
@@ -56,12 +55,6 @@ public class AttendanceController {
 		}
 	}
 	
-	@GetMapping("/myInfo")
-	public String myInfo() {
-		
-		return "attendance/myInfo";
-	}
-	
 	@GetMapping("/myVacation")
 	public String myVacation() {
 		return "attendance/attendanceMyVacation";
@@ -75,11 +68,6 @@ public class AttendanceController {
 	@GetMapping("/attendanceAllStatistic")
 	public String attendanceAllStatistic() {
 		return "attendance/attendanceAllStatistic";
-	}
-	
-	@GetMapping("/attendanceAllInfoList")
-	public String attendanceAllInfoList() {
-		return "attendance/attendanceAllInfoList";
 	}
 	
 	@GetMapping("/attendanceAllVacationList")
