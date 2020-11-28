@@ -42,5 +42,5 @@ public class EmpInfoAll {
 	
 	//join result
 	private String dept_info_name;		//부서명
-	private String job_info_name;			//직책명
+	private String job_info_name;		//직책명
 }	

@@ -91,6 +91,7 @@ td {
 
 .detailInfo{
 	width:100%;
+	table-layout: auto;
 }
 
 .detailInfo li{
@@ -115,6 +116,7 @@ td {
 	padding: 0.5rem;
 }
 
+.detailPersonalInfoTable tr td
 .detailCareerTable tr td,
 .detailRewordDisciplineTable tr td,
 .changeList tr td{
@@ -127,14 +129,15 @@ td {
 	width: 5%;
 }
 
-.detailCareerTable tr th:first-of-type,
-.detailRewordDisciplineTable tr th:first-of-type,
 .changeListTable tr th:first-of-type{
 	width: 2%;
 }
 
-.changeList{
-	padding-left: 2rem;
-	padding-right: 2rem;
+.detailCareerTable td{
+	text-align:center;
+}
+
+.rm{
+	witdh: 10px;
 }
 
