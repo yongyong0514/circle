@@ -465,10 +465,10 @@ br {
 /*파일 업로드 css*/
 
 .dragAndDropDiv {
-	border: 2px dashed #92AAB0;
-	width: 727px;
+	border: 1px dashed #0059A1;
+	width: 730px;
 	height: 30px;
-	color: #92AAB0;
+	color: #0059A1;
 	vertical-align: middle;
 	padding: 10px 0px 10px 10px;
 	font-size: 100%;
@@ -493,7 +493,7 @@ br {
 	line-height: 22px;
 	/* same as #progressBar height if we want text middle aligned */
 	width: 0;
-	background-color: #0ba1b5;
+	background-color: #0059A1;
 	border-radius: 3px;
 }
 
@@ -526,7 +526,7 @@ br {
 }
 
 .abort {
-	background-color: #A8352F;
+	background-color: #7D7D7D;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;

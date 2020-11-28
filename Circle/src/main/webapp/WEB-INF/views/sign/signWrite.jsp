@@ -605,11 +605,23 @@
 			/*Load Session Data*/
 			var jsonData1 = sessionStorage.getItem("joiner");
 			var joiner = "";
-			joiner = JSON.parse(jsonData1);		
+			joiner = JSON.parse(jsonData1);
+			
+			var jCodeList = new Array();
+				for (var i = 0; i < joiner.length; i++) {
+
+					jCodeList[i] = joiner[i].jCode;
+				}
 			
 			var jsonData2 = sessionStorage.getItem("watcher");
 			var watcher = "";
 			watcher = JSON.parse(jsonData2);
+			
+			var wCodeList = new Array();
+			for (var i = 0; i < watcher.length; i++) {
+
+				wCodeList[i] = watcher[i].wCode;
+			}
 
 			/*Check empty field*/
 			if($("#sign_keep").val() != '0') {
@@ -676,13 +688,12 @@
 
  			if(isSubmit) this.submit();
 			
-/*  			$.ajax({
+  			$.ajax({
 				url: base + "/sign/signJoiner",
 				type: "post",
-				data: { joiner : joiner
-					  , watcher: watcher }
-			}); */
-			
+				data: { jCodeList : jCodeList
+					  , wCodeList : wCodeList }
+			});
 		});
 	</script>
 </body>
