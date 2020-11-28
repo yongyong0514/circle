@@ -101,14 +101,15 @@
 										type="button" style="background-color: #D9418C; color: white;"
 										class="btn btn-default pull-right"
 										onclick="javascript:location.href='comuList'" value="글목록" />
+										<!-- 주주 -->
 									</td>
 								</tr>
 							</thead>
 						</table>
 						<br>
-
+			
 					</form>
-
+							
 				</div>
 			</div>
 		</div>
