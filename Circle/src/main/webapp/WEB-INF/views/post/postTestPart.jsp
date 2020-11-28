@@ -33,9 +33,7 @@
 	
 		<div class="content">
 			<!-- 내용 -->
-
 			<table class="post">
-
 						<tr>
 							<th>글번호</th>
 							<th>분류</th>
@@ -55,18 +53,15 @@
 							</tr>
 						</c:forEach>
 					</table>
-			<input type="submit" value="글쓰기">
-
-
-		
+			<button  onClick="location.href='${pageContext.request.contextPath}/post/postTestInsert'">글쓰기</button>
 			<!-- 옵션선택 끝 -->
-
 		</div>
 	</div>
 	</div>
 
 
 	<script>
+	
 		$(function() {
 			$('tbody tr[href]').click(function() {
 				console.log($(this).attr('href'));

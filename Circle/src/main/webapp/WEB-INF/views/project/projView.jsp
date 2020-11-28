@@ -66,13 +66,14 @@
           <!--   post content -->
           <div class="post-content">
          <h2 class="ui header">
+         
+         </h2>
         <i class="settings icon"></i>
         <div class="content">
-          Account Settings
+          
           <div class="sub header">2017-09-22 12:30 by Terror</div>
         </div>
-      </h2>
-            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe eligendi inventore ea eius aspernatur aliquam minus praesentium veniam est magni laborum, obcaecati dignissimos perferendis, sequi quidem animi fuga nostrum facere.</div>
+        </div>
           </div>
           <!--  comments -->
           <div class="ui comments">
@@ -159,7 +160,6 @@ new Vue({
       
       
 </div>
-		</div>
 
 
 

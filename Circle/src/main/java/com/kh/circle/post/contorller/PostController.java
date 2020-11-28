@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.post.entity.Post;
+import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostType;
 import com.kh.circle.post.service.PostService;
 import com.kh.circle.post.service.PostServiceImp;
@@ -40,73 +42,90 @@ public class PostController {
 	@Autowired
 	private HttpServletResponse response;
 
-	
-	
-	
-	
-/*TEST ZONE*/
-	@GetMapping("/postTestPart")
-	public String postTestPart(Model model) {
+	   
+	/*TEST ZONE*/
+	/*
+	//게시글 list
+	   @GetMapping("/postTestPart")
+	   public String postTestPart(Model model,
+	                        @RequestParam("type") String type) {
 
-		List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
-		List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
+	      System.out.println("type: " + type);
+	      
+	      String postName = "";
+	      if(type.equals("test")) {
+	         postName = "테스트";
+	      }
+	      
+	      List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
+	      List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
+	      
+	      model.addAttribute("postTestPart", postTestPart);
+	      model.addAttribute("postTestPart2", postTestPart2);
+
+	      model.addAttribute("postName", postName);
+	      
+	      return "post/postTestPart";
+
+	   }
+
+	
+	
+
+	//게시글 view
+	@GetMapping("/postTestView")
+	public String postTestView(Model model) {
+
 		
-		model.addAttribute("postTestPart", postTestPart);
-		model.addAttribute("postTestPart2", postTestPart2);
-
-		return "post/postTestPart";
+		 List<Post> postTestView = sqlSession.selectList("post.postTestPart");
+		 model.addAttribute("postTestPart", postTestView);
+		return "post/postTestView";
 
 	}
-	
-	@GetMapping("postHomebar")
-	public String postHomebar(Model model){
-		
-		Post postTestPart = sqlSession.selectOne("post.postTestPart2");
-		
-		
-		return "../post/postHomebar.jsp";
-	}
-	
-	
 
+	/*
+	//게시글 insert
+	
 	@GetMapping("/postTestInsert")
 	public String postTestInsert() {
-
+		
 		return "post/postTestInsert";
-				
 		
 	}
 	
 	
 	@PostMapping("postTestInsert")
-	public String postTestPart(@ModelAttribute Post post, @RequestParam MultipartFile file) throws IllegalStateException, IOException {
-		
+	@ResponseBody
+	public String postTestPart(
+			@ModelAttribute Post post,
+			@ModelAttribute  PostFile postFile,
+			@RequestParam String emp_info_emp_no,
+			@RequestParam MultipartFile file)
+			throws IllegalStateException, IOException {
+
+		System.out.println("test : " + post);
 		postService.insertPost(post, file);
-		
+
 		System.out.println("postpost : " + post);
 		System.out.println("postfile : " + file);
 		return "redirect:postTestPart";
-		
-		
-	}
-	
-	/*
-	@RequestMapping("/postTestInsert")
-	public String postTestInsert2(Model model,  Post post) {
 
-		List<Post> list = sqlSession.selectList("post.postType");
-		model.addAttribute("postList", list);
-		postService.insertPost(post);
-		
-		return "redirect:post/postTestPart";
 	}
 */
 	
 	
 	
 	
-	
-	
+	/*
+	 * @RequestMapping("/postTestInsert") public String postTestInsert2(Model model,
+	 * Post post) {
+	 * 
+	 * List<Post> list = sqlSession.selectList("post.postType");
+	 * model.addAttribute("postList", list); postService.insertPost(post);
+	 * 
+	 * return "redirect:post/postTestPart"; }
+	 */
+
 	/*
 	 * 페이징처리한 파트 실패함
 	 * 
@@ -160,10 +179,13 @@ public class PostController {
 	 * 
 	 * 
 	 * }
-	 */
+	 
 
 	@GetMapping("/postList")
-	public ModelAndView postList(ModelAndView model) {
+	public ModelAndView postList(ModelAndView model, @ModelAttribute String post_type) {
+		String postType = post_type;
+
+		System.out.println("controller postName: " + post_type);
 
 		List<Post> postList = sqlSession.selectList("post.postList");
 
@@ -186,7 +208,7 @@ public class PostController {
 		return "post/postNoticeList";
 
 	}
-	
+
 	@GetMapping("postEmployeeList")
 	public String postEmployeeList(Model model) {
 
@@ -197,9 +219,6 @@ public class PostController {
 		return "post/postEmployeeList";
 
 	}
-	
-	
-	
 
 	@RequestMapping("postType")
 	public String postType(Model model) {
@@ -209,17 +228,14 @@ public class PostController {
 		model.addAttribute("postType", postType);
 		return "../post/postType";
 	}
-	
 
 	@RequestMapping("/postInsert")
-	public String postInsert(Model model,  Post post) {
+	public String postInsert(Model model, Post post) {
 
 		List<Post> list = sqlSession.selectList("post.postType");
 		model.addAttribute("postList", list);
-		
-		
+
 		return null;
 	}
-
-	
+*/
 }
