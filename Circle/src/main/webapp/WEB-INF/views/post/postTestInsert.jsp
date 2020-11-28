@@ -51,7 +51,7 @@
 
 					<div class="title">게시글 작성</div>
 
-					 <form action="postTestInsert" method="post" enctype="multipart/form-data">
+					 <form action="postTestInsert" id= "postForm" method="post" enctype="multipart/form-data">
 						<div class="inputfield">
 							<label for="post_title">제목</label> <input type="text"
 								class="input" id="post_title" name="post_title"
@@ -74,18 +74,9 @@
 							</div>
 
 						</div>
+				
 						<div class="inputfield">
-							<div class="post_type">
-							<label for="post_type">게시판</label>
-							<label><input type="radio" name="post_type" value="1" checked>1</label>
-							<label><input type="radio" name="post_type" value="2">2</label>
-							<label><input type="radio" name="post_type" value="3">3</label>
-							<label><input type="radio" name="post_type" value="4">4</label>
-							<label><input type="radio" name="post_type" value="5">5</label>
-							</div>
-						</div>
-						<div class="inputfield">
-							<input type="submit" value="글쓰기" class="btn" name="submit" id="submit" onclick="submit(); return false;">
+							<input type="submit" value="글쓰기" class="btn" name="submit" id="btnSubmit" onclick="submit(); return false;">
 							<input type="reset" value="초기화" class="btn" name="reset" id="reset"> 
 							<input type="button" value="돌아가기" class="btn" name="return" id="return">
 
@@ -97,7 +88,26 @@
 				</div>
 			</div>
 		</div>
-		<script src="<c:url value="/resources/js/post/postInsert.js" />"></script>
+		
+		<script>
+		$(document).ready(finction() {
+			
+			$("#btnSubmit").click(function (event) {
+				
+				event.preventDefault();
+				var post_title = $("input[post_type='post_type']").val;
+				alert(post_title);
+				fir_ajax_submit(post_title);
+			})
+			
+		});
+		
+		function fire_ajax_submit(submit)
+		
+		
+		
+		</script>
+		
 <script>
 
 function submit(){
@@ -107,6 +117,9 @@ function submit(){
 	$ajax({
 		cache: false,
 		url : "${pageContext.request.contextPath}/post/postTestPart",
+		type : "POST",
+		data:  {"post_title" : "post_title"}
+		
 		processData: false,
 		contentType: false,
 		data : postData,

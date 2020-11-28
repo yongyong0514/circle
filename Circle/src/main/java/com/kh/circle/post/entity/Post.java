@@ -32,11 +32,25 @@ public class Post {
 	private String post_cvp;
 	private String post_code_ref;
 
+	/* post rep*/
+	private String post_repl_code;
+	private String post_repl_post;
+	private String post_repl_emp;
+	private String post_repl_cont;
+	private Date post_repl_wdat;
+	private String post_repl_crp;
+	private String post_repl_mdat;
+	private String post_repl_ref;
+	
+	
+	
 	/*postemp*/
 	private String emp_info_emp_no;
 	private String emp_info_name;
 	private String emp_info_dept_code;
+	private String emp_info_dept_name;
 	private String emp_info_job_code;
+	private String emp_info_job_name;
 	private String emp_info_email;
 	private String emp_info_mtel;
 	private String emp_info_etel;

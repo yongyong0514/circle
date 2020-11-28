@@ -12,10 +12,8 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/post/postList.css">
 
-
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 </head>
 <body>
 	<div class="wrap">
@@ -28,7 +26,7 @@
 		</div>
 		<div class="container">
 			<div class="contentBar">
-				<jsp:include page="../post/postHomebar.jsp" />
+				 <jsp:include page="../post/postHomebar.jsp" />
 			</div>
 	
 		<div class="content">

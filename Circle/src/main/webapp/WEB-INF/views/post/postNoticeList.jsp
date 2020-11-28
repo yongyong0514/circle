@@ -29,12 +29,7 @@
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../post/postHomebar.jsp" />
-				<select type="dropbox">
-						<!-- 게시판 선택용으로 시도 -->
-						<c:forEach var="postTestPart2" items="${postTestPart2}">
-							<option items="postTestPart2">${postTestPart2.post_type_title}</option>
-						</c:forEach>
-					</select>
+				
 			</div>
 	
 		<div class="content">

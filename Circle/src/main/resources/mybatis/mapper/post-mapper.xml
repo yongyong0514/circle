@@ -70,6 +70,15 @@ select *
 from  post_type
 </select>
 
+<select id="postTestView" resultType="post">
+
+select *
+from post p
+join post_repl r on (p.post_code = r.post_repl_post)
+join post_type t on (p.post_type = t.post_type_code)
+join emp_info e on (p.post_emp = e.emp_info_emp_no)
+</select>
+
 <!-- TEST END -->
 
 
