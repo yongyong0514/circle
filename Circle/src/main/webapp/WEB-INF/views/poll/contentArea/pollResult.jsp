@@ -5,8 +5,66 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollResult.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='${pageContext.request.contextPath}/resources/js/poll/echarts-en.min.js'></script>
+    <script type="text/javascript">
+        // based on prepared DOM, initialize echarts instance
+        var myChart = echarts.init($('#result-chart')[0]);
+		
+        var data1 = "맥창";
+        
+        // specify chart configuration item and data
+		option = {
+		    title: false,
+		    tooltip: {
+		        trigger: 'item',
+		        formatter: '{a} <br/>{b} : {c} ({d}%)'
+		    },
+		    legend: {
+		        type: 'scroll',
+		        orient: 'vertical',
+		        left: 10,
+		        bottom: 10,
+		        data: [data1,'솔낭구','뢰벤','순대국','청국장'],
+		
+		    },
+		    series: [
+		        {
+		            name: '점심 뭐먹지',
+		            type: 'pie',
+		            left:'10',
+		            radius : '55%',
+		            center: ['50%', '60%'],
+		            label: {
+		                position: 'outer',
+	                	formatter: '{b}：{c}명  ({d}%)  '
+		            },
+		            data:[
+		                {value:335, name:data1},
+		                {value:310, name:'솔낭구'},
+		                {value:234, name:'뢰벤'},
+		                {value:135, name:'순대국'},
+		                {value:1548, name:'청국장'}
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 0,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0)'
+		                    
+		                }
+		            }
+		        }
+		    ]
+		};
+
+        // use configuration item and data specified to show chart
+        myChart.setOption(option);
+    </script>
 <title>설문 결과보기</title>
 </head>
+
+
 <body>
 	<div class="poll-post-content-container">
 		<header>
@@ -139,43 +197,32 @@
 									<li class=question-response>
 										<span class="question">
 											<span class="seq">1</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"1번 질문 선택형"
+											.
+											점심 뭐먹지(질문 선택형)
 										</span>
-										<ul class="answer-wrap">
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code1" type="checkbox">
-													<label for="checkbox-code1">선택형</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code2" type="checkbox">
-													<label for="checkbox-code2">필수답변</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code3" type="checkbox">
-													<label for="checkbox-code3">복수선택</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code4" type="checkbox">
-													<label for="checkbox-code4">최대선택개수 제한없음</label>
-												</span>
-											</li>
-											<li class="etc">
-												<span class="txt-wrap">
-													<input id="checkbox-code5" type="checkbox">
-													<label for="checkbox-code5 txt" class="label-wrap">기타</label>
-													<input class="txt w-fix-max" type="text">
-												</span>
-											</li>
-										</ul>
+										<div class=result-chart-wrap>
+											<dl class=result-chart-info>
+												<dt>
+													<span class="txt">전체 참여자 : </span>
+												</dt>
+												<dd>
+													<span class="number">5</span>
+													<span class="txt">명</span>
+												</dd>
+												<dt>
+													<span class="txt">참여율 : </span>
+												</dt>
+												<dd>
+													<span class="number">1</span>
+													<span class="txt">명</span>
+													<span class="gage-wrap">
+														<span class="gage" style="width:20.00%"></span>
+													</span>
+													<span class="number">20.00%</span>
+												</dd>
+											</dl>										
+											<div id="result-chart" style="width:895px;height:250px;"></div>
+										</div>
 									</li>
 									<li class=question-response>
 										<span class="question">
@@ -417,6 +464,8 @@
 		</div>
 
 	</div>
+	
+
 
 </body>
 </html>

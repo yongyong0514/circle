@@ -29,6 +29,25 @@ span.date {
     font-size: 13px;
     color: #999;
 }
+dl{
+	display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    line-height: 150%;
+}
+dt{
+	display: block;
+	margin: 0;
+    padding: 0;
+}
+dd{
+	display: block;
+    margin-inline-start: 40px;
+    margin: 0;
+    padding: 0;
+}
 table {
     text-indent: initial;
     border-spacing: 2px;
@@ -330,6 +349,32 @@ span.question {
 .poll-post-question-container .question-list>li span.question{
     display: block;
 }
+div.result-chart-wrap {
+	margin: 0 22px;
+	
+}
+dl.result-chart-info{
+	border: 1px solid #ddd;
+    padding: 6px 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 485px;
+}
+.result-chart-info dt:first-child{
+	margin-left: 0;
+}
+.result-chart-info dt{
+	float: left;
+}
+.result-chart-info span{
+	vertical-align: middle;
+    color: #666;
+}
+.result-chart-info dd{
+	float: left;
+	margin-left: 5px;
+}
+
 .answer-option-wrap{
     display: inline-block;
     padding: 4px 0;
