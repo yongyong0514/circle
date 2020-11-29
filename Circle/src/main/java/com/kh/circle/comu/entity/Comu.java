@@ -20,4 +20,5 @@ public class Comu {
 	private String comu_post_comu_code;
 	private String comu_post_type;
 	private String emp_info_name;
+	private String comu_list_name;
 }

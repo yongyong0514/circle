@@ -49,56 +49,70 @@
 					<br>
 					<h5 class="n" id="nti">동호회 글 작성</h5>
 					<br>
-					<form action="${ applicationScope.contextPath }/comu/add"
+					<form action="<%-- ${ applicationScope.contextPath }/community/ --%>comuAddAction"
 						method="post" enctype="multipart/form-data">
 						<table id="all">
 							<thead>
 								<tr>
 
-									<td><select name="comu" id="comu">
+									<td><select name="comuName" id="comuName">
 											<option value="0">동호회 이름을 선택하세요</option>
-											<%-- <c:forEach var="b" items="${comu}"> --%>
-
-											<option value="<%-- ${ comu.COMU_LIST_CODE } --%>">
-												<%-- <c:out value="${ comu.COMU_LIST_NAME } "/> --%>
+												 <c:forEach var="comuName" items="${list}">
+											<option value="${comuName.comu_list_code}">
+											${comuName.comu_list_name}
 											</option>
 
-											<%-- </c:forEach> --%>
+											</c:forEach> 
 									</select></td>
 
 								</tr>
-
+								<tr>
+									<td><br></td>
+								</tr>
 								<tr>
 									<!--  <td class="n">제목 </td> -->
 									<td colspan="3"><input type="text" size="115" name="title"
 										id="title" placeholder="제목"></td>
 								</tr>
-
+								<tr>
+									<td><br></td>
+								</tr>
 								<tr>
 									<!-- <td align="center" class="n">내용 </td> -->
 									<td colspan="3"><textarea name="content" cols="100"
 											rows="20" style="resize: none;" class="text" placeholder="내용"></textarea>
 									</td>
 								</tr>
-								
+									<tr>
+									<td><br></td>
+								</tr>
 								<!-- 파일 추가 -->
 								<tr>
 									<td><input type="button"
-										class="btn btn-default btn-xs pull-right" id="add" name="add"
+										 id="add" name="add"
 										value="파일추가" class="form-control"> <input
-										type="button" class="btn btn-default btn-xs pull-right"
-										onclick="delbtn();" value="파일삭제" class="form-control">
+										type="button" 
+										onclick="delbtn();" value="파일삭제" class="form-control" id="add">
 									</td>
 								</tr>
+								<!-- class="btn btn-default btn-xs pull-right" -->
 								<tr>
-									<td><input type="file" class="form-control" name="file" id="file"></td>
+									<td><br></td>
+								</tr>
+								<tr >
+									<td id="file"><input type="file" class="form-control" name="file" id="file" ></td>
+									<td><br></td>
+								</tr>
+								
+								<tr>
+									<td><br></td>
 								</tr>
 								
 								<tr>
 									<td colspan="2"><input type="submit"
-										style="background-color: #D9418C; color: white;"
+										style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right" value="등록" /> <input
-										type="button" style="background-color: #D9418C; color: white;"
+										type="button" style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right"
 										onclick="javascript:location.href='comuList'" value="글목록" />
 										<!-- 주주 -->

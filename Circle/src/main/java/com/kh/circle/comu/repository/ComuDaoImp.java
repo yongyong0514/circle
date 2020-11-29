@@ -33,4 +33,12 @@ public class ComuDaoImp implements ComuDao {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("comu.comuListarticle");
 	}
+
+	@Override
+	public void comuAdd(Comu vo) throws Exception {
+		sqlSession.insert("comu.comuAdd",vo);
+		
+	}
+
+
 }

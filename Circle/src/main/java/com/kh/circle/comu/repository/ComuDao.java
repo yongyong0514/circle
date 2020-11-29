@@ -10,4 +10,8 @@ public interface ComuDao {
 	
 	public int comuListarticle()throws Exception;
 	
+	public void comuAdd(Comu vo)throws Exception;
+
+
+	
 }

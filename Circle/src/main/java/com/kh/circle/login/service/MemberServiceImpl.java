@@ -32,6 +32,7 @@ import com.kh.circle.login.entity.EmpInfo;
 		session.setAttribute("status", status);
 		session.setAttribute("userid", empInfo.getEmp_info_emp_no());
 		
+		
 		return status;
 	}
   }

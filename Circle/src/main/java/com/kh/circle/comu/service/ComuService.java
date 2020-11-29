@@ -14,6 +14,9 @@ public interface ComuService {
 
 	public int comuListarticle()throws Exception;
 	
+	public void comuAdd(Comu vo)throws Exception;
+
+	
 	 //void add(Comu comu, MultipartFile insert) throws IllegalStateException,IOException;
 	  
 	// ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;

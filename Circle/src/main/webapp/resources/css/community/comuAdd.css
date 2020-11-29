@@ -50,7 +50,7 @@ body{
 
 }
 #comu{
-	height:50px;
+	height:33px;
 	background: #0072C6;
 	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
 	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
@@ -87,3 +87,16 @@ body{
   font: bolder;
   font-size: 20px;
 }
+#add{
+	background:#E8F0FD;
+	 width:200px; 
+ height:25px;
+ margin-left:28px;
+  border-radius:10px;
+  font: bolder;
+  font-size: 15px;
+}
+#file{
+	 margin-left:80px;
+}
+

@@ -34,6 +34,13 @@ public class ComuServiceImp implements ComuService {
 		// TODO Auto-generated method stub
 		return dao.comuListarticle();
 	}
+
+	@Override
+	public void comuAdd(Comu vo) throws Exception {
+		// TODO Auto-generated method stub
+		dao.comuAdd(vo);
+	}
+
 	}
 
 
