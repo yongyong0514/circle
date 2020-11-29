@@ -64,12 +64,15 @@ td {
 	width: 100%;
 }
 
-.infoMainTable td,
-.changeListTable td{
+.infoMainTable td {
 	font-size:small;
 	vertical-align: middle;
 	border: 1px solid rgba(0,0,0,0.2);
 	padding: 0.5rem;
+}
+
+.setCenter input[type=text]{
+	text-align: center;
 }
 
 .photoCell{
@@ -116,6 +119,7 @@ td {
 	padding: 0.5rem;
 }
 
+.detailCertificationTable tr td,
 .detailPersonalInfoTable tr td
 .detailCareerTable tr td,
 .detailRewordDisciplineTable tr td,
@@ -140,4 +144,11 @@ td {
 .rm{
 	witdh: 10px;
 }
+
+.grey{
+	padding:0.2rem;
+	outline: none;
+	border: none;
+}
+
 

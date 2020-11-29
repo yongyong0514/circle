@@ -11,11 +11,13 @@ import com.kh.circle.empInfo.entity.CareerInfo;
 import com.kh.circle.empInfo.entity.CertificateInfo;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
 import com.kh.circle.empInfo.entity.HREvaluation;
+import com.kh.circle.empInfo.entity.InfoModify;
 import com.kh.circle.empInfo.entity.RewardDiscipline;
 import com.kh.circle.empInfo.repository.CareerInfoRepository;
 import com.kh.circle.empInfo.repository.CertificateInfoRepository;
 import com.kh.circle.empInfo.repository.EmpInfoRepository;
 import com.kh.circle.empInfo.repository.HREvaluationRepository;
+import com.kh.circle.empInfo.repository.InfoModifyRepository;
 import com.kh.circle.empInfo.repository.RewardDisciplineRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,9 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	
 	@Autowired
 	private HREvaluationRepository hREvaluationRepository;
+	
+	@Autowired
+	private InfoModifyRepository infoModifyRepository;
 	
 	//사원 1명의 정보
 	@Override
@@ -66,7 +71,8 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 		map.put("hREvaluationList", hREvaluationList);
 		
 		//정보변경이력
-		
+		List<InfoModify> infoModList = infoModifyRepository.infoModList(emp_no);
+		map.put("infoModList", infoModList);
 		
 		return map;
 	}
