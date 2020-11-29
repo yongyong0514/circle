@@ -82,8 +82,8 @@
 							<tr>
 								<th class="formBox8">첨부 파일</th>
 								<th class="formBox7" colspan="3">
-									<div id="fileUpload" class="dragAndDropDiv">파일을 드래그해서 여기에 놓거나 클릭해서 추가하세요</div>
-									<input type="file" name="fileUpload" id="fileUpload" style="display:none;" value="" multiple/>
+									<div id="fileUpload" class="dragAndDropDiv">파일을 여기에 드래그해서 추가하세요</div>
+									<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
 								</th>
 							</tr>
 							<tr>
@@ -222,6 +222,8 @@
 							</table>
 						</div>
 					</div>
+					<input type="hidden" id="jCodeList" name="jCodeList" readonly>
+					<input type="hidden" id="wCodeList" name="wCodeList" readonly>
 				</div>
 			</div>
 		</form>
@@ -400,8 +402,8 @@
                 
                 function sendFileToServer(formData,status)
                 {
-                    var uploadURL = "/fileUpload/post"; //Upload URL
-                    var extraData ={}; //Extra Data.
+                    var uploadURL = "/fileUpload/post";
+                    var extraData ={};
                     var jqXHR=$.ajax({
                             xhr: function() {
                             var xhrobj = $.ajaxSettings.xhr();
@@ -607,22 +609,29 @@
 			var joiner = "";
 			joiner = JSON.parse(jsonData1);
 			
-			var jCodeList = new Array();
+			var jList = "";	
+			if(joiner != null) {
 				for (var i = 0; i < joiner.length; i++) {
 
-					jCodeList[i] = joiner[i].jCode;
+					jList += joiner[i].jCode + "/";
 				}
+			}
+			var jCodeList = jList.substring(0, jList.length-1);
+
 			
 			var jsonData2 = sessionStorage.getItem("watcher");
 			var watcher = "";
 			watcher = JSON.parse(jsonData2);
-			
-			var wCodeList = new Array();
-			for (var i = 0; i < watcher.length; i++) {
 
-				wCodeList[i] = watcher[i].wCode;
+			var wList = "";
+			if(watcher != null) {
+				for (var i = 0; i < watcher.length; i++) {
+	
+					wList += watcher[i].wCode + "/";
+				}
 			}
-
+			var wCodeList = wList.substring(0, wList.length-1);
+			
 			/*Check empty field*/
 			if($("#sign_keep").val() != '0') {
 				
@@ -639,14 +648,19 @@
 									var signCount = "";
 									 signCount = joiner.length;
 									$("#sign_count").val(signCount);
+									$("#jCodeList").val(jCodeList);
 
 									if(watcher) {
 										isSubmit = true;
+										$("#wCodeList").val(wCodeList);
+										
 									} else {
 										var result = confirm("참조자를 등록하지 않았습니다. 계속하시겠습니까?");
 										
 										if(result == true) {
 											isSubmit = true;
+											$("#wCodeList").val(wCodeList);
+											
 										} else if(result == false) {
 											return false;
 										}
@@ -687,13 +701,6 @@
 			}
 
  			if(isSubmit) this.submit();
-			
-  			$.ajax({
-				url: base + "/sign/signJoiner",
-				type: "post",
-				data: { jCodeList : jCodeList
-					  , wCodeList : wCodeList }
-			});
 		});
 	</script>
 </body>

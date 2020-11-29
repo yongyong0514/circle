@@ -1,21 +1,24 @@
 package com.kh.circle.sign.service;
 
-import javax.inject.Inject;
+import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.circle.sign.repository.SignDao;
-import com.kh.circle.sign.vo.SignWrite;
+import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Service
 public class SignServiceImpl implements SignService {
 
-	@Inject
+	@Autowired
 	private SignDao signDao;
 	
 	@Override
-	public void write(SignWrite signWrite) throws Exception {
-		signDao.signWrite(signWrite);
+	public void insert(SignWriteInsert signWriteInsert) throws IllegalStateException, IOException {
+//		결재 등록
+		signDao.add(signWriteInsert);
+
 	}
 
 }

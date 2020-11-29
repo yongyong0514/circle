@@ -8,7 +8,7 @@
 <mapper namespace="sign">
 <!--  -->
 <!-- signList page mapper start -->
-	<select id="list" resultType="signList">
+	<select id="list" resultType="signList" parameterType="string">
 		SELECT SI.SIGN_CODE
 			 , ST.SIGN_TYPE_NAME
     		 , SI.SIGN_TITLE
@@ -25,11 +25,12 @@
  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
   		  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
  		 WHERE SI.SIGN_EDAT IS NULL
- 		   AND SI.SIGN_EMP_CODE = '200101090031'
+ 		   AND SI.SIGN_EMP_CODE = #{emp_info_emp_no}
  		 ORDER BY SI.SIGN_CODE DESC
 	</select>
 		
-	<select id="listComplete" resultType="signList">
+		
+	<select id="listComplete" resultType="signList" parameterType="string">
 		SELECT SI.SIGN_CODE
 			 , ST.SIGN_TYPE_NAME
     		 , SI.SIGN_TITLE
@@ -46,21 +47,10 @@
  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
   		  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
  		 WHERE SI.SIGN_EDAT IS NOT NULL
- 		   AND SI.SIGN_EMP_CODE = '200101090031'
+ 		   AND SI.SIGN_EMP_CODE = #{emp_info_emp_no}
  		 ORDER BY SI.SIGN_CODE DESC
 	</select>
 	
-<!-- 	<select id="count" resultType="int" parameterType="string">
-		 SELECT COUNT(*)
-  		   FROM (SELECT SI.SIGN_CODE
-     				  , SJ.SIGN_JOIN_TYPE
-     				  , SJ.SIGN_JOIN_CHECK
-  				   FROM SIGN SI
-  				   JOIN SIGN_JOIN SJ ON(SJ.SIGN_CODE = SI.SIGN_CODE)
- 				  WHERE SJ.SIGN_JOIN_TYPE = 'Y'
-   					AND SJ.SIGN_JOIN_CHECK = 'N'
-   					AND SI.SIGN_CODE = #{signCode})
-	</select> -->
 	
 	<select id="signJoinerCheck" resultType="signListJoiner">
 		SELECT EI.EMP_INFO_NAME
@@ -75,6 +65,7 @@
  		 ORDER BY JI.JOB_INFO_CODE ASC	
 	</select>
 	
+	
   	<select id="signJoiner" resultType="signListJoiner" >
 		SELECT EI.EMP_INFO_NAME
      		 , JI.JOB_INFO_NAME
@@ -86,6 +77,7 @@
    		   AND SI.SIGN_CODE = #{signCode}
  		 ORDER BY JI.JOB_INFO_CODE ASC
 	</select>
+	
 	
  	<select id="signWatcher" resultType="signListJoiner" >
 		SELECT EI.EMP_INFO_NAME
@@ -123,25 +115,38 @@
 
 <!-- signSelectOne page mapper end -->
 
+
 <!-- signWrite page mapper start -->
 	<!-- create one sign case start -->
 	<select id="seqSign" resultType="String">
 		SELECT SIGN_SEQ.NEXTVAL FROM DUAL
 	</select>
 	
-	<insert id="signWriteAdd" parameterType="map">
-		INSERT INTO SIGN VALUES('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
-     	          , #{sign_type_code}
-      		      , SYSDATE+#{sign_keep}
-               	  , #{sign_emp_code}
-              	  , #{sign_acc}
-                  , #{sign_title}
-          	      , #{sign_note}
-          	      , #{sign_status}
-           	      , SYSDATE
-           	      , NULL
-                  , 'SIPC000001'
-                  , #{sign_count})
+	
+	<insert id="signWriteInsert" parameterType="signWriteInsert">
+		INSERT INTO SIGN (SIGN_CODE
+					   , SIGN_TYPE_CODE
+					   , SIGN_KEEP
+					   , SIGN_ACC
+					   , SIGN_TITLE
+					   , SIGN_NOTE
+					   , SIGN_STATUS
+					   , SIGN_WDAT
+					   , SIGN_EDAT
+					   , SIGN_EMP_CODE
+					   , SIGN_STEP
+					   , SIGN_COUNT) VALUES ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
+     	         						  , #{sign_type_code}
+      		     						  , SYSDATE+#{sign_keep}
+              	 						  , #{sign_acc}
+                						  , #{sign_title}
+          	   							  , #{sign_note}
+          	    						  , 'N'
+           	    						  , SYSDATE
+           	    						  , NULL
+           	    						  , #{sign_emp_code}
+                						  , 'SIPC000001'
+                						  , #{sign_count})
 	</insert>
 	
 	
@@ -149,18 +154,40 @@
 		SELECT SIJC_SEQ.NEXTVAL FROM DUAL
 	</select>
 	
-	<insert id="signJoinerAdd" parameterType="map">
-		INSERT INTO SIGN_JOIN VALUES('SIJC'||TRIM(TO_CHAR(#{seqSignJoiner},'000000'))
-				  , #{sign_join_emp_code}
-				  , #{sign_join_type}
-				  , #{sign_join_check}
-				  , NULL
-				  , #{sign_code})
+	
+	<insert id="signWriteJoiner" parameterType="map">
+		INSERT INTO SIGN_JOIN (SIGN_JOIN_CODE
+							, SIGN_JOIN_EMP_CODE
+							, SIGN_JOIN_TYPE
+							, SIGN_JOIN_CHECK
+							, SIGN_JOIN_DATE
+							, SIGN_CODE) VALUES ('SIJC'||TRIM(TO_CHAR(#{seqSignJoiner},'000000'))
+				  							   , #{sign_join_emp_code}
+				  							   , 'Y'
+				 							   , 'N'
+				  							   , NULL
+											   , ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))))
+	</insert>
+	
+	
+	<insert id="signWriteWatcher" parameterType="map">
+		INSERT INTO SIGN_JOIN (SIGN_JOIN_CODE
+							, SIGN_JOIN_EMP_CODE
+							, SIGN_JOIN_TYPE
+							, SIGN_JOIN_CHECK
+							, SIGN_JOIN_DATE
+							, SIGN_CODE) VALUES ('SIJC'||TRIM(TO_CHAR(#{seqSignJoiner},'000000'))
+				  							   , #{sign_join_emp_code}
+				  							   , 'N'
+				 							   , 'N'
+				  							   , NULL
+											   , ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))))
 	</insert>
 
-	<insert id="signProcessAdd1" parameterType="map">
+
+	<insert id="signProcessAdd1" parameterType="String">
 		INSERT INTO SIGN_PROCESS VALUES('SIPC000001'
-				  , #{sign_code}
+				  , ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000')))
 				  , SYSDATE)
 	</insert>
 	

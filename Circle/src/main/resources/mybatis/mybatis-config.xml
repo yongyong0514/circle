@@ -55,6 +55,7 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignType" alias="signType"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignTypeContent" alias="signTypeContent"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignEmpList" alias="signEmpList"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignWriteInsert" alias="signWriteInsert"/>		
 	
 		
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendanceInfo"/>

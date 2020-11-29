@@ -1,10 +1,12 @@
 package com.kh.circle.sign.service;
 
-import com.kh.circle.sign.vo.SignWrite;
+import java.io.IOException;
+
+import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignService {
 	
-//	signWrite
-	public void write(SignWrite signWrite) throws Exception;
-
+//	결재 추가
+	void insert(SignWriteInsert signWriteInsert) throws IllegalStateException, IOException;
+		
 }
