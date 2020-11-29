@@ -1,11 +1,12 @@
 package com.kh.circle.sign.repository;
 
-import com.kh.circle.sign.vo.SignWrite;
+import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignDao {
 
-//	signWrite
-	public void signWrite(SignWrite signWrite) throws Exception;
-	
+	void add(SignWriteInsert signWriteInsert);
+
+//	결재 추가
+
 
 }

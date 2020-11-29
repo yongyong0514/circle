@@ -1,8 +1,11 @@
 package com.kh.circle.sign.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignList;
@@ -21,9 +27,6 @@ import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 @RequestMapping("/sign")
 public class SignController {
@@ -31,20 +34,23 @@ public class SignController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Inject
-	SignService signService;
-	
-//	@Autowired
-//	private SignService signService;
-	
-//	@GetMapping("/signList")
-//	public String signList(Model model) {
-//		List<Sign> list = sqlSession.selectList("sign.list");
-//		model.addAttribute("list", list);
-//
-//		return "sign/signList";
-//	}
-	
+	@Autowired
+	private SignService signService;	
+
+//	결재 첫화면
+	@GetMapping("/signList")
+	public String signList(Model model, HttpSession session) {
+		String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		
+		List<SignList> list = sqlSession.selectList("sign.list", emp_info_emp_no);
+		model.addAttribute("list", list);
+		
+		List<SignList> list2 = sqlSession.selectList("sign.listComplete", emp_info_emp_no);
+		model.addAttribute("list2", list2);
+
+		return "sign/signList";
+	}
 	
 //	결재 작성 화면
 	@GetMapping("/signWrite")
@@ -57,68 +63,60 @@ public class SignController {
 		
 		return "sign/signWrite";
 	}
-	
-// 결재 작성
+
+// 결재 작성 등록
 	@PostMapping("/signWrite")
-	public String signWrite(@ModelAttribute SignWriteInsert signWriteInsert) {
-		System.out.println(signWriteInsert);
+	public String signWrite(@ModelAttribute SignWriteInsert signWriteInsert
+					   /* , @RequestParam MultipartFile file */) throws IllegalStateException, IOException {
+		signService.insert(signWriteInsert);
+		
 		return "redirect:signList";
 	}
 	
-////	결재 작성
-//	@RequestMapping(value = "/signWrite", method = RequestMethod.POST)
-//	public String write(SignWrite signWrite) throws Exception {
-//		signService.write(signWrite);
-//		
-//		return "redirect:/";
-//	}
+// 결재 첨부 파일
+	@PostMapping("fileUpload/post")
+	public String upload(MultipartHttpServletRequest multipartRequest) { 
+        
+       Iterator<String> itr =  multipartRequest.getFileNames();
+       
+       String filePath = "d:\resources\files";
+       
+       while (itr.hasNext()) { 
+           MultipartFile mpf = multipartRequest.getFile(itr.next());
+    
+           String originalFilename = mpf.getOriginalFilename();
+    
+           String fileFullPath = filePath+"/"+originalFilename;
+    
+           try {
+               //파일 저장
+               mpf.transferTo(new File(fileFullPath));
+               System.out.println("여기1");
+               System.out.println("originalFilename"+originalFilename);
+               System.out.println("여기2");
+               System.out.println("fileFullPath"+fileFullPath);
+               System.out.println("여기3");
+           } catch (Exception e) {
+               System.out.println("postTempFile"+fileFullPath);
+               e.printStackTrace();
+           }
+      }
+       return "success";
+   }
+      
+    
 	
-//	결재 첫화면
-	@GetMapping("/signList")
-	public String signList(Model model) {
-		List<SignList> list = sqlSession.selectList("sign.list");
-		model.addAttribute("list", list);
-		
-		List<SignList> list2 = sqlSession.selectList("sign.listComplete");
-		model.addAttribute("list2", list2);
-
-		return "sign/signList";
-	}
-
-
-//	@RequestMapping(value ="/signListAll", method = RequestMethod.GET)
-//	public String list(Model model) throws Exception {
-//		model.addAttribute("list", signService.list());
-//		
-//		return "sign/signListAll";
-//	}
 	
-//	@RequestMapping(value="/signSelectOne", method = RequestMethod.GET)
-//	public String read(SignSelectOne signSelectOne, Model model) throws Exception {
-//		model.addAttribute("read", signService.read(signSelectOne.getSign_code()));
-//		
-//		return "sign/signSelectOne";
-//	}
-	
-//	@GetMapping("/signWrite")
-//	public String signWrite() {
-//		return "sign/signWrite";
-//	}
-//	
-//	@GetMapping("/signWriteForm")
-//	public String signWriteForm() {
-//		return "sign/signWriteForm";
-//	}
-//	
+// 결재 한건 선택
 	@GetMapping("/signSelectOne")
 	public String signSelectOne(@RequestParam String signCode, Model model) {
 		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
-		
 		model.addAttribute("signSelectOne", signSelectOne);
 		
 		return "sign/signSelectOne";
 	}
 	
+// 문서 첫화면
 	@GetMapping("/docuList")
 	public String docuList() {
 		return "document/docuList";

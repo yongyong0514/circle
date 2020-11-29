@@ -17,7 +17,6 @@ import com.kh.circle.sign.vo.SignListJoiner;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/signResult")
 public class SignResultController {
@@ -27,16 +26,14 @@ public class SignResultController {
 
 	
 	@GetMapping("/signListJoinerCheck")
-	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {
-		
+	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {	
 		List<SignListJoiner> list = sqlSession.selectList("sign.signJoinerCheck", signCode);
 		
 		return list;
 	}
 	
 	@GetMapping("/signListJoiner")
-	public List<SignListJoiner> signJoiner(@RequestParam String signCode) {
-		
+	public List<SignListJoiner> signJoiner(@RequestParam String signCode) {	
 		List<SignListJoiner> list = sqlSession.selectList("sign.signJoiner", signCode);
 		
 		return list;
@@ -44,27 +41,19 @@ public class SignResultController {
 
 	@GetMapping("/signListWatcher")
 	public List<SignListJoiner> signWatcher(@RequestParam String signCode) {
-		
 		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
 		
 		return list;
 	}
 	
-//	@GetMapping("/signTypeContent")
-//	public String signTypeContent(@RequestParam String typeCode) {
-//		
-//		return sqlSession.selectOne("sign.signTypeContent", typeCode);
-//	}
-	
 //	결재 작성 매핑 시작
 	@GetMapping("/signTypeContent")
 	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
-		
 		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
-		
 		Map<String, Object> map = new HashMap<>();
 		map.put("result", result);
 		
 		return map;
 	}
+
 }
