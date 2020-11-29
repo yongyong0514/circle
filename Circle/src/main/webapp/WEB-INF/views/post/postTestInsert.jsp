@@ -108,7 +108,7 @@
 		
 		</script>
 		
-<script>
+<script>   
 
 function submit(){
 	var form = $("post")[0];
