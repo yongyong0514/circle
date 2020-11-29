@@ -1,0 +1,72 @@
+.poll-toolbar{
+	position: relative;
+    min-height: 38px;
+    padding: 0 0 8px 0;
+}
+.poll-toolbar .poll-manage{
+    float: left;
+    margin: 6px 0 0 24px;
+}
+.toolbar-btn-wrap{
+	float: left;
+    display: inline-block;
+    height: 30px;
+    line-height: 29px;
+    padding: 0 8px;
+    white-space: nowrap;
+    border-radius: 2px;
+    font-size: 13px;
+    margin: 0 4px 0 0;
+    vertical-align: middle;
+}
+.toolbar-btn-wrap:hover{
+    background-color:#eee;
+}
+.toolbar-btn-wrap:first-child {
+    margin-left: 0;
+}
+.poll-toolbar .poll-post-list{
+    float: right;
+    margin: 5px 24px 0 0;
+    position: inherit;
+    line-height:30px;
+}
+.poll-toolbar .poll-post-list select{
+    border: 1px solid #ddd;
+    margin-top: 0;
+    font-weight: normal;
+    height: 32px;
+}
+img{
+	vertical-align: top;
+	border: 0;
+}
+.toolbar-icon {
+	display: inline-block;
+    background:url(../../../img/poll/ic_toolbar.png) no-repeat 0 0;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+.toolbar-icon.modify {
+    background-position: -300px -200px;
+}
+.toolbar-icon.play {
+    background-position: -250px -350px;
+}
+.toolbar-icon.stop {
+    background-position: -100px -50px;
+}
+.toolbar-icon.end {
+    background-position: -250px -300px;
+}
+.toolbar-icon.del {
+    background-position: -150px 0;
+}
+.toolbar-icon.list {
+    background-position: -300px -150px;
+}
+.toolbar-icon.doc {
+    background-position: -200px -200px;
+}
