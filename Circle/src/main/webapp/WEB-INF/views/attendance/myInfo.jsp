@@ -45,7 +45,7 @@
 								readonly></td>
 						</tr>
 						<tr>
-							<td rowspan="3"><input type="text"
+							<td class="setCenter" rowspan="3"><input type="text"
 								value="<c:out value='${map.empInfoOne.emp_info_name }'/>"
 								readonly></td>
 							<td class="titleCell">사번</td>
@@ -160,25 +160,14 @@
 									</tr>
 									<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
 										<tr>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_type }'/>"></td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_crtf_name }'/>">
-											</td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_crtf_no }'/>">
-											</td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_sdat }'/>">
-											</td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_crtf_levl }'/>"></td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_inst }'/>"></td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_edat }'/>"></td>
-											<td><input size="10" type="text"
-												value="<c:out value='${CertificateInfo.crtf_info_rm }'/>"></td>
+											<td><c:out value="${CertificateInfo.crtf_info_type }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_crtf_name }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_crtf_no }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_sdat }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_crtf_levl }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_inst }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_edat }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_rm }"/></td>
 										</tr>
 									</c:forEach>
 								</table></li>
@@ -316,9 +305,9 @@
 		</div>
 	</div>
 
-	<!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
+			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
@@ -330,6 +319,15 @@
 					$(".leftBar").removeClass("fixed");
 				}
 			})
+			<!-- 왼쪽바 고정 추가 옵션 끝 -->
+			
+			<!-- 변경 불가능한 컬럼 표시 시작-->
+			if($("input[type=text]").attr("readonly", true)){
+				$("input[type=text]").addClass("grey");
+			};
+			<!-- 변경 불가능한 컬럼 표시 시작-->
+		
+		
 		});
 	</script>
 </body>

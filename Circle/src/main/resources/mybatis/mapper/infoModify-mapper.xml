@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="infoModify">
+	<select id="searchWithEmpNo" parameterType="string" resultType="infoModify">
+		select IMH.info_mod_hstr_ordr
+			 , IMH.info_mod_hstr_emp_no
+			 , to_char(info_mod_hstr_dat, 'yyyy-MM-dd') as "info_mod_hstr_dat"
+			 , IMH.info_mod_hstr_col
+			 , IMH.info_mod_hstr_befr
+			 , IMH.info_mod_hstr_aftr
+			 , IMH.info_mod_hstr_mdfr
+			 , IMH.info_mod_hstr_resn
+			 , EI.emp_info_name as "emp_info_mdfr_name"
+		  from info_mod_hstr IMH
+		 inner join emp_info EI on (IMH.info_mod_hstr_mdfr = EI.emp_info_emp_no)
+		 where info_mod_hstr_emp_no = #{emp_no}
+	</select>
+</mapper>
