@@ -46,7 +46,8 @@
 				</div>
 				<div class="epi-sec">
 					<ul class="descp">
-					<c:forEach var="postTestView" items="${postTestView}">
+					<c:forEach var="postTestView" items="${postTestView}"
+					>
 						<li><img src="images/clock.png" alt=""><span>${postTestView.post_emp_name}</span></li>
 						<li><img src="images/clock.png" alt=""><span>${postTestView.post_wdat }</span></li>
 						<li><img src="images/icon9.png" alt=""><span>${postTestView.post_dept_name}</span></li>
@@ -76,6 +77,7 @@
 								<a class="author">${postTestView.post_repl_emp}</a>
 								<div class="metadata">
 									<span class="date">${postTestView.post_repl_wdat}</span>
+									
 								</div>
 								<div class="text">${postTestView.post_repl_cont }</div>
 								<div class="actions">
