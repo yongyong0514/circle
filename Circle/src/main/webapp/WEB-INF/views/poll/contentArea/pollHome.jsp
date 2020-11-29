@@ -10,6 +10,19 @@
 <script>
 	$(document).ready(function(){
 		
+		//미참여 설문 클릭
+		$('.poll-state-span-no-attendance').parent().parent().on('click', function(){
+			location.replace("${pageContext.request.contextPath}/poll/pollMain/post")			
+		});	
+		
+		//참여한 설문 클릭
+		$('.poll-state-span-attendance').parent().parent().on('click', function(){
+			location.replace("${pageContext.request.contextPath}/poll/pollMain/result")			
+		});	
+
+/* 		
+		ajax 용 스크립트
+		
 		console.log(history);
 		state = 'home';
 		history.push
@@ -28,6 +41,8 @@
 			history.pushState(state, null, url);
 			$('#content-box').load(url);
 		});	
+		
+ */
 		
 	});
 

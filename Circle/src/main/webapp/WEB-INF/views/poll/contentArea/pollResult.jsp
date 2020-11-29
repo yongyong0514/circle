@@ -7,60 +7,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollResult.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/poll/echarts-en.min.js'></script>
-    <script type="text/javascript">
-        // based on prepared DOM, initialize echarts instance
-        var myChart = echarts.init($('#result-chart')[0]);
-		
-        var data1 = "맥창";
-        
-        // specify chart configuration item and data
-		option = {
-		    title: false,
-		    tooltip: {
-		        trigger: 'item',
-		        formatter: '{a} <br/>{b} : {c} ({d}%)'
-		    },
-		    legend: {
-		        type: 'scroll',
-		        orient: 'vertical',
-		        left: 10,
-		        bottom: 10,
-		        data: [data1,'솔낭구','뢰벤','순대국','청국장'],
-		
-		    },
-		    series: [
-		        {
-		            name: '점심 뭐먹지',
-		            type: 'pie',
-		            left:'10',
-		            radius : '55%',
-		            center: ['50%', '60%'],
-		            label: {
-		                position: 'outer',
-	                	formatter: '{b}：{c}명  ({d}%)  '
-		            },
-		            data:[
-		                {value:335, name:data1},
-		                {value:310, name:'솔낭구'},
-		                {value:234, name:'뢰벤'},
-		                {value:135, name:'순대국'},
-		                {value:1548, name:'청국장'}
-		            ],
-		            itemStyle: {
-		                emphasis: {
-		                    shadowBlur: 0,
-		                    shadowOffsetX: 0,
-		                    shadowColor: 'rgba(0, 0, 0, 0)'
-		                    
-		                }
-		            }
-		        }
-		    ]
-		};
 
-        // use configuration item and data specified to show chart
-        myChart.setOption(option);
-    </script>
 <title>설문 결과보기</title>
 </head>
 
@@ -231,14 +178,28 @@
 											<span class="necessary">[필수]</span>
 											"2번 텍스트형 필수 장문"
 										</span>	
-										<ul class="answer-wrap">
-											<li>
-												<div class="text-area-wrap">
-													<textarea class="textarea w-max" rows="5">
-													</textarea>
-												</div>
-											</li>
-										</ul>						
+										<div class=result-chart-wrap>
+											<dl class=result-chart-info>
+												<dt>
+													<span class="txt">전체 참여자 : </span>
+												</dt>
+												<dd>
+													<span class="number">5</span>
+													<span class="txt">명</span>
+												</dd>
+												<dt>
+													<span class="txt">참여율 : </span>
+												</dt>
+												<dd>
+													<span class="number">1</span>
+													<span class="txt">명</span>
+													<span class="gage-wrap">
+														<span class="gage" style="width:20.00%"></span>
+													</span>
+													<span class="number">20.00%</span>
+												</dd>
+											</dl>										
+										</div>					
 									</li>
 									<li class=question-response>
 										<span class="question">
@@ -246,13 +207,28 @@
 											"."
 											"3번 텍스트형 단문"
 										</span>	
-										<ul class="answer-wrap">
-											<li>
-												<div class="text-wrap">
-													<input class="text w-max" type="text">
-												</div>
-											</li>
-										</ul>						
+										<div class=result-chart-wrap>
+											<dl class=result-chart-info>
+												<dt>
+													<span class="txt">전체 참여자 : </span>
+												</dt>
+												<dd>
+													<span class="number">5</span>
+													<span class="txt">명</span>
+												</dd>
+												<dt>
+													<span class="txt">참여율 : </span>
+												</dt>
+												<dd>
+													<span class="number">1</span>
+													<span class="txt">명</span>
+													<span class="gage-wrap">
+														<span class="gage" style="width:20.00%"></span>
+													</span>
+													<span class="number">20.00%</span>
+												</dd>
+											</dl>										
+										</div>					
 									</li>
 									<li class=question-response>
 										<span class="question">
@@ -261,79 +237,35 @@
 											<span class="necessary">[필수]</span>
 											"4번 필수 점수형 10점"
 										</span>	
-										<ul class="answer-wrap rank">
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id1" type="radio">
-													<label for="radio-id1">1</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id2" type="radio">
-													<label for="radio-id2">2</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id3" type="radio">
-													<label for="radio-id3">3</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id4" type="radio">
-													<label for="radio-id4">4</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id5" type="radio">
-													<label for="radio-id5">5</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id6" type="radio">
-													<label for="radio-id6">6</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id7" type="radio">
-													<label for="radio-id7">7</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id8" type="radio">
-													<label for="radio-id8">8</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id9" type="radio">
-													<label for="radio-id9">9</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id10" type="radio">
-													<label for="radio-id10">10</label>
-												</span>
-											</li>
-										</ul>						
+										<div class=result-chart-wrap>
+											<dl class=result-chart-info>
+												<dt>
+													<span class="txt">전체 참여자 : </span>
+												</dt>
+												<dd>
+													<span class="number">5</span>
+													<span class="txt">명</span>
+												</dd>
+												<dt>
+													<span class="txt">참여율 : </span>
+												</dt>
+												<dd>
+													<span class="number">1</span>
+													<span class="txt">명</span>
+												</dd>
+												<dt>
+													<span class="txt">평균 점수 : </span>
+												</dt>
+												<dd>
+													<span class="average-txt number">1</span>
+												</dd>
+											</dl>										
+										</div>					
 									</li>
 	
 								</ul>
 							</div>
 							<div class="question-submit-button">
-								<a href="#" class="poll-submit-btn main-btn">
-									<span class="txt">설문 제출</span>
-								</a>
-								<a href="#" class="poll-temp-save-btn sub-btn">
-									<span class="txt">임시 저장</span>
-								</a>
 							</div>
 						</div>				
 					</article>
@@ -465,7 +397,60 @@
 
 	</div>
 	
+    <script>
+        // based on prepared DOM, initialize echarts instance
+        var myChart = echarts.init($('#result-chart')[0]);
+		
+        var data1 = "맥창";
+        
+        // specify chart configuration item and data
+		option = {
+		    title: false,
+		    tooltip: {
+		        trigger: 'item',
+		        formatter: '{a} <br/>{b} : {c} ({d}%)'
+		    },
+		    legend: {
+		        type: 'scroll',
+		        orient: 'vertical',
+		        left: 10,
+		        bottom: 10,
+		        data: [data1,'솔낭구','뢰벤','순대국','청국장'],
+		
+		    },
+		    series: [
+		        {
+		            name: '점심 뭐먹지',
+		            type: 'pie',
+		            left:'10',
+		            radius : '55%',
+		            center: ['50%', '60%'],
+		            label: {
+		                position: 'outer',
+	                	formatter: '{b}：{c}명  ({d}%)  '
+		            },
+		            data:[
+		                {value:335, name:data1},
+		                {value:310, name:'솔낭구'},
+		                {value:234, name:'뢰벤'},
+		                {value:135, name:'순대국'},
+		                {value:1548, name:'청국장'}
+		            ],
+		            itemStyle: {
+		                emphasis: {
+		                    shadowBlur: 0,
+		                    shadowOffsetX: 0,
+		                    shadowColor: 'rgba(0, 0, 0, 0)'
+		                    
+		                }
+		            }
+		        }
+		    ]
+		};
 
+        // use configuration item and data specified to show chart
+        myChart.setOption(option);
+    </script>
 
 </body>
 </html>

@@ -39,7 +39,33 @@
 			<!-- 설문 구현부분 시작-->
 			<div class="poll-content">
 				<div id="content-box">
-					<jsp:include page="contentArea/pollHome.jsp"/>
+					
+					<c:choose>
+						<c:when test="${url eq 'home'}">
+							<jsp:include page="contentArea/pollHome.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'post'}">
+							<jsp:include page="contentArea/pollPost.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'result'}">
+							<jsp:include page="contentArea/pollResult.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'progress'}">
+							<jsp:include page="contentArea/pollProgress.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'finished'}">
+							<jsp:include page="contentArea/pollFinished.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'my'}">
+							<jsp:include page="contentArea/pollMy.jsp"/>
+						</c:when>
+						<c:when test="${url eq 'insert'}">
+							<jsp:include page="contentArea/pollInsert.jsp"/>
+						</c:when>
+						<c:otherwise>
+							<jsp:include page="contentArea/pollHome.jsp"/>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<!-- 설문 구현부분 종료-->
