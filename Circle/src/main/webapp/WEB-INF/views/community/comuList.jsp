@@ -36,7 +36,7 @@
 
 <script type="text/javascript">
 	function list(page){
-		location.href = "community/comuList?curPage="+page
+		location.href = "comuList?curPage="+page
 	}
 </script>
 
@@ -76,7 +76,7 @@
 				<c:forEach var="comuList" items="${map.list}">
 					<tr id="List">
 						<td><br>${comuList.comu_post_ordr}</td>
-						<td><br>${comuList.comu_post_comu_code}</td>
+						<td><br>${comuList.comu_list_name}</td>
 						<td><br>${comuList.comu_post_title}</td>
 						<td><br>${comuList.emp_info_name}</td>
 						<td><br>${comuList.comu_post_view}</td>

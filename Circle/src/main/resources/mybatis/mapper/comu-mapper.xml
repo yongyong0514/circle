@@ -57,18 +57,11 @@
 
 <select id="comuList" resultType="Comu">
 	<include refid="paging_header"></include>
-		select rownum,
-			comu_post_ordr,
-			comu_post_wrtr_emp_no,
-			comu_post_title,
-			comu_post_cont,
-			comu_post_dat,
-			comu_post_view,
-			comu_post_comu_code,
-			c.comu_post_type,
-			e.emp_info_name
-		from comu_post c,emp_info e
-		order by comu_post_ordr desc
+		select * 
+from comu_post c, emp_info e, comu_list l
+where c.COMU_POST_WRTR_EMP_NO = e.emp_info_emp_no 
+and c.COMU_POST_COMU_CODE = l.COMU_LIST_CODE
+order by comu_post_ordr desc
 	<!-- select * from comu_post order by comu_post_ordr desc  -->
 	<include refid="paging_footer"></include>
 </select>
@@ -83,6 +76,43 @@ from(
 	)
 where rn between #{start} and #{end}
 </sql>
+
+<!-- comuNameList -->
+<select id="comuNameList" resultType="ComuList" >
+	 
+	 SELECT * FROM comu_list
+   <!--  select *
+	from comu_post c, comu_list l
+	where c.COMU_POST_COMU_CODE = l.COMU_LIST_CODE -->
+</select>
+
+<!-- 게시글 작성 -->
+<insert id="comuAdd">
+	insert into comu_post(
+	comu_post_ordr,
+	comu_post_wrtr_emp_no,
+	comu_post_title,
+	comu_post_cont,
+	comu_post_dat,
+	comu_post_view,
+	comu_post_comu_code,
+	comu_post_type)
+	values(
+	comu_seq.nextval,
+	#{comu_post_wrtr_emp_no},
+	#{comu_post_title},
+	#{comu_post_cont},
+	sysdate,
+	0,
+	#{comu_list_code},
+	'1')
+</insert>
+
+
+
+
+
+
 
 	<!-- <select id="comuList" resultType="comuPlus">
 select * 

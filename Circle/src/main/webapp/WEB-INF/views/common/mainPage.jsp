@@ -28,7 +28,7 @@
 	<c:if test="${ empInfo != null}">
 		 
 		<form name="logout" action="${pageContext.request.contextPath}/empInfo/logout" method="GET">
-		<p>${empInfo.emp_info_name } 님 환영합니다.</p>
+		<p>${empInfo.emp_info_name} 님 환영합니다.</p>
 			
 			<button class="logout">로그아웃</button>
 		</form>
