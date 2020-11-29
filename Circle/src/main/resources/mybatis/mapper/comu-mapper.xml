@@ -80,10 +80,11 @@ where rn between #{start} and #{end}
 <!-- comuNameList -->
 <select id="comuNameList" resultType="ComuList" >
 	 
-	 SELECT * FROM comu_list
-   <!--  select *
+	   SELECT * FROM comu_list
+<!-- 	  select *
 	from comu_post c, comu_list l
-	where c.COMU_POST_COMU_CODE = l.COMU_LIST_CODE -->
+	 where c.COMU_POST_COMU_CODE = l.comu_list_code -->
+	 
 </select>
 
 <!-- 게시글 작성 -->
@@ -98,13 +99,13 @@ where rn between #{start} and #{end}
 	comu_post_comu_code,
 	comu_post_type)
 	values(
-	comu_seq.nextval,
+	copo_seq.nextval,
 	#{comu_post_wrtr_emp_no},
 	#{comu_post_title},
 	#{comu_post_cont},
 	sysdate,
 	0,
-	#{comu_list_code},
+	#{comu_post_comu_code},
 	'1')
 </insert>
 

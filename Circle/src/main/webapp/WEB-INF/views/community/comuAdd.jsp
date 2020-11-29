@@ -18,11 +18,41 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <style>
-#file{
-	margin: 0 auto;
-	margin-left: 30px;
-	margin-right: 30px;
+.formBox1{
+	border: 1px solid black;
+	width:30px;
+	color:black;
+	height:33px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	border-radius: 10px;
+}	
+.formInput1{
+	
+	border: 1px solid black;
+	width:150px;
+	color:black;
+	height:33px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	border-radius: 10px;
+	font-size: 15px;
+	font-weight: bolder;
+	align-content: center;
 }
+#comuName{
+border: 1px solid black;
+	width:200px;
+	color:black;
+	height:33px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	border-radius: 10px;
+	font: bolder;
+		}
 
 </style>
 
@@ -54,7 +84,30 @@
 						<table id="all">
 							<thead>
 								<tr>
-
+									<td><br></td>
+								</tr>
+								
+								
+							<tr>
+								
+								<th class="formBox1">작성자</th>
+								
+								<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" value="${empInfo.emp_info_name}" readonly>
+									<input type="text" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> </th>
+									<tr>
+									<td><br></td>
+								</tr>
+								<tr>
+								<th class="formBox1">직급</th>
+								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.emp_info_job_code}" readonly></th>
+							</tr>
+								
+								
+								<tr>
+									<td><br></td>
+								</tr>
+								<tr>
+									
 									<td><select name="comuName" id="comuName">
 											<option value="0">동호회 이름을 선택하세요</option>
 												 <c:forEach var="comuName" items="${list}">
@@ -66,9 +119,12 @@
 									</select></td>
 
 								</tr>
+								
 								<tr>
 									<td><br></td>
 								</tr>
+								
+							
 								<tr>
 									<!--  <td class="n">제목 </td> -->
 									<td colspan="3"><input type="text" size="115" name="title"
@@ -87,7 +143,7 @@
 									<td><br></td>
 								</tr>
 								<!-- 파일 추가 -->
-								<tr>
+								<!-- <tr>
 									<td><input type="button"
 										 id="add" name="add"
 										value="파일추가" class="form-control"> <input
@@ -95,15 +151,16 @@
 										onclick="delbtn();" value="파일삭제" class="form-control" id="add">
 									</td>
 								</tr>
-								<!-- class="btn btn-default btn-xs pull-right" -->
+								class="btn btn-default btn-xs pull-right"
 								<tr>
 									<td><br></td>
 								</tr>
 								<tr >
 									<td id="file"><input type="file" class="form-control" name="file" id="file" ></td>
 									<td><br></td>
-								</tr>
+								</tr> -->
 								
+								<!-- cut -->
 								<tr>
 									<td><br></td>
 								</tr>
