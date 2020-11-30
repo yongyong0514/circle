@@ -50,6 +50,16 @@
 
 	
 	<!-- TEST -->
+	
+	<!--  전사 게시판 불러오기 -->
+	<select id="postEmpList" resultType="post">
+	
+	select *
+	from post p
+	where P.post_type = 'POTY000002'
+	</select>
+	
+	
 	<select id="postTestPart" resultType="post">
  select * 
 from post p, emp_info e, post_type t
@@ -69,6 +79,18 @@ from post_type
 select *
 from  post_type
 </select>
+
+
+
+
+<select id="postTypeList" resultType="post">
+select *
+	from post p
+	where P.post_type = 'POTY000002'
+	order by post_code desc
+	
+	</select>
+
 
 <select id="postTestView" resultType="post">
 

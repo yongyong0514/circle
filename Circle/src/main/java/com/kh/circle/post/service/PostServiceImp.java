@@ -39,11 +39,9 @@ public class PostServiceImp implements PostService{
 	private SqlSession sqlSession;
 
 
-	static PostService postService = null;
-	
-	
 
 
+	/*end*/
 
 	@Override
 	public ResponseEntity<ByteArrayResource> download(String no) throws IOException {
@@ -72,6 +70,44 @@ public class PostServiceImp implements PostService{
 
 
 
+
+		@Override
+		public List<Post> postTest2(Post post) {
+			// TODO Auto-generated method stub
+			
+			System.out.println("service : " + post);
+			return postDao.postTest2(post);
+		}
+
+
+
+
+		@Override
+		public List<Post> postTest1(Post post) {
+
+			return 			postDao.postTest(post);
+
+		}
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 	@Override
 	public int insertPost(Post post) {
@@ -83,34 +119,6 @@ public class PostServiceImp implements PostService{
 */
 
 
-
-
-	@Override
-	public void insertPost(Post post, MultipartFile file) throws IllegalStateException, IOException {
-
-		
-		String code = postDao.insertPost(post);
-		
-		System.out.println("service code : " + code);
-		
-		if(!file.isEmpty()) {
-			
-			PostFile postFile = PostFile.builder()
-					
-					.file_oname(file.getOriginalFilename())
-					.file_type(file.getContentType())
-					.file_size(file.getSize())
-					.file_code(code)
-					.build();
-			
-			String file_no = postFileDao.insert(postFile);
-			
-			postSaveDao.save(file, file_no);
-			
-			System.out.println("sefile : " + file + "/// sefil_no" + file_no);
-		}
-		
-	}
 
 
 

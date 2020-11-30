@@ -10,7 +10,13 @@ import com.kh.circle.post.service.PostService;
 
 public interface PostDao {
 
-	String insertPost(Post post);
+
+
+	List<Post> postTest(Post post);
+
+	List<Post> postTest2(Post post);
+
+
 
 /*
 페이징처리

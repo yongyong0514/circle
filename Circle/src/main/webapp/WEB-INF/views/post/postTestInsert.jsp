@@ -25,24 +25,13 @@
 </head>
 <body>
 
-	<div class="wrap">
-		<div class="header">
-			<jsp:include page="../common/menuTopBar.jsp" />
-			<jsp:include page="../common/menuAlertBar.jsp" />
-		</div>
-		<div class="leftBar">
-			<jsp:include page="../post/postSidebar.jsp" />
-		</div>
-		<div class="container">
-			<div class="contentBar">
-				<jsp:include page="../post/postHomebar.jsp" />
+	
 	<script>
 		// 넘어오는 변수으로 페이지 이동하기
 		function moveurl(url) {
 			location.href = url;
 		}
 	</script>
-			</div>
 
 			<div class="content">
 <!--  본문 -->
@@ -86,9 +75,6 @@
 
 <!-- 본문 종료" -->					
 				</div>
-			</div>
-		</div>
-		
 		<script>
 		$(document).ready(finction() {
 			
