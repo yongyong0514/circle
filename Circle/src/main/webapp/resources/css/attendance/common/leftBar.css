@@ -104,9 +104,9 @@
 
 /* 추가 css 영역 시작 */
 
-hr{
-	border-color: rgba(0,0,0,0.5);
-	padding: 2rem;
+.attendanceStatusTable .clock{
+	text-align: center;
+	font-size: medium;
 }
 
 .attendanceStatus{
