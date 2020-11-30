@@ -5,6 +5,10 @@
 
 <!DOCTYPE html>
 <html>
+<script>
+
+
+</script>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css"
@@ -20,16 +24,17 @@
 		<div>
 			<select name="post_type" onchange="location.href=this.value">
 				<!-- 게시판 선택용으로 시도 -->
-				<option>이동할 게시판을 선택하세요</option>
-				<option value="${pageContext.request.contextPath}/post/postList">공지사항</option>
-				<option
-					value="${pageContext.request.contextPath}/post/postNoticeList">다음페이지</option>
-				<option
+				<option>이동할 게시판</option>
+				<option id="post_type">testpage</option>
+				<option name ="notice" value="${pageContext.request.contextPath}/post/postTestPart?type=notice">공지사항</option>
+				<option name = "new"
+					value="${pageContext.request.contextPath}/post/postTestPart?type=new">다음페이지</option>
+				<option name = "test"
 					value="${pageContext.request.contextPath}/post/postTestPart?type=test">테스트페이지</option>
 			</select>
-			<select name="post_type" onchange="location.href=this.value">
+			<select id="post_type" name="post_type" onchange="location.href=this.value">
 				<!-- 게시판 선택용으로 시도 -->
-				<option>작성하고 싶은 게시판을 선택하세요</option>
+				<option>작성 게시판</option>
 				<option value="${pageContext.request.contextPath}/post/postTestInsert">insertpage</option>
 				<option
 					value="${pageContext.request.contextPath}/post/postNoticeList">걍 넣어놈</option>

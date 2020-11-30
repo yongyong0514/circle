@@ -9,8 +9,6 @@
 <title>Circle</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/post/postList.css">
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -30,32 +28,7 @@
 			</div>
 	
 		<div class="content">
-			<!-- 내용 -->
-
-			<table class="post">
-
-				<tr>
-					<th class="code">글번호</th>
-					<th class="type">분류</th>
-					<th class="title">제목</th>
-					<th class="writer">작성자</th>
-					<th class="date">작성일</th>
-					<th class="cvp">조회수</th>
-				</tr>
-				<c:forEach var="postList" items="${postList}">
-					<tr>
-						<td>${postList.post_code}</td>
-						<td>${postList.post_type_title}</td>
-						<td>${postList.post_title}</td>
-						<td>${postList.emp_info_name}</td>
-						<td>${postList.post_wdat}</td>
-						<td>${postList.post_cvp}</td>
-					</tr>
-				</c:forEach>
-
-			</table>
-			<input type="submit" value="글쓰기">
-
+			<jsp:include page="<path> /postEmpList.jsp"></jsp:include>
 
 		
 			<!-- 옵션선택 끝 -->
