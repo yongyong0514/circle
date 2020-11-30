@@ -62,6 +62,9 @@
 						<c:when test="${url eq 'insert'}">
 							<jsp:include page="contentArea/pollInsert.jsp"/>
 						</c:when>
+						<c:when test="${url eq 'insertQuestion'}">
+							<jsp:include page="contentArea/pollQuestionInsert.jsp"/>
+						</c:when>
 						<c:otherwise>
 							<jsp:include page="contentArea/pollHome.jsp"/>
 						</c:otherwise>

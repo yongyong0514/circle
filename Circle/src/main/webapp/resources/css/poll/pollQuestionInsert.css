@@ -1,0 +1,110 @@
+span.help {
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    background: url(../../img/poll/ic_con.png) no-repeat 0 0;
+    margin-left: 1px;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 1.4;
+}
+span.help>span{
+	display: none;
+    font-size: 13px;
+    z-index: 3;
+}
+i {
+    font-style: italic;
+}
+.txtarea-wrap {
+    padding: 2px 0;
+    vertical-align: top;
+}
+.w-large {
+    width: 85%;
+}
+textarea{
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-sizing: border-box;
+    min-height: 50px;
+    max-height: 200px;
+    padding: 0 4px;
+    margin: 0;
+    line-height: normal;
+}
+ul.poll-list>li {
+    position: relative;
+    padding: 16px 0;
+    border-bottom: 1px solid #ddd;
+}
+ul.poll-list>li:hover {
+    background-color: #fdfdfd;
+    border-color: #cdcdcd;
+    box-shadow: 0 0px 16px rgba(0,0,0,0.2);
+}
+ul.poll-list>li.action{
+    border: none;
+    background-color: #fff;
+}
+ul.poll-list>li.action:hover{
+    box-shadow: none;
+}
+.add-poll-btn{
+    border: 1px solid #cdcdcd;
+    background: #f1f1f1;
+    padding: 6px 0;
+    text-align: center;
+    border-radius: 2px;
+    font-weight: bold;
+    font-weight: 500;
+    color: #777;
+    margin: auto;
+    width: 500px;
+}
+.add-poll-btn:hover{
+    cursor: pointer;
+    background: #f9f9f9;
+    border-color: #b6b6b6;
+    color: #333;
+}
+form {
+    border-bottom:0;
+}
+.main-btn,.sub-btn{
+	margin: 0 4px;
+}
+.select-wrap{
+	display: inline-block;
+    padding: 2px 0;
+    vertical-align: middle;
+}
+select {
+    border: 1px solid #ddd;
+    height: 26px;
+    padding: 0;
+    min-width: 44px;
+}
+.spacing1{
+	display: inline-block;
+    width: 10px;
+}
+.form-table .answer-wrap{
+	margin: 0 22px 0 0;
+}
+.disable {
+    filter: Alpha(Opacity=30) !important;
+    opacity: 0.3 !important;
+    cursor: default !important;
+}
+ul.answer-wrap li.create span.btn-wrap{
+	padding: 5px 0;
+}
+
+ul.answer-wrap li.create span.icon-addlist{
+	margin-left: 0;
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-right: 4px;
+}
