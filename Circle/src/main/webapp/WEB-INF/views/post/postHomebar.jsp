@@ -26,10 +26,10 @@
 				<!-- 게시판 선택용으로 시도 -->
 				<option>이동할 게시판</option>
 				<option id="post_type">testpage</option>
-				<option name ="notice" value="${pageContext.request.contextPath}/post/postTestPart?type=notice">공지사항</option>
-				<option name = "new"
+				<option  value="${pageContext.request.contextPath}/post/postTestPart?type=notice">공지사항</option>
+				<option 
 					value="${pageContext.request.contextPath}/post/postTestPart?type=new">다음페이지</option>
-				<option name = "test"
+				<option 
 					value="${pageContext.request.contextPath}/post/postTestPart?type=test">테스트페이지</option>
 			</select>
 			<select id="post_type" name="post_type" onchange="location.href=this.value">

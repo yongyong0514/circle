@@ -12,7 +12,7 @@ public interface PostDao {
 
 
 
-	List<Post> postTest(Post post);
+	List<Post> postTest(Post post, String type);
 
 	List<Post> postTest2(Post post);
 

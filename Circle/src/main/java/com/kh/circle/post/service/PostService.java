@@ -19,7 +19,7 @@ public interface PostService {
 	ResponseEntity<ByteArrayResource> download(String no) throws UnsupportedEncodingException, IOException;
 
 
-	List<Post> postTest1(Post post);
+	List<Post> postTest1(Post post, String type);
 
 
 	List<Post> postTest2(Post post);
