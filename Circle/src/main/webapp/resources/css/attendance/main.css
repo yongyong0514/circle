@@ -64,8 +64,14 @@ td {
 	text-align: center;
 }
 
-.title > h3:last-of-type{
-	text-align: right;
+.fas,
+.dateSelect div{
+	font-size: 1.5rem;
+	font-weight: lighter;
+}
+
+.dateSelect div{
+	display: inline-block;
 }
 
 .summaryTable{
@@ -108,10 +114,7 @@ td {
 	text-align: center;
 }
 
-.week td{
-	font-size: medium;
-	color: #0072C6;
-	text-align: center;
-	padding-top: 2rem;
-	padding-bottom: 2rem;
+.dateSelect i:hover,
+.dateSelect button:hover{
+	cursor:pointer;
 }

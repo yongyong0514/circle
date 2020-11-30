@@ -19,7 +19,8 @@ public class AttendanceInfo {
 	private String atdc_hstr_type;			// 업무형태 (내근/외근/출장/교육)
 	
 	//calc Values
-	private String workTime;				// long형 근무시간(퇴근시간 - 출근시간)
+	private int workTimeHour;			// 근무시간(시)
+	private int workTimeMinute;			// 근무시간(분)
 	private String weekStartDate;			// 카운트 시작일(일)
 	private String weekEndDate;			// 카운트 종료일(토)
 		

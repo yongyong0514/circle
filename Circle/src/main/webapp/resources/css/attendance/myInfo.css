@@ -71,6 +71,11 @@ td {
 	padding: 0.5rem;
 }
 
+.marginbox{
+	margin: 3px;
+}
+
+
 .setCenter input[type=text]{
 	text-align: center;
 }

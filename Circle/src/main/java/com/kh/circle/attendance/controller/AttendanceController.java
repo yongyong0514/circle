@@ -37,11 +37,12 @@ public class AttendanceController {
 		
 		//입력된 날짜값이 없는 경우 오늘 날짜로 설정
 		if("".equals(dateStr)) {
-			date = sdf.format(sdf.parse("2020-11-13"));
-//			date = sdf.format(new Date(System.currentTimeMillis()));
+//			date = sdf.format(sdf.parse("2020-11-13"));
+			date = sdf.format(new Date(System.currentTimeMillis()));
 		} else {
 //예시값으로 2020-11-13 입력			
-			date = sdf.format(sdf.parse("2020-11-13"));
+//			date = sdf.format(sdf.parse("2020-11-13"));
+			date = sdf.format(sdf.parse(dateStr));
 		}
 
 		String emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();

@@ -69,12 +69,12 @@
 								<span>2차 확인</span>
 							</td>
 							<td>
-								<input name="changePwd" type="password"><br>
-								<input name="changePwd2" type="password">
+								<input class="marginbox" name="changePwd" type="password"><br>
+								<input class="marginbox" name="changePwd2" type="password">
 							</td>
 							<td class="titleCell">현재 비밀번호</td>
-							<td><input name="curPwd" type="password"> <br>
-								<input type="submit" value="수정하기"></td>
+							<td><input class="marginbox" name="curPwd" type="password"> <br>
+								<input class="marginbox" type="submit" value="수정하기"></td>
 						</tr>
 					</table>
 					<!-- 대표정보 끝 -->

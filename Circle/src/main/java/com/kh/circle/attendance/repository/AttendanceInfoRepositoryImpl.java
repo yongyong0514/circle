@@ -42,4 +42,11 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 		return wsi;
 	}
 
+	@Override
+	public WeekStackInfo weekStackWorkTimeNull(Map<String, Object> inputMap) {
+		WeekStackInfo wsi = sqlSession.selectOne("attendance.weekStackWorkTimeNull", inputMap);
+
+		return wsi;
+	}
+
 }
