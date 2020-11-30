@@ -1,7 +1,9 @@
 package com.kh.circle.attendance.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,39 +15,46 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.circle.attendance.service.AttendanceService;
+import com.kh.circle.attendance.service.AttendanceInfoService;
 import com.kh.circle.login.entity.EmpInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
-
 	@Autowired
-	private AttendanceService attendanceService;
+	private AttendanceInfoService attendanceService;
 	
 	@GetMapping("/main")
 	public String main(HttpSession session,
-						@RequestParam(defaultValue="") String date,
-						Model model) {
-		
-		//date 형식 통일
-		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+						@RequestParam(defaultValue="") String dateStr,
+						Model model) throws ParseException {
 
-		if("".equals(date)) {
-			date = sdFormat.format(System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = "";
+		
+		//입력된 날짜값이 없는 경우 오늘 날짜로 설정
+		if("".equals(dateStr)) {
+			date = sdf.format(sdf.parse("2020-11-13"));
+//			date = sdf.format(new Date(System.currentTimeMillis()));
 		} else {
-			date = sdFormat.format(date);
+//예시값으로 2020-11-13 입력			
+			date = sdf.format(sdf.parse("2020-11-13"));
 		}
 
-		EmpInfo empInfo = (EmpInfo) session.getAttribute("empInfo");
+		String emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+
+		Map<String, Object> inputMap = new HashMap<String, Object>();
+		inputMap.put("emp_no", emp_no);
+		inputMap.put("date", date);
+		inputMap.put("today", date);
 		
-		if(empInfo != null) {
-			
-			Map<String, Object> map = attendanceService.mainList(empInfo.getEmp_info_emp_no(), date);
-			
+		if(emp_no != null) {
+			Map<String, Object> map = attendanceService.attendanceList(inputMap);
 			model.addAttribute("map", map);
+			model.addAttribute("today", date);
 			
 			return "attendance/main";
 		} else {

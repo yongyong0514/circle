@@ -19,6 +19,9 @@ public class InfoModify {
 	private String info_mod_hstr_mdfr;
 	private String info_mod_hstr_resn;
 	
+	//calc Values
+	private String info_mod_hstr_col_name;		//변경한 컬럼 이름
+	
 	//join
 	private String emp_info_mdfr_name;			//수정자 이름
 

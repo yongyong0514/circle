@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.empInfo.entity.InfoModify;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class InfoModifyRepositoryImpl implements InfoModifyRepository{
 	@Autowired
@@ -16,7 +19,7 @@ public class InfoModifyRepositoryImpl implements InfoModifyRepository{
 	@Override
 	public List<InfoModify> infoModList(String emp_no) {
 		
-		List<InfoModify> infoModList = sqlSession.selectList("infoModify.searchWithEmpNo");
+		List<InfoModify> infoModList = sqlSession.selectList("infoModify.searchWithEmpNo", emp_no);
 		
 		return infoModList;
 	}

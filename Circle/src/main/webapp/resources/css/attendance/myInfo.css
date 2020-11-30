@@ -145,10 +145,12 @@ td {
 	witdh: 10px;
 }
 
-.grey{
-	padding:0.2rem;
-	outline: none;
+.content input[type=text]:read-only{
 	border: none;
+	outline: none;
 }
 
-
+.content input[type=text],
+.content input[type=password]{
+	width: calc(100% - 1rem);
+}
