@@ -26,8 +26,7 @@
 		<div class="container">
 			<div class="content">
 				<h1>근태현황(메뉴명)</h1>
-				<br>
-				<br>
+				<br> <br>
 				<!-- 정보 수정용 form 시작 -->
 				<form action="#" method="post">
 					<!-- 대표정보 시작 -->
@@ -54,8 +53,7 @@
 								readonly></td>
 							<td class="titleCell">내선번호</td>
 							<td><input type="text"
-								value="<c:out value='${map.empInfoOne.emp_info_etel }'/>"
-								readonly></td>
+								value="<c:out value='${map.empInfoOne.emp_info_etel }'/>"></td>
 						</tr>
 						<tr>
 							<td class="titleCell">이메일</td>
@@ -66,19 +64,23 @@
 								value="<c:out value='${map.empInfoOne.emp_info_mtel }'/>"></td>
 						</tr>
 						<tr>
-							<td class="titleCell">비밀번호 수정</td>
-							<td><input name="changePwd" type="password"></td>
+							<td class="titleCell">
+								<span>비밀번호 수정</span><br><br>
+								<span>2차 확인</span>
+							</td>
+							<td>
+								<input name="changePwd" type="password"><br>
+								<input name="changePwd2" type="password">
+							</td>
 							<td class="titleCell">현재 비밀번호</td>
-							<td><input name="curPwd" type="password"> <input
-								type="submit" value="수정하기"></td>
+							<td><input name="curPwd" type="password"> <br>
+								<input type="submit" value="수정하기"></td>
 						</tr>
 					</table>
 					<!-- 대표정보 끝 -->
-					<br>
-					<br>
+					<br> <br>
 					<!-- 상세정보 시작 -->
-					<span>상세정보 열기 ▼▽</span> <br>
-					<br>
+					<span>상세정보 열기 ▼▽</span> <br> <br>
 					<div class="detailInfo">
 						<ul>
 							<li><span>사원정보</span>
@@ -160,14 +162,16 @@
 									</tr>
 									<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
 										<tr>
-											<td><c:out value="${CertificateInfo.crtf_info_type }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_crtf_name }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_crtf_no }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_sdat }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_crtf_levl }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_inst }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_edat }"/></td>
-											<td><c:out value="${CertificateInfo.crtf_info_rm }"/></td>
+											<td><c:out value="${CertificateInfo.crtf_info_type }" /></td>
+											<td><c:out
+													value="${CertificateInfo.crtf_info_crtf_name }" /></td>
+											<td><c:out value="${CertificateInfo.crtf_info_crtf_no }" /></td>
+											<td><c:out value="${CertificateInfo.crtf_info_sdat }" /></td>
+											<td><c:out
+													value="${CertificateInfo.crtf_info_crtf_levl }" /></td>
+											<td><c:out value="${CertificateInfo.crtf_info_inst }" /></td>
+											<td><c:out value="${CertificateInfo.crtf_info_edat }" /></td>
+											<td><c:out value="${CertificateInfo.crtf_info_rm }" /></td>
 										</tr>
 									</c:forEach>
 								</table></li>
@@ -199,10 +203,8 @@
 											<td><c:if test="${!empty careerInfo.year_term }">
 													<c:out value="${careerInfo.year_term}" />
 													<span>년 </span>
-												</c:if>
-												<c:out value="${careerInfo.month_term}" />
-													<span> 개월</span>
-											</td>
+												</c:if> <c:out value="${careerInfo.month_term}" /> <span>
+													개월</span></td>
 											<td><c:out value="${careerInfo.carr_hstr_job_type}" /></td>
 											<td><c:out value="${careerInfo.carr_hstr_rm}" /></td>
 										</tr>
@@ -272,28 +274,15 @@
 										<th class="titleCell">수정자</th>
 										<th class="titleCell">변경사유</th>
 									</tr>
-									<tr>
-										<td>2020-07-02</td>
-										<td>기본정보-주소</td>
-										<td>경기도 남양주시</td>
-										<td>서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F</td>
-										<td>가나다</td>
-										<td>주소이전</td>
-									</tr>
-
-
-									<tr>
-										<td>1</td>
-										<td>2020-07-02</td>
-										<td>기본정보-주소</td>
-										<td>서울특별시 강남구 테헤란로 14길 6 남도빌딩 2F, 3F, 4F, 5F, 6F</td>
-										<td>경기도 남양주시</td>
-										<td>가나다</td>
-										<td>주소이전</td>
-									</tr>
-
-									<c:forEach var="항목" items="항목s">
-
+									<c:forEach var="InfoModify" items="${map.infoModList }">
+										<tr>
+											<td><c:out value="${InfoModify.info_mod_hstr_dat }" /></td>
+											<td><c:out value="${InfoModify.info_mod_hstr_col_name }" /></td>
+											<td><c:out value="${InfoModify.info_mod_hstr_befr }" /></td>
+											<td><c:out value="${InfoModify.info_mod_hstr_aftr }" /></td>
+											<td><c:out value="${InfoModify.emp_info_mdfr_name }" /></td>
+											<td><c:out value="${InfoModify.info_mod_hstr_resn }" /></td>
+										</tr>
 									</c:forEach>
 								</table></li>
 						</ul>
@@ -307,6 +296,7 @@
 
 	<script>
 		$(function() {
+			
 			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
@@ -318,16 +308,8 @@
 				} else {
 					$(".leftBar").removeClass("fixed");
 				}
-			})
+			});
 			<!-- 왼쪽바 고정 추가 옵션 끝 -->
-			
-			<!-- 변경 불가능한 컬럼 표시 시작-->
-			if($("input[type=text]").attr("readonly", true)){
-				$("input[type=text]").addClass("grey");
-			};
-			<!-- 변경 불가능한 컬럼 표시 시작-->
-		
-		
 		});
 	</script>
 </body>

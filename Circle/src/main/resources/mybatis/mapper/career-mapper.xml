@@ -14,7 +14,6 @@
 			 , CH.carr_hstr_dept_code
 			 , CH.carr_hstr_job_code
 			 , CH.carr_hstr_job_type
-			 , CH.carr_hstr_term
 			 , CH.carr_hstr_rm
 			 , trunc(months_between(carr_hstr_edat+1, carr_hstr_sdat)/12) as "year_term"
 			 , trunc(mod(months_between(carr_hstr_edat+1, carr_hstr_sdat),12)) as "month_term"

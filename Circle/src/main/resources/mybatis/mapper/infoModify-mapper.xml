@@ -10,7 +10,25 @@
 		select IMH.info_mod_hstr_ordr
 			 , IMH.info_mod_hstr_emp_no
 			 , to_char(info_mod_hstr_dat, 'yyyy-MM-dd') as "info_mod_hstr_dat"
-			 , IMH.info_mod_hstr_col
+			 , info_mod_hstr_col
+             , decode(IMH.info_mod_hstr_col, 'EMP_INFO_DEPT_CODE', '소속부서'
+                                                , 'EMP_INFO_JOB_CODE', '직위/직책'
+                                                , 'EMP_INFO_ETEL', '내선번호'
+                                                , 'EMP_INFO_MTEL', '휴대전화번호'
+                                                , 'EMP_INFO_PWD', '비밀번호'
+                                                , 'EMP_INFO_MRRG', '결혼여부'
+                                                , 'EMP_INFO_VETR_NO', '보훈번호'
+                                                , 'EMP_INFO_VETR_REL', '관계'
+                                                , 'EMP_INFO_IMPD_TYPE', '장애종류'
+                                                , 'EMP_INFO_IMPD_LEVL', '장애급수'
+                                                , 'EMP_INFO_MILS', '병역여부'
+                                                , 'EMP_INFO_ADR', '주소'
+                                                , 'EMP_INFO_SDAT', '입사일'
+                                                , 'EMP_INFO_EDAT', '퇴사일'
+                                                , 'EMP_INFO_EMRG_TEL', '비상연락처'
+                                                , 'EMP_INFO_BANK_NAME', '은행이름'
+                                                , 'EMP_INFO_ACNT_NAME', '예금주명'
+                                                , 'EMP_INFO_ACNT_NO', '계좌번호') as "info_mod_hstr_col_name"
 			 , IMH.info_mod_hstr_befr
 			 , IMH.info_mod_hstr_aftr
 			 , IMH.info_mod_hstr_mdfr

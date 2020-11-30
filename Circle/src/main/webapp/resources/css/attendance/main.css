@@ -60,12 +60,8 @@ td {
 }
 
 .title{
-	display: table;
 	width:100%;
-}
-
-.title > h3{
-	display: table-cell;
+	text-align: center;
 }
 
 .title > h3:last-of-type{

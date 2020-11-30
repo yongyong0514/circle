@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,8 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/attendance/main.css">
 </head>
+<!-- 아이콘 참조 -->
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <body>
 	<div class="wrap">
 		<div class="header">
@@ -25,26 +28,39 @@
 		</div>
 		<div class="container">
 			<div class="content">
+			
+			<c:out value="${map.weekAttList }"/>
+			
 				<h1>근태현황(메뉴명)</h1>
-				<br><br>
+				<br>
 				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
 					<div class="title">
-						<!-- 페이징 필요 -->
-						<h3>기준일: 2020-11-13(금)</h3>
-						<h3>기준 근무시간: 52h</h3>
+						<h3 style="text-align:center"> 기준일 </h3>
+						<br>
+						<div class="dateSelect">
+							<span><i class='fas fa-angle-left'></i></span>
+							<c:out value="${today}"/>
+							<span><i class='fas fa-angle-right'></i></span>
+						</div>
+						<h3>기준 근무시간: <c:out value="${map.worktimePerWeek }"/>h</h3>
 					</div>
 					<br><br>
 					<table class="summaryTable">
 						<tr>
+							<th>기간</th>
 							<th>이번주 누적</th>
 							<th>이번주 초과</th>
 							<th>이번주 잔여</th>
 							<th>이번달 누적</th>
 							<th>이번달 초과</th>
 						</tr>
-						<!-- 값 불러오기 -->
 						<tr>
+							<td>
+ 								<%-- <c:out value="${map.weekAttList.AttendanceInfo[0].weekStartDate }"/>
+								<span> ~ </span>
+ 								<c:out value="${map.weekAttList.AttendanceInfo[0].weekEndDate }"/> --%>
+							</td>
 							<td>18h 2m</td>
 							<td>0h</td>
 							<td>33h 58m</td>
@@ -67,13 +83,6 @@
 						<th>상세</th>
 						<th>비고</th>
 					</tr>			
-					
-					<!--
-						리스트 형식으로 출력
-						1. 동기(c:forEach)
-						2. 비동기(aJax)		-> 실시간 반영할 부분 없음
-					-->
-					
 					<!-- 주간 근태내역 시작 -->
 					<c:forEach var="주차" items="주차s">
 						<tr class="week">
