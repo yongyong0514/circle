@@ -42,13 +42,22 @@
 			<li><button class="menuBtn" onclick="">회사이름불러올자리</button></li>
 			<li><button class="menuBtn2">My Page</button></li>
 			<li><button class="menuBtn2">My Profile</button></li>
+			
+			<li>
+				<c:if test="${ empInfo != null}">
+				<p  style="color: white;text-align: left;">${empInfo.emp_info_name} 님</p>
+				</c:if> 
+			</li>
+			
 			<li><img src="${pageContext.request.contextPath}/resources/img/common/menuTopBar/hamburger50x50.png" class="menuBtnRight" id="menuBtnRight" onclick="">
 				<div class="menuBox1">
 					<div class="buttonArea1">
 						<div><button class="buttonSize2" onclick="">&nbsp;출근 기록</button></div>
 						<div><button class="buttonSize2" onclick="">&nbsp;퇴근 기록</button></div>
 						<div><button class="buttonSize2"></button></div>
-						<div><button class="buttonSize3" onclick="">&nbsp;로그 아웃</button></div>
+						<form name="logout" action="${pageContext.request.contextPath}/empInfo/logout" method="GET">
+						<div><button class="buttonSize3" onclick="logout();">&nbsp;로그 아웃</button></div>
+						</form>
 					</div>
 				</div>
 			</li>
@@ -76,6 +85,12 @@
 	$(".menuBox1").mouseleave(function(){
 		$(".menuBox1").fadeOut(100);
 	});
+	
+	 $(function(){
+			$("#logout").click(function(){
+				location.href = "logout";
+			})
+  });
 </script>
 </body>
 </html>

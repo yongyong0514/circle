@@ -16,7 +16,7 @@ public class JoinMemberDaoImpl implements JoinMemberDao {
 	public JoinMember joinlogin(JoinMember joinmember) throws Exception {
 		
 
-		return sqlSession.selectOne("joinmember.login",joinmember);
+		return sqlSession.selectOne("empInfo.login",joinmember);
 	}
 
 	/*

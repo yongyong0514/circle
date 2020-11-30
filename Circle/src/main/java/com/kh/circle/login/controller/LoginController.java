@@ -31,6 +31,8 @@ public class LoginController {
 	@Autowired
 	private JoinMemberService joinservice;
 	
+
+	
 	@GetMapping("/login")
 	public String login(){
 		return "home";//home
@@ -39,7 +41,7 @@ public class LoginController {
 	
 	@PostMapping("/login")
 	public String login(EmpInfo empInfo,
-			/* JoinMember joinmember, */HttpServletRequest req,RedirectAttributes rttr) throws Exception{
+			/*JoinMember joinmember*/HttpServletRequest req,RedirectAttributes rttr) throws Exception{
 		log.info("선수입장");
 		
 		
@@ -83,4 +85,13 @@ public class LoginController {
 		
 		return "home";
 	}
+	
+	
+	/*
+	 * @GetMapping("/joinmember") public String joinmember(HttpSession session){
+	 * 
+	 * session.invalidate();
+	 * 
+	 * return "home"; }
+	 */
 }
