@@ -25,15 +25,12 @@ body {
 	position:absolute;
 	top:0;
 	width:100%;
-	z-index:80;
 }
 .menuAlertBar {
 	position:absolute;
 	top:40px;
-	z-index:80;
 }
 .menuBox {
-	top:40px;
 }
 
 .sch-navLeft {
