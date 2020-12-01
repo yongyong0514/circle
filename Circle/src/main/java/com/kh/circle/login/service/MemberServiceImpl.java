@@ -19,12 +19,12 @@ import com.kh.circle.login.entity.EmpInfo;
   public EmpInfo login(EmpInfo empInfo, HttpSession session) throws Exception { 
 	
 	//잘 받아왔는지 확인
-	System.out.println("service empInfo: " + empInfo);
+	//System.out.println("service empInfo: " + empInfo);
 	
 	EmpInfo status = dao.login(empInfo); 
 	
 	//repository에서 잘 받아왔는지 확인
-	System.out.println("service after dao empInfo: "+status);
+	/* System.out.println("service after dao empInfo: "+status); */
 	
 	if(status==null) {
 	  return null;

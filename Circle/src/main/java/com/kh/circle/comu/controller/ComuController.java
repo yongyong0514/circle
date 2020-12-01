@@ -66,10 +66,15 @@ public class ComuController {
 		return "community/comuAdd";
 	}
 	@RequestMapping(value="/comuAddAction",method=RequestMethod.POST)
-	public String comuAddAction(Comu vo, HttpSession session )throws Exception{
-		String writer = (String)session.getAttribute("comu_post_wrtr_emp_no");
-		vo.setComu_post_wrtr_emp_no(writer);
+	@ModelAttribute
+	public String comuAddAction(HttpSession session ,Comu vo)throws Exception{
+		
 		service.comuAdd(vo);
+		
+		
+		// 이건 나중에
+		String writer = ((Comu)session.getAttribute("comu.comuAdd")).getComu_post_wrtr_emp_no();
+		vo.setComu_post_wrtr_emp_no(writer);
 		return"redirect:community/comuList";
 	}
 	
