@@ -14,11 +14,16 @@ public class SignServiceImpl implements SignService {
 	@Autowired
 	private SignDao signDao;
 	
+	// 결재 등록	
 	@Override
 	public void insert(SignWriteInsert signWriteInsert) throws IllegalStateException, IOException {
-//		결재 등록
 		signDao.add(signWriteInsert);
-
+	}
+	
+	// 결재 첨부 파일 등록
+	@Override
+	public void insertFile(String files_oname, long files_size, String files_type, String files_cname, String files_route) {
+		signDao.add(files_oname, files_size, files_type, files_cname, files_route);
 	}
 
 }

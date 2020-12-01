@@ -15,6 +15,7 @@ public class SignDaoImpl implements SignDao {
 	@Autowired
 	private SqlSession sqlSession;
 
+	//결재 등록
 	@Override
 	public void add(SignWriteInsert signWriteInsert) {
 		
@@ -43,7 +44,6 @@ public class SignDaoImpl implements SignDao {
 		//생성된 시숸스 번호로 참조자 등록
 		String wList = signWriteInsert.getWCodeList();
 		
-		
 		if(wList.length() != 0) {
 			String [] wListArray = wList.split("/");
 			Map<String, Object> wmap = new HashMap<>();
@@ -62,7 +62,30 @@ public class SignDaoImpl implements SignDao {
 		}
 		
 		sqlSession.insert("sign.signProcessAdd1", seqSign);
-		
 	}
-
+	
+	//결재 파일 등록
+	@Override
+	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route) {
+		
+		//시퀀스 번호 생성 및 파일 등록
+		String seqSignFiles = sqlSession.selectOne("sign.seqSignFiles");	
+		
+		//결재 시퀀스 조회 및 등록
+		
+		String seqSignFilesCurrval = sqlSession.selectOne("sign.seqSignFilesCurrval");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignFiles", seqSignFiles);
+		map.put("seqSignFilesCurrval", seqSignFilesCurrval);
+		map.put("files_oname", files_oname);
+		map.put("files_size", files_size);
+		map.put("files_type", files_type);
+		map.put("files_cname", files_cname);
+		map.put("files_route", files_route);
+		
+		sqlSession.insert("sign.signFiles", map);
+	}
+	
 }

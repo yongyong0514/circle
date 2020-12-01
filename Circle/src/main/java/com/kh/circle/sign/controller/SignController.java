@@ -2,10 +2,8 @@ package com.kh.circle.sign.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -81,34 +79,28 @@ public class SignController {
 	public String upload(MultipartHttpServletRequest multipartRequest) { 
         
        Iterator<String> itr =  multipartRequest.getFileNames();
-       
+           
        String filePath = "d:/resources/files/sign";
        
        while (itr.hasNext()) { 
-           MultipartFile multipartFile = multipartRequest.getFile(itr.next());
+           MultipartFile multipartFile = multipartRequest.getFile(itr.next());   
     
            String files_oname = multipartFile.getOriginalFilename();
+           
+           String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
            
            long files_size = multipartFile.getSize();
            
            String files_type = multipartFile.getContentType();
            
-           String files_cname = UUID.randomUUID().toString();
+           String files_cname = UUID.randomUUID().toString() + extension;
            
-           String fileFullPath = filePath + "/" + files_cname;
+           String files_route = filePath + "/" + files_cname;
     
            try {
-        	   multipartFile.transferTo(new File(fileFullPath));
-        	   
-        	   Map<String, Object> map = new HashMap<>();
-        	   
-        	   map.put("files_oname", files_oname);
-        	   map.put("files_size", files_size);
-        	   map.put("files_type", files_type);
-        	   map.put("files_cname", files_cname);
-        	   
-        	   signService.insert(map);
-        	   
+        	   multipartFile.transferTo(new File(files_route));
+
+        	   signService.insertFile(files_oname, files_size, files_type, files_cname, files_route);
         	   
            } catch (Exception e) {
                e.printStackTrace();

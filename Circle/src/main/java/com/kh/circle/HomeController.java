@@ -123,6 +123,10 @@ public class HomeController {
 		 * find); } return "redirect:/";
 		 */
 	
+	@GetMapping("/login")
+	public String login() {
+		return "../views/home";
+	}
 	
 	//로그아웃 처리 컨트롤러
 	// - 세션에 있는 user 정보를 삭제

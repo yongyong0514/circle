@@ -11,6 +11,12 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common/menu/menuRightList.css">
 </head>
 <body>
+	<c:if test="${ empInfo == null}">
+		<script>
+			location.href="${pageContext.request.contextPath}/login";
+		</script>
+	</c:if>
+	<c:if test="${ empInfo != null}">
 <nav>
 	<div class="menuTopBar">
 		<ul>
@@ -44,9 +50,7 @@
 			<li><button class="menuBtn2">My Profile</button></li>
 			
 			<li>
-				<c:if test="${ empInfo != null}">
-				<p  style="color: white;text-align: left;">${empInfo.emp_info_name} 님</p>
-				</c:if> 
+				<div class="menuBtn3">${empInfo.emp_info_name} 님</div>
 			</li>
 			
 			<li><img src="${pageContext.request.contextPath}/resources/img/common/menuTopBar/hamburger50x50.png" class="menuBtnRight" id="menuBtnRight" onclick="">
@@ -92,5 +96,6 @@
 			})
   });
 </script>
+	</c:if>
 </body>
 </html>
