@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollQuestionInsert.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.tmpl.min.js"></script>
 
 <title>새 설문 작성</title>
 </head>
@@ -59,7 +60,50 @@
 					</fieldset>
 				</form>
 			</li>
-			
+			<li class="question-item sort">
+				<div class="question-preview">
+					<span class="question">
+						<span class="seq">1</span>
+						. 
+						질문&nbsp;입력&nbsp;(필수,&nbsp;
+						하나만선택,&nbsp;&nbsp;보기&nbsp;
+						두개,&nbsp;기타&nbsp;추가)
+					</span>
+					<ul class="answer-wrap">
+						<li>
+							<span class="option-wrap">
+								<input id="radio-question-1001-1" name="question-1001" type="radio">
+								<label for="radio-question-1001-2">
+									보기1 입력
+								</label>
+							</span>
+						</li>
+						<li>
+							<span class="option-wrap">
+								<input id="radio-question-1001-2" name="question-1001" type="radio">
+								<label for="radio-question-1001-2">
+									보기2 입력
+								</label>
+							</span>
+						</li>
+						<li class="etc">
+							<span class="txt-wrap">
+								<input type="radio" name="question-1001">
+								<span class="label-wrap txt">기타입력</span>
+								<input class="wfix-max txt" type="text" name="answer">
+							</span>
+						</li>
+					</ul>
+				</div>
+				<div class="action-wrap">
+					<a class="icon24-btn edit-question-btn" title="수정">
+						<span class="icon-toolbar write"></span>
+					</a>
+					<a class="icon24-btn remove-question-btn" title="삭제">
+						<span class="icon-toolbar del"></span>
+					</a>
+				</div>
+			</li>
 			<!-- 문항추가 입력 폼 시작 -->
 			<li class="question-item question-item-edit" style="display:none;">
 				<form class="question-form">
@@ -110,7 +154,9 @@
 									<span class="title">최대 선택 개수</span>
 								</th>
 								<td>
-									<select id="maxSelectCase" name="maxSelectCase"></select>
+									<select id="maxSelectCase" name="maxSelectCase">
+										<option value="0"> 제한없음 </option>
+									</select>
 								</td>
 							</tr>
 							<tr class="question-answer-row">
@@ -176,51 +222,143 @@
 	<div class="organChart">
 		<jsp:include page="../../common/menuOrganChart.jsp"/>
 	</div>
-
 </body>
+<!-- 보기 추가 옵션 템플릿 -->
+<script type="text/html" id="question-option-template">
+<li class="question-option-item">
+	<span class="txt-wrap">
+		<input type="radio" name="radio" value="1">
+		<input class="txt wfix-max question-option-desc" type="text" name="option-2">
+		<span class="alert-wrap desc-top-wrap warn-error">
+			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
+		</span>
+	</span>
+	<span class="m-btn-wrap del-question-option-btn">
+		<span class="icon-classic icon-del"></span>
+	</span>
+</li>
+</script>
+
+<!-- 기타 추가 옵션 템플릿 -->
+<script type="text/html" id="question-etc-option-template">
+<li class="question-option-item-etc etc">
+	<span class="txt-wrap">
+		<input type="radio" name="radio" value="1">
+		<input class="txt wfix-max question-option-desc" type="text" name value="기타">
+	</span>
+	<span class="m-btn-wrap del-question-option-btn">
+		<span class="icon-classic icon-del del-etc"></span>
+	</span>
+</li>
+</script>
 <script>
 	$(document).ready(function(){
 		
 		/************************
+		**					   **
 		** 문항 추가 관련 기능 ** 
+		**                     **
 		************************/
 		
-		/* 문항 추가 버튼 클릭기능 */
-		$("#add-question-btn").on("click", function(){
-			$(".question-item-edit").css("display","block");
-		});
-		
-		/* 문항 타입 선택 */
-		$("select[name=question-type]").on("change",function(){
-			switch($("select[name=question-type]").val()){
-			/* 선택형 선택시 */
-			case "select" : console.log("select 선택");
-			case "select" : console.log($(this).getQueryType());
-							$("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
-							$(".question-answer-row").css("display","table-row");
-							break;
+			/* 문항 추가 버튼 클릭기능 */
+			$("#add-question-btn").on("click", function(){
+				$(".question-item-edit").css("display","block");
+			});
 			
-			/* 텍스트형 선택시 */
-			case "text" : console.log("text 선택");
-							$(".question-answer-row").css("display","none");
-							$("select[name=question-sub-type]").html("<option value='text'>단문 입력</option><option value='textarea'>장문 입력</option>");
-							break;
+			/* 문항 타입 선택 */
+			$("select[name=question-type]").on("change",function(){
+				switch($("select[name=question-type]").val()){
+				/* 선택형 선택시 */
+				case "select" : console.log("select 선택");
+								$("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
+								$(".question-answer-row").css("display","table-row");
+								break;
+				
+				/* 텍스트형 선택시 */
+				case "text" : console.log("text 선택");
+								$(".question-answer-row").css("display","none");
+								$("select[name=question-sub-type]").html("<option value='text'>단문 입력</option><option value='textarea'>장문 입력</option>");
+								break;
+				
+				/* 점수형 선택시 */
+				case "score" : console.log("score 선택");
+								$(".question-answer-row").css("display","none");
+								$("select[name=question-sub-type]").html("<option value='3'>3 점</option><option value='5'>5 점</option><option value='7'>7 점</option><option value='10'>10 점</option>");
+								break;
+				}
+			});
+	
+			/*********************************
+			** 선택형 문항 내부 기능 ** 
+			**********************************/		
+			/* 복수선택 select 선택시 */
+			$("select[name=question-sub-type]").on("change", function(){
+				switch($(this).val()){
+					/* 하나만 선택 */
+					case "single" : console.log("single 선택");
+									$(".plural-only").css("display", "none");
+									break;
+					case "plural" : console.log("plural 선택");
+									$(".plural-only").css("display", "table-row");
+									break;
+				}
+			});
+			/* 최대 개수 제한 숫자 자동변경 */
+			$(".plural-only").mouseenter(function(){
+				$("#maxSelectCase").children("option:not(:first)").remove();
+				/* 보기 숫자 카운팅 변수 */
+				var count = ($(".question-answer-row .answer-wrap .question-option-item-etc .txt-wrap input.txt").length) + ($(".question-answer-row .answer-wrap .question-option-item").length);
+				
+				for(var i = 1;  i <= count; i++){
+					$("<option value=" + i + ">" + i + "</option>").appendTo("#maxSelectCase");
+				}
+			});
 			
-			/* 점수형 선택시 */
-			case "score" : console.log("score 선택");
-							$(".question-answer-row").css("display","none");
-							$("select[name=question-sub-type]").html("<option value='3'>3 점</option><option value='5'>5 점</option><option value='7'>7 점</option><option value='10'>10 점</option>");
-							break;
-			}
-		});
+			/* 선택형 보기 입력창 클릭시 기능 */
+			$(".add-question-btn").find("input[type='text']").on("click", function(){
+				$("#question-option-template").tmpl().prependTo(".question-form ul.answer-wrap");
+			});
+			/* 선택형 보기 입력창 제거 아이콘 클릭 */
+			$(document).on("click", "span.icon-del", function(){
+				$(this).closest(".question-option-item").remove();
+			});
+			/* 기타 추가 클릭 */
+			$(".add-etc-question-btn").on("click", function(){
+				$(this).css("display","none");
+				$("#question-etc-option-template").tmpl().appendTo(".question-form ul.answer-wrap");
+			});
+			/* 기타 제거 아이콘 클릭*/
+			$(document).on("click", "span.del-etc", function(){
+				$(this).closest(".question-option-item-etc").remove();
+				$(".add-etc-question-btn").css("display","block");
+			});
+			/*************************/
+			
+			/*********************************
+			** 문항추가 완료/취소 버튼 기능 ** 
+			**********************************/
+			/* 완료버튼 클릭 */
+			$(".poll-action").find("span:contains('완료')").on("click", function(){
+				/* 질문 입력창 입력 확인 - 경고메세지 출력*/
+				$("input[name=question]").val().length < 2 ? ($("input[name=question]").siblings(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"}).focus()) : ($(".desc-top-wrap").css("display","none"),$("input[name=question]").css({"border-color": "#ddd","color": "#333"}));
+				
+				/* 보기 입력창 입력 확인 - 경고메세지 출력 */
+				$(".question-form").find("input[name=option-2]").each(function(index,item) {
+					$(item).val().length < 1 ? ($(item).siblings(".desc-top-wrap").css("display","block"), $(item).css({"border-color": "red","color": "red"})) : ($(item).siblings(".desc-top-wrap").css("display","none"), $(item).css({"border-color": "#ddd","color": "#333"}));
+				});
+			});
+			
+			/* 취소버튼 클릭 */
+			$(".poll-action").find("span:contains('취소')").on("click", function(){
+				$(".question-item-edit").css("display","none");
+			});
+			/*********************************/
+			
+			
+		/*********************************
+		*********************************/
 		
-		
-		/************************
-		** 제목 입력 경고 기능 ** 
-		************************/
-		$("input[name=question]").blur(function(){
-			$("input[name=question]").val() == '' ? ($(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"})) : ($(".desc-top-wrap").css("display","none"),$("input[name=question]").css({"border-color": "#ddd","color": "#333"}))
-		});
 	});
+	
 </script>
 </html>

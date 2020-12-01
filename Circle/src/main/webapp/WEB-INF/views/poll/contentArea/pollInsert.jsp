@@ -34,6 +34,9 @@
 							<td>
 								<div class="txt-wrap">
 									<input class="txt w-max" type="text" name="title">
+									<span class="alert-wrap desc-top-wrap warn-error">
+										<span class="desc caution"><span class="alert_wrap wrap_desc_top go_error go_renew"><span class="desc caution">설문 제목은 필수 입력항목 입니다.</span></span></span>
+									</span>
 								</div>
 							</td>
 						</tr>
@@ -195,6 +198,11 @@
 <script>
 	$(document).ready(function(){
 		
+
+		
+		/************************
+		** 설문 대상 추가 기능 ** 
+		************************/		
 		//설문대상자 직접선택 라디오 버튼 숨기기
 		$("#organ-view").hide();
 		//설문대상자 직접선택 라디오 버튼 변경 인식
@@ -205,22 +213,27 @@
 					$("#organ-view").hide();
 				}
 		});
-		
 		//인원추가 버튼 클릭 인식/ 조직도 위치조정 후 오픈
 		$(".icon-addlist").on("click", function() {
 			var p = $(this).offset();
 			$(".organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
 		});
-		
 		//메뉴바 조직도 클릭시 위치 조정
 		$(".organChart").click(function(){
 			$(".organPanel").css({"position":"fixed","left":"80px","bottom":"2.2rem"});
 		});
+		/* ******************* */
 		
-		//다음/취소 버튼 선택기능
+		/************************
+		** 다음/취소 버튼 기능 ** 
+		************************/		
 		$("#next-btn").on("click", function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/insertQuestion");
+			//제목 입력 경고 기능
+			$("input[name=title]").val() == '' ? ($(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"})) : location.replace("${pageContext.request.contextPath}/poll/pollMain/insertQuestion");
+			
 		})
+		/* ******************* */
+		
 	});
 	
 </script>

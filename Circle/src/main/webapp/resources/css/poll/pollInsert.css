@@ -121,8 +121,10 @@ td {
 	display: inline-block;
     padding: 2px 0;
     vertical-align: middle;
-    display: block;
 }
+div.txt-wrap{
+	display:block;
+}]
 input.txt{
 	border: 1px solid #ddd;
     border-radius: 2px;
@@ -243,4 +245,17 @@ ul.name-tag li span.btn-wrap span.txt {
 }
 .icon16.remove-all {
     background-position: 0 0;
+}
+.desc-top-wrap{
+	display: block;
+    padding: 1px 0 6px;
+    vertical-align: top;
+    display:none;
+}
+.desc {
+    line-height: 1.5;
+    margin: 0;
+}
+.alert-wrap .caution {
+    color: #ee3b4c;
 }

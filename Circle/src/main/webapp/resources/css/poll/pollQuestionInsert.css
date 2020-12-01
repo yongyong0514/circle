@@ -116,16 +116,30 @@ ul.answer-wrap li.create span.icon-addlist{
 	padding: 10px 24px;
     text-align: center;
 }
-.desc-top-wrap{
-	display: block;
-    padding: 1px 0 6px;
-    vertical-align: top;
-    display:none;
+.poll-form ul {
+	padding-inline-start: 0px;	
 }
-.desc {
-    line-height: 1.5;
-    margin: 0;
+.m-btn-wrap {
+	vertical-align: middle;
+    padding: 5px 0;
+    display: inline-block;
 }
-.alert-wrap .caution {
-    color: #ee3b4c;
+span.icon-classic {
+    display: inline-block;
+    background: url(../../img/poll/icon_classic.png) no-repeat 0 0;
+    vertical-align: middle;
+}
+span.icon-del {
+    background-position: -177px -37px;
+    width: 16px;
+    height: 16px;
+}
+.btn-wrap:hover, .s-btn-wrap:hover, .m-btn-wrap:hover {
+    cursor: pointer;
+}
+ul.answer-wrap li.etc span.txt-wrap input.wfix-max {
+    width: 448px;
+}
+div.question-preview {
+    padding-left: 24px;
 }
