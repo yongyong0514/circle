@@ -33,14 +33,12 @@
 				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
 					<div class="title">
-						<h3> 기준일 </h3>
-						<br>
 						<div class="dateSelect">
+							<button onclick="changeDate(0);" value="today">오늘</button>
+							<br><br>
 							<i onclick="changeDate(-1);" class='fas fa-angle-left'></i>
 							<div>&nbsp;<c:out value="${today}"/>&nbsp;</div>
 							<i onclick="changeDate(1);" class='fas fa-angle-right'></i>
-							<br><br>
-							<button onclick="changeDate(0);" value="today">오늘</button>
 						</div>
 					</div>
 					<br><br>

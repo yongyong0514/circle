@@ -70,18 +70,32 @@ public class AttendanceController {
 		return "attendance/myVacation";
 	}
 
-	@GetMapping("/attendanceAllList")
-	public String attendanceAllList() {
-		return "attendance/attendanceAllList";
+	@GetMapping("/allAttendanceList")
+	public String allAttendanceList() {
+		return "attendance/allAttendanceList";
 	}
 	
-	@GetMapping("/attendanceAllStatistic")
-	public String attendanceAllStatistic() {
-		return "attendance/attendanceAllStatistic";
+	@GetMapping("/allAttendanceStatistic")
+	public String allAttendanceStatistic() {
+		return "attendance/allAttendanceStatistic";
 	}
 	
-	@GetMapping("/attendanceAllVacationList")
-	public String attendanceAllVacationList() {
-		return "attendance/attendanceAllVacationList";
+	@GetMapping("/allVacationList")
+	public String allVacationList() {
+		return "attendance/allVacationList";
+	}
+	
+	@GetMapping("/allVacationHistory")
+	public String allVacationHistory() {
+		return "attendance/allVacationHistory";
+	}
+	
+	
+	
+	
+	
+	@GetMapping("/test")
+	public String test() {
+		return "attendance/test";
 	}
 }

@@ -30,9 +30,6 @@
 				<br>
 				<!-- 연사 사용내역 요약 시작 -->
 				<div class="summary">
-					<h2>2020-11-14</h2>
-					<br>
-					<br>
 					<table class="summaryTable">
 						<tr>
 							<th></th>
@@ -58,13 +55,14 @@
 				<br>
 				<br>
 				<!-- 연차 사용내역 요약 끝 -->
+				
 				<div class="vacationHistory">
+					<!-- 연차 사용내역 상세 시작 -->
 					<h2>연차 사용내역</h2>
 					<br>
 					<br>
 					<table class="vacationHistoryTable">
 						<tr>
-							<th>순서</th>
 							<th>신청일</th>
 							<th>구분</th>
 							<th>시작일</th>
@@ -76,48 +74,27 @@
 							<th>관련서류</th>
 						</tr>
 						<!-- 반복 불러오기 시작 -->
-						<c:forEach var="항목" items="항목s">
-							<!-- 예시 데이터 시작 -->
-							<tr>
-								<td>1</td>
-								<td>2020-08-12</td>
-								<td>연차</td>
-								<td>2020-09-30</td>
-								<td>2020-10-02</td>
-								<td>3</td>
-								<td>정기휴가</td>
-								<td>결재완료</td>
-								<td>Y</td>
-								<td><input type="button" value="전자결재" /></td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>2020-10-07</td>
-								<td>병가</td>
-								<td>2020-10-08</td>
-								<td>2020-10-08</td>
-								<td>1</td>
-								<td>병가</td>
-								<td>결재완료</td>
-								<td>Y</td>
-								<td><input type="button" value="전자결재" /></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>2020-11-12</td>
-								<td>연차</td>
-								<td>2020-11-26</td>
-								<td>2020-11-27</td>
-								<td>2</td>
-								<td>정기휴가</td>
-								<td>결재대기</td>
-								<td>N</td>
-								<td><input type="button" value="전자결재" /></td>
-							</tr>
-							<!-- 예시 데이터 끝 -->
-						</c:forEach>
+						<c:if test="${!empty map.vList }">
+							<c:forEach var="Vacation" items="${map.vList }">
+								<tr>
+									<td><c:out value="${Vacation.anva_hstr_rdat }"/></td>
+									<td><c:out value="${Vacation.anva_hstr_type }"/></td>
+									<td><c:out value="${Vacation.anva_hstr_sdat }"/></td>
+									<td><c:out value="${Vacation.anva_hstr_edat }"/></td>
+									<td>
+										<c:out value="${Vacation.nights }"/>박
+										<c:out value="${Vacation.days }"/>일
+									</td>
+									<td><c:out value="${Vacation.anva_hstr_cont }"/></td>
+									<td></td>
+									<td><c:out value="${Vacation.anva_hstr_conf }"/></td>
+									<td><input type="button" value="전자결재" /></td>
+								</tr>
+							</c:forEach>
+						</c:if>
 						<!-- 반복 불러오기 끝 -->
 					</table>
+					<!-- 연차 사용내역 상세 끝 -->
 					<br>
 					<br>
 					<!-- 연차 신청하기 시작 -->
