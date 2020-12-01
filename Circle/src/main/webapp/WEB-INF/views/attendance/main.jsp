@@ -12,8 +12,8 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/attendance/main.css">
 </head>
-<!-- 아이콘 참조 -->
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
 <body>
 	<div class="wrap">
 		<div class="header">
@@ -28,22 +28,20 @@
 		</div>
 		<div class="container">
 			<div class="content">
-			
-			<c:out value="${map.weekAttList }"/>
-			
 				<h1>근태현황(메뉴명)</h1>
 				<br>
 				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
 					<div class="title">
-						<h3 style="text-align:center"> 기준일 </h3>
+						<h3> 기준일 </h3>
 						<br>
 						<div class="dateSelect">
-							<span><i class='fas fa-angle-left'></i></span>
-							<c:out value="${today}"/>
-							<span><i class='fas fa-angle-right'></i></span>
+							<i onclick="changeDate(-1);" class='fas fa-angle-left'></i>
+							<div>&nbsp;<c:out value="${today}"/>&nbsp;</div>
+							<i onclick="changeDate(1);" class='fas fa-angle-right'></i>
+							<br><br>
+							<button onclick="changeDate(0);" value="today">오늘</button>
 						</div>
-						<h3>기준 근무시간: <c:out value="${map.worktimePerWeek }"/>h</h3>
 					</div>
 					<br><br>
 					<table class="summaryTable">
@@ -52,20 +50,30 @@
 							<th>이번주 누적</th>
 							<th>이번주 초과</th>
 							<th>이번주 잔여</th>
-							<th>이번달 누적</th>
-							<th>이번달 초과</th>
+							<th>기준근무시간</th>
 						</tr>
 						<tr>
 							<td>
- 								<%-- <c:out value="${map.weekAttList.AttendanceInfo[0].weekStartDate }"/>
+ 								<c:out value="${map.weekStackInfo.weekStartDate }"/>
 								<span> ~ </span>
- 								<c:out value="${map.weekAttList.AttendanceInfo[0].weekEndDate }"/> --%>
+ 								<c:out value="${map.weekStackInfo.weekEndDate }"/>
 							</td>
-							<td>18h 2m</td>
-							<td>0h</td>
-							<td>33h 58m</td>
-							<td>18h 2m</td>
-							<td>0h</td>
+							<td>
+								<c:out value="${map.weekStackInfo.weekSumWorktimeHour }"/>h
+								<c:out value="${map.weekStackInfo.weekSumWorktimeMinute }"/>m
+
+							</td>
+							<td>
+								<c:out value="${map.weekStackInfo.weekOverWorktimeHour }"/>h 
+								<c:out value="${map.weekStackInfo.weekOverWorktimeMinute }"/>m
+							</td>
+							<td>
+								<c:out value="${map.weekStackInfo.weekRemainWorktimeHour }"/>h 
+								<c:out value="${map.weekStackInfo.weekRemainWorktimeMinute }"/>m
+							</td>
+							<td>
+								<c:out value="${map.weekStackInfo.worktimePerWeek }"/>h
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -83,32 +91,23 @@
 						<th>상세</th>
 						<th>비고</th>
 					</tr>			
-					<!-- 주간 근태내역 시작 -->
-					<c:forEach var="주차" items="주차s">
-						<tr class="week">
-							<td colspan="2">2020-11-08 ~ 2020-11-14</td>
-							<td colspan="3">누적근무시간: 18h 2m</td>
-							<td colspan="3">초과근무시간: 0h</td>
+					<!-- 일간 근태내역 시작 -->
+					<c:forEach var="AttendanceInfo" items="${map.weekAttList }">
+						<tr>
+							<td><c:out value="${AttendanceInfo.atdc_hstr_dat }"/></td>
+							<td><c:out value="${AttendanceInfo.atdc_hstr_stim}"/></td>
+							<td><c:out value="${AttendanceInfo.atdc_hstr_etim}"/></td>
+							<td>
+								<c:out value="${AttendanceInfo.workTimeHour }"/>h							
+								<c:out value="${AttendanceInfo.workTimeMinute }"/>m						
+							</td>
+							<td><c:out value="${AttendanceInfo.atdc_hstr_writ_type}"/></td>
+							<td><c:out value="${AttendanceInfo.atdc_hstr_type}"/></td>
+							<td>휴게시간 1h 제외</td>
+							<td></td>
 						</tr>
-						
-						<!-- 일간 근태내역 시작 -->
-						<c:forEach var="AttendanceInfo" items="${map.list }">
-							<tr>
-								<td><c:out value="${AttendanceInfo.atdc_hstr_dat }"/></td>
-								<td><c:out value="${AttendanceInfo.atdc_hstr_stim}"/></td>
-								<td><c:out value="${AttendanceInfo.atdc_hstr_etim}"/></td>
-								<td><c:out value="${AttendanceInfo.workTime }"/></td>
-								<td><c:out value="${AttendanceInfo.atdc_hstr_writ_type}"/></td>
-								<td><c:out value="${AttendanceInfo.atdc_hstr_type}"/></td>
-								<td>휴게시간 1h 제외</td>
-								<td></td>
-							</tr>
-						</c:forEach>
-						<!-- 일간 근태내역 끝 -->
-						
 					</c:forEach>
-					<!-- 주간 근태내역 끝 -->
-					
+					<!-- 일간 근태내역 끝 -->
 				</table>
 				<!-- 근태이력(리스트) 끝 -->
 			</div>
@@ -128,7 +127,35 @@
 				}
 			})
 			<!-- 왼쪽바 고정 추가 옵션 끝 -->
+			
 		});
+		
+		<!-- 날짜변경 옵션 시작 -->
+		function changeDate(num){
+			if(num == 0){
+				var today = new Date();
+			} else{
+				var today = new Date("${today}");
+			}
+			var date = new Date(today.valueOf()+(24*60*60*1000)*num);
+			
+			var dateStr = getFormatDate(date);
+
+			location.href = "${pageContext.request.contextPath}/attendance/main?dateStr=" + dateStr;
+		};	
+			
+		<!-- 날짜변경 옵션 끝 -->
+		
+		<!-- 날짜포맷 변경 시작 -->
+		function getFormatDate(date){
+		    var year = date.getFullYear();				//yyyy
+		    var month = (1 + date.getMonth());			//M
+		    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+		    var day = date.getDate();					//d
+		    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+		    return  year + '-' + month + '-' + day;		//형태 생성
+		}
+		<!-- 날짜포맷 변경 끝 -->
 	</script>
 </body>
 </html>

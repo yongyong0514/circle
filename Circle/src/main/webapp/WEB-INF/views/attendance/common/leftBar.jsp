@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/attendance/common/leftBar.css">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
 </head>
 <body>
 	<div>
@@ -15,7 +16,7 @@
 			<div class="attendanceStatus">
 				<table class="attendanceStatusTable">
 					<tr>
-						<th colspan="2">2020-11-13(금)</th>
+						<th class="clock" colspan="2"></th>
 					</tr>
 					<tr>
 						<td>출근시간</td>
@@ -58,5 +59,17 @@
 		
 	</div>
 </body>
+
+<script>
+	function displayTime() {
+	    var time = moment().format('YYYY년 MM월 D일<br>HH시 mm분');
+	    $('.clock').html(time);
+	    setTimeout(displayTime, 1000);
+	}
+	
+	$(document).ready(function() {
+	    displayTime();
+	});
+</script>
 
 </html>

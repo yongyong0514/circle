@@ -12,4 +12,6 @@ public interface AttendanceInfoRepository {
 	public int worktimePerWeek(String emp_no);
 	
 	public WeekStackInfo weekStackWorkTime(Map<String, Object> inputMap);
+	
+	public WeekStackInfo weekStackWorkTimeNull(Map<String, Object> inputMap);
 }
