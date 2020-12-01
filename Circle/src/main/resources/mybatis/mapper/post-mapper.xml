@@ -5,187 +5,110 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-	mapper라는 영역 안에 구문을 작성한다
-	- namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수)
--->
+<!-- mapper라는 영역 안에 구문을 작성한다 - namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수) -->
 <mapper namespace="post">
 
-<resultMap type="com.kh.circle.comu.entity.Comu" id="comuMap">
-	<id property="comu_post_ordr" column="comu_post_ordr"/>
-	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
-	<id property="comu_post_title" column="comu_post_title"/>
-	<id property="comu_post_cont" column="comu_post_cont"/>
-	<id property="comu_post_dat" column="comu_post_dat"/>
-	<id property="comu_post_view" column="comu_post_view"/>
-	<id property="comu_post_comu_code" column="comu_post_comu_code"/>
-	<id property="comu_post_type" column="comu_post_type"/>
-</resultMap>
 
-<resultMap type="com.kh.circle.comu.entity.ComuInfo" id="comuInfoMap">
-	<id property="comu_info_emp_no" column="comu_info_emp_no"/>
-	<id property="comu_info_comu_code" column="comu_info_comu_code"/>
-	<id property="comu_info_sdat" column="comu_info_sdat"/>
-	<id property="comu_info_edat" column="comu_info_edat"/>
-	<id property="comu_info_comu_job_code" column="comu_info_comu_job_code"/>
-	<id property="comu_info_rm" column="comu_info_rm"/>
-	<id property="comu_info_join" column="comu_info_join"/>
-	<id property="comu_info_join_rqst_dat" column="comu_info_join_rqst_dat"/>
-	
-</resultMap>
 
-<resultMap type="com.kh.circle.comu.entity.ComuList" id="comuListMap">
-	<id property="comu_list_code" column="comu_list_code"/>
-	<id property="comu_list_name" column="comu_list_name"/>
-	
-</resultMap>
-
-<resultMap type="com.kh.circle.comu.entity.ComuRepl" id="comuReplMap">
-<collection property="comu_repl_ordr" resultMap="comu_repl_ordr"/>
-<collection property="comu_repl_post_ordr" resultMap="comu_repl_post_ordr"/>
-<collection property="comu_repl_content" resultMap="comu_repl_content"/>
-<collection property="comu_repl_date" resultMap="comu_repl_date"/>
-<collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
-</resultMap>
-
-	
 	<!-- TEST -->
+
+	<!-- 게시판 메인 불러오기 -->
+
+	<select id="postMain" resultType="post">
+
+		select *
+		from post p, emp_info e, post_type t
+		where p.post_emp =
+		e.emp_info_emp_no
+		and p.post_type = t.post_type_code
+		and p.post_type in
+		('POTY000002', 'POTY000003')
+		order by p.post_code desc
+	</select>
 	
-	<!--  전사 게시판 불러오기 -->
-	<select id="postEmpList" resultType="post">
-	
-	select *
-	from post p
-	where P.post_type = 'POTY000002'
+	<select id="postParts" parameterType="String" resultType="post">
+  	select *
+		from post p
+		join emp_info e on (p.post_emp = e.emp_info_emp_no)
+		join post_type t on (p.post_type = t.post_type_code)
+		where t.post_type_code = #{post_type}
+		order by p.post_code desc;
 	</select>
 	
 	
-	<select id="postTestPart" resultType="post">
- select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-and p.post_type = 'POTY000002'
-order by post_code desc
-</select>
-
-<select id="postTestPart2" resultType="post">
-select *
-from post_type
-</select>
-
-<select id="postType" resultType="post">
-select *
-from  post_type
-</select>
-
-
-
-
-<select id="postTypeList" resultType="post">
-    select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-and p.post_type = 'POTY000003'
-order by post_code desc
 	
+
+	
+
+
+	<select id="postTestView" resultType="post">
+
+		select *
+		from post p
+		join
+		post_repl r on (p.post_code = r.post_repl_post)
+		join post_type t on
+		(p.post_type = t.post_type_code)
+		join emp_info e on (p.post_emp =
+		e.emp_info_emp_no)
 	</select>
 
-
-<select id="postTestView" resultType="post">
-
-select *
-from post p
-join post_repl r on (p.post_code = r.post_repl_post)
-join post_type t on (p.post_type = t.post_type_code)
-join emp_info e on (p.post_emp = e.emp_info_emp_no)
-</select>
-
-<!-- TEST END -->
+	<!-- TEST END -->
 
 
 
 
 
-<!--  postList 호출 -->
+	<!-- postList 호출 -->
 	<select id="postList" resultType="post">
-select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-order by post_code desc
-	</select> 
-	
-	
-<select id="postNoticeList" resultType="post">
-    select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-and p.post_type = 'POTY000003'
-order by post_code desc
-</select>
-
-<select id="postEmployeeList" resultType="post">
-    select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-and p.post_type = 'POTY000004'
-order by post_code desc
-</select>
+		select *
+		from post p, emp_info
+		e, post_type t
+		where p.post_emp = e.emp_info_emp_no
+		and p.post_type =
+		t.post_type_code
+		order by post_code desc
+	</select>
 
 
-<select id="post_seq" resultType="String">
-select post_seq.nextval from dual
-</select>
-	
+	<select id="post_seq" resultType="String">
+		select post_seq.nextval from
+		dual
+	</select>
+
 	<insert id="postTestInsert" parameterType="post">
-	
-   INSERT INTO POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT, POST_WDAT, POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF, POST_STAT)
-    VALUES(
-    #{post_code}, #{post_emp}, #{post_type}, #{post_title}, #{post_comt}, DEFAULT , '', 0, #{post_sec}, DEFAULT, '', DEFAULT)
+
+		INSERT INTO
+		POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
+		POST_WDAT,
+		POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF,
+		POST_STAT)
+		VALUES(
+		#{post_code}, #{post_emp}, #{post_type}, #{post_title},
+		#{post_comt}, DEFAULT , '',
+		0, #{post_sec}, DEFAULT, '', DEFAULT)
 	</insert>
 
-<!-- postCollect -->
-
-	
-	
-	
-	<!--  호출 끝 -->
-	
-	
-<!-- 페이징 처리 파트	
-	 페이징 처리 
-	<select id="postCount" resultType="int">
-	
-	select count(*) from post
-	
-</select>
-
- 페이징 처리 후 게시글 조회 
-<select id="selectPost" resultType="postPaging">
-	select *
-	from (
-	select rownum rn, a.*
-	) from (
-	select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-order by post_code desc
-	) a
-	where rn between #{start} and #{end}
-</select>
-
- 페이징 처리 끝 -->
+	<!-- postCollect -->
 
 
-	
 
-	
-	
+
+	<!-- 호출 끝 -->
+
+
+	<!-- 페이징 처리 파트 페이징 처리 <select id="postCount" resultType="int"> select count(*) 
+		from post </select> 페이징 처리 후 게시글 조회 <select id="selectPost" resultType="postPaging"> 
+		select * from ( select rownum rn, a.* ) from ( select * from post p, emp_info 
+		e, post_type t where p.post_emp = e.emp_info_emp_no and p.post_type = t.post_type_code 
+		order by post_code desc ) a where rn between #{start} and #{end} </select> 
+		페이징 처리 끝 -->
+
+
+
+
+
+
 
 
 

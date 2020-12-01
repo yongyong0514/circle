@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,43 +43,79 @@ public class PostController {
 	@Autowired
 	private HttpServletResponse response;
 
-	/* TEST ZONE */
+	
+	
+	@GetMapping("/postMain")
+	public String postMain(Model model, Post post) {
 
-	// 게시판 list 불러오기 [전사원]
+		
 
-	@GetMapping("/postEmpList")
-	public String postPart(Model model) {
+		System.out.println("test Con : " + model);
+		
+		List<Post> list = postService.postMain(model);
+		
+		System.out.println("last con : " + model);
+		
 
-		List<Post> postEmpList = sqlSession.selectList("post.postEmpList");
-
-		model.addAttribute("postEmpList", postEmpList);
-		return "../post/postEmpList.jsp";
-
+		return "post/postMain";
 	}
 
-	// 게시글 list
-	/*   @GetMapping("/postTestPart")
-	   public String postTestPart(Model model,
-	                        @RequestParam("type") String type) {
-	      System.out.println("type: " + type);
-	      
-	      String postName = "";
-	      if(type.equals("test")) {
-	         postName = "테스트";
-	      }
-	      
-	      List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
-	      List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
-	      
-	      model.addAttribute("postTestPart", postTestPart);
-	      model.addAttribute("postTestPart2", postTestPart2);
-	      model.addAttribute("postName", postName);
-	      
-	      return "post/postTestPart";
-	   }
-	*/
-	@GetMapping("/postTestPart")
-	public String postTestPart(Model model, @RequestParam(value = "type") String type, Post post) {
+	
+	
+	@GetMapping("postList")
+	public String postList() {
+		return "/post/postList";
+	}
+
+	@GetMapping("/postList/{url}")
+	public String postReturn(@PathVariable String url, Model model, Post post) {
+
+		System.out.println("test :  " + url);
+		
+		//게시판별 이름 찾기
+		String postName = "";
+		String post_type = "";
+
+		List<Post> postTypeList = null;
+
+		switch (url) {
+
+		case "test":
+			postName = "테스트";
+			post_type = "POTY000001";
+			break;
+		case "employee":
+			postName = "전사 게시판";
+			post_type = "POTY000002";
+			break;
+
+		case "notice":
+			postName = "공지사항";
+			post_type = "POTY000003";
+			break;
+
+		case "":
+			postName = "전체게시글";
+			break;
+		}
+		
+		System.out.println("name :  "  + postName);
+
+		System.out.println("test Con : " + model);
+		
+		List<Post> list = postService.postParts(post_type);
+		
+		model.addAttribute("post_Type", post_type);
+		model.addAttribute("postParts", list);
+		
+
+		return "post/postList";
+	}
+
+/*
+	
+	@GetMapping("postList")
+	public String postListReturn(Model model, @RequestParam(value = "/") String type, Post post) {
 
 		System.out.println("type: " + type);
 
@@ -88,7 +125,7 @@ public class PostController {
 		}
 
 		List<Post> postTypeList = null;
-		
+
 		switch (type) {
 
 		case "test":
@@ -97,33 +134,60 @@ public class PostController {
 		case "new":
 			postName = "테스트2";
 			break;
-			
+
 		case "notice":
 			postName = "테스트1";
 			break;
-			
+
+		case "":
+			postName = "게시판메인";
+			break;
 		}
+
 		postTypeList = postService.postTest1(post, type);
-		
+
 		// 1번 리스트 -> 1번 서비스 2번 리스트 -> 2번 서비스
-		 
-		
 
 		System.out.println("DDDDD" + postTypeList);
 
 		model.addAttribute("postTypeList", postTypeList);
-		
+
 		model.addAttribute("type", type);
 
 		model.addAttribute("postName", postName);
 
 		System.out.println("DD!!!!!!! " + model);
-		
-		return "post/postTestPart?type=" + type;
+
+		return "post/postList?type=" + type;
+
+
 
 	}
- 
-	   
+
+	*/
+	
+	/* TEST ZONE */
+
+
+
+	// 게시글 list
+	/*
+	 * @GetMapping("/postTestPart") public String postTestPart(Model model,
+	 * 
+	 * @RequestParam("type") String type) { System.out.println("type: " + type);
+	 * 
+	 * String postName = ""; if(type.equals("test")) { postName = "테스트"; }
+	 * 
+	 * List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
+	 * List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
+	 * 
+	 * model.addAttribute("postTestPart", postTestPart);
+	 * model.addAttribute("postTestPart2", postTestPart2);
+	 * model.addAttribute("postName", postName);
+	 * 
+	 * return "post/postTestPart"; }
+	 */
+
 	// 게시글 view
 	@GetMapping("/postTestView")
 	public String postTestView(Model model) {

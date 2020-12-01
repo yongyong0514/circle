@@ -17,24 +17,33 @@
 <body>
 	<div class="postHomeBar">
 		<div>
+		<c:choose>
+		<c:when test="${! empty postName }">
 			<c:if test="${! empty postName }">
-				<c:out value="${postName }에 오신걸 환영합니다." />
+				<c:out value="${postName }" />
 			</c:if>
+			</c:when>
+			<c:otherwise>
+				<c:out value="전체 게시판"/>
+			</c:otherwise>
+			</c:choose>
 		</div>
 		<div>
 			<select name="post_type" onchange="location.href=this.value">
 				<!-- 게시판 선택용으로 시도 -->
-				<option>이동할 게시판</option>
-				<option id="post_type">testpage</option>
-				<option  value="${pageContext.request.contextPath}/post/postTestPart?type=notice">공지사항</option>
+				<option value="">이동할 게시판</option>
+				<option  value="${pageContext.request.contextPath}/post/postMain">게시판 메인</option>
+				<option  value="${pageContext.request.contextPath}/post/postList/notice">공지사항</option>
+				<option  value="${pageContext.request.contextPath}/post/postList/employee">전사게시판</option>
 				<option 
-					value="${pageContext.request.contextPath}/post/postTestPart?type=new">다음페이지</option>
-				<option 
-					value="${pageContext.request.contextPath}/post/postTestPart?type=test">테스트페이지</option>
+				
+					value="${pageContext.request.contextPath}/post/postList?type=test">테스트페이지</option>
 			</select>
+			
+			
 			<select id="post_type" name="post_type" onchange="location.href=this.value">
-				<!-- 게시판 선택용으로 시도 -->
-				<option>작성 게시판</option>
+				<!-- 글쓰기 게시판 선택용으로 시도 -->
+				<option>게시글 쓰기</option>
 				<option value="${pageContext.request.contextPath}/post/postTestInsert">insertpage</option>
 				<option
 					value="${pageContext.request.contextPath}/post/postNoticeList">걍 넣어놈</option>

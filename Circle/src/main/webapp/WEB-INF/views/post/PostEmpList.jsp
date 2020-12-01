@@ -2,19 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Circle</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	
-	
-</head>
-<body>
+
 
 	<!-- 전사 게시판 불러오기 -->
 
@@ -38,6 +31,3 @@
 		</c:forEach>
 
 	</table>
-
-</body>
-</html>
