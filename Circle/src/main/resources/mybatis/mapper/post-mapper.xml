@@ -66,7 +66,6 @@ from post p, emp_info e, post_type t
 where p.post_emp = e.emp_info_emp_no 
 and p.post_type = t.post_type_code
 and p.post_type = 'POTY000002'
-and e.emp_info_dept_code = 'D0100'
 order by post_code desc
 </select>
 
@@ -84,10 +83,12 @@ from  post_type
 
 
 <select id="postTypeList" resultType="post">
-select *
-	from post p
-	where P.post_type = 'POTY000002'
-	order by post_code desc
+    select * 
+from post p, emp_info e, post_type t
+where p.post_emp = e.emp_info_emp_no 
+and p.post_type = t.post_type_code
+and p.post_type = 'POTY000003'
+order by post_code desc
 	
 	</select>
 

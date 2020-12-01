@@ -35,14 +35,6 @@ public class PostDaoImp implements PostDao {
 		return sqlSession.selectList("postTypeList2", post);
 	}
 
-	@Override
-	public List<Post> postTest(Post post) {
-
-
-
-
-		List<Post> list = sqlSession.selectList("postTypeList", post);
-		return list;
 
 		/*
 		 * 페이징처리
@@ -73,5 +65,17 @@ public class PostDaoImp implements PostDao {
 		 * 
 		 */
 
+
+	@Override
+	public List<Post> postTest(Post post, String type) {
+
+		
+		System.out.println("post dao" + post);
+		System.out.println("post type" + type);
+		
+		
+		List<Post> list = sqlSession.selectList("postTypeList", post);
+		
+		return list;
 	}
 }

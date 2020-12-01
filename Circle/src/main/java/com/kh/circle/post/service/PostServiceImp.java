@@ -82,11 +82,14 @@ public class PostServiceImp implements PostService{
 
 
 
+
 		@Override
-		public List<Post> postTest1(Post post) {
+		public List<Post> postTest1(Post post, String type) {
 
-			return 			postDao.postTest(post);
-
+			System.out.println("post ser : " + post);
+			System.out.println("type ser: " + type);
+			
+			return 			postDao.postTest(post, type);
 		}
 
 

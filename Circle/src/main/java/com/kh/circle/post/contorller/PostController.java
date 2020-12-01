@@ -57,8 +57,7 @@ public class PostController {
 	}
 
 	// 게시글 list
-	
-	   @GetMapping("/postTestPart")
+	/*   @GetMapping("/postTestPart")
 	   public String postTestPart(Model model,
 	                        @RequestParam("type") String type) {
 	      System.out.println("type: " + type);
@@ -77,37 +76,34 @@ public class PostController {
 	      
 	      return "post/postTestPart";
 	   }
-	/*
+	*/
 	@GetMapping("/postTestPart")
-	public String postTestPart(Model model, @RequestParam("name") String name, Post post) {
+	public String postTestPart(Model model, @RequestParam(value = "type") String type, Post post) {
 
-		System.out.println("type: " + name);
+		System.out.println("type: " + type);
 
 		String postName = "";
-		if (name.equals("test")) {
+		if (type.equals("test")) {
 			postName = "테스트";
 		}
 
 		List<Post> postTypeList = null;
 		
-		switch (name) {
+		switch (type) {
 
 		case "test":
 			postName = "테스트";
-			postTypeList = postService.postTest1(post);
 			break;
 		case "new":
 			postName = "테스트2";
-			postTypeList = postService.postTest2(post);
 			break;
 			
 		case "notice":
 			postName = "테스트1";
-			postTypeList = postService.postTest2(post);
 			break;
 			
 		}
-
+		postTypeList = postService.postTest1(post, type);
 		
 		// 1번 리스트 -> 1번 서비스 2번 리스트 -> 2번 서비스
 		 
@@ -116,16 +112,17 @@ public class PostController {
 		System.out.println("DDDDD" + postTypeList);
 
 		model.addAttribute("postTypeList", postTypeList);
-		model.addAttribute("postTypeList2", postTypeList);
+		
+		model.addAttribute("type", type);
 
 		model.addAttribute("postName", postName);
 
 		System.out.println("DD!!!!!!! " + model);
-		return "post/postTestPart";
+		
+		return "post/postTestPart?type=" + type;
 
 	}
-*/
-	   
+ 
 	   
 	// 게시글 view
 	@GetMapping("/postTestView")
