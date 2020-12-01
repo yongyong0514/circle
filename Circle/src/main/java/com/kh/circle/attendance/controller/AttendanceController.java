@@ -89,4 +89,13 @@ public class AttendanceController {
 	public String allVacationHistory() {
 		return "attendance/allVacationHistory";
 	}
+	
+	
+	
+	
+	
+	@GetMapping("/test")
+	public String test() {
+		return "attendance/test";
+	}
 }

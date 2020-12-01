@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/common/menuBar/menuOrganChart.css">
 </head>
@@ -22,7 +25,7 @@
 				<input type="text" name="searchValue" placeholder="사번/이름/부서/직위/이메일"/>
 			</div>
 			<div class="closeBtnArea">
-				<input type="button" onclick="close();" name="closeBtn" value="X"/>
+				<input type="button" name="closeBtn" value="X"/>
 			</div>
 		</div>
 		<div class="members">
@@ -110,15 +113,16 @@
 <!-- 조직도 스크립트 시작 -->
 <script>
 	$(function(){
-		$(".organChart").click(function(){
-			console.log("clicked");
+		$(".organChartBtn").click(function(){
 			$(".organPanel").toggle();
+			console.log("clicked");
+		});
+		
+		$(".closeBtnArea").click(function(){
+		  $(".organPanel").hide();
+		  console.log("worked");
 		});
 	});
-	
-	function close(){
-		$(".organPanel").hide();
-	}
 </script>
 <!-- 조직도 스크립트 끝 -->
 

@@ -27,7 +27,6 @@
 			<div class="content">
 				<h1>내 연차이력</h1>
 				<br>
-				<c:out value="${map }"/>
 				<br>
 				<!-- 연사 사용내역 요약 시작 -->
 				<div class="summary">
@@ -86,8 +85,8 @@
 										<c:out value="${Vacation.nights }"/>박
 										<c:out value="${Vacation.days }"/>일
 									</td>
-									<td></td>
 									<td><c:out value="${Vacation.anva_hstr_cont }"/></td>
+									<td></td>
 									<td><c:out value="${Vacation.anva_hstr_conf }"/></td>
 									<td><input type="button" value="전자결재" /></td>
 								</tr>
