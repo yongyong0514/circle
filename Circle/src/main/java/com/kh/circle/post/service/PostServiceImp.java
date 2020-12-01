@@ -96,17 +96,23 @@ public class PostServiceImp implements PostService{
 
 
 
-	
+		@Override
+		public List<Post> postMain(Model model) {
+			
+			System.out.println("test sev : "  + model);
+			return postDao.postMain(model);
+		}
 
 
 
 
 
-
-
-
-
-
+		@Override
+		public List<Post> postParts(String post_type) {
+			
+			System.out.println("sev : " + post_type);
+			return postDao.postParts(post_type);
+		}
 
 
 

@@ -9,6 +9,7 @@
 <body>
 	<div>
 		<div class="menuLeftBar">
+			<div class="menuLeftListTop">게시판</div>
 			<div class="menuLeftListTitle"><a href="#">전체 게시글</a></div><!-- 공지 + 전사만 -->
 			<div class="menuLeftListTitle"><a href="#">공지 사항</a></div>
 			<div class="menuLeftListTitle"><a href="#">전사 게시판</a></div>

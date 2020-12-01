@@ -16,6 +16,10 @@ public interface PostDao {
 
 	List<Post> postTest2(Post post);
 
+	List<Post> postMain(Model model);
+
+	List<Post> postParts(String post_type);
+
 
 
 /*
