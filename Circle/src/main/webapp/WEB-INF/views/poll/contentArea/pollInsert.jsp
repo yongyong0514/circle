@@ -78,7 +78,7 @@
 										<ul class="name-tag">
 											<li class="create add-btn">
 												<span class="btn-wrap">
-													<span class="form-icon icon-addlist"></span>
+													<span class="icon-form icon-addlist"></span>
 													<span class="txt">추가</span>
 												</span>
 												<a class="remove-all-tag rest-btn">
@@ -100,7 +100,7 @@
 									<ul class="name-tag">
 										<li class="create add-btn">
 											<span class="btn-wrap">
-												<span class="form-icon icon-addlist"></span>
+												<span class="icon-form icon-addlist"></span>
 												<span class="txt">추가</span>
 											</span>
 											<a class="remove-all-tag rest-btn">
