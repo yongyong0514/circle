@@ -330,10 +330,10 @@
                     e.stopPropagation();
                     e.preventDefault();
                 });
-                //drag 영역 클릭시 파일 선택창
+                /* //drag 영역 클릭시 파일 선택창
                 objDragAndDrop.on('click',function (e){
                     $('input[type=file]').trigger('click');
-                });
+                }); */
  
                 $('input[type=file]').on('change', function(e) {
                     var files = e.originalEvent.targezst.files;
@@ -402,7 +402,8 @@
                 
                 function sendFileToServer(formData,status)
                 {
-                    var uploadURL = "/fileUpload/post";
+        			var base = "${pageContext.request.contextPath}";
+                    var uploadURL = base + "/sign/signFiles";
                     var extraData ={};
                     var jqXHR=$.ajax({
                             xhr: function() {
