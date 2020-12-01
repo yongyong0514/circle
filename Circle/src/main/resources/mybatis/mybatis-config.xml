@@ -67,6 +67,8 @@
 		<typeAlias type="com.kh.circle.empInfo.entity.RewardDiscipline" alias="rewardDisciplineInfo"/>
 		<typeAlias type="com.kh.circle.empInfo.entity.HREvaluation" alias="hREvaluation"/>
 		<typeAlias type="com.kh.circle.empInfo.entity.InfoModify" alias="infoModify"/>
+		
+		<typeAlias type="com.kh.circle.vacation.entity.Vacation" alias="vacation"/>
 	</typeAliases>
 
 	<!-- 

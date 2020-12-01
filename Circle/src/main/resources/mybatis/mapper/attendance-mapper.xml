@@ -11,8 +11,8 @@
 			 , atdc_hstr_emp_no
 			 , to_char(atdc_hstr_dat, 'yyyy-MM-dd') as "atdc_hstr_dat"
 			 , atdc_hstr_writ_type
-			 , to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD')-7, '일요일'), 'yyyy-MM-DD') as "atdc_hstr_stim"
-			 , to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD'), '토요일'), 'yyyy-MM-DD') as "atdc_hstr_etim"
+			 , to_char(atdc_hstr_stim, 'hh24:mi:ss') as "atdc_hstr_stim"
+			 , to_char(atdc_hstr_etim, 'hh24:mi:ss') as "atdc_hstr_etim"
 			 , atdc_hstr_type
 			 , floor(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24) as "workTimeHour"
 			 , floor(mod(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24,1)*60) as "workTimeMinute"

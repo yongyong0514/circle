@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vacation">
+	<select id="searchWithEmpNo" parameterType="string" resultType="vacation">
+		select anva_hstr_emp_no
+			 , anva_hstr_type	
+			 , to_char(anva_hstr_rdat, 'yyyy-MM-ddd') as "anva_hstr_rdat"
+			 , to_char(anva_hstr_sdat, 'yyyy-MM-ddd') as "anva_hstr_sdat"
+			 , to_char(anva_hstr_edat, 'yyyy-MM-ddd') as "anva_hstr_edat"
+			 , anva_hstr_cont
+			 , anva_hstr_conf
+			 , anva_hstr_sign_code
+			 , to_number(anva_hstr_edat - anva_hstr_sdat) + 1 as "days"
+			 , nvl(to_number(anva_hstr_edat - anva_hstr_sdat), 0) as "nights"
+		  from anva_hstr
+		 where anva_hstr_emp_no = #{emp_no}
+		 order by anva_hstr_rdat desc
+	</select>
+	
+</mapper>
