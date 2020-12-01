@@ -31,7 +31,7 @@
 		from post p
 		join emp_info e on (p.post_emp = e.emp_info_emp_no)
 		join post_type t on (p.post_type = t.post_type_code)
-		where t.post_type_code = #{post_type}
+		where t.post_type_code = '${post_type}'
 		order by p.post_code desc;
 	</select>
 	
