@@ -61,6 +61,20 @@
 	font-size: 12px;
 	font-weight: bolder;	
 }
+
+.menuBtn3 {
+	line-height: 36px;
+	float: left;	
+	width: 150px;
+	height: 40px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+	color: white;
+	font-size: 16px;
+}
+
 .menuAlert {
 	float: right;	
 	text-align: center;
