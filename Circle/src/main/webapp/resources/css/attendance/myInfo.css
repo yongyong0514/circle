@@ -146,10 +146,6 @@ td {
 	text-align:center;
 }
 
-.rm{
-	witdh: 10px;
-}
-
 .content input[type=text]:read-only{
 	border: none;
 	outline: none;
@@ -158,4 +154,16 @@ td {
 .content input[type=text],
 .content input[type=password]{
 	width: calc(100% - 1rem);
+}
+
+.more{
+	display: none;
+}
+
+.hideInfo{
+	display: none;
+}
+
+.showInfo{
+	display: block;
 }
