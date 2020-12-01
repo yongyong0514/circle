@@ -108,3 +108,24 @@ ul.answer-wrap li.create span.icon-addlist{
     margin-top: -2px;
     margin-right: 4px;
 }
+.btn-create span.txt{
+	padding: 6px 0;
+    line-height: normal;
+}
+.poll-action{
+	padding: 10px 24px;
+    text-align: center;
+}
+.desc-top-wrap{
+	display: block;
+    padding: 1px 0 6px;
+    vertical-align: top;
+    display:none;
+}
+.desc {
+    line-height: 1.5;
+    margin: 0;
+}
+.alert-wrap .caution {
+    color: #ee3b4c;
+}

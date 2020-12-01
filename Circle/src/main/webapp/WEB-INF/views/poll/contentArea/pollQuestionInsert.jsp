@@ -24,6 +24,7 @@
 		<jsp:include page="../contentTopBar/pollPostBar.jsp"></jsp:include>
 	</header>
 	<div class="content-container poll-insert-form">
+		<!-- 문항 입력 부분 시작 -->
 		<ul class="poll-list ul-sort">
 			<li>
 				<form id="poll-form" name="poll-form">
@@ -58,7 +59,9 @@
 					</fieldset>
 				</form>
 			</li>
-			<li class="question-item question-item-edit">
+			
+			<!-- 문항추가 입력 폼 시작 -->
+			<li class="question-item question-item-edit" style="display:none;">
 				<form class="question-form">
 					<table class="poll-form form-table">
 						<tbody>
@@ -69,6 +72,9 @@
 								<td>
 									<div class="txt-wrap">
 										<input class="txt w-large" type="text" name="question">
+										<span class="alert-wrap desc-top-wrap warn-error">
+											<span class="desc caution">2 ~ 255자 까지 입력할 수 있습니다.</span>
+										</span>
 									</div>
 								</td>
 							</tr>
@@ -140,13 +146,20 @@
 					</div>
 				</form>
 			</li>
+			<!-- 문항추가 입력 폼 끝 -->
+			
+			<!-- 문항추가 버튼 시작 -->
 			<li class="action">
 				<div id="add-question-btn" class="add-poll-btn">
 					<span class="icon"></span>
 					<span class="txt">문항 추가</span>
 				</div>
 			</li>
+			<!-- 문항추가 입력 폼 끝 -->
 		</ul>
+		<!-- 문항 입력 부분 끝 -->
+		
+		<!-- 문항 입력 완료 버튼 시작 -->
 		<div class="form-action-wrap">
 			<a id="finish-btn" class="main-btn">
 				<span class="txt">작성 완료</span>
@@ -158,6 +171,7 @@
 				<span class="txt">임시저장</span>
 			</a>
 		</div>
+		<!-- 문항 입력 완료 버튼 끝 -->
 	</div>
 	<div class="organChart">
 		<jsp:include page="../../common/menuOrganChart.jsp"/>
@@ -167,6 +181,46 @@
 <script>
 	$(document).ready(function(){
 		
+		/************************
+		** 문항 추가 관련 기능 ** 
+		************************/
+		
+		/* 문항 추가 버튼 클릭기능 */
+		$("#add-question-btn").on("click", function(){
+			$(".question-item-edit").css("display","block");
+		});
+		
+		/* 문항 타입 선택 */
+		$("select[name=question-type]").on("change",function(){
+			switch($("select[name=question-type]").val()){
+			/* 선택형 선택시 */
+			case "select" : console.log("select 선택");
+			case "select" : console.log($(this).getQueryType());
+							$("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
+							$(".question-answer-row").css("display","table-row");
+							break;
+			
+			/* 텍스트형 선택시 */
+			case "text" : console.log("text 선택");
+							$(".question-answer-row").css("display","none");
+							$("select[name=question-sub-type]").html("<option value='text'>단문 입력</option><option value='textarea'>장문 입력</option>");
+							break;
+			
+			/* 점수형 선택시 */
+			case "score" : console.log("score 선택");
+							$(".question-answer-row").css("display","none");
+							$("select[name=question-sub-type]").html("<option value='3'>3 점</option><option value='5'>5 점</option><option value='7'>7 점</option><option value='10'>10 점</option>");
+							break;
+			}
+		});
+		
+		
+		/************************
+		** 제목 입력 경고 기능 ** 
+		************************/
+		$("input[name=question]").blur(function(){
+			$("input[name=question]").val() == '' ? ($(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"})) : ($(".desc-top-wrap").css("display","none"),$("input[name=question]").css({"border-color": "#ddd","color": "#333"}))
+		});
 	});
 </script>
 </html>
