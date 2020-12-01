@@ -42,35 +42,37 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(EmpInfo empInfo,
 			/*JoinMember joinmember*/HttpServletRequest req,RedirectAttributes rttr) throws Exception{
-		log.info("선수입장");
+		/* log.info("선수입장"); */
 		
 		
-		System.out.println("controller empInfo:" + empInfo);
+		/* System.out.println("controller empInfo:" + empInfo); */
 		
 		HttpSession session = req.getSession();
 		EmpInfo login = service.login(empInfo, session);
 		
 		/* JoinMember joinlogin = joinservice.login(joinmember, session); */
 		
-		System.out.println("세션 값 : "+session);
-		System.out.println("login : "+login);
+		/*
+		 * System.out.println("세션 값 : "+session); System.out.println("login : "+login);
+		 */
 		
 		if(login==null){
-			System.out.println("null값 입력");
-			System.out.println("empInfo : "+empInfo);
+			/*
+			 * System.out.println("null값 입력"); System.out.println("empInfo : "+empInfo);
+			 */
 			
 			session.setAttribute("empInfo", null);
 			/* session.setAttribute("joinmember", null); */
 			
 			rttr.addFlashAttribute("message",false);
-			System.out.println("rttr : "+rttr );
+			/* System.out.println("rttr : "+rttr ); */
 			
 		}else {
-			System.out.println("login 값알려주세요 : "+login);
+			/* System.out.println("login 값알려주세요 : "+login); */
 			session.setAttribute("empInfo", login);
 
 			/* session.setAttribute("joinmember", joinlogin); */
-			System.out.println("session "+session);
+			/* System.out.println("session "+session); */
 			return "redirect:/common/mainPage";
 		}
 		return "redirect:/";
