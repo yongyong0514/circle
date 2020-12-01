@@ -2,8 +2,11 @@ package com.kh.circle.sign.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -73,40 +76,46 @@ public class SignController {
 		return "redirect:signList";
 	}
 	
-// 결재 첨부 파일
-// 주석처리
-	@PostMapping("fileUpload/post")
+// 결재 첨부 파일	
+	@PostMapping("/signFiles")
 	public String upload(MultipartHttpServletRequest multipartRequest) { 
         
        Iterator<String> itr =  multipartRequest.getFileNames();
        
-       String filePath = "d:\resources\files";
+       String filePath = "d:/resources/files/sign";
        
        while (itr.hasNext()) { 
-           MultipartFile mpf = multipartRequest.getFile(itr.next());
+           MultipartFile multipartFile = multipartRequest.getFile(itr.next());
     
-           String originalFilename = mpf.getOriginalFilename();
-    
-           String fileFullPath = filePath+"/"+originalFilename;
+           String files_oname = multipartFile.getOriginalFilename();
+           
+           long files_size = multipartFile.getSize();
+           
+           String files_type = multipartFile.getContentType();
+           
+           String files_cname = UUID.randomUUID().toString();
+           
+           String fileFullPath = filePath + "/" + files_cname;
     
            try {
-               //파일 저장
-               mpf.transferTo(new File(fileFullPath));
-               System.out.println("여기1");
-               System.out.println("originalFilename"+originalFilename);
-               System.out.println("여기2");
-               System.out.println("fileFullPath"+fileFullPath);
-               System.out.println("여기3");
+        	   multipartFile.transferTo(new File(fileFullPath));
+        	   
+        	   Map<String, Object> map = new HashMap<>();
+        	   
+        	   map.put("files_oname", files_oname);
+        	   map.put("files_size", files_size);
+        	   map.put("files_type", files_type);
+        	   map.put("files_cname", files_cname);
+        	   
+        	   signService.insert(map);
+        	   
+        	   
            } catch (Exception e) {
-               System.out.println("postTempFile"+fileFullPath);
                e.printStackTrace();
            }
       }
        return "success";
-   }
-      
-    
-	
+	}
 	
 // 결재 한건 선택
 	@GetMapping("/signSelectOne")
