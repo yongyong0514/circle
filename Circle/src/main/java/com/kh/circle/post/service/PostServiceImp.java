@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostFile.PostFileBuilder;
+import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
@@ -41,65 +42,10 @@ public class PostServiceImp implements PostService{
 
 
 
-	/*end*/
-
-	@Override
-	public ResponseEntity<ByteArrayResource> download(String no) throws IOException {
-	/*	PostFile postFile = postFileDao.find(no);
-		
-		
-		if(postFile == null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		byte[] data = postSaveDao.load(postFile.getFile_code());
-		
-		ByteArrayResource resource = new ByteArrayResource(data);
-		
-		ResponseEntity<ByteArrayResource> entity =
-				ResponseEntity.ok()
-									.header("Content-Length", String.valueOf(postFile.getFile_size()))
-									.header("Content-Type", "application/octet-stream; charset=UTF-8")
-									.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(postFile.getFile_cname(), "UTF-8"+ "\""))
-									.body(resource);
-		*/
-		
-		return null;
-	}
-
-
-
-
-
-		@Override
-		public List<Post> postTest2(Post post) {
-			// TODO Auto-generated method stub
-			
-			System.out.println("service : " + post);
-			return postDao.postTest2(post);
-		}
-
-
-
-
-
-		@Override
-		public List<Post> postTest1(Post post, String type) {
-
-			System.out.println("post ser : " + post);
-			System.out.println("type ser: " + type);
-			
-			return 			postDao.postTest(post, type);
-		}
-
-
-
-
 
 		@Override
 		public List<Post> postMain(Model model) {
 			
-			System.out.println("test sev : "  + model);
 			return postDao.postMain(model);
 		}
 
@@ -110,64 +56,38 @@ public class PostServiceImp implements PostService{
 		@Override
 		public List<Post> postParts(String post_type) {
 			
-			System.out.println("sev : " + post_type);
 			return postDao.postParts(post_type);
 		}
 
 
 
 
-/*
-	@Override
-	public int insertPost(Post post) {
+		@Override
+		public int countPost() {
+			return postDao.countPost();
+		}
 
+
+
+
+		@Override
+		public List<Post> selecePost(PostPaging postPaging) {
+			
+			System.out.println("sev : " + postPaging);
+			return postDao.selectPost(postPaging);
+		}
+
+
+
+
+		@Override
+		public void postInsert(Post post) {
+
+			System.out.println("postsssssssss : " + post);
+			String post_code = postDao.postInsert(post);
+			
 		
-		
-		return postDao.insertPost(post);
-	}
-*/
+			}
+			
+		}
 
-
-
-
-
-
-
-
-
-/* 페이징 처리
-	@Override
-	public List<Post> getPostList(int offset, int recordsPerPage) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
-
-	@Override
-	public int getNoOfRecords() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-
-
-	public PostService getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-*/
-
-
-
-
-
-
-	
-	}

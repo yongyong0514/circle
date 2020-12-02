@@ -13,12 +13,10 @@ public class PostSaveDaoImp implements PostSaveDao{
 
 	private final String path = "c:/upload/post";
 
-	@Override
-	public void save(MultipartFile file, String file_no) throws IllegalStateException, IOException {
 
-		
-		File target = new File(path, String.valueOf(file_no));
-		file.transferTo(target);
+	@Override
+	public void file(MultipartFile file, String fileCode) {
+		// TODO Auto-generated method stub
 		
 	}
 

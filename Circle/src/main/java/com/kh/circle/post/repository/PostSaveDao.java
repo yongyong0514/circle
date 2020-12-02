@@ -6,7 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface PostSaveDao {
 
-	void save(MultipartFile file, String file_no) throws IllegalStateException, IOException;
+
+	void file(MultipartFile file, String fileCode);
 
 
 

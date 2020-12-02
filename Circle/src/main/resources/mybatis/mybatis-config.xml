@@ -17,7 +17,7 @@
 		<typeAlias type="com.kh.circle.post.entity.Post" alias="post"/>
 		<typeAlias type="com.kh.circle.post.entity.PostFile" alias="postFile"/> 
 		<typeAlias type="com.kh.circle.post.entity.PostStorage" alias="postStorage"/> 
-		<typeAlias type="com.kh.circle.post.entity.PostType" alias="postType"/> 
+		<typeAlias type="com.kh.circle.post.entity.PostPaging" alias="postPaging"/> 
  
    		
 

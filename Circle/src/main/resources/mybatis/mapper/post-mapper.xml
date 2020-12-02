@@ -26,36 +26,49 @@
 		order by p.post_code desc
 	</select>
 	
-	<select id="postParts" parameterType="String" resultType="post">
+	<!--  부분 게시판  -->
+	<select id="postParts" parameterType="string" resultType="post">
   	select *
 		from post p
 		join emp_info e on (p.post_emp = e.emp_info_emp_no)
 		join post_type t on (p.post_type = t.post_type_code)
-		where p.post_type = '${post_type}'
+		where p.post_type = #{post_type}
 		order by p.post_code desc
 	</select>
 	
 	
-	
+	<!-- 총 게시글 갯수 -->
+<select id="postCount" resultType="int">
+select count(*) from post
+</select>
 
-	
 
-
-	<select id="postTestView" resultType="post">
-
+<!--  페이징 처리 후 게시글 조회 -->
+<select id="postSelect" parameterType="postPaging" resultType="post">
+select *
+from (
+		select rownum rn, a.*
+from (
 		select *
-		from post p
-		join
-		post_repl r on (p.post_code = r.post_repl_post)
-		join post_type t on
-		(p.post_type = t.post_type_code)
-		join emp_info e on (p.post_emp =
-		e.emp_info_emp_no)
-	</select>
+		from post
+		order by post_code desc
+		) a
+)
+where rn between #{start} and #{end}
 
-	<!-- TEST END -->
+</select>
+
+<!--  게시글 상세보기-->
+
+<select id="postView" resultType="post" parameterType="string">
+select from post where post_code = #{post_code}
+</select>
 
 
+
+<select id="insertSeq" resultType="string">
+select post_seq.nextval from dual
+</select>
 
 
 
@@ -71,12 +84,7 @@
 	</select>
 
 
-	<select id="post_seq" resultType="String">
-		select post_seq.nextval from
-		dual
-	</select>
-
-	<insert id="postTestInsert" parameterType="post">
+	<insert id="postInsert" parameterType="post">
 
 		INSERT INTO
 		POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
@@ -88,27 +96,6 @@
 		#{post_comt}, DEFAULT , '',
 		0, #{post_sec}, DEFAULT, '', DEFAULT)
 	</insert>
-
-	<!-- postCollect -->
-
-
-
-
-	<!-- 호출 끝 -->
-
-
-	<!-- 페이징 처리 파트 페이징 처리 <select id="postCount" resultType="int"> select count(*) 
-		from post </select> 페이징 처리 후 게시글 조회 <select id="selectPost" resultType="postPaging"> 
-		select * from ( select rownum rn, a.* ) from ( select * from post p, emp_info 
-		e, post_type t where p.post_emp = e.emp_info_emp_no and p.post_type = t.post_type_code 
-		order by post_code desc ) a where rn between #{start} and #{end} </select> 
-		페이징 처리 끝 -->
-
-
-
-
-
-
 
 
 
