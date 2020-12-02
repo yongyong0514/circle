@@ -69,12 +69,13 @@ public class ComuController {
 	@ModelAttribute
 	public String comuAddAction(HttpSession session ,Comu vo)throws Exception{
 		
+		
+		//Comu comu = sqlSession.selectOne("comu.comuAdd");
 		service.comuAdd(vo);
 		
-		
 		// 이건 나중에
-		String writer = ((Comu)session.getAttribute("comu.comuAdd")).getComu_post_wrtr_emp_no();
-		vo.setComu_post_wrtr_emp_no(writer);
+		//String writer = ((Comu)session.getAttribute("comu.comuAdd")).getComu_post_wrtr_emp_no();
+		//vo.setComu_post_wrtr_emp_no(comu);
 		return"redirect:community/comuList";
 	}
 	
