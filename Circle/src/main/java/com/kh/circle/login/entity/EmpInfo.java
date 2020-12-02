@@ -35,4 +35,9 @@ public class EmpInfo {
 	private String emp_info_mils;
 	private Date emp_info_edat;
 	private Date emp_info_sdat;
+	
+	
+	//직급가져오기
+	private String job_info_code;
+	private String job_info_name;
 }

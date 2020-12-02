@@ -50,7 +50,7 @@
 			<li><button class="menuBtn2">My Profile</button></li>
 			
 			<li>
-				<div class="menuBtn3">${empInfo.emp_info_name} 님</div>
+				<div class="menuBtn3">${empInfo.emp_info_name} ${empInfo.job_info_name} 님</div>
 			</li>
 			
 			<li><img src="${pageContext.request.contextPath}/resources/img/common/menuTopBar/hamburger50x50.png" class="menuBtnRight" id="menuBtnRight" onclick="">

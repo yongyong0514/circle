@@ -22,11 +22,11 @@ public class MemberDaoImpl implements MemberDao{
 	public EmpInfo login(EmpInfo empInfo) {
 		
 		//잘 받아왔는지 확인
-		System.out.println("repository empInfo: " + empInfo);
+		/* System.out.println("repository empInfo: " + empInfo); */
 		
 		EmpInfo tempEmpInfo =  sqlSession.selectOne("empInfo.login", empInfo);
 		
-		System.out.println("after sqlSession empInfo: " + tempEmpInfo);
+		/* System.out.println("after sqlSession empInfo: " + tempEmpInfo); */
 		
 		return tempEmpInfo;
 		
