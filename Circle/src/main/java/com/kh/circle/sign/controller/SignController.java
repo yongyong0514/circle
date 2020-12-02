@@ -24,6 +24,8 @@ import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignList;
+import com.kh.circle.sign.vo.SignListJoiner;
+import com.kh.circle.sign.vo.SignModify;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
@@ -115,8 +117,38 @@ public class SignController {
 		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
 		model.addAttribute("signSelectOne", signSelectOne);
 		
+		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signJoinerCode", signCode);	
+		model.addAttribute("signListJoiner", signListJoiner);
+		
 		return "sign/signSelectOne";
 	}
+	
+// 결재 한건 수정
+	@GetMapping("/signModify")
+	public String signModify(@RequestParam String signCode, Model model) {
+		SignModify signModify = sqlSession.selectOne("sign.signModify", signCode);
+		model.addAttribute("signModify", signModify);
+		
+		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signModifyJList", signCode);
+		String jList = "";
+		for(int i = 0; i < signListJoiner.size(); i++) {
+			jList += signListJoiner.get(i) + "/";
+		}
+		signModify.setJCodeList(jList.substring(0, jList.length() -1));
+		
+		List<SignListJoiner> signListWatcher = sqlSession.selectList("sign.signModifyWList", signCode);
+		
+		if(!signListWatcher.isEmpty()) {
+			String wList = "";
+			for(int i = 0; i < signListWatcher.size(); i++) {
+				wList += signListWatcher.get(i) + "/";
+			}
+			signModify.setWCodeList(wList.substring(0, wList.length() -1));
+		}
+		return "sign/signModify";
+	}
+
+	
 	
 // 문서 첫화면
 	@GetMapping("/docuList")

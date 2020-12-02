@@ -46,12 +46,12 @@
 .menuLeftList0 {
 	width: 180px;
 	height: 40px;
-	padding-left: 2rem;		
 	line-height: 40px;
-	text-align: left;
-	font-size: 16px;
+	text-align: center;
+	font-size: 14px;
 	color: white;
 	background: none;
+	cursor: pointer;
 }
 
 .menuLeftList {

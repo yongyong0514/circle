@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -22,9 +22,9 @@
 	<div class="container">
 		<form id="formArea" method="post" enctype="multipart/form-data">
 			<div class="contentBar">
-				<jsp:include page="../sign/signWriteBar.jsp" />
+				<jsp:include page="../sign/signModifyBar.jsp" />
 				<div class="signHomeListBar">
-					<button class="signListBtn" type="submit">작성하기</button>
+					<button class="signListBtn" type="submit">수정하기</button>
 				</div>
 				<div class="content">
 					<div class="formBox">
@@ -42,21 +42,21 @@
 								<th class="formBox2">
 									<select class="formSelect1" id="sign_keep" name="sign_keep">
 											<option value="0">보존 연한을 선택하세요</option>
-											<option value="365">1 년</option>
-											<option value="1095">3 년</option>
-											<option value="1825">5 년</option>
-											<option value="3650">10 년</option>
-											<option value="NULL">영구</option>
+											<option value="365" <c:if test="${signModify.sign_keep eq '365'}">selected</c:if>>1 년</option>
+											<option value="1095" <c:if test="${signModify.sign_keep eq '1095'}">selected</c:if>>3 년</option>
+											<option value="1825" <c:if test="${signModify.sign_keep eq '1825'}">selected</c:if>>5 년</option>
+											<option value="3650" <c:if test="${signModify.sign_keep eq '3650'}">selected</c:if>>10 년</option>
+											<option value="NULL" <c:if test="${signModify.sign_keep eq NULL}">selected</c:if>>영구</option>
 									</select>
 								</th>
 								<th class="formBox1">보안 등급</th>
 								<th class="formBox2">
 									<select class="formSelect1" id="sign_acc" name="sign_acc">
 											<option value="0">보안 등급을 선택하세요</option>
-											<option value="1">S 등급</option>
-											<option value="2">A 등급</option>
-											<option value="3">B 등급</option>
-											<option value="4">C 등급</option>
+											<option value="1" <c:if test="${signModify.sign_acc eq '1'}">selected</c:if>>S 등급</option>
+											<option value="2" <c:if test="${signModify.sign_acc eq '2'}">selected</c:if>>A 등급</option>
+											<option value="3" <c:if test="${signModify.sign_acc eq '3'}">selected</c:if>>B 등급</option>
+											<option value="4" <c:if test="${signModify.sign_acc eq '4'}">selected</c:if>>C 등급</option>
 									</select>
 								</th>
 							</tr>
@@ -66,7 +66,7 @@
 									<select class="formSelect2" id="sign_type_code" name="sign_type_code">
 										<option value="0">문서 유형을 선택하세요</option>
 										<c:forEach var="item" items="${list}">
-											<option value="${item.sign_type_code}">${item.sign_type_name}</option>
+											<option value="${item.sign_type_code}"<c:if test="${signModify.sign_type_code eq item.sign_type_code}">selected</c:if>>${item.sign_type_name}</option>
 										</c:forEach>
 									</select>
 								</th>
@@ -231,7 +231,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+
 <!-- 새로고침 감지 -->
 	<script>
 		window.onbeforeunload = function(e) {
@@ -249,17 +249,8 @@
 		$(document).submit(function(){
 			onbeforeunload = false;
 		});
-	</script>
+	</script>	
 	
-<!-- TUI EDITOR -->
-	<script>
-		var editor = new toastui.Editor({
-			el : document.querySelector("#editor"),
-			height : "630px",
-			initialEditType : "wysiwyg",
-		});
-	</script>
-
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
 	<script>
 		$(function() {
@@ -275,6 +266,15 @@
 		});
 	</script>
 
+<!-- TUI EDITOR -->
+	<script>
+		var editor = new toastui.Editor({
+			el : document.querySelector("#editor"),
+			height : "630px",
+			initialEditType : "wysiwyg",
+		});
+	</script>
+	
 <!-- 문서 종류 옵션 시작 -->
 	<script>
 		$("#sign_type_code").on("change", function() {
@@ -439,7 +439,7 @@
                 
             });
     </script>
-
+    
 <!-- 결재자 추가 시작 -->
 	<!-- 결재자 등록 HOVER -->
 	<script>
@@ -447,8 +447,8 @@
 			$(".joinForm1").fadeIn(100);
 		};
 	</script>
-
-	<!-- 결재자 추가 목록 표시 -->
+	
+		<!-- 결재자 추가 목록 표시 -->
 	<script>
 		$(function() {
 			$("#resultBox1, #resultBox2").sortable({
@@ -456,8 +456,8 @@
 			}).disableSelection();
 		});
 	</script>
-
-	<!-- 결재자 추가 후 세션 저장 -->
+	
+<!-- 결재자 추가 후 세션 저장 -->
 	<script>
 		$(document).on('click', function() {
 					if ($(".joinForm1").css("display") != "none") {
@@ -494,7 +494,7 @@
 			});
 	</script>
 
-	<!-- 결재자 추가 후 표시 리스트 -->
+<!-- 결재자 추가 후 표시 리스트 -->
 	<script>
 		function showList() {
 			var jsonData = sessionStorage.getItem("joiner");
@@ -525,7 +525,7 @@
 			$(".watcherForm1").fadeIn(100);
 		};
 	</script>
-
+	
 	<!-- 참조자 추가 목록 표시 -->
 	<script>
 		$(function() {
@@ -534,8 +534,7 @@
 			}).disableSelection();
 		});
 	</script>
-
-	<!-- 참조자자 추가 후 세션 저장 -->
+<!-- 참조자자 추가 후 세션 저장 -->
 	<script>
 		$(document).on('click', function() {
 					if ($(".watcherForm1").css("display") != "none") {
@@ -702,6 +701,6 @@
 
  			if(isSubmit) this.submit();
 		});
-	</script>
+	</script>	
 </body>
 </html>

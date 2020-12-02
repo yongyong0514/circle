@@ -11,7 +11,7 @@
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop" onclick="location='${pageContext.request.contextPath}/sign/signList'">전자결재</div>
 			<div class="menuLeftListBtn"><button class="menuLeftBtn" onclick="location='${pageContext.request.contextPath}/sign/signWrite'">새 결재 작성</button></div>
-			<div class="menuLeftList0"></div>
+			<div class="menuLeftList0">전자결재 설정</div>
 			<div class="menuLeftListTitle">진행 중인 결재</div>
 			<div class="menuLeftList">전체</div>
 			<div class="menuLeftList">임시 저장</div>					

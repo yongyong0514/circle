@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.kh.circle.sign.repository.SignDao;
 import com.kh.circle.sign.vo.SignWriteInsert;

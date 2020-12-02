@@ -475,7 +475,9 @@ body {
 	width: 500px;
 	height: 140px;
     text-align: center;
-    background: #E8F0FD;
+    background: #ffffff;
+   	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
     border-radius: 10px;
 	display: none;
 	position: absolute;
@@ -497,7 +499,8 @@ body {
 }
 
 #signSelect > li > button:hover {
-	background: #408EF2;
+	background: #91b9ed;
+    border-radius: 10px;	
 }
 
 .arrowImg {
