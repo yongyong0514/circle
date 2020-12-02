@@ -25,7 +25,6 @@
 		</div>
 		<div class="organChart">
 			<c:import url="/organChart/getInfo"/>
-			<%-- <jsp:include page="../common/menuOrganChart.jsp"/> --%>
 		</div>
 		<div class="container">
 			<div class="content">
