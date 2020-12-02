@@ -7,9 +7,9 @@ import com.kh.circle.organChart.entity.OrganEmp;
 
 public interface OrganChartRepository {
 
-	public int maxLevel();
+//	public int maxLevel();
 	
-	public List<OrganDept> oDList(int lvl);
+	public List<OrganDept> oDList();
 	
 	public List<OrganEmp> oEList(String dept_code);
 }

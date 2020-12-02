@@ -14,16 +14,16 @@ public class OrganChartRepositoryImpl implements OrganChartRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Override
-	public int maxLevel() {
-		return sqlSession.selectOne("organChart.maxLevel");
-	}
+//	@Override
+//	public int maxLevel() {
+//		return sqlSession.selectOne("organChart.maxLevel");
+//	}
 	
 
 	@Override
-	public List<OrganDept> oDList(int lvl) {
+	public List<OrganDept> oDList() {
 		
-		List<OrganDept> oDList = sqlSession.selectList("organChart.deptList", lvl);
+		List<OrganDept> oDList = sqlSession.selectList("organChart.deptList");
 		
 		return oDList;
 	}
