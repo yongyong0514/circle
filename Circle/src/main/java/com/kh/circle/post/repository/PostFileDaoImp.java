@@ -21,16 +21,12 @@ public class PostFileDaoImp implements PostFileDao {
 
 	private final String path = "C:/upload/post";
 
-
 	@Override
-	public String insert(PostFile postFile) {
-
-String file_code = sqlession.selectOne("pofi_seq");
-		
-		postFile.setFile_code(file_code);
-		sqlession.insert("postFile.fileInsert", postFile);
-		
-		return file_code;
+	public String insert(PostFile fileInsert) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
 
 }

@@ -17,6 +17,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.ui.Model;
 
 import com.kh.circle.post.entity.Post;
+import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.service.PostService;
 
 @Repository
@@ -36,6 +37,7 @@ public class PostDaoImp implements PostDao {
 		List<Post> postMain = sqlSession.selectList("postMain");
 		model.addAttribute("postMain", postMain);
 
+		
 		System.out.println("last dao : " + model);
 		return postMain;
 	}
@@ -45,11 +47,8 @@ public class PostDaoImp implements PostDao {
 	public List<Post> postParts(String post_type) {
 
 		
-		System.out.println("dao : " + post_type);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("post_type", post_type);
 		
-		List<Post> postParts = sqlSession.selectList("post.postParts", map);
+		List<Post> postParts = sqlSession.selectList("post.postParts", post_type);
 
 		System.out.println(" doa : " + postParts);
 		
@@ -59,52 +58,41 @@ public class PostDaoImp implements PostDao {
 	}
 
 	@Override
-	public List<Post> postTest2(Post post) {
-		// TODO Auto-generated method stub
+	public int countPost() {
 
-		System.out.println("dao 2 : " + post);
-		
-		return sqlSession.selectList("postTypeList2", post);
+		int num = sqlSession.selectOne("post.postCount");
+		return num;
 	}
-
-	/*
-	 * 페이징처리
-	 * 
-	 * @Override public int getNoOfRecords() {
-	 * 
-	 * 
-	 * 
-	 * return noOfRecords; }
-	 * 
-	 * @Override public List<Post> getPostList(int offset, int recordsPerPage) {
-	 * 
-	 * List<Post> postList = new ArrayList<Post>();
-	 * 
-	 * HashMap<String, Object> params = new HashMap<String, Object>();
-	 * 
-	 * params.put("offset", offset); params.put("noOfRecords", noOfRecords);
-	 * 
-	 * try { postList = sqlSession.selectList("postDao.selectPost", params);
-	 * this.noOfRecords = sqlSession.selectOne("postDao.postCount");
-	 * 
-	 * } finally { sqlSession.close(); }
-	 * 
-	 * return postList; }
-	 * 
-	 * @Override public PostDao getInstance() { // TODO Auto-generated method stub
-	 * return null; }
-	 * 
-	 */
 
 	@Override
-	public List<Post> postTest(Post post, String type) {
+	public List<Post> selectPost(PostPaging postPaging) {
+		
+		System.out.println("dao : " + postPaging);
 
-		System.out.println("post dao" + post);
-		System.out.println("post type" + type);
-
-		List<Post> list = sqlSession.selectList("postTypeList", post);
-
-		return list;
+		List<Post> paging = sqlSession.selectList("post.postSelect", postPaging);
+		
+		System.out.println("pppppp " + paging);
+		return paging;
 	}
+
+
+	@Override
+	public String postInsert(Post post) {
+
+		String post_code = sqlSession.selectOne("post.insertSeq");
+		post.setPost_code(post_code);
+		
+		sqlSession.insert("post.postInsert", post);
+		
+		return post_code;
+	}
+
+	@Override
+	public Post postView(String post_code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
-import com.kh.circle.post.entity.PostType;
+import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.service.PostService;
 import com.kh.circle.post.service.PostServiceImp;
 
@@ -43,36 +43,55 @@ public class PostController {
 	@Autowired
 	private HttpServletResponse response;
 
-	
-	
+	// post Mainpage
 	@GetMapping("/postMain")
-	public String postMain(Model model, Post post) {
+	public String postMain(Model model, Post post, PostPaging postPaging,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
-		
 
-		System.out.println("test Con : " + model);
-		
 		List<Post> list = postService.postMain(model);
-		
-		System.out.println("last con : " + model);
-		
 
+
+		int total = postService.countPost();
+
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		System.out.println("total~ : " + total);
+
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		model.addAttribute("postParts", list);
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("viewAll", postService.selecePost(postPaging));
+
+		System.out.println(postPaging);
 		return "post/postMain";
 	}
 
-	
-	
+	// post List page
 	@GetMapping("postList")
 	public String postList() {
 		return "/post/postList";
 	}
 
+	// post List / url
 	@GetMapping("/postList/{url}")
-	public String postReturn(@PathVariable String url, Model model, Post post) {
+	public String postReturn(@PathVariable String url, Model model, Post post, PostPaging postPaging,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
 		System.out.println("test :  " + url);
-		
-		//게시판별 이름 찾기
+
+		// 게시판별 이름 찾기
 		String postName = "";
 		String post_type = "";
 
@@ -98,224 +117,97 @@ public class PostController {
 			postName = "전체게시글";
 			break;
 		}
-		
-		System.out.println("name :  "  + postName);
 
-		System.out.println("test Con : " + model);
-		
 		List<Post> list = postService.postParts(post_type);
-		
-		model.addAttribute("post_Type", post_type);
+
+		int total = postService.countPost();
+
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		System.out.println("total~ : " + total);
+
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+
+		model.addAttribute("post_type", post_type);
 		model.addAttribute("postParts", list);
-		
+		model.addAttribute("postCount", postPaging);
+		model.addAttribute("postSelect", postService.selecePost(postPaging));
+
+		System.out.println("last test num : " + model);
 
 		return "post/postList";
 	}
-
-/*
 	
-	@GetMapping("postList")
-	public String postListReturn(Model model, @RequestParam(value = "/") String type, Post post) {
+	
+	
+	
 
-		System.out.println("type: " + type);
+	// 게시글 insert
+	
+	
+	@GetMapping("/postInsert/{url}")
+	public String postSelectInsert() {
+System.out.println("1차 겟 ");
+		return "post/postInsert";
 
+	}
+	
+
+	
+
+	
+	@PostMapping("/postInsert/{url}")
+	@ResponseBody
+	public String insert(@ModelAttribute Post post,
+						@RequestParam MultipartFile file,
+						HttpSession session,
+						@PathVariable String url) {
+		
+		
+		System.out.println("vjvjvjv포스트 월em");
+		request.getSession();
 		String postName = "";
-		if (type.equals("test")) {
-			postName = "테스트";
-		}
+		String post_type = "";
 
-		List<Post> postTypeList = null;
 
-		switch (type) {
+		switch (url) {
 
 		case "test":
-			postName = "테스트";
+			post_type = "POTY000001";
 			break;
-		case "new":
-			postName = "테스트2";
+		case "employee":
+			post_type = "POTY000002";
 			break;
 
 		case "notice":
-			postName = "테스트1";
+			post_type = "POTY000003";
 			break;
 
 		case "":
-			postName = "게시판메인";
+			postName = "전체게시글";
 			break;
 		}
-
-		postTypeList = postService.postTest1(post, type);
-
-		// 1번 리스트 -> 1번 서비스 2번 리스트 -> 2번 서비스
-
-		System.out.println("DDDDD" + postTypeList);
-
-		model.addAttribute("postTypeList", postTypeList);
-
-		model.addAttribute("type", type);
-
-		model.addAttribute("postName", postName);
-
-		System.out.println("DD!!!!!!! " + model);
-
-		return "post/postList?type=" + type;
-
-
-
+		post  = (Post)session.getAttribute("emp_info_emp_no");
+		post  = (Post)session.getAttribute("emp_info_emp_name");
+		post  = (Post)session.getAttribute("emp_info_emp_detp_code");
+		post  = (Post)session.getAttribute("emp_info_emp_job_code");
+	    post.setPost_type(post_type);
+		System.out.println("post  con : " + post);
+		
+		postService.postInsert(post);
+		
+		return "redirect:post/postMain";
 	}
-
-	*/
 	
-	/* TEST ZONE */
+	
 
 
-
-	// 게시글 list
-	/*
-	 * @GetMapping("/postTestPart") public String postTestPart(Model model,
-	 * 
-	 * @RequestParam("type") String type) { System.out.println("type: " + type);
-	 * 
-	 * String postName = ""; if(type.equals("test")) { postName = "테스트"; }
-	 * 
-	 * List<Post> postTestPart = sqlSession.selectList("post.postTestPart");
-	 * List<Post> postTestPart2 = sqlSession.selectList("post.postTestPart2");
-	 * 
-	 * model.addAttribute("postTestPart", postTestPart);
-	 * model.addAttribute("postTestPart2", postTestPart2);
-	 * model.addAttribute("postName", postName);
-	 * 
-	 * return "post/postTestPart"; }
-	 */
-
-	// 게시글 view
-	@GetMapping("/postTestView")
-	public String postTestView(Model model) {
-
-		List<Post> postTestView = sqlSession.selectList("post.postTestPart");
-		model.addAttribute("postTestPart", postTestView);
-		return "post/postTestView";
-
-	}
-
-	// 게시글 insert
-
-	@GetMapping("/postTestInsert")
-	public String postTestInsert() {
-
-		return "post/postTestInsert";
-
-	}
-
-	@GetMapping("/testpost")
-	public String posttestpost() {
-
-		return "post/testpost";
-
-	}
-
-	/*
-	 * 페이징처리한 파트 실패함
-	 * 
-	 * @GetMapping("postList") public String postList(Model model, PostPaging
-	 * paging) {
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * // pageing calculation int currentPageNo = 1; int recordsPerPage = 0; String
-	 * url = null;
-	 * 
-	 * //커넥션 풀 연결 / 인스턴스 생성 PostService postService = PostService.getInstance();
-	 * 
-	 * //pages, lines 파라미터를 받아 currnetPageNo, recordsPerpage대입 // 처음 페이지 열릴 때에는 당연히
-	 * 1, 0 if(request.getParameter("pages") != null) currentPageNo =
-	 * Integer.parseInt(request.getParameter("pages"));
-	 * 
-	 * if(request.getParameter("lines") != null) recordsPerPage =
-	 * Integer.parseInt(request.getParameter("lines"));
-	 * 
-	 * 
-	 * //Paging 객체 생성(currentPagenNO, recordsPerPage를 인자로 넣고 초기화함) //객체 선언한 뒤 paging
-	 * 출력하면 recordsPerPage가 5로 출력 PostPaging postPaging = new
-	 * PostPaging(currentPageNo, recordsPerPage);
-	 * 
-	 * 
-	 * //해당 게시글의 인덱스를 구하는 변수offset
-	 * 
-	 * int offset = (postPaging.getCurrentPageNo() - 1) *
-	 * postPaging.getRecordsPerPage();
-	 * 
-	 * 
-	 * 
-	 * //post 데이터 가져오기 List<Post> post = postService.getPostList(offset,
-	 * postPaging.getRecordsPerPage());
-	 * 
-	 * //전체 갯수 구해서 numberOfRecords 메소드 세팅 //*************** 이 인근 이해안감
-	 * postPaging.setNumberOfRecords(postService.getNoOfRecords());
-	 * 
-	 * 
-	 * //paging 생성 paging.makePaging();
-	 * 
-	 * 
-	 * //list 존재시 request.setAttribute("post", post); request.setAttribute("paging",
-	 * paging);
-	 * 
-	 * return "post/postList";
-	 * 
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * @GetMapping("/postList") public ModelAndView postList(ModelAndView
-	 * model, @ModelAttribute String post_type) { String postType = post_type;
-	 * 
-	 * System.out.println("controller postName: " + post_type);
-	 * 
-	 * List<Post> postList = sqlSession.selectList("post.postList");
-	 * 
-	 * model = new ModelAndView();
-	 * 
-	 * model.addObject("postList", postList); model.setViewName("post/postList");
-	 * 
-	 * return model;
-	 * 
-	 * }
-	 * 
-	 * @GetMapping("postNoticeList") public String postNoticeList(Model model) {
-	 * 
-	 * List<Post> postNoticeList = sqlSession.selectList("post.postNoticeList");
-	 * 
-	 * model.addAttribute("postNoticeList", postNoticeList);
-	 * 
-	 * return "post/postNoticeList";
-	 * 
-	 * }
-	 * 
-	 * @GetMapping("postEmployeeList") public String postEmployeeList(Model model) {
-	 * 
-	 * List<Post> postEmployeeList = sqlSession.selectList("post.postEmployeeList");
-	 * 
-	 * model.addAttribute("postEmployeeList", postEmployeeList);
-	 * 
-	 * return "post/postEmployeeList";
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping("postType") public String postType(Model model) {
-	 * 
-	 * List<PostType> postType = sqlSession.selectList("post.postType");
-	 * 
-	 * model.addAttribute("postType", postType); return "../post/postType"; }
-	 * 
-	 * @RequestMapping("/postInsert") public String postInsert(Model model, Post
-	 * post) {
-	 * 
-	 * List<Post> list = sqlSession.selectList("post.postType");
-	 * model.addAttribute("postList", list);
-	 * 
-	 * return null; }
-	 */
 }

@@ -31,6 +31,7 @@
 		<jsp:include page="../post/postPart.jsp"/>
 			<!-- 옵션선택 끝 -->
 
+
 		</div>
 	</div>
 	</div>

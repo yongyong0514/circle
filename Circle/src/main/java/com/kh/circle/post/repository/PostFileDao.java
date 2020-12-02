@@ -8,8 +8,10 @@ import com.kh.circle.post.entity.PostFile;
 
 public interface PostFileDao {
 
+	String insert(PostFile fileInsert);
 
-	String insert(PostFile postFile);
+
+
 
 
 
