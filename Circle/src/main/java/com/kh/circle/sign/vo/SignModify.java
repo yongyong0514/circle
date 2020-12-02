@@ -2,14 +2,14 @@ package com.kh.circle.sign.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignSelectOne {
+public class SignModify {
 	private String sign_code;
 	private String sign_emp_code;
 	private String sign_type_name;
@@ -23,4 +23,7 @@ public class SignSelectOne {
 	private String sign_step;
 	private String sign_count;
 	private String sign_note;
+	private String sign_keep;
+	private String jCodeList;
+	private String wCodeList;
 }

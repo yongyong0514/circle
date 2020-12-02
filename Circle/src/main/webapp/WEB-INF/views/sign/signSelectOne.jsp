@@ -24,7 +24,13 @@
 				<jsp:include page="../sign/signSelectOneHomeBar.jsp"/>
 				<div class="signHomeListBar">
 					<ul>
-						<li class="signHomeListTitle"><button class="signSelectOneModifyBtn">수정하기</button></li>
+						<li class="signHomeListTitle">
+							<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
+								<c:if test="${signSelectOne.sign_emp_code == empInfo.emp_info_emp_no}" >
+									<button class="signSelectOneModifyBtn">수정하기</button>
+								</c:if>
+							</c:if>
+						</li>
 						<li><button class="signListBtn3">완료일</button></li>
 						<li><button class="signListBtn3">작성일</button></li>
 						<li><button class="signListBtn2">참조자</button></li>
@@ -103,11 +109,22 @@
 							</tr>
 							<tr>
 								<td class="formBox7" colspan="2">
-								<button id="formBtn3">결재</button>
-									<ul id="signSelect">
-										<li><button>승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;<button>반려<br><a class="fontSize1">결재를 거부합니다</a></button></li>
-										<li><img src="${pageContext.request.contextPath}/resources/img/sign/arrow.png" class="arrowImg"></li>
-									</ul>
+									<c:forEach var="join" items="${signListJoiner}">
+										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
+											<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
+											<button id="formBtn3">결재</button>
+												<ul id="signSelect">
+													<li>
+														<button>승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
+														<button>반려<br><a class="fontSize1">결재를 거부합니다</a></button>
+													</li>
+												</ul>
+											</c:if>
+										</c:if>
+									</c:forEach>
+										<c:if test="${signSelectOne.sign_step == 'SIPC000003'}">
+											<button id="formBtn3" disabled>결재가 완료되었습니다</button>
+										</c:if>
 								</td>
 							</tr>
 <!-- 					결재가 완료되었으면 메세지 변경 및 버튼 비활성화	
@@ -176,7 +193,15 @@
 			</div>
 		</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>    
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script>
+		$(".signSelectOneModifyBtn").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var code = document.location.href.split("=");
+			var signCode = code[1]; 
+			location.href = "../sign/signModify?signCode=" + signCode;
+		});  
+    </script>
     <script>
     	$(function(){
     		var content = $("#viewer").data("content"); //data-content의 값을 불러와라

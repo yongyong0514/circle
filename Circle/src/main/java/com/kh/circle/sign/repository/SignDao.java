@@ -1,5 +1,7 @@
 package com.kh.circle.sign.repository;
 
+import org.springframework.ui.Model;
+
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignDao {

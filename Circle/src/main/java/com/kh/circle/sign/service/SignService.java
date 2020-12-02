@@ -2,6 +2,8 @@ package com.kh.circle.sign.service;
 
 import java.io.IOException;
 
+import org.springframework.ui.Model;
+
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignService {
