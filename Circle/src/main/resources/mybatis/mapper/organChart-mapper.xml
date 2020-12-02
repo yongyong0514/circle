@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="organChart">
+
+	<select id="maxLevel" resultType="int">
+	select max(level)
+	  from dept_info
+	 start with dept_info_code = 'D0000'
+   connect by nocycle prior dept_info_code = dept_info_uper
+	 order by dept_info_code
+	</select>
+	
+	<select id="deptList" parameterType="int" resultType="organDept">
+		select lvl
+			 , dept_info_code
+			 , dept_info_name
+			 , dept_info_levl
+			 , dept_info_uper
+		  from (select level as lvl
+					 , dept_info_code
+					 , dept_info_name
+					 , dept_info_levl
+					 , dept_info_uper
+				  from dept_info
+				 start with dept_info_code = 'D0000'
+			   connect by nocycle prior dept_info_code = dept_info_uper
+				 order by dept_info_code
+			   )
+		 where lvl = #{lvl}
+	</select>	
+	
+	<select id="empList" parameterType="string" resultType="organEmp">
+		select EI.emp_info_emp_no
+			 , EI.emp_info_name
+			 , EI.emp_info_email
+			 , EI.emp_info_phto
+			 , DI.dept_info_name
+			 , JI.job_info_name
+		  from emp_info EI
+		 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
+		 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
+		 where EI.emp_info_dept_code = #{dept_code} 
+		 order by EI.emp_info_name asc
+	</select>
+	
+</mapper>
