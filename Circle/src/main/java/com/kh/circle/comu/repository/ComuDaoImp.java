@@ -40,5 +40,20 @@ public class ComuDaoImp implements ComuDao {
 		
 	}
 
+	@Override
+	public String comuAdd2(String emp_no) {
+												/* 매퍼이름.id */
+		String emp_name = sqlSession.selectOne("comu.add2",emp_no);
+		
+		return emp_name;
+	}
+
+	@Override
+	public void comuInsert(Comu comu) {
+
+		sqlSession.insert("comu.insert",comu);
+		
+	}
+
 
 }

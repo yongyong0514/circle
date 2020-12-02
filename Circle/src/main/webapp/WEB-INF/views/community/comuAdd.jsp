@@ -78,8 +78,11 @@ border: 1px solid black;
 
 					<br>
 					<h5 class="n" id="nti">동호회 글 작성</h5>
-					<br>
-					<form action="<%-- ${ applicationScope.contextPath }/community/ --%>comuAddAction"
+					<br>	
+									<!-- ${pageContext.request.contextPath} 는 localHost 페이지에 절대경로 -->
+					<%-- <form action="${pageContext.request.contextPath}/comu/comuAddAction"></form> --%>
+									<!-- Controller에 처리를 맡긴다 -->
+					<form action="${pageContext.request.contextPath}/community/comuAddAction"
 						method="post" enctype="multipart/form-data">
 						<table id="all">
 							<thead>
@@ -99,7 +102,7 @@ border: 1px solid black;
 								</tr>
 								<tr>
 								<th class="formBox1">직급</th>
-								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
+								<th class="formBox2"><input type="text" name="job" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
 							</tr>
 								
 								
@@ -108,7 +111,7 @@ border: 1px solid black;
 								</tr>
 								<tr>
 									
-									<td><select name="comuName" id="comuName">
+									<td><select name="comu_post_comu_code" id="comuName">
 											<option value="0">동호회 이름을 선택하세요</option>
 												 <c:forEach var="comuName" items="${list}">
 											<option value="${comuName.comu_list_code}">
@@ -127,7 +130,7 @@ border: 1px solid black;
 							
 								<tr>
 									<!--  <td class="n">제목 </td> -->
-									<td colspan="3"><input type="text" size="115" name="title"
+									<td colspan="3"><input type="text" size="115" name="comu_post_title"
 										id="title" placeholder="제목"></td>
 								</tr>
 								<tr>
@@ -135,7 +138,7 @@ border: 1px solid black;
 								</tr>
 								<tr>
 									<!-- <td align="center" class="n">내용 </td> -->
-									<td colspan="3"><textarea name="content" cols="100"
+									<td colspan="3"><textarea name="comu_post_cont" cols="100"
 											rows="20" style="resize: none;" class="text" placeholder="내용"></textarea>
 									</td>
 								</tr>

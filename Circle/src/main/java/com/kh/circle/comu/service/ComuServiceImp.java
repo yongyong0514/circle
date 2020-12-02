@@ -41,6 +41,20 @@ public class ComuServiceImp implements ComuService {
 		dao.comuAdd(vo);
 	}
 
+	@Override
+	public String comuAdd2(String emp_no) {
+		String emp_name = dao.comuAdd2(emp_no);
+
+		
+		return emp_name;
+	}
+
+	@Override
+	public void comuInsert(Comu comu) {
+		
+		dao.comuInsert(comu);
+	}
+
 	}
 
 
