@@ -24,7 +24,8 @@
 			<jsp:include page="common/leftBar.jsp" />
 		</div>
 		<div class="organChart">
-			<jsp:include page="../common/menuOrganChart.jsp"/>
+			<c:import url="/organChart/getInfo"/>
+			<%-- <jsp:include page="../common/menuOrganChart.jsp"/> --%>
 		</div>
 		<div class="container">
 			<div class="content">
