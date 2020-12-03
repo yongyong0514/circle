@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostPaging;
@@ -45,14 +46,13 @@ public class PostController {
 	private HttpServletResponse response;
 
 	// post Mainpage
+
 	@GetMapping("/postMain")
 	public String postMain(Model model, Post post, PostPaging postPaging,
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
-
 		List<Post> list = postService.postMain(model);
-
 
 		int total = postService.countPost();
 
@@ -65,8 +65,6 @@ public class PostController {
 		} else if (cntPerPage == null) {
 			cntPerPage = "5";
 		}
-
-		System.out.println("total~ : " + total);
 
 		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
@@ -90,12 +88,9 @@ public class PostController {
 			@RequestParam(value = "nowPage", required = false) String nowPage,
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
-		System.out.println("test :  " + url);
-
 		// 게시판별 이름 찾기
 		String postName = "";
 		String post_type = "";
-
 
 		switch (url) {
 
@@ -132,8 +127,6 @@ public class PostController {
 			cntPerPage = "5";
 		}
 
-		System.out.println("total~ : " + total);
-
 		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		model.addAttribute("post_type", post_type);
@@ -141,56 +134,69 @@ public class PostController {
 		model.addAttribute("postCount", postPaging);
 		model.addAttribute("postSelect", postService.selecePost(postPaging));
 
-		System.out.println("last test num : " + model);
-
 		return "post/postList";
 	}
-	
-	
-	
-	
 
 	// 게시글 insert
-	
-	
+
 	@GetMapping("/postInsert")
 	public String insert(Model model) {
-System.out.println("1차 겟 ");
 
-	List<Post> postType = postService.insertType();
-	
-	model.addAttribute("postType", postType);
-	System.out.println("ddddddddd : " + postType);
+		List<Post> postType = postService.insertType();
+
+		model.addAttribute("postType", postType);
 
 		return "post/postInsert";
 
 	}
-	
 
-	
+	// insert postMapping
 
-	
 	@PostMapping("/postInsertAdd")
-	public String insert(@ModelAttribute Post post,
-						HttpSession session) {
-		
-		
-		System.out.println("vjvjvjv포스트 월em");
-		request.getSession();
-		
-		String emp_no = (String) session.getAttribute("emp_info_emp_no");
-		
-		
-		post  = (Post)session.getAttribute("emp_info_emp_detp_code");
-		post  = (Post)session.getAttribute("emp_info_emp_job_code");
-		System.out.println("post  con : " + emp_no);
-		
+	public String insert(@ModelAttribute Post post, HttpSession session) {
+
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+
+		String emp_name = postService.postEmpInfo(emp_no);
+
+		post.setPost_emp(emp_no);
+
 		postService.postInsert(post);
+
+		return "redirect:postMain";
+	}
+
+	// post View page
+	@GetMapping("/postView")
+	public String postView(Model model, @RequestParam("post_code") String post_code) {
+
+		model.addAttribute("postView", postService.viewDetail(post_code));
+
+		return "post/postView";
+	}
+
+	// post update
+
+	@GetMapping("/postUpdate")
+	public String postUpdate(Model model, @RequestParam("post_code")String post_code) {
+
+		model.addAttribute("postCheck", postService.postCheck(post_code));
 		
-		return "redirect:post/postMain";
+		System.out.println("tette" + post_code );
+		System.out.println("tette" + model );
+		
+		return "post/postUpdate";
 	}
 	
-	
-
+	@PostMapping("/postUpdatenew")
+	public String postUpdateNew(Post post) {
+		
+		postService.postUpdate(post);
+		System.out.println("Testtt" + post.getPost_code());
+		
+		System.out.println("djelRkwl rksk" + post);
+		
+		return "redirect: postView?post_code=" + post.getPost_code();
+	}
 
 }

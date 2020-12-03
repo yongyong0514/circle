@@ -11,8 +11,7 @@ import com.kh.circle.post.service.PostService;
 
 public interface PostDao {
 
-
-
+	// select
 	List<Post> postMain(Model model);
 
 	List<Post> postParts(String post_type);
@@ -21,12 +20,24 @@ public interface PostDao {
 
 	List<Post> selectPost(PostPaging postPaging);
 
-	Post postView(String post_code);
-
-	String postInsert(Post post);
+	// insert
 
 	List<Post> insertType();
 
-	String insertEmpInfo(String emp_info_emp_no);
+	String postEmpInfo(String emp_no);
 
+	void postInsert(Post post);
+	
+	//상세보기
+
+	List<Post> viewDetail(String post_code);
+
+	void CountDetail(String post_code);
+
+	void postUpdate(Post post);
+
+	List<Post> postCheck(String post_code);
+	
+	//수정하기
+	
 }

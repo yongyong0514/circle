@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,96 +23,90 @@ import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
 
-
 @Service
-public class PostServiceImp implements PostService{
+public class PostServiceImp implements PostService {
 
 	@Autowired
 	private PostDao postDao;
-	
+
 	@Autowired
 	private PostFileDao postFileDao;
-	
+
 	@Autowired
 	private PostSaveDao postSaveDao;
-	
-	
+
 	@Autowired
 	private SqlSession sqlSession;
 
+	// 게시글 리스트
+	@Override
+	public List<Post> postMain(Model model) {
 
+		return postDao.postMain(model);
+	}
 
+	@Override
+	public List<Post> postParts(String post_type) {
 
+		return postDao.postParts(post_type);
+	}
 
-		@Override
-		public List<Post> postMain(Model model) {
-			
-			return postDao.postMain(model);
-		}
+	@Override
+	public int countPost() {
+		return postDao.countPost();
+	}
 
+	@Override
+	public List<Post> selecePost(PostPaging postPaging) {
 
+		return postDao.selectPost(postPaging);
+	}
 
+	// 입력하기
+	@Override
+	public List<Post> insertType() {
+		return postDao.insertType();
+	}
 
+	@Override
+	public String postEmpInfo(String emp_no) {
 
-		@Override
-		public List<Post> postParts(String post_type) {
-			
-			return postDao.postParts(post_type);
-		}
+		String emp_name = postDao.postEmpInfo(emp_no);
 
+		return emp_name;
+	}
 
+	@Override
+	public void postInsert(Post post) {
 
+		postDao.postInsert(post);
 
-		@Override
-		public int countPost() {
-			return postDao.countPost();
-		}
+	}
+	
+	//상세보기
 
+	@Override
+	public List<Post> viewDetail(String post_code) {
 
+		postDao.CountDetail(post_code);
 
+		return postDao.viewDetail(post_code);
+	}
 
-		@Override
-		public List<Post> selecePost(PostPaging postPaging) {
-			
-			System.out.println("sev : " + postPaging);
-			return postDao.selectPost(postPaging);
-		}
+	//수정하기
+	@Override
+	public void postUpdate(Post post) {
 
-
-
-
-		@Override
-		public void postInsert(Post post) {
-
-			System.out.println("postsssssssss : " + post);
-			
-			
-			
-			
-			String post_code = postDao.postInsert(post);
-			
-			
-			System.out.println("seeee : " + post_code);
 		
-			}
+		System.out.println("seeeeeeeee ; "+ post);
+		postDao.postUpdate(post);
+	}
 
+	@Override
+	public List<Post> postCheck(String post_code) {
 
+		return postDao.postCheck(post_code);
+	}
+	
 
-
-
-		@Override
-		public List<Post> insertType() {
-			return postDao.insertType();
-		}
-
-
-
-
-
-		@Override
-		public String InsertEmpInfo(String emp_info_emp_no) {
-			return postDao.insertEmpInfo(emp_info_emp_no);
-		}
-			
-		}
-
+}
