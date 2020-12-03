@@ -8,16 +8,18 @@
 	<div class="title">게시글 작성</div>
 <form name="postUpdate"  id="postUpdate"  action="${pageContext.request.contextPath}/post/postUpdate"  method="POST" >
 		<div class="inputfield">
-			<label for="post_title">제목</label>
-			 <input type="text" class="input" id="post_title" name="post_title" placeholder="제목을 작성해주세요">
+		 	<label for="post_title">제목</label>
+		  	 <input type="text" class="input" id="post_title" name="post_title" value="${postCheck.post_title }">
 		</div>
 		<!-- <div class="inputfield">
 			<label for="post_file">파일</label> 
 			<input name="post_file" id="post_file" type="file" class="input" accept="*.*" multiple="multiple">
 		</div> -->
 		<div class="inputfield">
+		</div> 
+		<div class="inputfield">
 			<label for="post_comt">본문</label>
-			<textarea class="textarea" id="post_comt" name="post_comt"></textarea>
+			<textarea class="textarea" id="post_comt" name="post_comt">${postCheck.post_comt}</textarea>
 		</div>
 		<div class="inputfield">
 			<label for="post_sec">공개</label>
@@ -28,8 +30,8 @@
 		</div>
 
 		<div class="inputfield">
+			<input type="hidden" name="post_code" value="${postCheck.post_code }">
 			<input type="submit" value="글쓰기" class="btn" name="submit" id="submit">
-			<input	type="reset" value="초기화" class="btn" name="reset" id="reset">
 			<input type="button" value="돌아가기" class="btn" name="return" id="return">
 
 		</div>

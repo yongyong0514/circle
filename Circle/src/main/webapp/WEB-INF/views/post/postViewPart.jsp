@@ -20,8 +20,10 @@
 	</div>
 
 <c:forEach var="postView" items="${postView }">
-<div><a href='<c:url value='/post/postUpdate?post_code=${postView.post_code}'/>'>수정하기</a></div>
+<div><a href='<c:url value='/post/postUpdate?post_code=${postCheck.post_code}'/>'>수정하기</a></div>
 </c:forEach>
-<button>삭제하기</button>
-	<button>돌아가기</button>
+<c:forEach var="postView" items="${postView }">
+<div><a href='<c:url value='/post/postDelete?post_code=${postView.post_code}'/>'>삭제하기</a></div>
+</c:forEach>
+<button>돌아가기</button>
 </div>

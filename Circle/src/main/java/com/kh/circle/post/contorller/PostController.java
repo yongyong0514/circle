@@ -178,25 +178,30 @@ public class PostController {
 	// post update
 
 	@GetMapping("/postUpdate")
-	public String postUpdate(Model model, @RequestParam("post_code")String post_code) {
+	public String postUpdate(Model model, @RequestParam("post_code") String post_code) {
 
-		model.addAttribute("postCheck", postService.postCheck(post_code));
-		
-		System.out.println("tette" + post_code );
-		System.out.println("tette" + model );
-		
+		Post postCheck = postService.postCheck(post_code);
+		model.addAttribute("postCheck", postCheck);
+
 		return "post/postUpdate";
 	}
-	
-	@PostMapping("/postUpdatenew")
-	public String postUpdateNew(Post post) {
-		
+
+	@PostMapping("/postUpdate")
+	public String postUpdate(@ModelAttribute Post post, HttpSession session,
+			@RequestParam("post_code") String post_code) {
+
 		postService.postUpdate(post);
-		System.out.println("Testtt" + post.getPost_code());
-		
-		System.out.println("djelRkwl rksk" + post);
-		
+
 		return "redirect: postView?post_code=" + post.getPost_code();
+	}
+
+	// 게시글 삭제
+
+	@GetMapping("/postDelete")
+	public String postDelete(@RequestParam("post_code") String post_code) {
+		postService.postDelete(post_code);
+
+		return "redirect: postMain";
 	}
 
 }

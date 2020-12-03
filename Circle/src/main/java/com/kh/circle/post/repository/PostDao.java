@@ -34,10 +34,12 @@ public interface PostDao {
 
 	void CountDetail(String post_code);
 
+	//수정하기
 	void postUpdate(Post post);
 
-	List<Post> postCheck(String post_code);
+	Post postCheck(String post_code);
 	
-	//수정하기
+//삭제하기
 	
+	void postDelete(String post_code);
 }

@@ -136,6 +136,9 @@ update post
 		where p.post_code = #{post_code}
 </select>
 
+<delete id="postDelete" parameterType="string">
+delete from post where post_code = #{post_code}
 
+</delete>
 
 </mapper>

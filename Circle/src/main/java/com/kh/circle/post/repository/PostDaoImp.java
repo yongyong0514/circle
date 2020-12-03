@@ -88,8 +88,8 @@ public class PostDaoImp implements PostDao {
 		sqlSession.insert("post.postInsert", post);
 
 	}
-	
-	//상세보기
+
+	// 상세보기
 
 	@Override
 	public List<Post> viewDetail(String post_code) {
@@ -99,29 +99,34 @@ public class PostDaoImp implements PostDao {
 		return post;
 	}
 
-	
 	@Override
 	public void CountDetail(String post_code) {
 
 		sqlSession.update("CountDetail", post_code);
 
 	}
-	//수정하기
+	// 수정하기
 
 	@Override
 	public void postUpdate(Post post) {
-		
-		System.out.println("ppppppppppppppdao" + post);
+
 		sqlSession.update("postUpdate", post);
-		
+
 	}
 
 	@Override
-	public List<Post> postCheck(String post_code) {
+	public Post postCheck(String post_code) {
 
-		List<Post> post = sqlSession.selectList("post.postCheck", post_code);
-		
+		Post post = sqlSession.selectOne("post.postCheck", post_code);
+
 		return post;
+	}
+
+	// 삭제하기
+	@Override
+	public void postDelete(String post_code) {
+
+		sqlSession.delete("post.postDelete", post_code);
 	}
 
 }
