@@ -79,6 +79,8 @@ public class PostDaoImp implements PostDao {
 	@Override
 	public String postInsert(Post post) {
 
+		System.out.println("pospopopo dao : " + post);
+		
 		String post_code = sqlSession.selectOne("post.insertSeq");
 		post.setPost_code(post_code);
 		
@@ -92,6 +94,24 @@ public class PostDaoImp implements PostDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	
+	//insert part
+	@Override
+	public List<Post> insertType() {
+		
+		List<Post> post_type = sqlSession.selectList("post.postType");
+		return post_type;
+	}
+
+	@Override
+	public String insertEmpInfo(String emp_info_emp_no) {
+		
+		String emp_info_emp_name = sqlSession.selectOne("post.empInfo", emp_info_emp_no);
+		return emp_info_emp_name;
+	}
+
 
 
 

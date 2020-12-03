@@ -40,13 +40,17 @@
 			</select>
 			
 			
-				<!-- 글쓰기 게시판 선택용 -->
-			<select id="post_type" name="post_type" onchange="location.href=this.value">
-				<option>게시글 쓰기</option>
-				<option value="${pageContext.request.contextPath}/post/postInsert/employee">전사 게시판</option>
-			</select>
+			<button type="button" id="postInsert" onclick="location.href='${pageContext.request.contextPath}/post/postInsert'">글쓰기</button>
 		</div>
 	</div>
+
+<script>
+
+function insert() {
+	
+}
+
+</script>
 
 </body>
 </html>

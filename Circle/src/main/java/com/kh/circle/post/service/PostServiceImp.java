@@ -84,10 +84,34 @@ public class PostServiceImp implements PostService{
 		public void postInsert(Post post) {
 
 			System.out.println("postsssssssss : " + post);
+			
+			
+			
+			
 			String post_code = postDao.postInsert(post);
 			
+			
+			System.out.println("seeee : " + post_code);
 		
 			}
+
+
+
+
+
+		@Override
+		public List<Post> insertType() {
+			return postDao.insertType();
+		}
+
+
+
+
+
+		@Override
+		public String InsertEmpInfo(String emp_info_emp_no) {
+			return postDao.insertEmpInfo(emp_info_emp_no);
+		}
 			
 		}
 

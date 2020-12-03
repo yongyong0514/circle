@@ -6,16 +6,7 @@
 <div class="form" id="post" >
 
 	<div class="title">게시글 작성</div>
-
-<%
-String emp_id = null;
-
-if(session.getAttribute("emp_id_emp_no") != null){
-	emp_id = (String) session.getAttribute("emp_id_emp_no");
-}
-
-%>
-	<form name="postInsert"  id="postInsert"  method="post" action="{path}/post/postMain">
+<form name="postInsert"  id="postInsert"  action="${pageContext.request.contextPath}/post/postInsertAdd"  method="POST" >
 		<div class="inputfield">
 			<label for="post_title">제목</label>
 			
@@ -29,6 +20,14 @@ if(session.getAttribute("emp_id_emp_no") != null){
 			<label for="post_comt">본문</label>
 			<textarea class="textarea" id="post_comt" name="post_comt"></textarea>
 		</div>
+			<div class="inputfield">
+			<label for="post_type">게시판종류 </label>
+			<select id="post_type" name="post_type">
+			<c:forEach var="type" items="${postType}">
+			<option value="${type.post_type_code}">${type.post_type_title}</option>
+			</c:forEach>
+			</select>
+		</div>
 
 		<div class="inputfield">
 			<label for="post_sec">공개</label>
@@ -36,11 +35,10 @@ if(session.getAttribute("emp_id_emp_no") != null){
 				<label><input type="radio" id="post_sec" name="post_sec" value="Y" checked>공개</label>
 				<label><input type="radio" id="post_sec" name="post_sec" value="N">비공개</label>
 			</div>
-
 		</div>
 
 		<div class="inputfield">
-			<input type="submit" value="글쓰기" class="btn" name="submit" id="btnSubmit" onclick="submit(); return false;">
+			<input type="submit" value="글쓰기" class="btn" name="submit" id="submit">
 			<input	type="reset" value="초기화" class="btn" name="reset" id="reset">
 			<input type="button" value="돌아가기" class="btn" name="return" id="return">
 
