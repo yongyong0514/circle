@@ -52,6 +52,8 @@ public class ComuServiceImp implements ComuService {
 	@Override
 	public void comuInsert(Comu comu) {
 		
+		System.out.println("service : " + comu);
+		
 		dao.comuInsert(comu);
 	}
 
