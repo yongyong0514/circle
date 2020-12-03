@@ -78,9 +78,12 @@ public class ComuController {
 					@ModelAttribute Comu comu)throws Exception{
 		//여기까지가 1번째 단계
 		
+		System.out.println("대충 : " + comu);
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		
+System.out.println("DDD : " + emp_no);		
 		String emp_name = service.comuAdd2(emp_no);
+		
+		System.out.println("DDFD : " + emp_name);
 		//2번째 단계 끝
 		
 		comu.setComu_post_wrtr_emp_no(emp_no);
@@ -88,7 +91,9 @@ public class ComuController {
 		
 		service.comuInsert(comu);
 		
-		return"redirect:community/comuList";
+		System.out.println("last : " + comu);
+		
+		return"redirect:/community/comuList";
 	}
 	
 	//게시글 동호회 선택

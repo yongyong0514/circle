@@ -51,6 +51,8 @@ public class ComuDaoImp implements ComuDao {
 	@Override
 	public void comuInsert(Comu comu) {
 
+		
+		System.out.println("dao : " + comu);
 		sqlSession.insert("comu.insert",comu);
 		
 	}

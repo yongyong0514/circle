@@ -45,6 +45,11 @@
 	<div class="wrap">
 		<jsp:include page="../common/menuTopBar.jsp" />
 		<jsp:include page="../common/menuAlertBar.jsp" />
+		
+		<div class="organChart">
+			<c:import url="/organChart/getInfo"/>
+		</div>
+		
 		<div class="container">
 			<div class="navLeft">
 				<jsp:include page="../community/comuLeftBar.jsp" />
