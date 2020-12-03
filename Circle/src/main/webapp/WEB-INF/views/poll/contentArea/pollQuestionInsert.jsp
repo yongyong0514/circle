@@ -16,7 +16,6 @@
 		//topBar title 변경
 		$('.pollHomeTitle').text('설문 문항 작성');
 	});
-
 </script>
 <body>
 	<header>
@@ -58,54 +57,10 @@
 					</fieldset>
 				</form>
 			</li>
-			<li class="question-item sort">
-				<div class="question-preview">
-					<span class="question">
-						<span class="seq">1</span>
-						. 
-						<span class="necessary">[필수]</span>
-						질문&nbsp;입력&nbsp;(필수,&nbsp;
-						하나만선택,&nbsp;&nbsp;보기&nbsp;
-						두개,&nbsp;기타&nbsp;추가)
-					</span>
-					<ul class="answer-wrap">
-						<li>
-							<span class="option-wrap">
-								<input id="radio-question-1001-1" name="question-1001" type="radio">
-								<label for="radio-question-1001-2">
-									보기1 입력
-								</label>
-							</span>
-						</li>
-						<li>
-							<span class="option-wrap">
-								<input id="radio-question-1001-2" name="question-1001" type="radio">
-								<label for="radio-question-1001-2">
-									보기2 입력
-								</label>
-							</span>
-						</li>
-						<li class="etc">
-							<span class="txt-wrap">
-								<input type="radio" name="question-1001">
-								<span class="label-wrap txt">기타입력</span>
-								<input class="wfix-max txt" type="text" name="answer">
-							</span>
-						</li>
-					</ul>
-				</div>
-				<div class="action-wrap">
-					<a class="icon24-btn edit-question-btn" title="수정">
-						<span class="icon-toolbar write"></span>
-					</a>
-					<a class="icon24-btn remove-question-btn" title="삭제">
-						<span class="icon-toolbar del"></span>
-					</a>
-				</div>
-			</li>
 			
-
+			<!---------------------------------->
 			<!-- 문항추가 입력 폼 추가될 위치 -->
+			<!---------------------------------->
 			
 			<!-- 문항추가 버튼 시작 -->
 			<li class="action">
@@ -132,13 +87,8 @@
 		</div>
 		<!-- 문항 입력 완료 버튼 끝 -->
 	</div>
-	<div class="organChart">
-		<jsp:include page="../../common/menuOrganChart.jsp"/>
-	</div>
-</body>
-
-<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.tmpl.min.js"></script>
+<script src="/circle/resources/js/poll/jquery.min.js"></script>
+<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
 
 <!-- 문항추가 입력 폼 -->
 <script type="text/html" id="question-form-template">
@@ -259,6 +209,9 @@
 	<span class="txt-wrap">
 		<input type="radio" name="radio" value="1">
 		<input class="txt wfix-max question-option-desc" type="text" name="option-2" value="기타">
+		<span class="alert-wrap desc-top-wrap warn-error">
+			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
+		</span>
 	</span>
 	<span class="m-btn-wrap del-question-option-btn">
 		<span class="icon-classic icon-del del-etc"></span>
@@ -271,6 +224,9 @@
 	<span class="txt-wrap">
 		<input type="checkbox" name="checkbox" value="1">
 		<input class="txt wfix-max question-option-desc" type="text" name="option-2" value="기타">
+		<span class="alert-wrap desc-top-wrap warn-error">
+			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
+		</span>
 	</span>
 	<span class="m-btn-wrap del-question-option-btn">
 		<span class="icon-classic icon-del del-etc"></span>
@@ -330,9 +286,58 @@
 </li>
 </script>
 
+<!-- 미리보기 생성 - 선택형 -->
+<script type="text/html" id="optionable-preview">
+<li class="question-item sort">
+	<div class="question-preview">
+		<span class="question">
+			<span class="seq">\${seq}</span>
+			.
+			<span class="necessary">\${necessary}</span>
+			\${title}
+		</span>
+		<ul class="answer-wrap">
+
+
+		</ul>
+	</div>
+	<div class="action-wrap">
+		<a class="icon24-btn edit-question-btn" title="수정">
+			<span class="icon-toolbar write"></span>
+		</a>
+		<a class="icon24-btn remove-question-btn" title="삭제">
+			<span class="icon-toolbar del"></span>
+		</a>
+	</div>
+</li>
+</script>
+<!-- 미리보기 보기 생성 -선택형  -->
+<script type="text/html" id="optionable-preview-content">
+			<li>
+				<span class="option-wrap">
+					<input id="\${checkType}-question-\${seq}-\${subSeq}" name="question-\${seq}" type="\${checkType}">
+					<label for="\${checkType}-question-\${seq}-\${subSeq}">
+						\${selectContent}
+					</label>
+				</span>
+			</li>
+</script>
+<!-- 미리보기 기타-보기 생성 -선택형  -->
+<script type="text/html" id="optionable-preview-etc=content">
+			<li class="etc">
+				<span class="txt-wrap">
+					<input type="\${checkType}" name="question-\${seq}">
+					<span class="label-wrap txt">\${etcSelectContent}</span>
+					<input class="wfix-max txt" type="text" name="answer">
+				</span>
+			</li>
+</script>
+
 
 <script>
 /*********************************  함수 정의 영역  ****************************/
+	
+
 
 	/* 선택형에서 하나만, 복수형 선택시 radio <---> checkbox button 변경 */
 	function buttonChange() {
@@ -355,25 +360,6 @@
 		$(".plural-only").remove();
 	}
 	
-	/* form데이터 객체만들기/태그추가 기능 */
-	function formOrdering() {
-		
-		$(".question-form").submit(function(e){
-			
-			var formMap;
-			
-			var questionTitle = $('.question-form input[name=question]').val();
-			var questionType = $('.question-type select option:selected').val();
-			
-			console.log($('.question-form input[name=question]').val());
-			console.log($('.question-type select option:selected').val());
-			
-			$(".question-form select option:selected").each(function(){
-				formMap = $(this).val();
-			});
-		})
-	}
-	
 	/* 문항추가 입력폼 추가 */
 	function addQuestionEditFrom(){
 		$("#question-form-template").tmpl().insertBefore("li.action");
@@ -381,54 +367,6 @@
 	/* 문항추가 입력폼 제거 */
 	function removeQuestionEditForm(){
 		$(".question-item-edit").remove();
-	}
-	/* 문항 미리보기 - 선택형 - 추가 */
-	function addPreviewSelectQuestion(){
-		$('#question-select-complete-form').tmpl().insertBefore('.action');
-	}
-	
-	/* 문항추가폼 미입력 부분 확인/ 확인후 후속 추가동작 */
-	function confirmAddQuestion(){
-		/* 질문 입력창 입력 확인 - 경고메세지 출력*/
-		if($("input[name=question]").val().length < 2){
-			($("input[name=question]").siblings(".desc-top-wrap").css("display","block")
-			,$("input[name=question]").css({"border-color": "red","color": "red"})
-			.focus());
-		} else {
-			($(".desc-top-wrap").css("display","none")
-			,$("input[name=question]").css({"border-color": "#ddd","color": "#333"}));
-			
-			/* 보기 입력창 존재 확인 - 경고창 출력 */
-			if(confirmAddQuestionFromSelectExist() == false){
-				
-				alert("등록된 문항이 없습니다");
-				
-			} else {
-				/* 보기 입력창 미입력 확인 - 경고메세지 출력 */
-				
-				var inputCheck = 0;
-				$(".question-form").find("input[name=option-2]").each(function(index,item) {
-					if($(item).val().length < 1){
-						($(item).siblings(".desc-top-wrap").css("display","block")
-						, $(item).css({"border-color": "red","color": "red"}));
-						
-						inputCheck += 1;
-					} else {
-						($(item).siblings(".desc-top-wrap").css("display","none"), $(item)
-						.css({"border-color": "#ddd","color": "#333"}));
-					}
-				});
-			
-				if(inputCheck == 0){
-					/* 확인완료/추가창 제거/완성태그 추가 */
-					removeQuestionEditForm();
-					addPreviewSelectQuestion();
-				}
-
-			}
-			
-
-		}
 	}
 	
 	/* 문항 추가 폼 존재확인 */
@@ -463,7 +401,115 @@
 		}
 	}
 	
-/*********************************  실행 영역  ****************************/
+
+	
+	/* 문항추가폼 미입력 부분 확인/ 확인후 후속 추가동작 */
+	function confirmAddQuestion(){
+		/* 질문 입력창 입력 확인 - 경고메세지 출력*/
+		if($("input[name=question]").val().length < 2){
+			($("input[name=question]").siblings(".desc-top-wrap").css("display","block")
+			,$("input[name=question]").css({"border-color": "red","color": "red"})
+			.focus());
+		} else {
+			($(".desc-top-wrap").css("display","none")
+			,$("input[name=question]").css({"border-color": "#ddd","color": "#333"}));
+			/* 보기 입력창 존재 확인 - 경고창 출력 */
+			if(confirmAddQuestionFromSelectExist() == false){
+				alert("등록된 문항이 없습니다");
+			} else {
+				/* 보기 입력창 미입력 확인 - 경고메세지 출력 */
+				var inputCheck = 0;
+				$(".question-form").find("input[name=option-2]").each(function(index,item) {
+					if($(item).val().length < 1){
+						($(item).siblings(".desc-top-wrap").css("display","block")
+						, $(item).css({"border-color": "red","color": "red"}));
+						inputCheck += 1;
+					} else {
+						($(item).siblings(".desc-top-wrap").css("display","none"), $(item)
+						.css({"border-color": "#ddd","color": "#333"}));
+					}
+				});
+				if(inputCheck == 0){
+					/* 확인완료/추가창 제거/완성태그 추가 */
+					addPreviewSelectOptionable();
+					
+					removeQuestionEditForm();
+					addQuestionEditFrom();
+					
+				}
+			}
+		}
+	}
+	
+	/* 문항 완료 미리보기 - 테스트용 - 추가 */
+	function addPreviewSelectQuestion(){
+		$('#question-select-complete-form').tmpl().insertBefore('.action');
+	}
+	
+	/* 문항 전역변수 초기화 */
+	var seq = 0;			//순번
+	var title;				//제목
+	var selectType;			//선택형
+	var selectNumberType;	//선택 개수
+	var necessary;			//필수 체크
+	var subSeq = 0;			//문항순번
+	var checkType;			//radio - checkbox 종류 선택
+	var selectContent = new Array();		//문항 내용
+	var etcSelectContent;	//기타 문항 내용
+	
+	/* 문항 완료 미리보기 - 선택형 - 추가 */
+	function addPreviewSelectOptionable() {
+		
+		seq += 1;
+		title = extractTitle();
+		necessary = extractNecessary();
+		checkType = extractCheckType();
+		selectContent = extractContent(seq, checkType);
+		
+		console.log(seq);
+		console.log(title);
+		console.log(necessary);
+		console.log(checkType);
+		console.log(selectContent);
+		
+		var data = {"seq":seq, "title":title, "necessary":necessary};
+		$("#optionable-preview").tmpl(data).insertBefore('.action');
+		
+		$.each(selectContent, function(index, item){
+			$("#optionable-preview-content").tmpl(item)
+		})
+	}
+	
+	/* form데이터 객체만들기 */
+	function formOrdering() {
+	}
+	
+	/* 문항 제목 변수화 */
+	function extractTitle(){
+		title = $('.question-form input[name=question]').val();
+		return title;
+	}
+	/* 문항 필수 체크 */
+	function extractNecessary(){
+		var temp;
+		$('#checkbox-required').prop('checked') ? temp = "[필수]" : temp = "";
+		return temp;
+	}
+	/* radio-checkbox 선택 변수화 */
+	function extractCheckType(){
+		return $('.question-form .question-option-item .txt-wrap input:first').prop("type");
+	}
+	/* 선택 보기 내용 변수화 */
+	function extractContent(seq, checkType){
+		var contents = new Array();
+		subSeq = 1;
+		$(".question-form").find("input[name=option-2]").each(function(index,item) {
+			contents.push({"seq":seq, "checkType":checkType, "subSeq": subSeq, "content":$(item).val()});
+			subSeq+=1;
+		});
+		return contents;
+	}
+/*********************************  실행 영역  **************************************************************************/
 	$(document).ready(function(){
 		
 		/************************
@@ -579,14 +625,12 @@
 			/* 취소버튼 클릭 */
 			$(document).on("click", ".poll-action span:contains('취소')", removeQuestionEditForm);
 			/*********************************/
-			
+
 			
 		/*********************************
 		*********************************/
-		
 	});
-	
-
-	
 </script>
+</body>
+
 </html>
