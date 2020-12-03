@@ -30,6 +30,12 @@ public interface PostService {
 
 	void postInsert(Post post);
 
+	
+	List<Post> insertType();
+
+
+	String InsertEmpInfo(String emp_info_emp_no);
+
 
 
 

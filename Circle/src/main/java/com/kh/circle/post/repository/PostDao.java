@@ -25,4 +25,8 @@ public interface PostDao {
 
 	String postInsert(Post post);
 
+	List<Post> insertType();
+
+	String insertEmpInfo(String emp_info_emp_no);
+
 }

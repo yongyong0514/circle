@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -95,7 +96,6 @@ public class PostController {
 		String postName = "";
 		String post_type = "";
 
-		List<Post> postTypeList = null;
 
 		switch (url) {
 
@@ -153,9 +153,15 @@ public class PostController {
 	// 게시글 insert
 	
 	
-	@GetMapping("/postInsert/{url}")
-	public String postSelectInsert() {
+	@GetMapping("/postInsert")
+	public String insert(Model model) {
 System.out.println("1차 겟 ");
+
+	List<Post> postType = postService.insertType();
+	
+	model.addAttribute("postType", postType);
+	System.out.println("ddddddddd : " + postType);
+
 		return "post/postInsert";
 
 	}
@@ -164,43 +170,20 @@ System.out.println("1차 겟 ");
 	
 
 	
-	@PostMapping("/postInsert/{url}")
-	@ResponseBody
+	@PostMapping("/postInsertAdd")
 	public String insert(@ModelAttribute Post post,
-						@RequestParam MultipartFile file,
-						HttpSession session,
-						@PathVariable String url) {
+						HttpSession session) {
 		
 		
 		System.out.println("vjvjvjv포스트 월em");
 		request.getSession();
-		String postName = "";
-		String post_type = "";
-
-
-		switch (url) {
-
-		case "test":
-			post_type = "POTY000001";
-			break;
-		case "employee":
-			post_type = "POTY000002";
-			break;
-
-		case "notice":
-			post_type = "POTY000003";
-			break;
-
-		case "":
-			postName = "전체게시글";
-			break;
-		}
-		post  = (Post)session.getAttribute("emp_info_emp_no");
-		post  = (Post)session.getAttribute("emp_info_emp_name");
+		
+		String emp_no = (String) session.getAttribute("emp_info_emp_no");
+		
+		
 		post  = (Post)session.getAttribute("emp_info_emp_detp_code");
 		post  = (Post)session.getAttribute("emp_info_emp_job_code");
-	    post.setPost_type(post_type);
-		System.out.println("post  con : " + post);
+		System.out.println("post  con : " + emp_no);
 		
 		postService.postInsert(post);
 		

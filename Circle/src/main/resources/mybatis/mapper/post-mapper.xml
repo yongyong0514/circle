@@ -97,6 +97,18 @@ select post_seq.nextval from dual
 		0, #{post_sec}, DEFAULT, '', DEFAULT)
 	</insert>
 
+<select id="postType" resultType="postType">
+select *
+from post_type
+
+</select>
+
+<select id="empInfo" parameterType="string">
+select emp_info_emp_name
+from emp_info
+where emp_info_emp_no = #{emp_info_emp_no}
+
+</select>
 
 
 </mapper>
