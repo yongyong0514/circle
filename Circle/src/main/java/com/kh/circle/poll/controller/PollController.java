@@ -1,5 +1,7 @@
 package com.kh.circle.poll.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,24 +9,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.circle.login.entity.EmpInfo;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/poll")
 public class PollController {
 	
-	@GetMapping("/pollMain")
-	public String pollMain() {
-		return "/poll/pollMain";
-	}
-	
 	@GetMapping("/pollMain/{url}")
 	public String pollMain(@PathVariable String url, Model model) {
-		
 		model.addAttribute("url", url);
 		
 		return "/poll/pollMain";
 	}
+	
+	@GetMapping("/pollMain")
+	public String pollMain() {
+		
+		return "/poll/pollMain";
+	}
+	
 	
 	
 	/***************
