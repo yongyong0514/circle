@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Circle</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -19,23 +21,19 @@
 		</div>
 		<div class="leftBar">
 			<jsp:include page="../post/postSidebar.jsp" />
-
 		</div>
 		<div class="container">
 			<div class="contentBar">
-				<jsp:include page="../post/postHomebar.jsp" />
+				 <jsp:include page="../post/postHomebar.jsp" />
 			</div>
-			<div class="content">
+	
+		<div class="content">
+		<jsp:include page="../post/postUpdatePart.jsp"/>
+			<!-- 옵션선택 끝 -->
 
-				<!-- 본문 -->
-
-				<jsp:include page="postTestPart.jsp"></jsp:include>
-
-				<!--  본문 종료 -->
-			</div>
 		</div>
 	</div>
-
+	</div>
 
 </body>
 </html>

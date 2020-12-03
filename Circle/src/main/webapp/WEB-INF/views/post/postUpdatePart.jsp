@@ -6,10 +6,9 @@
 <div class="form" id="post" >
 
 	<div class="title">게시글 작성</div>
-<form name="postInsert"  id="postInsert"  action="${pageContext.request.contextPath}/post/postInsertAdd"  method="POST" >
+<form name="postUpdate"  id="postUpdate"  action="${pageContext.request.contextPath}/post/postUpdate"  method="POST" >
 		<div class="inputfield">
 			<label for="post_title">제목</label>
-			
 			 <input type="text" class="input" id="post_title" name="post_title" placeholder="제목을 작성해주세요">
 		</div>
 		<!-- <div class="inputfield">
@@ -20,16 +19,6 @@
 			<label for="post_comt">본문</label>
 			<textarea class="textarea" id="post_comt" name="post_comt"></textarea>
 		</div>
-			<div class="inputfield">
-			<label for="post_type">게시판종류 </label>
-			<select id="post_type" name="post_type">
-			<option>게시판 선택</option>
-			<c:forEach var="type" items="${postType}">
-			<option id="post_type"  value="${type.post_type_code}">${type.post_type_title}</option>
-			</c:forEach>
-			</select>
-		</div>
-
 		<div class="inputfield">
 			<label for="post_sec">공개</label>
 			<div class="post_select">

@@ -17,60 +17,52 @@
 	<select id="postMain" resultType="post">
 
 		select *
-		from post p, emp_info e, post_type t
+		from post p, emp_info
+		e, post_type t
 		where p.post_emp =
 		e.emp_info_emp_no
-		and p.post_type = t.post_type_code
+		and p.post_type =
+		t.post_type_code
 		and p.post_type in
 		('POTY000002', 'POTY000003')
-		order by p.post_code desc
+		order by
+		p.post_code desc
 	</select>
-	
-	<!--  부분 게시판  -->
+
+	<!-- 부분 게시판 -->
 	<select id="postParts" parameterType="string" resultType="post">
-  	select *
+		select *
 		from post p
 		join emp_info e on (p.post_emp = e.emp_info_emp_no)
-		join post_type t on (p.post_type = t.post_type_code)
-		where p.post_type = #{post_type}
+		join
+		post_type t on (p.post_type = t.post_type_code)
+		where p.post_type =
+		#{post_type}
 		order by p.post_code desc
 	</select>
-	
-	
+
+
 	<!-- 총 게시글 갯수 -->
-<select id="postCount" resultType="int">
-select count(*) from post
-</select>
+	<select id="postCount" resultType="int">
+		select count(*) from post
+	</select>
 
 
-<!--  페이징 처리 후 게시글 조회 -->
-<select id="postSelect" parameterType="postPaging" resultType="post">
-select *
-from (
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="postSelect" parameterType="postPaging"
+		resultType="post">
+		select *
+		from (
 		select rownum rn, a.*
-from (
+		from (
 		select *
 		from post
 		order by post_code desc
 		) a
-)
-where rn between #{start} and #{end}
+		)
+		where rn between #{start} and #{end}
 
-</select>
-
-<!--  게시글 상세보기-->
-
-<select id="postView" resultType="post" parameterType="string">
-select from post where post_code = #{post_code}
-</select>
-
-
-
-<select id="insertSeq" resultType="string">
-select post_seq.nextval from dual
-</select>
-
-
+	</select>
 
 	<!-- postList 호출 -->
 	<select id="postList" resultType="post">
@@ -84,31 +76,66 @@ select post_seq.nextval from dual
 	</select>
 
 
+	<!-- insert -->
+
 	<insert id="postInsert" parameterType="post">
 
-		INSERT INTO
-		POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
-		POST_WDAT,
-		POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF,
+		INSERT INTO POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
+		POST_WDAT, POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF,
 		POST_STAT)
-		VALUES(
-		#{post_code}, #{post_emp}, #{post_type}, #{post_title},
-		#{post_comt}, DEFAULT , '',
-		0, #{post_sec}, DEFAULT, '', DEFAULT)
+		VALUES(CONCAT('POST', LPAD(POST_SEQ.NEXTVAL, 6, 0)), #{post_emp}, #{post_type},
+		#{post_title}, #{post_comt} , DEFAULT ,TO_DATE('', 'YYYY/MM/DD'), 0,
+		#{post_sec}, 'N', '', 'N')
 	</insert>
 
-<select id="postType" resultType="postType">
-select *
-from post_type
+	<select id="postType" resultType="postType">
+		select *
+		from post_type
 
+	</select>
+
+	<select id="empInfo" resultType="string" parameterType="string">
+		select emp_info_name
+		from emp_info
+		where emp_info_emp_no = #{emp_no}
+
+	</select>
+
+
+	<!-- view -->
+	<!-- 게시글 상세보기 -->
+
+	<select id="postView" resultType="post" parameterType="string">
+		select *
+		from post p
+		join post_type t on (p.post_type = t.post_type_code)
+		join emp_info e on (p.post_emp = e.emp_info_emp_no)
+		where p.post_code = #{post_code}
+	</select>
+
+<update id="CountDetail">
+update post
+set post_cvp = post_cvp + 1
+where post_code = #{post_code}
+
+</update>
+
+<!--  update -->
+
+<update id="postUpdate" parameterType="post">
+update post
+ set post_title = #{post_title}, post_comt=#{post_comt}, post_sec=#{post_sec}
+ where post_code = #{post_code}
+</update>
+
+<select id="postCheck" parameterType="string" resultType="post">
+	select *
+		from post p
+		join post_type t on (p.post_type = t.post_type_code)
+		join emp_info e on (p.post_emp = e.emp_info_emp_no)
+		where p.post_code = #{post_code}
 </select>
 
-<select id="empInfo" parameterType="string">
-select emp_info_emp_name
-from emp_info
-where emp_info_emp_no = #{emp_info_emp_no}
-
-</select>
 
 
 </mapper>

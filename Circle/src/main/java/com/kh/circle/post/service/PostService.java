@@ -15,29 +15,28 @@ import com.kh.circle.post.repository.PostDao;
 
 public interface PostService {
 
-
+	// 자세히보기
 	List<Post> postMain(Model model);
-
 
 	List<Post> postParts(String post_type);
 
-
 	int countPost();
-
 
 	List<Post> selecePost(PostPaging postPaging);
 
-
-	void postInsert(Post post);
-
-	
+	// 입력하기
 	List<Post> insertType();
 
+	String postEmpInfo(String emp_no);
 
-	String InsertEmpInfo(String emp_info_emp_no);
+	void postInsert(Post post);
+	
+	//상세보기
 
+	List<Post> viewDetail(String post_code);
 
+	void postUpdate(Post post);
 
-
+	List<Post> postCheck(String post_code);
 
 }

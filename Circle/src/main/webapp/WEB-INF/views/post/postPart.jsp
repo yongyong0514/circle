@@ -36,7 +36,7 @@
 	<c:forEach var="Post" items="${postParts}">
 		<tr>
 			<td>${Post.post_code}</td>
-			<td>${Post.post_title}</td>
+			<td><a href='<c:url value='/post/postView?post_code=${Post.post_code}'/>'>${Post.post_title}</a></td>
 			<td>${Post.emp_info_name}</td>
 			<td>${Post.post_wdat}</td>
 			<td>${Post.post_cvp}</td>
@@ -50,9 +50,7 @@
 <div>
 <c:set var="Post"/>
 <c:if test="${postPaging.startPage != 1}">
-<c:if test="${pageContext.request.contextPath}/post/postList/notice">
-<a href="/postList/notice?nowPage=${postPaging.startPage - 1}&cntPerPage${postPaging.cntPerPage}">&lt;</a>
-</c:if>
+<a href="${pageContext.request.contextPath}/post/postList/notice?nowPage=${postPaging.startPage - 1}&cntPerPage${postPaging.cntPerPage}">&lt;</a>
 	<a href="/postList?nowPage=${postPaging.startPage - 1}&cntPerPage${postPaging.cntPerPage}/">&lt;</a>
 
 </c:if>
