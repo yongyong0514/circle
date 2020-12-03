@@ -20,7 +20,7 @@
 		<jsp:include page="../sign/signLeftBar.jsp" />
 	</div>
 	<div class="container">
-		<form id="formArea" method="post" enctype="multipart/form-data">
+		<form id="formArea" method="get" enctype="multipart/form-data">
 			<div class="contentBar">
 				<jsp:include page="../sign/signModifyBar.jsp" />
 				<div class="signHomeListBar">
@@ -94,7 +94,7 @@
 					</div>
 					<div class="formRight">
 						<div>
-							<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();">결재자 등록</div>
+							<div class="formBtn1" id="signJoinerBtn" onclick="signJoiner();" style="color:grey;">결재자 등록</div>
 							<div class="joinAlert">결재자가 저장되었습니다</div>
 							<div class="joinForm1">
 								<%-- <div>
@@ -160,7 +160,7 @@
 							<br>
 						</div>
 						<div>
-							<div class="formBtn1" id="signWatcherBtn" onclick="signWatcher();">참조자 등록</div>
+							<div class="formBtn1" id="signWatcherBtn" onclick="signWatcher();" style="color:grey;">참조자 등록</div>
 							<div class="watcherAlert">참조자가 저장되었습니다</div>
 							<div class="watcherForm1">
 								<%-- <div>
@@ -284,18 +284,79 @@
 	</script>
 	<script>
 		$(document).ready(function(){
-			var base = "${pageContext.request.contextPath}";
-			var signCode = document.location.href.split("=");
-			
-			$.ajax({
-				url: base + "/signResult/signListJoiner",
-				type: "get",
-				data: {signCode : signCode[1]},
-				success: function(data) {
+				var base = "${pageContext.request.contextPath}";
+				var signCode = document.location.href.split("=");
 					
-					sessionStorage.setItem('joiner', JSON.stringify(data));				
+				$.ajax({
+					url: base + "/signResult/signListJoiner",
+					type: "get",
+					data: {signCode : signCode[1]},
+					success: function(data) {
+						var $joiner = $("#joiner tbody");
+						$joiner.html('');
+						
+							for (var key in data) {
+							var $tr = $("<tr class='resultList'>");
+							var $jCode = $("<td class='jCode'>").text(data[key].emp_info_emp_no);
+							var $jName = $("<td class='jName'>").text(data[key].emp_info_name);
+							var $jJob = $("<td class='jJob'>").text(data[key].job_info_name);
+
+							/* $tr.append($jCode);*/
+							$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+							$tr.append($jName);
+							$tr.append($jJob);
+	
+							$joiner.append($tr);					
+						}		
+						sessionStorage.setItem('joiner', JSON.stringify(data));
+					}
+				});
+			});
+	</script>
+	<script>
+	 	$(document).ready(function(){
+				var base = "${pageContext.request.contextPath}";
+				var signCode = document.location.href.split("=");
+				
+				$.ajax({
+					url: base + "/signResult/signListWatcher",
+					type: "get",
+					data: {signCode : signCode[1]},
+					success: function(data) {
+						var $watcher = $("#watcher tbody");
+						$watcher.html('');
+
+						for (var key in data) {
+							var $tr = $("<tr class='resultList'>");
+							var $wCode = $("<td class='wCode'>").text(data[key].emp_info_emp_no);
+							var $wName = $("<td class='wName'>").text(data[key].emp_info_name);
+							var $wJob = $("<td class='wJob'>").text(data[key].job_info_name);
+
+							/* $tr.append($jCode); */
+							$tr.append("<td class='jImg'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='resultImg1'></td>");
+							$tr.append($wName);
+							$tr.append($wJob);
+
+							$watcher.append($tr);
+						}
+						sessionStorage.setItem('watcher', JSON.stringify(data));
 				}
 			});
+	 	});
+	</script>
+	<script>
+		$(document).ready(function(){
+				var base = "${pageContext.request.contextPath}";
+				var signCode = document.location.href.split("=");
+				
+				$.ajax({
+					url: base + "/signResult/signFileList",
+					type: "get",
+					data: {signCode : signCode[1]},
+					success: function(data) {
+						
+					}
+				});
 		});
 	</script>
 <!-- 문서 종류 옵션 시작 -->
@@ -465,11 +526,11 @@
     
 <!-- 결재자 추가 시작 -->
 	<!-- 결재자 등록 HOVER -->
-	<script>
+<!-- 	<script>
 		function signJoiner() {
 			$(".joinForm1").fadeIn(100);
 		};
-	</script>
+	</script> -->
 	
 		<!-- 결재자 추가 목록 표시 -->
 	<script>
@@ -543,11 +604,11 @@
 
 <!-- 참여자 추가 시작 -->
 	<!-- 참조자 등록 HOVER -->
-	<script>
+<!-- 	<script>
 		function signWatcher() {
 			$(".watcherForm1").fadeIn(100);
 		};
-	</script>
+	</script> -->
 	
 	<!-- 참조자 추가 목록 표시 -->
 	<script>
@@ -635,7 +696,7 @@
 			if(joiner != null) {
 				for (var i = 0; i < joiner.length; i++) {
 
-					jList += joiner[i].jCode + "/";
+					jList += joiner[i].emp_info_emp_no + "/";
 				}
 			}
 			var jCodeList = jList.substring(0, jList.length-1);
@@ -649,7 +710,7 @@
 			if(watcher != null) {
 				for (var i = 0; i < watcher.length; i++) {
 	
-					wList += watcher[i].wCode + "/";
+					wList += watcher[i].emp_info_emp_no + "/";
 				}
 			}
 			var wCodeList = wList.substring(0, wList.length-1);
