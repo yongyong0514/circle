@@ -18,7 +18,7 @@
 			 , EI.emp_info_etel
 			 , EI.emp_info_cmp_code
 			 , EI.emp_info_rm
-			 , rpad(substr(EI.emp_info_id_no,1,8), length(EI.emp_info_id_no), '*') as "emp_info_id_no"
+			 , rpad(substr(EI.emp_info_id_no,1,8), length(EI.emp_info_id_no), '*') as emp_info_id_no
 			 , EI.emp_info_gend
 			 , EI.emp_info_adr
 			 , EI.emp_info_emrg_tel
@@ -31,8 +31,8 @@
 			 , EI.emp_info_vetr_no
 			 , EI.emp_info_vetr_rel
 			 , EI.emp_info_mils
-			 , to_char(EI.emp_info_edat, 'yyyy-MM-dd') as "emp_info_edat"
-			 , to_char(EI.emp_info_sdat, 'yyyy-MM-dd') as "emp_info_sdat"
+			 , to_char(EI.emp_info_sdat, 'yyyy-MM-dd') as emp_info_sdat
+			 , to_char(EI.emp_info_edat, 'yyyy-MM-dd') as emp_info_edat
 			 , DI.dept_info_name
 			 , JI.job_info_name
 		 from emp_info EI

@@ -9,15 +9,15 @@
 	<select id="searchWithEmpNo" parameterType="map" resultType="attendanceInfo">
 		select atdc_hstr_ordr
 			 , atdc_hstr_emp_no
-			 , to_char(atdc_hstr_dat, 'yyyy-MM-dd') as "atdc_hstr_dat"
+			 , to_char(atdc_hstr_dat, 'yyyy-MM-dd') as atdc_hstr_dat
 			 , atdc_hstr_writ_type
-			 , to_char(atdc_hstr_stim, 'hh24:mi:ss') as "atdc_hstr_stim"
-			 , to_char(atdc_hstr_etim, 'hh24:mi:ss') as "atdc_hstr_etim"
+			 , to_char(atdc_hstr_stim, 'hh24:mi:ss') as atdc_hstr_stim
+			 , to_char(atdc_hstr_etim, 'hh24:mi:ss') as atdc_hstr_etim
 			 , atdc_hstr_type
-			 , floor(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24) as "workTimeHour"
-			 , floor(mod(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24,1)*60) as "workTimeMinute"
-			 , to_char(NEXT_DAY(to_date(#{date}, 'yyyy-MM-dd')-7, '일요일'), 'yyyy-MM-DD') as "weekStartDate"
-			 , to_char(NEXT_DAY(to_date(#{date}, 'yyyy-MM-dd')-1, '토요일'), 'yyyy-MM-DD') as "weekEndDate"
+			 , floor(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24) as workTimeHour
+			 , floor(mod(mod((atdc_hstr_etim - atdc_hstr_stim),1)*24,1)*60) as workTimeMinute
+			 , to_char(NEXT_DAY(to_date(#{date}, 'yyyy-MM-dd')-7, '일요일'), 'yyyy-MM-DD') as weekStartDate
+			 , to_char(NEXT_DAY(to_date(#{date}, 'yyyy-MM-dd')-1, '토요일'), 'yyyy-MM-DD') as weekEndDate
 		  from atdc_hstr
 		 where atdc_hstr_emp_no = #{emp_no}
 		   and to_date(#{date}, 'yyyy-MM-dd') >= atdc_hstr_dat
@@ -34,8 +34,8 @@
 	</select>		
 
 	<select id="weekStackWorkTime" parameterType="map" resultType="weekStackInfo">
-		select floor(mod(sum(atdc_hstr_etim - atdc_hstr_stim),1)*24) as "weekSumWorktimeHour"
-			 , floor(mod(mod(sum(atdc_hstr_etim - atdc_hstr_stim),1)*24,1)*60) as "weekSumWorktimeMinute"
+		select floor(mod(sum(atdc_hstr_etim - atdc_hstr_stim),1)*24) as weekSumWorktimeHour
+			 , floor(mod(mod(sum(atdc_hstr_etim - atdc_hstr_stim),1)*24,1)*60) as weekSumWorktimeMinute
 		  from atdc_hstr
 		 where atdc_hstr_emp_no = #{emp_no}
 		   and to_date(#{date}, 'yyyy-MM-dd') >= atdc_hstr_dat
@@ -44,8 +44,8 @@
 	</select>
 
 	<select id="weekStackWorkTimeNull" parameterType="map" resultType="weekStackInfo">
-		select to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD')-7, '일요일'), 'yyyy-MM-DD') as "weekStartDate"
-			 , to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD')-1, '토요일'), 'yyyy-MM-DD') as "weekEndDate"
+		select to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD')-7, '일요일'), 'yyyy-MM-DD') as weekStartDate
+			 , to_char(NEXT_DAY(trunc(to_date(#{date}, 'yyyy-MM-dd'), 'DD')-1, '토요일'), 'yyyy-MM-DD') as weekEndDate
 			 , 0 as "weekSumWorktimeHour"
 			 , 0 as "weekSumWorktimeMinute"
 			 , 0 as "weekOverWorktimeHour"

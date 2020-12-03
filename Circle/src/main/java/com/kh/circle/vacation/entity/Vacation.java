@@ -20,6 +20,6 @@ public class Vacation {
 	private String anva_hstr_sign_code;		// 결재코드 - 연결
 	
 	//calc Values
-	private int days;						// n일
+	private double days;						// n일
 	private int nights;						// n박
 }

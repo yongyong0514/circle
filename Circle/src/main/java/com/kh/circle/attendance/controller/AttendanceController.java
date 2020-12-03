@@ -27,7 +27,7 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceInfoService attendanceService;
 	
-	@GetMapping("/main")
+	@GetMapping("/myAttendance")
 	public String main(HttpSession session,
 						@RequestParam(defaultValue="") String dateStr,
 						Model model) throws ParseException {
@@ -57,7 +57,7 @@ public class AttendanceController {
 			model.addAttribute("map", map);
 			model.addAttribute("today", date);
 			
-			return "attendance/main";
+			return "attendance/myAttendance";
 		} else {
 			model.addAttribute("msg", "로그인 후 사용 가능합니다.");
 			
@@ -65,11 +65,6 @@ public class AttendanceController {
 		}
 	}
 	
-	@GetMapping("/myVacation")
-	public String myVacation() {
-		return "attendance/myVacation";
-	}
-
 	@GetMapping("/allAttendanceList")
 	public String allAttendanceList() {
 		return "attendance/allAttendanceList";
@@ -88,14 +83,5 @@ public class AttendanceController {
 	@GetMapping("/allVacationHistory")
 	public String allVacationHistory() {
 		return "attendance/allVacationHistory";
-	}
-	
-	
-	
-	
-	
-	@GetMapping("/test")
-	public String test() {
-		return "attendance/test";
 	}
 }

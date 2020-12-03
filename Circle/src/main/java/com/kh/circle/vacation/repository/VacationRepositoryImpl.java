@@ -20,11 +20,32 @@ public class VacationRepositoryImpl implements VacationRepository{
 	public List<Vacation> vacationList(String emp_no) {
 		
 		List<Vacation> vList = sqlSession.selectList("vacation.searchWithEmpNo", emp_no);
-		Vacation v =  (Vacation) vList.get(0);
 
-		log.info("v: " + v);
-		
 		return vList;
+	}
+
+	@Override
+	public String annualTerm(String emp_no) {
+		
+		String annualTerm = sqlSession.selectOne("vacation.annualTerm", emp_no);
+		
+		return annualTerm;
+	}
+
+	@Override
+	public int annualLeave(String annualTerm) {
+		
+		int annualLeave = sqlSession.selectOne("vacation.annualLeave", annualTerm);
+		
+		return annualLeave;
+	}
+
+	@Override
+	public double usedVacationDays(String emp_no) {
+
+		double usedVacationDays = sqlSession.selectOne("vacation.usedVacationDays", emp_no);
+		
+		return usedVacationDays;
 	}
 
 }
