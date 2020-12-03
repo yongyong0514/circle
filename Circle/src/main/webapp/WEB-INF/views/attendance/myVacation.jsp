@@ -33,21 +33,17 @@
 					<table class="summaryTable">
 						<tr>
 							<th></th>
-							<th>총 연차</th>
-							<th>지급연차</th>
-							<th>지급월차</th>
 							<!-- 1년 미만은 근무개월수*2 월차 발생 -->
+							<th>총 연차</th>
 							<th>사용연차</th>
 							<th>잔여연차</th>
 						</tr>
 						<!-- 값 불러오기 -->
 						<tr>
-							<td>가나다 대리</td>
-							<td>18</td>
-							<td>18</td>
-							<td>-</td>
-							<td>2</td>
-							<td>16</td>
+							<td><c:out value="${sessionScope.empInfo.emp_info_name}"/></td>
+							<td><c:out value="${map.annualLeave }"/></td>
+							<td><c:out value="${map.usedVacationDays }"/></td>
+							<td><c:out value="${map.leftVacationDays }"/></td>
 						</tr>
 						<!-- 값 불러오기 끝 -->
 					</table>
@@ -106,9 +102,9 @@
 							<table class="vacationApplyTable">
 								<tr>
 									<td>휴가신청일</td>
-									<td><input type="date" readonly></td>
+									<td><input class="registDate" name="registDate" type="date" readonly></td>
 									<td>구분</td>
-									<td><select name="vacationType">
+									<td><select class="vacationType" name="vacationType">
 											<option value="annual" selected>연차</option>
 											<option value="half">반차</option>
 											<option value="bereavement">경조사</option>
@@ -119,7 +115,7 @@
 											<option value="etc">기타</option>
 									</select></td>
 									<td>전일/반일</td>
-									<td><select name="isHalf">
+									<td><select class="isHalf" name="isHalf">
 											<option value="full" selected>전일</option>
 											<option value="amHalf">오전반차</option>
 											<option value="pmHalf">오후반차</option>
@@ -163,9 +159,9 @@
 		</div>
 	</div>
 
-	<!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
+			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
@@ -176,8 +172,32 @@
 				} else {
 					$(".leftBar").removeClass("fixed");
 				}
-			})
+			});
+			<!-- 왼쪽바 고정 추가 옵션 끝-->
+			
+			/* 휴가신청일: 오늘날짜로 초기화 */
+			$(".registDate").val(getFormatDate(new Date()));
+	
+			/* 휴가 구분에 따라 전일/반일 선택 제한 */
+			if( $(".vacationType").change( function(){ return $(this).val(); } ) == "half") {
+					console.log(":dmdkrklk");
+			}
+				
+			
+		
 		});
+		
+		<!-- 날짜포맷 변경 시작 -->
+		function getFormatDate(date){
+		    var year = date.getFullYear();				//yyyy
+		    var month = (1 + date.getMonth());			//M
+		    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+		    var day = date.getDate();					//d
+		    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+		    return  year + '-' + month + '-' + day;		//형태 생성
+		}
+		<!-- 날짜포맷 변경 끝 -->
+		
 	</script>
 </body>
 </html>

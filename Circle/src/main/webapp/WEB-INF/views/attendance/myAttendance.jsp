@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/attendance/main.css">
+	href="${pageContext.request.contextPath}/resources/css/attendance/myAttendance.css">
 </head>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
@@ -139,7 +139,7 @@
 			
 			var dateStr = getFormatDate(date);
 
-			location.href = "${pageContext.request.contextPath}/attendance/main?dateStr=" + dateStr;
+			location.href = "${pageContext.request.contextPath}/attendance/myAttendance?dateStr=" + dateStr;
 		};	
 			
 		<!-- 날짜변경 옵션 끝 -->

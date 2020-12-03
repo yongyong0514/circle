@@ -1,4 +1,9 @@
 /* 조직도 버튼 */
+.organChart{
+	position:absolute;
+	z-index:99;
+}
+
 .organChartBorder{
 	box-sizing: border-box;
 	position:fixed;

@@ -125,11 +125,11 @@
 									<tr>
 										<td class="titleCell">입사일</td>
 										<td><input type="text"
-											value="<c:out value='${map.empInfoOne.emp_info_edat }'/>"
+											value="<c:out value='${map.empInfoOne.emp_info_sdat }'/>"
 											readonly></td>
 										<td class="titleCell">퇴사일</td>
 										<td><input type="text"
-											value="<c:out value='${map.empInfoOne.emp_info_sdat }'/>"
+											value="<c:out value='${map.empInfoOne.emp_info_edat }'/>"
 											readonly></td>
 										<td class="titleCell">비상연락처</td>
 										<td><input type="text"

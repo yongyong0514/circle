@@ -38,7 +38,7 @@
 
 			<!-- 메뉴 시작 -->
 			<div class="menuLeftListTitle">인사/근태관리</div>
-			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/main'">내 근태이력</div>
+			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">내 근태이력</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/empInfo/myInfo'">내 인사정보</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/vacation/myVacation'">내 연차이력</div>
 			

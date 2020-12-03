@@ -38,7 +38,7 @@
 						<div><button class="buttonSize" disabled><img src="${pageContext.request.contextPath}/resources/img/common/menu/167-wall-clock.png" class="menuIcon"><br>예약</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/poll/pollMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/121-paste.png" class="menuIcon"><br>설문</button></div>
 						<div><button class="buttonSize" onclick="location.href='${pageContext.request.contextPath}/addressBook/main'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/109-smartphone.png" class="menuIcon"><br>주소록</button></div>
-						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath }/attendance/main"'><img src="${pageContext.request.contextPath}/resources/img/common/menu/032-briefcase.png" class="menuIcon"><br>근태관리</button></div>
+						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath }/attendance/myAttendance"'><img src="${pageContext.request.contextPath}/resources/img/common/menu/032-briefcase.png" class="menuIcon"><br>근태관리</button></div>
 						<div><button class="buttonSize1"><img src="${pageContext.request.contextPath}/resources/img/common/menu/152-followers.png" class="menuIcon"><br>관리자</button></div>
 					</div>
 					<div class="changePlan">
