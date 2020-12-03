@@ -13,6 +13,7 @@ public class SignModify {
 	private String sign_code;
 	private String sign_emp_code;
 	private String sign_type_name;
+	private String sign_type_code;
 	private String sign_title;
 	private String emp_info_name;
 	private String job_info_name;
@@ -24,6 +25,7 @@ public class SignModify {
 	private String sign_count;
 	private String sign_note;
 	private String sign_keep;
+	private String sign_acc;
 	private String jCodeList;
 	private String wCodeList;
 }

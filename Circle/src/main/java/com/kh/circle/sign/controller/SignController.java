@@ -129,22 +129,29 @@ public class SignController {
 		SignModify signModify = sqlSession.selectOne("sign.signModify", signCode);
 		model.addAttribute("signModify", signModify);
 		
-		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signModifyJList", signCode);
-		String jList = "";
-		for(int i = 0; i < signListJoiner.size(); i++) {
-			jList += signListJoiner.get(i) + "/";
-		}
-		signModify.setJCodeList(jList.substring(0, jList.length() -1));
+		List<SignType> list = sqlSession.selectList("sign.signTypeList");
+		model.addAttribute("list", list);
 		
-		List<SignListJoiner> signListWatcher = sqlSession.selectList("sign.signModifyWList", signCode);
+		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
+		model.addAttribute("list2", list2);
 		
-		if(!signListWatcher.isEmpty()) {
-			String wList = "";
-			for(int i = 0; i < signListWatcher.size(); i++) {
-				wList += signListWatcher.get(i) + "/";
-			}
-			signModify.setWCodeList(wList.substring(0, wList.length() -1));
-		}
+//		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signModifyJList", signCode);
+//		String jList = "";
+//		for(int i = 0; i < signListJoiner.size(); i++) {
+//			jList += signListJoiner.get(i) + "/";
+//		}
+//		signModify.setJCodeList(jList.substring(0, jList.length() -1));
+//		
+//		List<SignListJoiner> signListWatcher = sqlSession.selectList("sign.signModifyWList", signCode);
+//		
+//		if(!signListWatcher.isEmpty()) {
+//			String wList = "";
+//			for(int i = 0; i < signListWatcher.size(); i++) {
+//				wList += signListWatcher.get(i) + "/";
+//			}
+//			signModify.setWCodeList(wList.substring(0, wList.length() -1));
+//		}
+
 		return "sign/signModify";
 	}
 

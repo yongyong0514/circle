@@ -35,7 +35,7 @@
 									<input type="text" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> 
 									<input type="text" class="formInput1" id="sign_count" name="sign_count" readonly></th>
 								<th class="formBox1">직급</th>
-								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.emp_info_job_code}" readonly></th>
+								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
 							</tr>
 							<tr>
 								<th class="formBox1">보존 연한</th>
