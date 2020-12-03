@@ -19,9 +19,9 @@ public class OrganChartController {
 	
 	@GetMapping("/getInfo")
 	public String getInfo(Model model) {
-		List<List<OrganDept>> levelList = organChartService.oDList();
+		List<OrganDept> oDList = organChartService.oDList();
 		
-		model.addAttribute("levelList", levelList);
+		model.addAttribute("oDList", oDList);
 		
 		return "/common/menuOrganChart";
 	}

@@ -6,15 +6,15 @@
 
 <mapper namespace="organChart">
 
-	<select id="maxLevel" resultType="int">
+<!-- 	<select id="maxLevel" resultType="int">
 	select max(level)
 	  from dept_info
 	 start with dept_info_code = 'D0000'
    connect by nocycle prior dept_info_code = dept_info_uper
 	 order by dept_info_code
-	</select>
+	</select> -->
 	
-	<select id="deptList" parameterType="int" resultType="organDept">
+<!-- 	<select id="deptList" parameterType="int" resultType="organDept">
 		select lvl
 			 , dept_info_code
 			 , dept_info_name
@@ -31,7 +31,21 @@
 				 order by dept_info_code
 			   )
 		 where lvl = #{lvl}
-	</select>	
+	</select>	 -->
+	
+	<select id="deptList" resultType="organDept">
+		select level as lvl
+			 , dept_info_code
+			 , dept_info_name
+			 , dept_info_levl
+			 , dept_info_uper
+		  from dept_info
+		 start with dept_info_code = 'D0000'
+	   connect by nocycle prior dept_info_code = dept_info_uper
+		 order by dept_info_code
+	</select>
+	
+	
 	
 	<select id="empList" parameterType="string" resultType="organEmp">
 		select EI.emp_info_emp_no

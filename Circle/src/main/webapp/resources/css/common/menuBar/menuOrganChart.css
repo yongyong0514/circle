@@ -39,7 +39,7 @@
 	position: fixed;
 	left: 80px;
 	bottom: 2.2rem;
-	width: 30vw;
+	width: 20vw;
 	height: 50vh;
 	background: white;
 	border: 1px solid #0072C6;
@@ -103,6 +103,12 @@
 
 /* 트리구조 css */
 
+.deptBtn{
+	font-weight: bold;
+	color: #0072C6;
+}
+
+
 .tree div {margin-left:25px; background:transparent; border:0;}
 .tree ul {display:none; padding-left:17px;}
 .tree li.unfold>ul {display:block;}
@@ -115,4 +121,4 @@
 .tree li.final span {cursor:default;}
 .tree li span::before {content:'+';}
 .tree li.unfold>span::before {content:'-';}
-.tree li.final span::before {content:'▒';}
+.tree li ul li.unfold>span::before {content:'-';}
