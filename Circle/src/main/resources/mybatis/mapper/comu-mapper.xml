@@ -88,7 +88,7 @@ where rn between #{start} and #{end}
 </select>
 
 <!-- 게시글 작성 -->
-<insert id="comuAdd">
+<!-- <insert id="comuAdd">
 	insert into comu_post(
 	comu_post_ordr,
 	comu_post_wrtr_emp_no,
@@ -107,39 +107,36 @@ where rn between #{start} and #{end}
 	0,
 	#{comu_post_comu_code},
 	'1')
-</insert>
-
-
-
-
-
-
-
-	<!-- <select id="comuList" resultType="comuPlus">
-select * 
-from post p, emp_info e, post_type t
-where p.post_emp = e.emp_info_emp_no 
-and p.post_type = t.post_type_code
-order by post_code desc
-	</select> -->
+</insert> -->
 	
-	
-<!--  <select id="seq" resultType="String">
-		select post_seq.nextval from dual
+	<select id="add2" parameterType="String" resultType="String">
+		select emp_info_name
+			from emp_info
+			where emp_info_emp_no = #{emp_no}
 	</select>
-	
-	<insert id="insert" parameterType="post">
-	INSERT INTO POST(
-	POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT, POST_WDAT, POST_MDAT, POST_CVP,
-	 POST_SEC, POST_NOTI, POST_CODE_REF, POST_STAT)
-   
-    VALUES(
-    CONCAT('POST', LPAD(POST_SEQ.NEXTVAL, 6, 0)), '201603240077',  'POTY000001', '튼튼하며. 이상은 가치를 봄바람을 능히 커다란 이것이다.    ',
-    
-    ' 현저하게 것은 청춘 있으랴? 아름답고 놀이 날카로우나 그들의 이상의 그림자는 이것이다. 굳세게 만물은 이상의 피부가 얼음과 심장의 그와 고동을 낙원을 칼이다. 쓸쓸한 품으며, 없으면, 공자는 우리의 철환하였는가? 같이, 뜨거운지라, 같이, 실로 품으며, 영락과 사랑의 그들의 귀는 것이다. 산야에 청춘의 없으면, 불러 가진 광야에서 인간의 그들은 끓는 듣는다. 품고 못할 오아이스도 창공에 시들어 바이며, 가슴이 황금시대다. 속에서 바로 별과 아니다. 청춘의 것은 피에 위하여서, 봄바람이다.  '
-    , DEFAULT , '', 0, 'Y', 'N', '', 'N');
-	</insert> -->
-
-
+									<!-- 별칭 -->
+	<insert id="insert" parameterType="comu">
+		insert into comu_post(
+		comu_post_ordr,
+		comu_post_wrtr_emp_no,
+		comu_post_title,
+		comu_post_cont,
+		comu_post_dat,
+		comu_post_view,
+		comu_post_comu_code,
+		comu_post_type
+		)
+		values
+		(
+				copo_seq.nextval
+			, #{comu_post_wrtr_emp_no}
+			, #{comu_post_title}
+			, #{comu_post_cont}
+			, sysdate
+			, 0
+			, #{comu_post_comu_code}
+			, '1'
+		)
+	</insert>
 </mapper>
 

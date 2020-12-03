@@ -12,6 +12,8 @@ public interface ComuDao {
 	
 	public void comuAdd(Comu vo)throws Exception;
 
-
+	public String comuAdd2(String emp_no);
+	
+	public void comuInsert(Comu comu);
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import com.kh.circle.comu.entity.Comu;
 import com.kh.circle.comu.entity.ComuList;
 import com.kh.circle.comu.entity.ComuPager;
 import com.kh.circle.comu.service.ComuService;
+import com.kh.circle.login.entity.EmpInfo;
 
 @Controller
 @RequestMapping("/community")
@@ -58,24 +60,34 @@ public class ComuController {
 		return mav;
 	}
 	//게시글 작성
-	@RequestMapping(value="/comuAdd")
-	public String comuAdd(Model model) {
+	@RequestMapping(value="/comuAdd")	
+									//하나씩 가져올때는 add에 name이 job인 객체(@ModelAttribute("job") String str,
+	public String comuAdd(@ModelAttribute Comu comu,	
+				Model model) {
+		comu.getComu_post_title();
+		
 		List<ComuList> list = sqlSession.selectList("comu.comuNameList");
 		model.addAttribute("list",list);
 		
 		return "community/comuAdd";
 	}
-	@RequestMapping(value="/comuAddAction",method=RequestMethod.POST)
-	@ModelAttribute
-	public String comuAddAction(HttpSession session ,Comu vo)throws Exception{
+	
+	
+	@PostMapping("/comuAddAction")
+	public String comuAddAction(HttpSession session ,
+					@ModelAttribute Comu comu)throws Exception{
+		//여기까지가 1번째 단계
 		
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
-		//Comu comu = sqlSession.selectOne("comu.comuAdd");
-		service.comuAdd(vo);
+		String emp_name = service.comuAdd2(emp_no);
+		//2번째 단계 끝
 		
-		// 이건 나중에
-		//String writer = ((Comu)session.getAttribute("comu.comuAdd")).getComu_post_wrtr_emp_no();
-		//vo.setComu_post_wrtr_emp_no(comu);
+		comu.setComu_post_wrtr_emp_no(emp_no);
+		comu.setEmp_info_name(emp_name);
+		
+		service.comuInsert(comu);
+		
 		return"redirect:community/comuList";
 	}
 	
