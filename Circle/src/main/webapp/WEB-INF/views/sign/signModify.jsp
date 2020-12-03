@@ -35,7 +35,7 @@
 									<input type="text" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> 
 									<input type="text" class="formInput1" id="sign_count" name="sign_count" readonly></th>
 								<th class="formBox1">직급</th>
-								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.emp_info_job_code}" readonly></th>
+								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
 							</tr>
 							<tr>
 								<th class="formBox1">보존 연한</th>
@@ -63,17 +63,17 @@
 							<tr>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox4" colspan="3">
-									<select class="formSelect2" id="sign_type_code" name="sign_type_code">
+									<select class="formSelect2" id="sign_type_code" name="sign_type_code" disabled>
 										<option value="0">문서 유형을 선택하세요</option>
 										<c:forEach var="item" items="${list}">
-											<option value="${item.sign_type_code}"<c:if test="${signModify.sign_type_code eq item.sign_type_code}">selected</c:if>>${item.sign_type_name}</option>
+											<option value="${item.sign_type_code}" <c:if test="${signModify.sign_type_code eq item.sign_type_code}">selected</c:if>>${item.sign_type_name}</option>
 										</c:forEach>
 									</select>
 								</th>
 							</tr>
 							<tr>
 								<th class="formBox1">제목</th>
-								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title" name="sign_title"></th>
+								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="sign_title" name="sign_title" value="${signModify.sign_title}"></th>
 							</tr>
 							<tr>
 								<th class="formBox0"></th>
@@ -90,7 +90,7 @@
 							</tr>
 						</table>
 						<div class="formBox5" id="editor"></div>
-						<textarea id="sign_note" name="sign_note" readonly></textarea>
+						<textarea id="sign_note" name="sign_note" readonly>${signModify.sign_note}</textarea>
 					</div>
 					<div class="formRight">
 						<div>
@@ -221,8 +221,8 @@
 							</table>
 						</div>
 					</div>
-					<input type="hidden" id="jCodeList" name="jCodeList" readonly>
-					<input type="hidden" id="wCodeList" name="wCodeList" readonly>
+					<input type="hidden" id="jCodeList" name="jCodeList" value="" readonly>
+					<input type="hidden" id="wCodeList" name="wCodeList" value="" readonly>
 				</div>
 			</div>
 		</form>
@@ -274,7 +274,30 @@
 			initialEditType : "wysiwyg",
 		});
 	</script>
-	
+
+<!-- 수정 폼 로드 시 가져올 일부 본문 값 -->
+	<script>
+		$(document).ready(function(){
+			var note = $('#sign_note').val();
+			editor.setHtml(note);
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			
+			$.ajax({
+				url: base + "/signResult/signListJoiner",
+				type: "get",
+				data: {signCode : signCode[1]},
+				success: function(data) {
+					
+					sessionStorage.setItem('joiner', JSON.stringify(data));				
+				}
+			});
+		});
+	</script>
 <!-- 문서 종류 옵션 시작 -->
 	<script>
 		$("#sign_type_code").on("change", function() {
