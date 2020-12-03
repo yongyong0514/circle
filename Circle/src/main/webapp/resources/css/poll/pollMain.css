@@ -4,7 +4,7 @@
 html body {
 	overflow-x: hidden;
 	width:100%;
-    min-width: 1000px;
+    min-width: 900px;
     position: relative;
 }
 
