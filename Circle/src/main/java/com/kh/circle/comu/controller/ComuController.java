@@ -80,7 +80,7 @@ public class ComuController {
 		
 		System.out.println("대충 : " + comu);
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-System.out.println("DDD : " + emp_no);		
+		System.out.println("DDD : " + emp_no);		
 		String emp_name = service.comuAdd2(emp_no);
 		
 		System.out.println("DDFD : " + emp_name);
@@ -96,16 +96,6 @@ System.out.println("DDD : " + emp_no);
 		return"redirect:/community/comuList";
 	}
 	
-	//게시글 동호회 선택
-	/*
-	 * @GetMapping("/comuName") public ModelAndView comuName() throws Exception{ //
-	 * 게시글 리스트 ModelAndView mv = new ModelAndView(); List<Comu> comuName =
-	 * service.comuName(); mv.setViewName("community/comuAdd"); Map<String, Object>
-	 * mapName = new HashMap<String, Object>(); mapName.put("comuName", comuName);
-	 * mv.addObject("mapName", mapName); // model.addAttribute("comuList",comuList);
-	 * for (Comu a : comuName) { System.out.println("comuName 값 넘어오낭??" +
-	 * a.getComu_list_name()); } return mv; }
-	 */
 
 	@GetMapping("/comuInfoList")
 	public String comuInfoList() {
@@ -116,18 +106,61 @@ System.out.println("DDD : " + emp_no);
 	public String comuJoin() {
 		return "community/comuJoin";
 	}
-
-	// 동호회 게시글 등록
-	/*
-	 * @GetMapping("/comuAdd") public String comuAdd(Model
-	 * model, @ModelAttribute("comu.comuList") Comu comu) {
-	 * 
-	 * model.addAttribute("comu", comu);
-	 * 
-	 * return "community/comuAdd"; }
-	 */
 	@GetMapping("/comuApp")
 	public String comuApp() {
 		return "community/comuApp";
 	}
-}
+	
+	//게시글 상세조회
+	@GetMapping ("comuDetail")
+		public String comuDetail(Model model,@RequestParam("comu_post_ordr") String comu_post_ordr) {
+		
+		//번호가져와서 해당하는 번호를 볼수있게
+		model.addAttribute("comuDetail",service.comuDetail(comu_post_ordr));
+		
+		return "community/comuDetail";
+	}
+
+	/* 수정하기로 들어가기 comu_post_wrtr_emp_no 가 맞아야 들어간다 */
+	@GetMapping("/comuUpdate")
+	public String comuUpdate(Model model,@RequestParam("emp_info_name")String emp_info_name) {
+		
+		model.addAttribute("comuCheck", service.comuCheck(emp_info_name));
+		
+		return "community/comuUpdate";
+	}
+}	
+
+
+
+
+//	@GetMapping("/edit")
+//		public String edit(@RequestParam String comu_post_wrtr_emp_no) {
+//			Comu comu=sqlSession.selectOne("");
+//		
+//		
+//			return "community/comuUpdate";
+//		}
+//		
+//	}
+
+//게시글 동호회 선택
+/*
+ * @GetMapping("/comuName") public ModelAndView comuName() throws Exception{ //
+ * 게시글 리스트 ModelAndView mv = new ModelAndView(); List<Comu> comuName =
+ * service.comuName(); mv.setViewName("community/comuAdd"); Map<String, Object>
+ * mapName = new HashMap<String, Object>(); mapName.put("comuName", comuName);
+ * mv.addObject("mapName", mapName); // model.addAttribute("comuList",comuList);
+ * for (Comu a : comuName) { System.out.println("comuName 값 넘어오낭??" +
+ * a.getComu_list_name()); } return mv; }
+ */
+
+// 동호회 게시글 등록
+/*
+ * @GetMapping("/comuAdd") public String comuAdd(Model
+ * model, @ModelAttribute("comu.comuList") Comu comu) {
+ * 
+ * model.addAttribute("comu", comu);
+ * 
+ * return "community/comuAdd"; }
+ */
