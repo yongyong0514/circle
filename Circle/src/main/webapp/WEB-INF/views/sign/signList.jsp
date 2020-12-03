@@ -19,6 +19,9 @@
 		<div class="leftBar">
 			<jsp:include page="../sign/signLeftBar.jsp" />
 		</div>
+		<div>
+			<c:import url="/organChart/getInfo"/>
+		</div>
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../sign/signHomeBar.jsp" />

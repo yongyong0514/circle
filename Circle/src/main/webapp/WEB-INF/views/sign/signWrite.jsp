@@ -312,6 +312,8 @@
                     $(this).css('border', '2px dotted #0B85A1');
                     e.preventDefault();
                     var files = e.originalEvent.dataTransfer.files;
+                    
+                    console.log(files);
                 
                     handleFileUpload(files,objDragAndDrop);
                 });

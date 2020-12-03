@@ -7,15 +7,12 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kh.circle.sign.vo.SignEmpList;
+import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignListJoiner;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/signResult")
@@ -54,6 +51,14 @@ public class SignResultController {
 		map.put("result", result);
 		
 		return map;
+	}
+	
+//	결재 첨부 파일 로드
+	@GetMapping("/signFileList")
+	public List<SignFiles> signFileList(@RequestParam String signCode) {
+		List<SignFiles> list = sqlSession.selectList("sign.signFileList", signCode);
+		
+		return list;
 	}
 
 }

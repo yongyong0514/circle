@@ -330,7 +330,18 @@
  		 WHERE SJ.SIGN_JOIN_TYPE = 'N'
    		   AND SI.SIGN_CODE = #{signCode}
  		 ORDER BY JI.JOB_INFO_CODE ASC
-	</select>	
+	</select>
+	
+	<select id="signFileList" resultType="signFiles">
+		SELECT *
+ 		  FROM FILES
+		 WHERE FILES_TYPE=#{signCode}
+		   AND FILES_STATUS = 'N'
+	</select>
+<!-- 	<update id="signModify" parameterType="signWriteInsert">
+		
+	</update> -->
+	
 <!-- modify one sign case end -->
 
 	<select id="signTypeContent" resultType="String">

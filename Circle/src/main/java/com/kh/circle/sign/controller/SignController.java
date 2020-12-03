@@ -123,7 +123,7 @@ public class SignController {
 		return "sign/signSelectOne";
 	}
 	
-// 결재 한건 수정
+// 결재 한건 수정 화면
 	@GetMapping("/signModify")
 	public String signModify(@RequestParam String signCode, Model model) {
 		SignModify signModify = sqlSession.selectOne("sign.signModify", signCode);
@@ -134,27 +134,16 @@ public class SignController {
 		
 		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
 		model.addAttribute("list2", list2);
-		
-//		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signModifyJList", signCode);
-//		String jList = "";
-//		for(int i = 0; i < signListJoiner.size(); i++) {
-//			jList += signListJoiner.get(i) + "/";
-//		}
-//		signModify.setJCodeList(jList.substring(0, jList.length() -1));
-//		
-//		List<SignListJoiner> signListWatcher = sqlSession.selectList("sign.signModifyWList", signCode);
-//		
-//		if(!signListWatcher.isEmpty()) {
-//			String wList = "";
-//			for(int i = 0; i < signListWatcher.size(); i++) {
-//				wList += signListWatcher.get(i) + "/";
-//			}
-//			signModify.setWCodeList(wList.substring(0, wList.length() -1));
-//		}
 
 		return "sign/signModify";
 	}
-
+	
+// 결재 한건 수정
+	@PostMapping("/signModify")
+	public String signModify() {
+		
+		return "sign/signList";
+	}
 	
 	
 // 문서 첫화면
