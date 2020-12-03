@@ -83,6 +83,9 @@ input[type=radio], input{
     vertical-align: middle;
     margin-top: -2px;
 }
+.toolbar-icon.write {
+    background-position: -250px -200px;
+}
 .toolbar-icon.modify {
     background-position: -300px -200px;
 }

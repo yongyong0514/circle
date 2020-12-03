@@ -29,7 +29,9 @@
 		<div class="poll-navLeft">
 			<jsp:include page="../poll/pollLeftBar.jsp" />
 		</div>
-		
+		<div class="organChart">
+			<c:import url="/organChart/getInfo"/>
+		</div>
 		<!-- 컨텐츠 구현부분 -->
 		<div class="poll-container">
 		
