@@ -105,7 +105,7 @@
 									<td><input class="regitDate" name="regitDate" type="date" readonly></td>
 									<td>구분</td>
 									<td><select class="vacationType" name="vacationType">
-											<option value="annual">연차</option>
+											<option value="annual" selected>연차</option>
 											<option value="half">반차</option>
 											<option value="bereavement">경조사</option>
 											<option value="maternity">출산/육아</option>
@@ -116,7 +116,7 @@
 									</select></td>
 									<td>전일/반일</td>
 									<td><select class="isHalf" name="isHalf">
-											<option value="full">전일</option>
+											<option value="full" selected>전일</option>
 											<option value="amHalf">오전반차</option>
 											<option value="pmHalf">오후반차</option>
 									</select></td>
@@ -128,7 +128,7 @@
 									~
 									<input class="endDate" name="endDate" type="date">
 									&nbsp;&nbsp;&nbsp;&nbsp;일수: 
-									<input class="calcDate" name="calcDate" type="text" value="1" readonly />
+									<input class="calcDate" name="calcDate" type="text" value="0" readonly />
 									<!-- 일수는 바로 계산 --></td>
 									<td>전자결제상태</td>
 									<td><input type="text" id="permissionStatus"
@@ -139,7 +139,7 @@
 								</tr>
 								<tr>
 									<td>내용</td>
-									<td colspan="5"><textarea></textarea></td>
+									<td colspan="5"><textarea name="content"></textarea></td>
 								</tr>
 							</table>
 							<br>
@@ -194,7 +194,6 @@
 			
 			/* 휴가 계산일 수 초기화 */
 			$(".calcDate").val(resultDays);
-			
 			
 			/* 휴가 구분 선택 시 */
 			$(".vacationType").change(function(){
