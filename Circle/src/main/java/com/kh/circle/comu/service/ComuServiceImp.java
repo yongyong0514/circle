@@ -40,15 +40,16 @@ public class ComuServiceImp implements ComuService {
 		// TODO Auto-generated method stub
 		dao.comuAdd(vo);
 	}
-
+	
+	//사원번호 가져오기
 	@Override
 	public String comuAdd2(String emp_no) {
 		String emp_name = dao.comuAdd2(emp_no);
 
-		
 		return emp_name;
 	}
-
+	
+	//게시글 작성
 	@Override
 	public void comuInsert(Comu comu) {
 		
@@ -57,6 +58,28 @@ public class ComuServiceImp implements ComuService {
 		dao.comuInsert(comu);
 	}
 
+	//상세조회
+	@Override
+	public List<Comu> comuDetail(String comu_post_ordr) {
+
+		dao.CountView(comu_post_ordr);
+		
+		return dao.comuDetail(comu_post_ordr);
+	}
+	
+	//수정화면 들어가기
+	@Override 
+	public List<Comu> comuCheck(String emp_info_name) {
+		
+		return dao.comuCheck(emp_info_name);
+	}
+	@Override
+	public void comuUpdate(Comu comu) {
+		
+		dao.comuUpdate(comu);
+	}
+
+	
 	}
 
 

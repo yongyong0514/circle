@@ -62,7 +62,6 @@ from comu_post c, emp_info e, comu_list l
 where c.COMU_POST_WRTR_EMP_NO = e.emp_info_emp_no 
 and c.COMU_POST_COMU_CODE = l.COMU_LIST_CODE
 order by comu_post_ordr desc
-	<!-- select * from comu_post order by comu_post_ordr desc  -->
 	<include refid="paging_footer"></include>
 </select>
 
@@ -87,34 +86,15 @@ where rn between #{start} and #{end}
 	 
 </select>
 
-<!-- 게시글 작성 -->
-<!-- <insert id="comuAdd">
-	insert into comu_post(
-	comu_post_ordr,
-	comu_post_wrtr_emp_no,
-	comu_post_title,
-	comu_post_cont,
-	comu_post_dat,
-	comu_post_view,
-	comu_post_comu_code,
-	comu_post_type)
-	values(
-	copo_seq.nextval,
-	#{comu_post_wrtr_emp_no},
-	#{comu_post_title},
-	#{comu_post_cont},
-	sysdate,
-	0,
-	#{comu_post_comu_code},
-	'1')
-</insert> -->
-	
+	<!-- 사원번호 가져오기 -->
 	<select id="add2" parameterType="String" resultType="String">
 		select emp_info_name
 			from emp_info
 			where emp_info_emp_no = #{emp_no}
 	</select>
-									<!-- 별칭 -->
+	
+	
+	<!-- 게시판 작성 -->			<!-- 별칭 -->
 	<insert id="insert" parameterType="comu">
 		insert into comu_post(
 		comu_post_ordr,
@@ -138,5 +118,41 @@ where rn between #{start} and #{end}
 			, '1'
 		)
 	</insert>
+	
+	<!-- 게시글 상세 보기 -->
+	<select id="comuDetail" resultType="comu" parameterType="String">
+	select *
+	from comu_post c
+	join comu_list l on(c.comu_post_comu_code = l.comu_list_code)
+	join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
+	where c.comu_post_ordr = #{comu_post_ordr}
+	</select>
+	
+	<!-- 조회수 카운트 -->
+	<update id="CountView">
+		update comu_post
+		set comu_post_view = comu_post_view + 1
+		where comu_post_ordr = #{comu_post_ordr}
+	</update>
+	
+	
+	<!-- 수정글로 입장 -->
+	<select id="comuCheck" parameterType="String" resultType="comu">
+			select *
+		from comu_post c
+		join comu_list l on (c.comu_post_comu_code = l.comu_list_code)
+		join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
+		where e.emp_info_name = #{emp_info_name}
+	</select>
+	
+	
+	<!-- 게시글 수정 -->
+	<update id="ComuUpdate">
+		update comu_post
+		set 
+	</update>
 </mapper>
+
+
+
 

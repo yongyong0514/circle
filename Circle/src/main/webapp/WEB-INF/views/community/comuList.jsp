@@ -82,7 +82,7 @@
 					<tr id="List">
 						<td><br>${comuList.comu_post_ordr}</td>
 						<td><br>${comuList.comu_list_name}</td>
-						<td><br>${comuList.comu_post_title}</td>
+						<td><br><a href='<c:url value='/community/comuDetail?comu_post_ordr=${comuList.comu_post_ordr}'/>'>${comuList.comu_post_title}</a></td>
 						<td><br>${comuList.emp_info_name}</td>
 						<td><br>${comuList.comu_post_view}</td>
 						<td><br>${comuList.comu_post_dat}</td>
