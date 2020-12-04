@@ -37,6 +37,9 @@ public interface PostService {
 
 	void postUpdate(Post post);
 
-	List<Post> postCheck(String post_code);
+	Post postCheck(String post_code);
 
+	
+	//삭제하기
+	void postDelete(String post_code);
 }

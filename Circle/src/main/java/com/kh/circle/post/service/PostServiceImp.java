@@ -82,8 +82,8 @@ public class PostServiceImp implements PostService {
 		postDao.postInsert(post);
 
 	}
-	
-	//상세보기
+
+	// 상세보기
 
 	@Override
 	public List<Post> viewDetail(String post_code) {
@@ -93,20 +93,23 @@ public class PostServiceImp implements PostService {
 		return postDao.viewDetail(post_code);
 	}
 
-	//수정하기
+	// 수정하기
 	@Override
 	public void postUpdate(Post post) {
 
-		
-		System.out.println("seeeeeeeee ; "+ post);
 		postDao.postUpdate(post);
 	}
 
 	@Override
-	public List<Post> postCheck(String post_code) {
+	public Post postCheck(String post_code) {
 
 		return postDao.postCheck(post_code);
 	}
-	
+
+	@Override
+	public void postDelete(String post_code) {
+
+		postDao.postDelete(post_code);
+	}
 
 }
