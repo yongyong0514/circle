@@ -6,6 +6,7 @@ import java.util.List;
 
 
 import com.kh.circle.comu.entity.Comu;
+import com.kh.circle.comu.entity.ComuList;
 
 
 public interface ComuService {
@@ -28,12 +29,19 @@ public interface ComuService {
 	public List<Comu> comuDetail(String comu_post_ordr);
 	
 	//글 수정으로 입장
-	List<Comu> comuCheck(String emp_info_name);
+	List<Comu> comuCheck(String comu_post_ordr);
 	
 	//글 수정
 	void comuUpdate(Comu comu);
 	
+	//글 삭제하기
+	void comuDelete(String comu_post_ordr);
 	
+	//동호회 리스트 가져오기
+	List<ComuList> comuListName(String comu_list_code);
+	
+	//가입신청서에 동호회 이름 가져오기
+	public String comuApp(String comu_list_code);
 	
 	
 	 //void add(Comu comu, MultipartFile insert) throws IllegalStateException,IOException;

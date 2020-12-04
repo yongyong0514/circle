@@ -19,7 +19,8 @@
 		inner join job_info JI on (e.emp_info_job_code = JI.job_info_code) 
 	where emp_info_emp_no=#{emp_info_emp_no}
 	and emp_info_pwd=#{emp_info_pwd}
-	and emp_info_edat is null
+	and emp_info_edat is null 
+	 
  </select>
  	
 <!-- <select id="joinmember" parameterType="joinmember" resultType="joinmember" >

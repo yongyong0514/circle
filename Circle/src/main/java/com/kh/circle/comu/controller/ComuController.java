@@ -95,22 +95,7 @@ public class ComuController {
 		
 		return"redirect:/community/comuList";
 	}
-	
 
-	@GetMapping("/comuInfoList")
-	public String comuInfoList() {
-		return "community/comuInfoList";
-	}
-
-	@GetMapping("/comuJoin")
-	public String comuJoin() {
-		return "community/comuJoin";
-	}
-	@GetMapping("/comuApp")
-	public String comuApp() {
-		return "community/comuApp";
-	}
-	
 	//게시글 상세조회
 	@GetMapping ("comuDetail")
 		public String comuDetail(Model model,@RequestParam("comu_post_ordr") String comu_post_ordr) {
@@ -123,15 +108,54 @@ public class ComuController {
 
 	/* 수정하기로 들어가기 comu_post_wrtr_emp_no 가 맞아야 들어간다 */
 	@GetMapping("/comuUpdate")
-	public String comuUpdate(Model model,@RequestParam("emp_info_name")String emp_info_name) {
+	public String comuUpdate(Model model,@RequestParam("comu_post_ordr")String comu_post_ordr) {
 		
-		model.addAttribute("comuCheck", service.comuCheck(emp_info_name));
+		model.addAttribute("comuCheck", service.comuCheck(comu_post_ordr));
 		
 		return "community/comuUpdate";
 	}
+	
+	//게시글 삭제
+	@GetMapping("/comuDelete")
+	public String comuDelete(@RequestParam("comu_post_ordr")String comu_post_ordr) {
+	service.comuDelete(comu_post_ordr);
+	
+	return "redirect:/community/comuList";
 }	
+	
+	@GetMapping("/comuInfoList")
+	public String comuInfoList() {
+		return "community/comuInfoList";
+	}
 
-
+	@GetMapping("/comuJoin")
+	public String comuJoin() {
+		return "community/comuJoin";
+	}
+	
+	//동호회 종류 리스트
+	@GetMapping("/comuListName")
+	public String comuListName(@ModelAttribute ComuList comuList,
+								Model model) {
+		comuList.getComu_list_code();
+		List<ComuList> comuListName = sqlSession.selectList("comu.comuListName");
+		model.addAttribute("comuListName",comuListName);
+		
+		System.out.println("controller ListName"+comuListName);
+		
+		return "community/comuListName";
+	}
+	//동호회 가입 신청서로 넘어가기
+	@GetMapping("/comuApp")
+	public String comuApp(Model model,@RequestParam("comu_list_code")String comu_list_code ) {
+		model.addAttribute("comuApp", service.comuApp(comu_list_code));
+		
+		
+		System.out.println("comuApp으로 가는길임??"+model);
+		return "community/comuApp";
+	}
+	
+}
 
 
 //	@GetMapping("/edit")

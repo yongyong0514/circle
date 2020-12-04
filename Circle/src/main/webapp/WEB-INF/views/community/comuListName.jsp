@@ -25,12 +25,14 @@
 		border:1px solid silver;
 		margin: auto;
 }
-#List{
+td{
+		width:500px;
 		height:50px;
 		border:1px solid black;
 		font-weight: bolder;
-		margin:auto;
-		 background:#FFFFFF;
+		margin:0 auto ;
+		 background:#E8F0FD;
+		 margin-top:2px auto;
 	}
 </style>
 
@@ -61,11 +63,11 @@
 			<table id="listArea" style="text-align: center; border: 1px solid #FFOODD;">
 				<tr id="listbar">
 					<!-- <th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">글번호</th> -->
-					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">동호회</th>
-					<th width="300px" style="background-color:#eeeeee; text-align: center; color:#black; ">글제목</th>
-					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">작성자</th>
-					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">조회수</th>
-					<th width="150px" style="background-color:#eeeeee; text-align: center; color:#black; ">작성일</th>
+					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">동호회 이름</th>
+					<th width="300px" style="background-color:#eeeeee; text-align: center; color:#black; ">동호회 대표</th>
+					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">직급</th>
+					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">가입신청</th>
+					<!-- <th width="150px" style="background-color:#eeeeee; text-align: center; color:#black; ">작성일</th> -->
 				<!-- width="150px" -->
 				</tr>
 				<tr>
@@ -73,21 +75,24 @@
 				</tr>
 				<tbody>
 					
-				<c:forEach var="comuName" items="${list}">
-					<tr id="ListName" >
-						<td <%-- value="${comuName.comu_list_code}" --%>><br>${comuName.comu_list_name}</td>
-						<%-- <td><br>${comuList.comu_list_name}</td>
-						<td><br>${comuList.comu_post_title}</td>
-						<td><br>${comuList.emp_info_name}</td>
-						<td><br>${comuList.comu_post_view}</td>
+				<c:forEach var="comuListName" items="${comuListName}"> 
+					<tr id="ListName">
+						<td ><br>${comuListName.comu_list_name}</td>
+						<td><br>${comuListName.emp_info_name}</td>
+						<td><br>${comuListName.job_info_name}</td>
+						<td><br><a href='<c:url value='/community/comuApp?comu_list_code=${comuListName.comu_list_code}'/>'>가입신청하기</a></td>
+						<%-- <td><br>${comuList.comu_post_view}</td>
 						<td><br>${comuList.comu_post_dat}</td> --%>
 						<%-- <td><c:out value="${ comuList.comu_post_dat }"/></td> --%>
 					</tr>
-				</c:forEach>
+				 </c:forEach> 
 				</tbody>
 				
+				
+				
+				
 				<!-- 페이지 구현 -->
-				<tr>
+				<%-- <tr>
 					<td colspan="5" align="center">
 				<!-- 현재 페이지 블럭이 1보다 크면 처음 페이지로 이동 -->
 					<c:if test="${map.pager.curBlock > 1}">
@@ -120,7 +125,7 @@
 							href="javascript:list('${map.pager.totPage}')">[끝]</a>			
 						</c:if>	
 					</td>
-				</tr>
+				</tr> --%>
 				
 			</table>
 			</form>
