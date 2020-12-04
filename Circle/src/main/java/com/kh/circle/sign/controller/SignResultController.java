@@ -1,16 +1,20 @@
 package com.kh.circle.sign.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignListJoiner;
 
@@ -20,6 +24,9 @@ public class SignResultController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private SignService signService;
 
 	
 	@GetMapping("/signListJoinerCheck")
@@ -59,6 +66,14 @@ public class SignResultController {
 		List<SignFiles> list = sqlSession.selectList("sign.signFileList", signCode);
 		
 		return list;
+	}
+
+// 결재 첨부 파일 다운로드
+	@GetMapping("/signFileDownload")
+	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
+		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
+		
+		return entity;
 	}
 
 }

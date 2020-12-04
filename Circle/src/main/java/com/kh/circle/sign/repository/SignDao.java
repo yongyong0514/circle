@@ -18,6 +18,6 @@ public interface SignDao {
 	SignFiles find(String fileCode);
 
 	//결재 첨부 파일 로드
-	byte[] load(String files_code) throws IOException;
+	byte[] load(String files_cname) throws IOException;
 
 }

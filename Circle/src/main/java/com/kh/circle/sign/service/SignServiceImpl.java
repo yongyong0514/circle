@@ -34,22 +34,19 @@ public class SignServiceImpl implements SignService {
 	@Override
 	public ResponseEntity<ByteArrayResource> download(String fileCode) throws IOException {
 		
-		SignFiles signFiles = signDao.find(fileCode);
+		SignFiles file = signDao.find(fileCode);
 		
-		if(signFiles == null) {
+		if(file == null) {
 			return ResponseEntity.notFound().build();
 		}
-		
-		byte[] data = signDao.load(signFiles.getFiles_code());
-		
+		byte[] data = signDao.load(file.getFiles_cname());
 		ByteArrayResource resource = new ByteArrayResource(data);
-		
 		ResponseEntity<ByteArrayResource> entity = 
 				ResponseEntity.ok()
-						.header("Content-Length", String.valueOf(signFiles.getFiles_size()))
+						.header("Content-Length", String.valueOf(file.getFiles_size()))
 						.header("Content-Type", "application/octet-stream; charset=UTF-8")
-						.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(signFiles.getFiles_oname(), "UTF-8")+"\"")
-					.body(resource);
+						.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(file.getFiles_oname(), "UTF-8")+"\"")
+						.body(resource);
 		
 		return entity;
 	}

@@ -386,11 +386,11 @@
 			var tag = $(this);
 			var fileCode = tag.children().eq(2).text();
 			$.ajax({
-				url: base + "/sign/signFileDownload",
+				url: base + "/signResult/signFileDownload",
 				type: "get",
 				data: {fileCode : fileCode},
 				success: function(data) {
-					
+					var file = new Blob([data]);
 				}
 			});
 			
