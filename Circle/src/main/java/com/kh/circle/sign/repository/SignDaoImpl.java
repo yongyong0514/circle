@@ -1,18 +1,22 @@
 package com.kh.circle.sign.repository;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
 
-import com.kh.circle.sign.vo.SignModify;
+import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Repository
 public class SignDaoImpl implements SignDao {
+	
+	private final String path = "d:/resources/files/sign";
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -88,5 +92,20 @@ public class SignDaoImpl implements SignDao {
 		map.put("files_route", files_route);
 		
 		sqlSession.insert("sign.signFiles", map);
+	}
+
+	//결재 첨부 파일 정보 찾기
+	@Override
+	public SignFiles find(String fileCode) {
+		return sqlSession.selectOne("sign.signFileOne", fileCode);
+	}
+
+	//결재 첨부 파일 로드
+	@Override
+	public byte[] load(String files_code) throws IOException {
+		File target = new File(path, String.valueOf(files_code));
+		byte[] data = FileUtils.readFileToByteArray(target);
+
+		return data;
 	}
 }
