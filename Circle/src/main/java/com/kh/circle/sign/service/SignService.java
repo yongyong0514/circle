@@ -20,3 +20,4 @@ public interface SignService {
 	ResponseEntity<ByteArrayResource> download(String fileCode) throws IOException;
 
 }
+	

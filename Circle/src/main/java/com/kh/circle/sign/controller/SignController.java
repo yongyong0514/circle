@@ -146,15 +146,7 @@ public class SignController {
 		
 		return "sign/signList";
 	}
-	
-// 결재 첨부 파일 다운로드
-	@GetMapping("/signFileDownload")
-	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
-		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
-		
-		return entity;
-	}
-	
+
 	
 // 문서 첫화면
 	@GetMapping("/docuList")

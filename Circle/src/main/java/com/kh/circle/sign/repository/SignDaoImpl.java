@@ -15,9 +15,7 @@ import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Repository
 public class SignDaoImpl implements SignDao {
-	
-	private final String path = "d:/resources/files/sign";
-	
+		
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -71,6 +69,8 @@ public class SignDaoImpl implements SignDao {
 	}
 	
 	//결재 파일 등록
+	private final String path = "d:/resources/files/sign";
+	
 	@Override
 	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route) {
 		
@@ -102,10 +102,10 @@ public class SignDaoImpl implements SignDao {
 
 	//결재 첨부 파일 로드
 	@Override
-	public byte[] load(String files_code) throws IOException {
-		File target = new File(path, String.valueOf(files_code));
+	public byte[] load(String files_cname) throws IOException {
+		File target = new File(path, String.valueOf(files_cname));
 		byte[] data = FileUtils.readFileToByteArray(target);
-
+		
 		return data;
 	}
 }
