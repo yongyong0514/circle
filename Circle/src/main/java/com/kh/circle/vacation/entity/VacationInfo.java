@@ -1,8 +1,19 @@
 package com.kh.circle.vacation.entity;
 
-public class VacationAdd {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class VacationInfo {
 	private String empNo;
 	private String empName;
+	
+	
 	private String regitDate;				// 등록일
 	private String vacationType;			// 구분: 연차/반차/경조사/출산-육아/보건/예비군-민방위/병가/기타
 	private String isHalf;					// 반차정보

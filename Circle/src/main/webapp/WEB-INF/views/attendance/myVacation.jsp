@@ -98,7 +98,7 @@
 						<h2>연차신청</h2>
 						<br>
 						<br>
-						<form action="/vacation/addVacation" method="GET">
+						<form action="${pageContext.request.contextPath }/vacation/addVacation" method="POST">
 							<table class="vacationApplyTable">
 								<tr>
 									<td>휴가신청일</td>
@@ -107,10 +107,10 @@
 									<td><select class="vacationType" name="vacationType">
 											<option value="annual" selected>연차</option>
 											<option value="half">반차</option>
-											<option value="bereavement">경조사</option>
+											<option value="event">경조사</option>
 											<option value="maternity">출산/육아</option>
 											<option value="menstrual">보건</option>
-											<option value="militaryServ">예비군/민방위</option>
+											<option value="military">예비군/민방위</option>
 											<option value="sick">병가</option>
 											<option value="etc">기타</option>
 									</select></td>
@@ -124,22 +124,22 @@
 								<tr>
 									<td>휴가기간</td>
 									<td>
-									<input class="startDate" name="startDate" type="date">
+									<input class="startDate" name="startDate" type="date" required>
 									~
-									<input class="endDate" name="endDate" type="date">
+									<input class="endDate" name="endDate" type="date" required>
 									&nbsp;&nbsp;&nbsp;&nbsp;일수: 
 									<input class="calcDate" name="calcDate" type="text" value="0" readonly />
 									<!-- 일수는 바로 계산 --></td>
 									<td>전자결제상태</td>
-									<td><input type="text" id="permissionStatus"
+									<td><input type="text" id="permission"
 										name="permission" readonly value="결제대기"></td>
 									<td>실제사용여부</td>
-									<td><input type="checkbox" name="used" readonly></td>
+									<td><input type="checkbox" name="used" onclick="return false;"></td>
 									<!-- 결재완료/해당 일자 지남 -->
 								</tr>
 								<tr>
 									<td>내용</td>
-									<td colspan="5"><textarea name="content"></textarea></td>
+									<td colspan="5"><textarea name="content" required></textarea></td>
 								</tr>
 							</table>
 							<br>
@@ -174,8 +174,6 @@
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
@@ -275,8 +273,6 @@
 				
 				// 종료일 제한
 				$(".endDate").prop("min", $(".startDate").val());
-				console.log($(".startDate").val());
-				console.log($(".endDate").prop("min"));
 				
 				// 종료일이 선택되어 있지 않다면
 				if( isNull($(".endDate").val()) ){

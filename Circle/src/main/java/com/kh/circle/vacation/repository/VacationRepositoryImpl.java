@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.vacation.entity.Vacation;
+import com.kh.circle.vacation.entity.VacationInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +47,11 @@ public class VacationRepositoryImpl implements VacationRepository{
 		double usedVacationDays = sqlSession.selectOne("vacation.usedVacationDays", emp_no);
 		
 		return usedVacationDays;
+	}
+
+	@Override
+	public void addVacation(VacationInfo vacationInfo) {
+		sqlSession.insert("vacation.addVacation", vacationInfo);
 	}
 
 }

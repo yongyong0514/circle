@@ -2,6 +2,7 @@ package com.kh.circle.vacation.controller;
 
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.circle.login.entity.EmpInfo;
-import com.kh.circle.vacation.entity.VacationAdd;
+import com.kh.circle.sign.vo.SignWriteInsert;
+import com.kh.circle.vacation.entity.VacationInfo;
 import com.kh.circle.vacation.service.VacationService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +51,43 @@ public class VacationController {
 	
 	
 	@PostMapping("/addVacation")
-	public String addVacation(@ModelAttribute VacationAdd vacationAdd) {
+	public String addVacation(@ModelAttribute VacationInfo vacationInfo,
+								HttpSession session,
+								RedirectAttributes attr) {
+
+		String emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		String emp_name = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_name();
+
+		vacationInfo.setEmpNo(emp_no);
+		vacationInfo.setEmpName(emp_name);
+
+		// 처리과정
+		// 1. 받아온 정보를 휴가계 양식에 맞도록 SignWrite 형으로 변형
+		SignWriteInsert signWriteInsert = vacationService.formVacation(vacationInfo);
+
+		// 2. 전달할 값을 map에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("VacationInfo", vacationInfo);
+		map.put("signWriteInsert", signWriteInsert);
 		
-		return "redirect:";
+		// 3. sign controller에 값 전달
+		attr.addFlashAttribute("map", map);
+		
+		// 4. 처리여부 ("/insertVacation"에서)회신 후 insert
+		
+		// 논의 필요한 부분
+		// Sign Controller의 어디로 보내야 하나?
+		return "/sign/signWrite";
+	}
+	
+	@PostMapping("/insertVacation")
+	public String insertVacation(@ModelAttribute("map") HashMap map) {
+		
+		VacationInfo vacationInfo = (VacationInfo) map.get("vacationInfo");
+		
+		// 4. 처리여부 ("/insertVacation"에서)회신 후 insert
+		vacationService.addVacation(vacationInfo);
+
+	return "redirect:/vacation/myVacation";
 	}
 }

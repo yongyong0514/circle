@@ -7,7 +7,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.circle.sign.vo.SignWriteInsert;
 import com.kh.circle.vacation.entity.Vacation;
+import com.kh.circle.vacation.entity.VacationInfo;
 import com.kh.circle.vacation.repository.VacationRepository;
 
 @Service
@@ -42,6 +44,24 @@ public class VacationServiceImpl implements VacationService {
 		map.put("leftVacationDays", leftVacationDays);
 		
 		return map;
+	}
+
+	@Override
+	public void addVacation(VacationInfo vacationInfo) {
+		vacationRepository.addVacation(vacationInfo);
+	}
+
+	@Override
+	public SignWriteInsert formVacation(VacationInfo vacationInfo) {
+		// 받아온 정보를 html형식으로 변환
+		// 논의 필요한 부분
+		
+		SignWriteInsert swi = new SignWriteInsert();
+		
+		String htmlText = "";
+		
+		
+		return swi;
 	}
 
 }
