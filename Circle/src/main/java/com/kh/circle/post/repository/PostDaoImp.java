@@ -58,11 +58,8 @@ public class PostDaoImp implements PostDao {
 	@Override
 	public List<Post> selectPost(PostPaging postPaging) {
 
-		System.out.println("dao : " + postPaging);
-
 		List<Post> paging = sqlSession.selectList("post.postSelect", postPaging);
 
-		System.out.println("pppppp " + paging);
 		return paging;
 	}
 

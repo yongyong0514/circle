@@ -57,41 +57,46 @@
 			<th class="post_dates">작성일</th>
 			<th class="post_cvps">조회수</th>
 		</tr>
-	<c:forEach var="postMain" items="${postMain}">
-			<tr>
-				<td>${postMain.post_code}</td>
-				<td>${postMain.post_type_title}</td>
-				<td>${postMain.emp_info_name}</td>
-				<td><a href='<c:url value='/post/postView?post_code=${postMain.post_code}'/>'>${postMain.post_title}</a></td>
-				<td>${postMain.post_wdat}</td>
-				<td>${postMain.post_cvp}</td>
-			
-			</tr>
-</c:forEach>
+	<c:forEach var="postSelect" items="${postSelect}">
+		<tr>
+			<td>${postSelect.post_code}</td>
+			<td><a href='<c:url value='/post/postView?post_code=${postSelect.post_code}'/>'>${postSelect.post_title}</a></td>
+			<td>${postSelect.emp_info_name}</td>
+			<td>${postSelect.post_wdat}</td>
+			<td>${postSelect.post_cvp}</td>
+		</tr>
+	</c:forEach>
 	</table>
 	
 	<!-- 뷰 페이징 처리 -->
-		<div>
-<c:if test="${postCount.startPage != 1}">
-	<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${postCount.startPage - 1}&cntPerPage${postCount.cntPerPage}" class="active">&laquo;</a>
+<div>
+<c:set var="Post"/>
+<c:if test="${paging.startPage != 1}">
+<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+	<a href="post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+
 </c:if>
-<c:forEach begin="${postCount.startPage }" end="${postCount.endPage}" var="p">
+<c:forEach begin="${paging.startPage }" end="${paging.endPage}" var="p">
 <c:choose>
-<c:when test="${p == postCount.nowPage }">
+<c:when test="${p == paging.nowPage }">
 <b>${p}</b>
 </c:when>
-<c:when test="${ p != postCount.nowPage }">
-<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${p}&cntPerPage=${postCount.cntPerPage}">${p}</a>
+<c:when test="${ p != paging.nowPage }">
+<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
 </c:when>
 
 </c:choose>
 </c:forEach>
-<c:if test="${postCount.endPage != postSelect.lastPage }">
-	<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${postCount.endPage+1}&cntPerPage=${postCount.cntPerPage}">&raquo;</a>
+<c:if test="${paging.endPage != paging.lastPage }">
+	<a href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
 </c:if>
 
 </div>
 	<br>
+	 
+	 
+	 
+	 
 	<!-- 검색 -->
 	<form>
 	<select name="opt">
@@ -108,7 +113,7 @@
 		<!--  본문 종료 -->
 			</div>
 		</div>
-	</div>
+		</div>
 
 
 </body>

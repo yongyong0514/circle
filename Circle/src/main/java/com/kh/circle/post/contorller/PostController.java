@@ -26,6 +26,7 @@ import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.service.PostService;
 import com.kh.circle.post.service.PostServiceImp;
 
@@ -56,6 +57,7 @@ public class PostController {
 
 		int total = postService.countPost();
 
+
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";
@@ -68,11 +70,13 @@ public class PostController {
 
 		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
+
+
 		model.addAttribute("postParts", list);
 		model.addAttribute("paging", postPaging);
-		model.addAttribute("viewAll", postService.selecePost(postPaging));
-
-		System.out.println(postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
+		model.addAttribute("postSelect", postService.selecePost(postPaging));
+	
 		return "post/postMain";
 	}
 
@@ -91,11 +95,11 @@ public class PostController {
 		// 게시판별 이름 찾기
 		String postName = "";
 		String post_type = "";
-
+		
 		switch (url) {
 
 		case "test":
-			postName = "테스트";
+			postName = "공지사항";
 			post_type = "POTY000001";
 			break;
 		case "employee":
@@ -104,8 +108,12 @@ public class PostController {
 			break;
 
 		case "notice":
-			postName = "공지사항";
+			postName = "개발본부";
 			post_type = "POTY000003";
+			break;
+		case "etc":
+			postName = "다른부서";
+			post_type = "POTY000004";
 			break;
 
 		case "":
@@ -130,10 +138,13 @@ public class PostController {
 		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 
 		model.addAttribute("post_type", post_type);
+		model.addAttribute("url", url);
 		model.addAttribute("postParts", list);
-		model.addAttribute("postCount", postPaging);
+		model.addAttribute("paging", postPaging);
 		model.addAttribute("postSelect", postService.selecePost(postPaging));
 
+		
+		
 		return "post/postList";
 	}
 
@@ -203,5 +214,7 @@ public class PostController {
 
 		return "redirect: postMain";
 	}
+	
+		
+	}
 
-}

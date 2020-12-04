@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper라는 영역 안에 구문을 작성한다 - namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수) -->
+<mapper namespace="postReply">
+
+
+<!-- 댓글 입력 -->
+<insert id="postReplytInsert" parameterType="postReply">
+INSERT INTO POST_REPL
+(POST_REPL_CODE,POST_REPL_POST, POST_REPL_EMP, POST_REPL_CONT,
+POST_REPL_WDAT, POST_REPL_CRP,POST_REPL_MDAT,POST_REPL_REF)
+    VALUES(CONCAT('PORE', LPAD(PORE_SEQ.NEXTVAL, 6, 0)),
+    #{post_repl_post}, #{post_repl_emp}, 
+    #{post_rept_cont}, DEFAULT ,0,  '', '');
+
+</insert>
+
+<!-- 댓글 목록 -->
+<select id="postReplyList" resultType="postReply">
+select *
+from  post_repl r
+join post p on (r.post_repl_post = p.post_code)
+join emp_info e on (r.post_repl_emp = e.emp_info_emp_no)
+where post_repl_psot = #{post_repl_post}
+</select>
+
+<update id="postReplyUpdate" parameterType="postReply">
+update post_repl
+set 
+post_repl_cont = #{post_repl_cont}
+where post_repl_code = #{post_repl_code}
+</update>
+
+<delete id="postReplyDelete" parameterType="String">
+delete from post_repl where post_repl_code = #{post_repl_code}
+</delete>
+
+
+<select id="postReplyCount" resultType="int">
+select count(*)
+from post_repl
+</select>
+
+</mapper>
