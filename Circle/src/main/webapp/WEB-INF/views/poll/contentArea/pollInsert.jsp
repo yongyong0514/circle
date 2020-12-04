@@ -229,7 +229,7 @@
 		************************/		
 		$("#next-btn").on("click", function(){
 			//제목 입력 경고 기능
-			$("input[name=title]").val() == '' ? ($(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"})) : location.replace("${pageContext.request.contextPath}/poll/pollMain/insertQuestion");
+			$("input[name=title]").val() == '' ? ($(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"})) : location.href("${pageContext.request.contextPath}/poll/questionInsert");
 			
 		})
 		/* ******************* */

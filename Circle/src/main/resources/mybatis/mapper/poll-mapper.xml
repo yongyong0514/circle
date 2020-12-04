@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="poll">
+	<!-- 내 일정 가져오기 -->
+	<select id="homeList" parameterType="String" resultMap="homeMap">
+		select poll_post_code
+        	  , POLL_POST_NAME
+	          , POLL_POST_SEC
+	          , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+	          , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT   
+	          , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
+	          , EMP_INFO_NAME
+	          , JOB_INFO_NAME
+           from poll_post
+ 	       join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+      left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{emp_no})
+       	   join emp_info on (poll_post_emp = emp_info_emp_no)
+       	   join job_info on (emp_info_job_code = job_info_code)
+       	  where poll_post_stat = 'Y'
+       group by poll_post_code          
+	          , POLL_POST_NAME
+	          , POLL_POST_SEC
+	          , POLL_POST_SDAT
+	          , POLL_POST_EDAT
+	          , EMP_INFO_NAME
+	          , JOB_INFO_NAME
+	</select>
+	<resultMap type="hashMap" id="homeMap">
+	</resultMap>
+	
+	
+
+	
+</mapper>

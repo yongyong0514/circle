@@ -5,7 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollLeftBar.css">
+<script src='${pageContext.request.contextPath}/resources/js/poll/jquery.min.js'></script>
 </head>
+
+<body>
+	<div class="menuLeftBar">
+		<div class="menuLeftListTop" id="poll-top">설문</div>
+		<div class="menuLeftListBtn"><button class="menuLeftBtn">새 설문 추가</button></div>
+		<div class="menuLeftList" style="pointer-events: none;"></div>
+		<div class="menuLeftListTitle">설문</div>
+		<div class="menuLeftList" id="poll-progress">
+			진행중인 설문
+		</div>
+		<div class="menuLeftList" id="poll-finished">마감된 설문</div>					
+		<div class="menuLeftList" id="poll-my">내 설문</div>
+	</div>
+	<div class="organChart">
+		<c:import url="/organChart/getInfo"/>
+	</div>
 <script>
 	$(document).ready(function(){
 		/********************** 
@@ -18,48 +35,22 @@
 		});
 		
 		$(".menuLeftBtn").on("click",function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollInsert");
+			location.replace("${pageContext.request.contextPath}/poll/insert");
 		})
 		
 		$('#poll-progress').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/progress");
+			location.replace("${pageContext.request.contextPath}/poll/progress");
 		});
 		
  		$('#poll-finished').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/finished");
+			location.replace("${pageContext.request.contextPath}/poll/finished");
 		});
  		
 		$('#poll-my').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/my");
+			location.replace("${pageContext.request.contextPath}/poll/my");
 		});
 		
-		$('.menuLeftListBtn').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/insert");
-		});
-		
-		//ajax용 스크립트
-/* 		
-		//진행중인 설문 클릭
-		$('#poll-progress').on('click', function(){
-			var url = "${pageContext.request.contextPath}/poll/pollProgress";
-			history.pushState(state, null, url);
-			$('#content-box').load(url);
-		});	
-*/	
 	});
 </script>
-<body>
-	<div class="menuLeftBar">
-		<div class="menuLeftListTop" id="poll-top">설문</div>
-		<div class="menuLeftListBtn"><button class="menuLeftBtn">새 설문 추가</button></div>
-		<div class="menuLeftList" style="pointer-events: none;"></div>
-		<div class="menuLeftListTitle">설문</div>
-		<div class="menuLeftList" id="poll-progress">진행중인 설문</div>
-		<div class="menuLeftList" id="poll-finished">마감된 설문</div>					
-		<div class="menuLeftList" id="poll-my">내 설문</div>
-	</div>
-	<div class="organChart">
-		<c:import url="/organChart/getInfo"/>
-	</div>
 </body>
 </html>
