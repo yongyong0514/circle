@@ -82,7 +82,7 @@
 								<th class="formBox8">첨부 파일</th>
 								<th class="formBox7" colspan="3">
 									<div id="fileUpload" class="dragAndDropDiv">파일을 여기에 드래그해서 추가하세요</div>
-									<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+											<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
 								</th>
 							</tr>
 							<tr>
@@ -354,9 +354,46 @@
 					type: "get",
 					data: {signCode : signCode[1]},
 					success: function(data) {
+						var objDragAndDrop = $(".dragAndDropDiv");
 						
+						for(var key in data) {
+							var $statusbar = $("<div class='statusbar'>");
+							var $filename = $("<div class='filename'>").text(data[key].files_oname);
+
+							var size = data[key].files_size/1024;
+								if(size > 1024) {
+									size = size.toFixed(2) + " MB";
+								} else {
+									size = size.toFixed(2) + " KB";
+								}
+							var $size = $("<div class='filesize'>").text(size);
+
+							var $filecode = $("<div class='filecode' style='display: none;'>").text(data[key].files_code);
+							
+							$statusbar.append($filename);
+							$statusbar.append($size);
+							$statusbar.append($filecode);
+							
+							objDragAndDrop.after($statusbar);
+						}
 					}
 				});
+		});
+	</script>
+	<script>
+		$(document).on("click",".statusbar",function(){
+			var base = "${pageContext.request.contextPath}";
+			var tag = $(this);
+			var fileCode = tag.children().eq(2).text();
+			$.ajax({
+				url: base + "/sign/signFileDownload",
+				type: "get",
+				data: {fileCode : fileCode},
+				success: function(data) {
+					
+				}
+			});
+			
 		});
 	</script>
 <!-- 문서 종류 옵션 시작 -->

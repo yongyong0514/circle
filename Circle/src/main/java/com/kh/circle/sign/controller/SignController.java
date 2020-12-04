@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -143,6 +145,14 @@ public class SignController {
 	public String signModify() {
 		
 		return "sign/signList";
+	}
+	
+// 결재 첨부 파일 다운로드
+	@GetMapping("/signFileDownload")
+	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
+		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
+		
+		return entity;
 	}
 	
 	

@@ -338,6 +338,13 @@
 		 WHERE FILES_TYPE=#{signCode}
 		   AND FILES_STATUS = 'N'
 	</select>
+	
+	<select id="signFileOne"  resultType="signFiles" parameterType="String">
+		SELECT *
+		  FROM FILES
+		 WHERE FILES_CODE=#{fileCode}
+		   AND FILES_STATUS = 'N'
+	</select>
 <!-- 	<update id="signModify" parameterType="signWriteInsert">
 		
 	</update> -->
