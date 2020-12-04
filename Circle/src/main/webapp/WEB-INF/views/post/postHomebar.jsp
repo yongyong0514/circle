@@ -34,9 +34,12 @@
 				<!-- 게시판 선택용 -->
 			<select name="post_type" onchange="location.href=this.value">
 				<option value="">이동할 게시판</option>
-				<option  value="${pageContext.request.contextPath}/post/postMain">게시판 메인</option>
-				<option  value="${pageContext.request.contextPath}/post/postList/notice">공지사항</option>
-				<option  value="${pageContext.request.contextPath}/post/postList/employee">전사게시판</option>
+				<!--  error -->
+				<option  value="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">게시판 메인</option>
+				<option  value="${pageContext.request.contextPath}/post/postList/notice?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">공지사항</option>
+				<option  value="${pageContext.request.contextPath}/post/postList/employee?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">전사게시판</option>
+			<!--  선택이 안됨 -->
+			
 			</select>
 			
 			

@@ -18,7 +18,9 @@
 			<div>${postView.post_comt}</div>
 		</c:forEach>
 	</div>
-
+	
+	
+<!-- 버튼 부분 -->
 <c:forEach var="postView" items="${postView }">
 <div><a href='<c:url value='/post/postUpdate?post_code=${postCheck.post_code}'/>'>수정하기</a></div>
 </c:forEach>
@@ -27,3 +29,20 @@
 </c:forEach>
 <button>돌아가기</button>
 </div>
+
+<!--  덧글 -->
+
+<c:if test="${sessionScopt.emp_info_emp_no != null }">
+	
+	<input type="hidden" name="post_code" value="${ostCheck.post_code}">
+
+	<textarea id="post_repl_cont" name="post_repl_cont">
+	
+	
+	</textarea>
+	<span>
+	<button type="button" id="btnReply" name="btnReply">댓글 작성</button>
+	</span>
+	</c:if>
+	<div id="listReply"></div>
+		<jsp:include page="../post/PostReply.jsp" />

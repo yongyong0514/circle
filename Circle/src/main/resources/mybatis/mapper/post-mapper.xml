@@ -124,7 +124,7 @@ where post_code = #{post_code}
 
 <update id="postUpdate" parameterType="post">
 update post
- set post_title = #{post_title}, post_comt=#{post_comt}, post_sec=#{post_sec}
+ set post_title = #{post_title}, post_comt=#{post_comt}, post_sec=#{post_sec}, post_mdat=SYSDATE
  where post_code = #{post_code}
 </update>
 
@@ -140,5 +140,45 @@ update post
 delete from post where post_code = #{post_code}
 
 </delete>
+
+
+<!--  검색 -->
+<sql id="postSearch">
+<![CDATA[
+select *
+from
+ (select rownum rn, post_code, post_title, post_comt, post_emp, post_wdat, post_wdat, psot_mdat
+from post
+where
+]]>
+
+<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+<foreach collection="typeArr" item='type'>
+
+<choose>
+<when test ="type == 'T'.toString()">
+
+post_title like '%' || #{keyword} || '%'
+</when>
+<when test="type == 'C'.toString()">
+
+post_comt like '%' || #{keyword}} || '%'
+</when>
+<when test="type == 'W'.toString()">
+post_emp like '%'||#{keyword}||'%'
+</when>
+
+</choose>
+</foreach>
+
+</trim>
+
+<![CDATA[
+rownum <= #{nowPage} *#{cntPage} 
+)
+where rn > (#{nowPage} - 1) * #{cntPage}
+]]>
+)
+</sql>
 
 </mapper>
