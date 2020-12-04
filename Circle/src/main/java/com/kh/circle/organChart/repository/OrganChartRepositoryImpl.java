@@ -9,16 +9,12 @@ import org.springframework.stereotype.Repository;
 import com.kh.circle.organChart.entity.OrganDept;
 import com.kh.circle.organChart.entity.OrganEmp;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Repository
 public class OrganChartRepositoryImpl implements OrganChartRepository {
 	@Autowired
 	private SqlSession sqlSession;
-	
-//	@Override
-//	public int maxLevel() {
-//		return sqlSession.selectOne("organChart.maxLevel");
-//	}
-	
 
 	@Override
 	public List<OrganDept> oDList() {

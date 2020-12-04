@@ -98,34 +98,38 @@
 						<h2>연차신청</h2>
 						<br>
 						<br>
-						<form action="#" method="GET">
+						<form action="/vacation/addVacation" method="GET">
 							<table class="vacationApplyTable">
 								<tr>
 									<td>휴가신청일</td>
-									<td><input class="registDate" name="registDate" type="date" readonly></td>
+									<td><input class="regitDate" name="regitDate" type="date" readonly></td>
 									<td>구분</td>
 									<td><select class="vacationType" name="vacationType">
-											<option value="annual" selected>연차</option>
+											<option value="annual">연차</option>
 											<option value="half">반차</option>
 											<option value="bereavement">경조사</option>
 											<option value="maternity">출산/육아</option>
-											<option value="menstrual">보건휴가</option>
+											<option value="menstrual">보건</option>
 											<option value="militaryServ">예비군/민방위</option>
 											<option value="sick">병가</option>
 											<option value="etc">기타</option>
 									</select></td>
 									<td>전일/반일</td>
 									<td><select class="isHalf" name="isHalf">
-											<option value="full" selected>전일</option>
+											<option value="full">전일</option>
 											<option value="amHalf">오전반차</option>
 											<option value="pmHalf">오후반차</option>
 									</select></td>
 								</tr>
 								<tr>
 									<td>휴가기간</td>
-									<td><input name="StartDate" type="date">~<input
-										name="endDate" type="date"> (일수: <input id="calcDate"
-										type="text" value="1" readonly />) <!-- 일수는 바로 계산 --></td>
+									<td>
+									<input class="startDate" name="startDate" type="date">
+									~
+									<input class="endDate" name="endDate" type="date">
+									&nbsp;&nbsp;&nbsp;&nbsp;일수: 
+									<input class="calcDate" name="calcDate" type="text" value="1" readonly />
+									<!-- 일수는 바로 계산 --></td>
 									<td>전자결제상태</td>
 									<td><input type="text" id="permissionStatus"
 										name="permission" readonly value="결제대기"></td>
@@ -161,7 +165,11 @@
 
 	<script>
 		$(function() {
-			<!-- 왼쪽바 고정 추가 옵션 시작-->
+			var today = getFormatDate(new Date());
+			var sDate = new Date($(".startDate").val());
+			var eDate = new Date($(".endDate").val());
+			
+			/* 왼쪽바 고정 추가 옵션 시작 */
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
@@ -173,21 +181,111 @@
 					$(".leftBar").removeClass("fixed");
 				}
 			});
-			<!-- 왼쪽바 고정 추가 옵션 끝-->
+			
 			
 			/* 휴가신청일: 오늘날짜로 초기화 */
-			$(".registDate").val(getFormatDate(new Date()));
-	
-			/* 휴가 구분에 따라 전일/반일 선택 제한 */
-			if( $(".vacationType").change( function(){ return $(this).val(); } ) == "half") {
-					console.log(":dmdkrklk");
-			}
-				
+			$(".regitDate").val(today);
 			
-		
+			
+			/* 휴가 구분에 따라 전일/반일/휴가기간 선택 제한 */
+			$(".vacationType").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+			
+				if($(".vacationType option:selected").val() == "half"){
+					$(".isHalf option[value!='full']").prop("disabled", false);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					$(".isHalf option[value!='amHalf']").prop("selected", true);
+					
+					if(resultDays == 0){
+				 		resultDays = 0.5;
+				 		$(".calcDate").val(resultDays);
+					}
+				} else{
+					$(".isHalf option[value='full']").prop("disabled", false);
+					$(".isHalf option[value!='full']").prop("disabled", true);
+					$(".isHalf option[value='full']").prop("selected", true);
+					
+					if(resultDays < 1){
+						var calcDate = new Date(sDate);
+						
+						$(".endDate").val("");
+				 		resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+				 		
+				 		if(isNaN(resultDays)){
+				 			resultDays = 0;
+				 		}
+				 		$(".calcDate").val(resultDays);
+					}
+				}
+			});
+			
+
+			/* 휴가기간 선택 날짜 제한 */
+			$(".startDate").prop("min", today);
+			
+			/* 휴가기간 일자 계산 */
+			$(".calcDate").val(0);
+			
+			$(".startDate").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+				
+				console.log( $(".endDate").val() === "" );
+				
+				if( (resultDays == 0)
+						|| ($(".vacationType option:selected").val() == "half") ){
+					resultDays = 0.5;
+					$(".vacationType option[value='half']").prop("selected", true);
+					$(".isHalf option[value='amHalf']").prop("selected", true);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					
+				} else if( (resultDays >= 1)
+							&& ($(".vacationType option:selected").val() != "half")){
+					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
+				}
+				
+				if(isNull($(".endDate").val())){
+					resultDays = 0;
+				}
+
+				$(".endDate").prop("min", $(".startDate").val());
+				
+				$(".calcDate").val(resultDays);
+			});
+			
+			$(".endDate").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+				
+				$(".startDate").prop("max", $(".endDate").val());	
+				
+				if( (resultDays == 0)
+						|| ($(".vacationType option:selected").val() == "half") ){
+					resultDays = 0.5;
+					$(".vacationType option[value='half']").prop("selected", true);
+					$(".isHalf option[value='amHalf']").prop("selected", true);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					
+				} else if( (resultDays >= 1)
+							&& ($(".vacationType option:selected").val() != "half")){
+					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
+				}
+				
+				if(isNull($(".startDate").val())){
+					resultDays = 0;
+				}
+
+				$(".startDate").prop("max", $(".endDate").val());
+				
+				$(".calcDate").val(resultDays);
+			});
 		});
 		
-		<!-- 날짜포맷 변경 시작 -->
+		/* 날짜포맷 변경 */
 		function getFormatDate(date){
 		    var year = date.getFullYear();				//yyyy
 		    var month = (1 + date.getMonth());			//M
@@ -196,7 +294,11 @@
 		    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
 		    return  year + '-' + month + '-' + day;		//형태 생성
 		}
-		<!-- 날짜포맷 변경 끝 -->
+		
+		/* null 체크 */
+		function isNull(value){
+			return (value === undefined || value === null || value === "") ? true : false;
+		}
 		
 	</script>
 </body>
