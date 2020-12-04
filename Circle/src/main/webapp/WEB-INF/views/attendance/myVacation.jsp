@@ -168,6 +168,7 @@
 			var today = getFormatDate(new Date());
 			var sDate = new Date($(".startDate").val());
 			var eDate = new Date($(".endDate").val());
+			var resultDays = 0;
 			
 			/* 왼쪽바 고정 추가 옵션 시작 */
 			var leftBar = $(".leftBar").offset().top;
@@ -187,8 +188,245 @@
 			$(".regitDate").val(today);
 			
 			
-			/* 휴가 구분에 따라 전일/반일/휴가기간 선택 제한 */
+			/* 휴가기간 선택 날짜 제한 */
+			$(".startDate").prop("min", today);
+
+			
+			/* 휴가 계산일 수 초기화 */
+			$(".calcDate").val(resultDays);
+			
+			
+			/* 휴가 구분 선택 시 */
 			$(".vacationType").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				resultDays = 0;
+				
+				var isSameDate = ( $(".startDate").val() === $(".endDate").val() ? true : false );
+				
+				// "반차"가 선택된 경우
+				if($(".vacationType option:selected").val() == "half"){
+					// "전일" 선택 제한
+					$(".isHalf option[value!='full']").prop("disabled", false);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					
+					// 기본 선택값(오전 반차) 선택
+					$(".isHalf option[value='amHalf']").prop("selected", true);
+					
+					// 휴가기간 옵션과 연계
+					// 휴가기간 중 선택되지 않은 값이 있는 경우 -> 기본값(0) 출력
+					if(isNull(sDate) || isNull(eDate)){
+						$(".calcDate").val(resultDays);
+					}
+					// 시작일과 종료일이 모두 선택된 경우
+					else{
+						// 1. 두 값이 같을 경우 -> 0.5 출력
+						if(isSameDate){
+							resultDays = 0.5;
+							$(".calcDate").val(resultDays);
+						}						
+						// 2. 두 값이 다를 경우 -> 종료일을 시작일로 변경 후 일수 계산
+						else{
+							$(".endDate").val(sDate);
+							resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000) + 0.5;
+							$(".calcDate").val(resultDays);
+						}						
+					}
+				}
+				// "반차"가 아닌 경우
+				else{
+					// "오전/오후 반차" 선택 제한
+					
+					$(".isHalf option[value='full']").prop("disabled", false);					
+					$(".isHalf option[value!='full']").prop("disabled", true);
+
+					// 기본 선택값(전일) 선택
+					$(".isHalf option[value='full']").prop("selected", true);
+					
+					// 휴가기간 옵션과 연계
+					// 휴가기간 중 선택되지 않은 값이 있는 경우
+					if(isNull(sDate) || isNull(eDate)){
+						resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+						$(".calcDate").val(resultDays);
+					}
+					// 시작일과 종료일이 모두 선택된 경우
+					else{
+						// 1. 두 값이 같을 경우 -> 종료일을 null값으로 변환
+						if(isSameDate){
+							$(".endDate").val("");
+							resultDays = 0;
+							$(".calcDate").val(resultDays);
+						}
+						// 2. 두 값이 다를 경우 -> 계산 후 출력
+						else{
+							resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+							$(".calcDate").val(resultDays);
+						}
+					}
+				}
+			});
+			
+			
+			/* 휴가 기간 선택 시 */
+			
+			// 시작일 선택 시
+			$(".startDate").change(function*(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				
+				// 종료일 제한
+				$(".endDate").prop("min", $(".startDate").val());
+				
+				// 종료일이 선택되어 있지 않다면
+				if( isNull($(".endDate").val()) ){
+					return;
+				}
+				// 종료일이 선택되어 있다면
+				else{
+					// isSameDate = 시작일과 종료일이 동일한가 ? true		
+					var isSameDate = ( $(".startDate").val() === $(".endDate").val() ? true : false );
+					
+					// 휴가일수 계산
+					// 시작일과 종료일이 동일 -> 휴가일수를 0.5일로 변경
+					if(isSameDate){
+						resultDays = 0.5;
+						$(".calcDate").val(resultDays);
+						
+						// 휴가구분 옵션을 "반차"로 변경
+						$(".vacationType option[value='half']").prop("selected", true);
+
+						// .change 함수가 작동될까?
+						
+					}
+					// 시작일과 종료일이 상이 -> 휴가일수 정상계산
+					else{
+						resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+						$(".calcDate").val(resultDays);		
+						
+						// 휴가 구분이 "반차"로 저장된 경우 -> 기본값("연차")로 변경
+						if($(".vacationType option[value='half']").prop("selected", true)){
+							$(".vacationType option[value='half']").prop("selected", false);
+							$(".vacationType option[value='annual']").prop("selected", true);
+						}
+					}
+				}
+			});
+			
+			// 종료일 선택 시
+			$(".endDate").change(function*(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				
+				// 시작일 제한
+				$(".startDate").prop("max", $(".endDate").val());
+				
+				// 시작일이 선택되어 있지 않다면
+				if( isNull($(".startDate").val()) ){
+					return;
+				}
+				// 시작일이 선택되어 있다면
+				else{
+					// isSameDate = 시작일과 종료일이 동일한가 ? true		
+					var isSameDate = ( sDate === eDate ? true : false );
+					
+					// 휴가일수 계산
+					// 시작일과 종료일이 동일 -> 휴가일수를 0.5일로 변경
+					if(isSameDate){
+						resultDays = 0.5;
+						$(".calcDate").val(resultDays);
+						
+						// 휴가구분 옵션을 "반차"로 변경
+						$(".vacationType option[value='half']").prop("selected", true);
+
+						// .change 함수가 작동될까?
+						
+					}
+					// 시작일과 종료일이 상이 -> 휴가일수 정상계산
+					else{
+						resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+						$(".calcDate").val(resultDays);		
+						
+						// 휴가 구분이 "반차"로 저장된 경우 -> 기본값("연차")로 변경
+						if($(".vacationType option[value='half']").prop("selected", true)){
+							$(".vacationType option[value='half']").prop("selected", false);
+							$(".vacationType option[value='annual']").prop("selected", true);
+							
+							// .change 함수가 작동할까?
+						}
+					}
+				}
+			});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+/* 			$(".startDate").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+				
+				if( (resultDays == 0)
+						|| ($(".vacationType option:selected").val() == "half") ){
+					console.log("1번 들어옴");
+					resultDays = 0.5;
+					$(".vacationType option[value='half']").prop("selected", true);
+					$(".isHalf option[value='amHalf']").prop("selected", true);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					
+				} else if( (resultDays >= 1)
+							&& ($(".vacationType option:selected").val() != "half")){
+					console.log("2번 들어옴");
+					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
+				} 
+				
+				if(isNull($(".endDate").val())){
+					resultDays = 0;
+				}
+
+				console.log("다시계산:" + resultDays);
+				$(".calcDate").val(resultDays);
+
+				$(".endDate").prop("min", $(".startDate").val());
+			});
+			
+			$(".endDate").change(function(){
+				sDate = new Date($(".startDate").val());
+				eDate = new Date($(".endDate").val());
+				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
+				
+				$(".startDate").prop("max", $(".endDate").val());	
+				
+				if( (resultDays == 0)
+						|| ($(".vacationType option:selected").val() == "half") ){
+					resultDays = 0.5;
+					$(".vacationType option[value='half']").prop("selected", true);
+					$(".isHalf option[value='amHalf']").prop("selected", true);
+					$(".isHalf option[value='full']").prop("disabled", true);
+					
+				} else if( (resultDays >= 1)
+							&& ($(".vacationType option:selected").val() != "half")){
+					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
+				}
+				
+				if(isNull($(".startDate").val())){
+					resultDays = 0;
+				}
+
+				$(".calcDate").val(resultDays);
+				
+				$(".startDate").prop("max", $(".endDate").val());
+			});
+			 */
+			
+			
+			
+			
+/* 			$(".vacationType").change(function(){
 				sDate = new Date($(".startDate").val());
 				eDate = new Date($(".endDate").val());
 				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
@@ -219,69 +457,11 @@
 				 		$(".calcDate").val(resultDays);
 					}
 				}
-			});
+			}); */
 			
-			/* 휴가기간 선택 날짜 제한 */
-			$(".startDate").prop("min", today);
 			
-			/* 휴가기간 일자 계산 */
-			$(".calcDate").val(0);
+/*			$(".calcDate").val(0); */
 			
-			$(".startDate").change(function(){
-				sDate = new Date($(".startDate").val());
-				eDate = new Date($(".endDate").val());
-				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
-				
-				console.log( $(".endDate").val() === "" );
-				
-				if( (resultDays == 0)
-						|| ($(".vacationType option:selected").val() == "half") ){
-					resultDays = 0.5;
-					$(".vacationType option[value='half']").prop("selected", true);
-					$(".isHalf option[value='amHalf']").prop("selected", true);
-					$(".isHalf option[value='full']").prop("disabled", true);
-					
-				} else if( (resultDays >= 1)
-							&& ($(".vacationType option:selected").val() != "half")){
-					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
-				}
-				
-				if(isNull($(".endDate").val())){
-					resultDays = 0;
-				}
-
-				$(".endDate").prop("min", $(".startDate").val());
-				
-				$(".calcDate").val(resultDays);
-			});
-			
-			$(".endDate").change(function(){
-				sDate = new Date($(".startDate").val());
-				eDate = new Date($(".endDate").val());
-				var resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
-				
-				$(".startDate").prop("max", $(".endDate").val());	
-				
-				if( (resultDays == 0)
-						|| ($(".vacationType option:selected").val() == "half") ){
-					resultDays = 0.5;
-					$(".vacationType option[value='half']").prop("selected", true);
-					$(".isHalf option[value='amHalf']").prop("selected", true);
-					$(".isHalf option[value='full']").prop("disabled", true);
-					
-				} else if( (resultDays >= 1)
-							&& ($(".vacationType option:selected").val() != "half")){
-					resultDays =  (eDate - sDate) / (24 * 60 * 60 * 1000);
-				}
-				
-				if(isNull($(".startDate").val())){
-					resultDays = 0;
-				}
-
-				$(".startDate").prop("max", $(".endDate").val());
-				
-				$(".calcDate").val(resultDays);
-			});
 		});
 		
 		/* 날짜포맷 변경 */
