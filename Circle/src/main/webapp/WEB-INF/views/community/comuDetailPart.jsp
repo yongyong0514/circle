@@ -99,10 +99,11 @@ li{
 		
 		 	<br>
 		 	<c:forEach var="comuDetail" items="${comuDetail}">
-			<li align="right"><a href='<c:url value='/community/comuUpdate?emp_info_name=${comuDetail.emp_info_name}'/>'>[수정하기]</a>
+			<li align="right"><a href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
 			
-			<a href='<c:url value='/community/comuUpdate?emp_info_name=${comuDetail.emp_info_name}'/>'>[삭제하기]</a>
-		</li>
+			
+			
+			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li>
 			</c:forEach>
 		</ul>
 		</div>

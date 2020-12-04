@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.kh.circle.comu.entity.Comu;
+import com.kh.circle.comu.entity.ComuList;
 import com.kh.circle.comu.repository.ComuDao;
 
 @Service
@@ -69,14 +70,38 @@ public class ComuServiceImp implements ComuService {
 	
 	//수정화면 들어가기
 	@Override 
-	public List<Comu> comuCheck(String emp_info_name) {
+	public List<Comu> comuCheck(String comu_post_ordr) {
 		
-		return dao.comuCheck(emp_info_name);
+		return dao.comuCheck(comu_post_ordr);
 	}
+	//수정하기
 	@Override
 	public void comuUpdate(Comu comu) {
 		
 		dao.comuUpdate(comu);
+	}
+	
+	//삭제하기
+	@Override
+	public void comuDelete(String comu_post_ordr) {
+
+
+		dao.comuDelete(comu_post_ordr);
+	}
+
+	//동호회 리스트 가져오기
+	@Override
+	public List<ComuList> comuListName(String comu_list_code) {
+		
+
+		return dao.comuListName(comu_list_code);
+	}
+
+	@Override
+	public String comuApp(String comu_list_code) {
+		String list_name = dao.comuApp(comu_list_code);
+		
+		return list_name;
 	}
 
 	

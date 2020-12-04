@@ -40,4 +40,18 @@ public class EmpInfo {
 	//직급가져오기
 	private String job_info_code;
 	private String job_info_name;
+	
+	//동호회 게시글 가져오기
+	private String comu_post_ordr;
+	private String comu_post_wrtr_emp_no;
+	private String comu_post_title;
+	private String comu_post_cont;
+	private Date comu_post_dat;
+	private int comu_post_view;
+	private String comu_post_comu_code;
+	private String comu_post_type;
+	
+	//동호회 정보 가져오기
+	private String comu_list_code;
+	private String comu_list_name;
 }

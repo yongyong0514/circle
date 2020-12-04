@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.comu.entity.Comu;
+import com.kh.circle.comu.entity.ComuList;
 
 @Repository
 public class ComuDaoImp implements ComuDao {
@@ -72,9 +73,9 @@ public class ComuDaoImp implements ComuDao {
 	
 	//수정하기로 입장
 	@Override
-	public List<Comu> comuCheck(String emp_info_name) {
+	public List<Comu> comuCheck(String comu_post_ordr) {
 		
-		List<Comu> comu = sqlSession.selectList("comu.comuCheck",emp_info_name);
+		List<Comu> comu = sqlSession.selectList("comu.comuCheck",comu_post_ordr);
 		
 		return comu;
 	}
@@ -84,6 +85,30 @@ public class ComuDaoImp implements ComuDao {
 	public void comuUpdate(Comu comu) {
 
 		sqlSession.update("comu.ComuUpdate",comu);
+	}
+	
+	//삭제하기
+	@Override
+	public void comuDelete(String comu_post_ordr) {
+		
+		
+		sqlSession.delete("comu.comuDelete",comu_post_ordr);
+	}
+	
+	//동호회 리스트 가져오기
+	@Override
+	public List<ComuList> comuListName(String comu_list_code) {
+
+		List<ComuList> comuListName = sqlSession.selectList("comu.comuListName",comu_list_code);
+		
+		return comuListName;
+	}
+	//가입신청서에 동호회 이름 가져오기
+	@Override
+	public String comuApp(String comu_list_code) {
+		String list_name = sqlSession.selectOne("comu.comuApp",comu_list_code);
+		
+		return list_name;
 	}
 
 

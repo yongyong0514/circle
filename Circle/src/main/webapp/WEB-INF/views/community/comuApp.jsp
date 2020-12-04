@@ -14,6 +14,30 @@
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <style>
 
+.formBox1{
+	border: 1px solid black;
+	width:30px;
+	color:black;
+	height:33px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	border-radius: 10px;
+}	
+.formInput1{
+	
+	border: 1px solid black;
+	width:150px;
+	color:black;
+	height:33px;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	background: linear-gradient(to right, #AFDBFF, #F1F9FF, #AFDBFF);
+	border-radius: 10px;
+	font-size: 15px;
+	font-weight: bolder;
+	align-content: center;
+}
 </style>
 
 </head>
@@ -39,21 +63,16 @@
 				<br>
 				<h5 class="n" id="nti">가입 신청서 작성</h5>
 				<br>
-				   <form action="${ applicationScope.contextPath }/comunity/add" method="post" >
+				<form action="${pageContext.request.contextPath}/community/comuApp"
+						method="post" >
             <table id="all">
                <tr>
-                  <td class="n">동호회</td>
-                 
-                  <td>
-                     <select name="comu" id="comu">
-                     	<option value="0">동호회 이름을 선택하세요</option>
-                     <c:forEach var="b" items="${comu}">
-                     
-                        <option value="${ comu.COMU_LIST_CODE }"><c:out value="${ comu.COMU_LIST_NAME }"/></option>
-                 
-                        </c:forEach>
-                     </select>
-                  </td>
+                  <th class="n">동호회</th>
+              
+                  <th>
+                     <input type="text" class="formInput1" id="comu_list_code" value="${list.comu_list_code}" readonly>
+                     <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${list.comu_list_name}" readonly>
+                  </th>
                   
                </tr>
              

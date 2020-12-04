@@ -20,7 +20,7 @@
 			
 			<div class="menuLeftListBtn">
 			<%-- <c:if test="${ !empty sessionScope.member }">  --%>
-			<button class="menuLeftBtn" onclick="location.href='/circle/community/comuApp'">가입 신청</button>
+			<!-- <button class="menuLeftBtn" onclick="location.href='/circle/community/comuApp'">가입 신청</button> -->
 			<%-- 	</c:if> --%>
 			</div>
 			
