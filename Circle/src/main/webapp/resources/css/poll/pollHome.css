@@ -90,4 +90,6 @@ html body .poll-content-container 	{width:100%;
 						    }
 
 .recent-poll-list-container	{height:70%;}
-
+table tbody tr:hover{
+	background: #f4f4f4;
+}
