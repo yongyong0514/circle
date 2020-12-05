@@ -50,6 +50,8 @@
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjaxEntry" alias="schAjaxEntry"/>
 
+		<typeAlias type="com.kh.circle.poll.entity.Pagination" alias="pagination"/>
+
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>

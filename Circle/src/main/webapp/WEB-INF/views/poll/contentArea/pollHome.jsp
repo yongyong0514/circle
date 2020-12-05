@@ -13,30 +13,46 @@
 <script>
 	$(document).ready(function(){
 		
+		//미참여 설문 클릭
+		$('.poll-state-span-no-attendance').parent().parent().on('click', function(){
+			location.replace("${pageContext.request.contextPath}/poll/pollMain/post")			
+		});	
+		
+		//참여한 설문 클릭
+		$('.poll-state-span-attendance').parent().parent().on('click', function(){
+			location.replace("${pageContext.request.contextPath}/poll/pollMain/result")			
+		});	
+		
+		
+		/* 상세보기 기능 */
+		
 		/* 행 클릭시 기능 */ 
 		$('tbody tr').on('click', function(){
 			/* 게시글 postCode 추출 */
 			postCode = $(this).find('.post-code').text();
+			
 			/* 게시글 참여여부 추출 */
 			var joinOrNot = $(this).find('.poll-state-td span').prop('class');
+			
 			/* 설문 만료날짜 추출 */
 			var endDate = Date.parse($(this).find('.poll-term-td').text().substr(13,10));
+			
+			/* 설문 마감여부 추출 */
+			var closing = $(this).find('.post-closing').text();
+			console.log(closing);
+			
 			/* 현재날짜 변수화 */
 			var sysdate = Date.parse(nowDate());
 			
+			
 			/* 조건 비교후 컨트롤러로 postCode 전송 */
-			if(joinOrNot == 'poll-state-span-no-attendance'){
-				if(sysdate < endDate){
-					location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + postCode;
-				} else {
-					location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + postCode;
-				}
+/*  			if(joinOrNot == 'poll-state-span-no-attendance' && sysdate < endDate && closiong != 'Y'){
+				location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + postCode;
 			} else {
 				location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + postCode;
-			}
+			} */
 		});
-		
-		
+		 
 	});
 
 	/************************ 함수 정의 *************************/
@@ -71,31 +87,36 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="i" begin="0" end="2">
+					<c:forEach var="item" items="${post}" begin="0" end="1">
 						<tr>
 							<td class="poll-state-td">
 								<c:choose>
-									<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
+									<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 										<span class="poll-state-span-no-attendance">
 									</c:when>
-									<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 1}">
+									<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
 										<span class="poll-state-span-attendance">
 									</c:when>
 								</c:choose>
 									<c:choose>
-										<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
+										<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 											<c:out value="미참여"></c:out>
 										</c:when>
-										<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 1}">
+										<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
 											<c:out value="참여 완료"></c:out>
 										</c:when>
 									</c:choose>
 								</span>
 							</td>
-							<td class="poll-title-td"><c:out value="${post[i].POLL_POST_NAME}"/></td>
-							<td class="poll-term-td"><c:out value="${post[i].POLL_POST_SDAT} ~ ${post[i].POLL_POST_EDAT}"></c:out></td>
-							<td class="poll-writer-td"><c:out value="${post[i].EMP_INFO_NAME}  ${post[i].JOB_INFO_NAME}"></c:out></td>
-							<td class="post-code" hidden="true"><c:out value="${post[i].POLL_POST_CODE}"></c:out></td>
+							<td class="poll-title-td">
+								<a>
+									<span class="txt"><c:out value="${item.POLL_POST_NAME}"/></span>
+								</a>
+							</td>
+							<td class="poll-term-td"><c:out value="${item.POLL_POST_SDAT} ~ ${item.POLL_POST_EDAT}"></c:out></td>
+							<td class="poll-writer-td"><c:out value="${item.EMP_INFO_NAME}  ${item.JOB_INFO_NAME}"></c:out></td>
+							<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
+							<td class="post-closing" hidden="true"><c:out value="${item.POLL_POST_CLOSING}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -115,31 +136,36 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="i" begin="0" end="9">
+					<c:forEach var="item" items="${post}">
 						<tr>
 							<td class="poll-state-td">
 								<c:choose>
-									<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
+									<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 										<span class="poll-state-span-no-attendance">
 									</c:when>
-									<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 1}">
+									<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
 										<span class="poll-state-span-attendance">
 									</c:when>
 								</c:choose>
 									<c:choose>
-										<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
+										<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 											<c:out value="미참여"></c:out>
 										</c:when>
-										<c:when test="${post[i].POLL_POST_QUST_ANSW_JOIN_EMP eq 1}">
+										<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
 											<c:out value="참여 완료"></c:out>
 										</c:when>
 									</c:choose>
 								</span>
 							</td>
-							<td class="poll-title-td"><c:out value="${post[i].POLL_POST_NAME}"/></td>
-							<td class="poll-term-td"><c:out value="${post[i].POLL_POST_SDAT} ~ ${post[i].POLL_POST_EDAT}"></c:out></td>
-							<td class="poll-writer-td"><c:out value="${post[i].EMP_INFO_NAME}  ${post[i].JOB_INFO_NAME}"></c:out></td>
-							<td class="post-code" hidden="true"><c:out value="${post[i].POLL_POST_CODE}"></c:out></td>
+							<td class="poll-title-td">
+								<a>
+									<span class="txt"><c:out value="${item.POLL_POST_NAME}"/></span>
+								</a>
+							</td>
+							<td class="poll-term-td"><c:out value="${item.POLL_POST_SDAT} ~ ${item.POLL_POST_EDAT}"></c:out></td>
+							<td class="poll-writer-td"><c:out value="${item.EMP_INFO_NAME}  ${item.JOB_INFO_NAME}"></c:out></td>
+							<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
+							<td class="post-closing" hidden="true"><c:out value="${item.POLL_POST_CLOSING}"></c:out></td>
 						</tr>
 					</c:forEach>
 				</tbody>

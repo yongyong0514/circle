@@ -7,34 +7,139 @@
 
 
 <mapper namespace="poll">
-	<!-- 내 일정 가져오기 -->
+	<!-- 홈 설문 목록 조회 -->
 	<select id="homeList" parameterType="String" resultMap="homeMap">
-		select poll_post_code
-        	  , POLL_POST_NAME
-	          , POLL_POST_SEC
-	          , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
-	          , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT   
-	          , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
-	          , EMP_INFO_NAME
-	          , JOB_INFO_NAME
-           from poll_post
- 	       join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-      left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{emp_no})
-       	   join emp_info on (poll_post_emp = emp_info_emp_no)
-       	   join job_info on (emp_info_job_code = job_info_code)
-       	  where poll_post_stat = 'Y'
-       group by poll_post_code          
-	          , POLL_POST_NAME
-	          , POLL_POST_SEC
-	          , POLL_POST_SDAT
-	          , POLL_POST_EDAT
-	          , EMP_INFO_NAME
-	          , JOB_INFO_NAME
+    select  <![CDATA[ ROWNUM ]]>
+          , poll_post_code
+          , POLL_POST_NAME
+          , POLL_POST_SEC
+          , POLL_POST_SDAT
+          , POLL_POST_EDAT   
+          , POLL_POST_CLOSING
+          , POLL_POST_QUST_ANSW_join_emp
+          , EMP_INFO_NAME
+          , JOB_INFO_NAME		
+       from (select  poll_post_code
+                   , POLL_POST_NAME
+                   , POLL_POST_SEC
+                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
+                   , POLL_POST_CLOSING  
+                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
+                   , EMP_INFO_NAME
+                   , JOB_INFO_NAME
+                from poll_post
+                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
+                join emp_info on (poll_post_emp = emp_info_emp_no)
+                join job_info on (emp_info_job_code = job_info_code)
+                join poll_post_join on (poll_post_code = poll_join_post)
+               where poll_post_stat = 'Y'
+                 and poll_join_emp = #{empNo}
+            group by poll_post_code          
+                   , POLL_POST_NAME
+                   , POLL_POST_SEC
+                   , POLL_POST_SDAT
+                   , POLL_POST_EDAT
+                   , POLL_POST_CLOSING
+                   , EMP_INFO_NAME
+                   , JOB_INFO_NAME)
+      where <![CDATA[ ROWNUM <= 10 ]]>
 	</select>
 	<resultMap type="hashMap" id="homeMap">
 	</resultMap>
-	
-	
 
+	<!-- 진행중인 설문 조회(페이지/검색 적용) -->	
+	<select id="progressList" parameterType="pagination" resultMap="progressMap">
+		 select rnum
+		      , poll_post_code
+		      , POLL_POST_NAME
+		      , POLL_POST_SEC
+		      , POLL_POST_SDAT
+		      , POLL_POST_EDAT   
+		      , POLL_POST_CLOSING
+		      , POLL_POST_QUST_ANSW_join_emp
+		      , EMP_INFO_NAME
+		      , JOB_INFO_NAME	
+		   from (select ROWNUM rnum
+		          , poll_post_code
+		          , POLL_POST_NAME
+		          , POLL_POST_SEC
+		          , POLL_POST_SDAT
+		          , POLL_POST_EDAT   
+		          , POLL_POST_CLOSING
+		          , POLL_POST_QUST_ANSW_join_emp
+		          , EMP_INFO_NAME
+		          , JOB_INFO_NAME		
+		       from (select  poll_post_code
+		                   , POLL_POST_NAME
+		                   , POLL_POST_SEC
+		                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
+		                   , POLL_POST_CLOSING  
+		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
+		                   , EMP_INFO_NAME
+		                   , JOB_INFO_NAME
+		                from poll_post
+		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
+		                join emp_info on (poll_post_emp = emp_info_emp_no)
+		                join job_info on (emp_info_job_code = job_info_code)
+		                join poll_post_join on (poll_post_code = poll_join_post)
+		               where poll_post_stat = 'Y'
+		                 and poll_join_emp = #{empNo}
+		                 and <![CDATA[ poll_post_sdat < sysdate ]]>
+		                 and <![CDATA[ poll_post_edat > sysdate ]]>
+		                 and poll_post_name like '%${searchTitle}%'
+                		 and emp_info_name like '%${searchWriter}%'
+		                 and poll_post_closing != 'Y'
+		            group by poll_post_code          
+		                   , POLL_POST_NAME
+		                   , POLL_POST_SEC
+		                   , POLL_POST_SDAT
+		                   , POLL_POST_EDAT
+		                   , POLL_POST_CLOSING
+		                   , EMP_INFO_NAME
+		                   , JOB_INFO_NAME
+		           	)
+		    	)
+		   where rnum between #{start} and #{end}
+	</select>
+	<resultMap type="hashMap" id="progressMap"></resultMap>
+	
+	<!-- 설문 결과 조회 -->
+	<select id="getResult" parameterType="map" resultMap="getMap">
+		select * form poll_post_qust where false
+	</select>
+	<resultMap type="hashMap" id="getMap"></resultMap>
+	
+	<!-- 진행중인 설문 총 개수 조회 -->
+	<select id="countTotalProgressPost"  parameterType="pagination" resultType="int">
+		select count(1) as cnt
+		  from (select count(poll_post_code)
+		                from poll_post
+		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
+		                join emp_info on (poll_post_emp = emp_info_emp_no)
+		                join job_info on (emp_info_job_code = job_info_code)
+		                join poll_post_join on (poll_post_code = poll_join_post)
+		               where poll_post_stat = 'Y'
+		                 and poll_join_emp = #{empNo}
+		                 and <![CDATA[ poll_post_sdat < sysdate ]]>
+               			 and <![CDATA[ poll_post_edat > sysdate ]]>
+		                 and poll_post_closing != 'Y'
+		                 and poll_post_name like '%${searchTitle}%'
+           				 and emp_info_name like '%${searchWriter}%'
+		            group by poll_post_code
+		                   , POLL_POST_EMP
+		                   , POLL_POST_NAME
+		                   , POLL_POST_SEC
+		                   , POLL_POST_SDAT
+		                   , POLL_POST_EDAT
+		                   , POLL_POST_CLOSING
+		                   , EMP_INFO_NAME
+		                   , JOB_INFO_NAME)
+	</select>
+	
 	
 </mapper>

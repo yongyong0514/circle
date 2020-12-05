@@ -31,23 +31,23 @@
 		
 		//좌측메뉴 상단을 누르면 메인으로 가는 기능
 		$("#poll-top").on("click", function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain");
+			location.href ="${pageContext.request.contextPath}/poll/pollMain";
 		});
 		
 		$(".menuLeftBtn").on("click",function(){
-			location.replace("${pageContext.request.contextPath}/poll/insert");
+			location.href ="${pageContext.request.contextPath}/poll/insert";
 		})
 		
 		$('#poll-progress').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/progress");
+			location.href = "${pageContext.request.contextPath}/poll/progress";
 		});
 		
  		$('#poll-finished').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/finished");
+			location.href = "${pageContext.request.contextPath}/poll/finished";
 		});
  		
 		$('#poll-my').on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/my");
+			location.href = "${pageContext.request.contextPath}/poll/my";
 		});
 		
 	});
