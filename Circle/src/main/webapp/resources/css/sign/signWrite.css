@@ -503,16 +503,26 @@ br {
 	width: 97.5%;
 	padding: 10px 10px 0px 10px;
 	vertical-align: top;
+	cursor: pointer;
+}
+
+.statusbar:hover {
+	background: #91B9ED;
 }
 
 .statusbar:nth-child(odd) {
 	background: #EBEFF0;
 }
 
+.statusbar:nth-child(odd):hover {
+	background: #91B9ED;
+}
+
 .filename {
 	display: inline-block;
 	vertical-align: top;
-	width: 250px;
+	min-width: 250px;
+	max-width: 100%;
 	float: left;
 }
 
@@ -520,7 +530,8 @@ br {
 	display: inline-block;
 	vertical-align: top;
 	color: #30693D;
-	width: 100px;
+	min-width: 100px;
+	max-width: 100%;
 	margin-left: 10px;
 	margin-right: 5px;
 }

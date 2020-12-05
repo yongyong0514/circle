@@ -67,9 +67,6 @@ body {
 	height: 60px;
 }
 
-.formBox5 {
-}
-
 .formBox6 {
 	width: 800px;
 	height: 100%;
@@ -165,29 +162,12 @@ body {
 	outline: none;
 }
 
-.formInput1 {
-	margin-left: 10px;
-	margin-top: 10px;
-	width: 665px;
-	height: 60px;
-	background: none;
-	border: 1px solid #D8D8D8;
-}
-
-.formBtn0 {
-	margin-top: 10px;
-	margin-right: 10px;
-	float: right;
-	width: 100px;
-	height: 60px;
-	cursor: pointer;
-	font-size: 15px;
-	border: 1px solid black;
-	border-radius: 3px;
-	background: #D8D8D8;
-	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
-	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
-	color: black;	
+.formResult7 {
+	width: 100%;
+	height: 100%;
+	background: white;
+	border: none;
+	outline: none;	
 }
 
 .formBtn2 {
@@ -542,4 +522,199 @@ body {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+/*파일 업로드 css*/
+.progressBar {
+	width: 150px;
+	height: 22px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+	display: inline-block;
+	margin: 0px 10px 5px 5px;
+	vertical-align: top;
+}
+
+.progressBar div {
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	line-height: 22px;
+	/* same as #progressBar height if we want text middle aligned */
+	width: 0;
+	background-color: #0059A1;
+	border-radius: 3px;
+}
+
+.statusbar {
+	border-top: 1px solid #A9CCD1;
+	min-height: 25px;
+	width: 97.5%;
+	padding: 10px 10px 0px 10px;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.statusbar:hover {
+	background: #91B9ED;
+}
+
+.statusbar:nth-child(odd) {
+	background: #EBEFF0;
+}
+
+.statusbar:nth-child(odd):hover {
+	background: #91B9ED;
+}
+
+.filename {
+	display: inline-block;
+	vertical-align: top;
+	min-width: 250px;
+	max-width: 100%;
+	float: left;
+}
+
+.filesize {
+	display: inline-block;
+	vertical-align: top;
+	color: #30693D;
+	min-width: 100px;
+	max-width: 100%;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+
+.abort {
+	background-color: #7D7D7D;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
+	color: #fff;
+	font-family: arial;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 4px 15px;
+	cursor: pointer;
+	vertical-align: top
+}
+
+
+/* 댓글과 서명 CSS */
+.signAndReply {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #D8D8D8;
+}
+
+.replyBox {
+	background: #F1F9FF;
+}
+
+.replyBox:nth-child(even) {
+	background: white;
+}
+
+.img3 {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 30px;
+	height: 30px;
+}
+
+.replyImage {
+	padding-top: 1rem;
+	vertical-align: top;
+	width: 40px;
+	height: 40px;
+}
+
+.replyName {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 90px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;	
+}
+
+.replyJob {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 90px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;	
+}
+
+.replyTime {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 190px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	color: #7D7D7D;
+	background: none;	
+}
+
+.replyNote {
+	margin-left: 10px;
+	max-width: 740px;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	resize: none;
+	overflow: hidden;
+	background: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.replyArea {
+	margin-left: 10px;
+	margin-top: 8px;
+	width: 665px;
+	height: 60px;
+	resize: none;
+	overflow: hidden;
+	font-family: inherit;
+    font-size: inherit;
+	background: none;
+	border: 1px solid #D8D8D8;
+}
+
+#submitReply {
+	line-height: 60px;
+	text-align: center;
+	margin-top: 10px;
+	margin-right: 10px;
+	float: right;
+	width: 100px;
+	height: 60px;
+	cursor: pointer;
+	font-size: 18px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	color: black;	
+}
+
+#submitReply:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+	
 }

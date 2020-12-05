@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 
+import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignService {
@@ -18,6 +18,9 @@ public interface SignService {
 	
 	// 결재 첨부 파일 다운로드
 	ResponseEntity<ByteArrayResource> download(String fileCode) throws IOException;
+
+	//결재 댓글 등록
+	void insert(SignReplyInsert signReplyInsert);
 
 }
 	

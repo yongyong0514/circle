@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +23,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignEmpList;
+import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignListJoiner;
 import com.kh.circle.sign.vo.SignModify;
+import com.kh.circle.sign.vo.SignReply;
+import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
@@ -78,7 +79,7 @@ public class SignController {
 		return "redirect:signList";
 	}
 	
-// 결재 첨부 파일	
+// 결재 첨부 파일 등록
 	@PostMapping("/signFiles")
 	public String upload(MultipartHttpServletRequest multipartRequest) { 
         
@@ -122,6 +123,12 @@ public class SignController {
 		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signJoinerCode", signCode);	
 		model.addAttribute("signListJoiner", signListJoiner);
 		
+		List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
+		model.addAttribute("list3", list3);
+		
+		List<SignReply> list4 = sqlSession.selectList("sign.signReply", signCode);
+		model.addAttribute("list4", list4);
+		
 		return "sign/signSelectOne";
 	}
 	
@@ -136,6 +143,9 @@ public class SignController {
 		
 		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
 		model.addAttribute("list2", list2);
+		
+		List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
+		model.addAttribute("list3", list3);
 
 		return "sign/signModify";
 	}
@@ -147,6 +157,13 @@ public class SignController {
 		return "sign/signList";
 	}
 
+// 결재 리플 작성
+	@PostMapping("/signReplyInsert")
+	public String signReplyInsert(@ModelAttribute SignReplyInsert signReplyInsert) {
+		signService.insert(signReplyInsert);
+		
+		return "success";
+	}
 	
 // 문서 첫화면
 	@GetMapping("/docuList")

@@ -333,8 +333,17 @@
 	</select>
 	
 	<select id="signFileList" resultType="signFiles">
-		SELECT *
- 		  FROM FILES
+		SELECT FILES_CODE
+     	     , FILES_ONAME
+  		     , FILES_CNAME
+     		 , FILES_ROUTE
+     		 , FILES_DATE
+     		 , FILES_TYPE
+     		 , FILES_STATUS
+     		 , CASE WHEN MOD(FILES_SIZE, 1024) &gt; 1024 THEN CONCAT(TRUNC(FILES_SIZE/1024, 2), ' MB')
+            		WHEN MOD(FILES_SIZE, 1024) &lt; 1024 THEN CONCAT(TRUNC(FILES_SIZE/1024, 2), ' KB')
+       		    END FILES_SIZE
+       	  FROM FILES
 		 WHERE FILES_TYPE=#{signCode}
 		   AND FILES_STATUS = 'N'
 	</select>
@@ -371,4 +380,36 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
  	      ORDER BY JI.JOB_INFO_CODE ASC
 	</select>
 <!-- signWrite page mapper end -->
+
+<!-- select signSelectOne reply start-->
+	<select id="signReply" resultType="signReply">
+		SELECT SR.SIGN_REPLY_CODE
+   		     , SR.SIGN_REPLY_DATE
+   		     , SR.SIGN_REPLY_CONTENT
+   		     , EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_NAME
+  		  FROM SIGN_REPLY SR
+  		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SR.SIGN_REPLY_EMP_CODE)
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 		 WHERE SIGN_REPLY_SIGN_CODE = #{signCode}
+	</select>	
+<!-- select signSelectOne reply end -->
+
+<!-- insert signSelectOne reply start -->
+	<select id="seqSignReply" resultType="String">
+		SELECT SIRC_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="signReplyInsert" parameterType="map">
+		INSERT INTO SIGN_REPLY( SIGN_REPLY_CODE
+                      		  , SIGN_REPLY_SIGN_CODE
+                      		  , SIGN_REPLY_CONTENT
+                      	      , SIGN_REPLY_DATE
+                     		  , SIGN_REPLY_EMP_CODE) VALUES( 'SIRC'||TRIM(TO_CHAR(#{seqSignReply},'000000'))
+                                                   		   , #{sign_code}
+                                                 		   , #{sign_reply_content}
+                                                 		   , SYSDATE
+                                                 		   , #{emp_info_emp_code})
+	</insert>
+<!-- insert signSelectOne reply end -->
 </mapper>
