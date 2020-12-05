@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.circle.sign.repository.SignDao;
 import com.kh.circle.sign.vo.SignFiles;
+import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Service
@@ -49,5 +50,12 @@ public class SignServiceImpl implements SignService {
 						.body(resource);
 		
 		return entity;
+	}
+
+	//결재 댓글 등록
+	@Override
+	public void insert(SignReplyInsert signReplyInsert) {
+		signDao.add(signReplyInsert);
+		
 	}
 }

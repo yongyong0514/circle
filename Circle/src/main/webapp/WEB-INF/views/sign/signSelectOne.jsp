@@ -108,6 +108,18 @@
 								</td>
 							</tr>
 							<tr>
+								<td class="formFile" colspan="2">
+									<div id="fileUpload" class="dragAndDropDiv"></div>
+									<c:forEach var="file" items="${list3}">
+										<div class='statusbar'>
+											<div class='filename' onclick="location.href='${pageContext.request.contextPath}/signResult/signFileDownload?fileCode=${file.files_code}'">${file.files_oname}</div>
+											<div class='filesize'>${file.files_size}</div>
+											<div class='filecode' style='display: none;'></div>
+										</div>
+									</c:forEach>
+								</td>
+							</tr>
+							<tr>
 								<td class="formBox7" colspan="2">
 									<c:forEach var="join" items="${signListJoiner}">
 										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
@@ -132,12 +144,26 @@
 							<td class="formBox7" colspan="2"><button class="formBtn3" disabled>결재가 완료되었습니다</button></td>
 						</tr> -->
 						</table>
-						<table class="formResult5">
-							<tr>
-								<td class="formBox0" colspan="2"></td>
-							</tr>
-							<tr>
-								<td class="formBox2" rowspan="2"><%-- <img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img2"> --%></td>
+						<table class="signAndReply"><!-- 댓글과 서명박스 구현 공간 -->
+					<%-- 	<c:forEach var="reply" items="${list4}">
+							<tbody class="replyBox">
+								<tr>
+									<td class="replyImage" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="img3"></td>
+									<td class="replyUser" >
+										<input type="text" class="formResult2" value="${reply.emp_info_name}" readonly>
+										<input type="text" class="formResult2" value="${reply.job_info_name}" readonly>
+										<input type="text" class="formResult4" value="${reply.sign_reply_date}" readonly>
+									</td>
+								</tr>
+								<tr>
+									<td class="formReply">
+										<textarea class="replyNote" readonly>${reply.sign_reply_content}</textarea>
+									</td>
+								</tr>
+							</tbody>
+						</c:forEach> --%>
+							<%-- <tr>
+								<td class="formBox2" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="img2"></td>
 								<td class="formBox3">
 									<input type="text" class="formResult2" value="이름공간" readonly>
 									<input type="text" class="formResult2" value="직위" readonly>
@@ -152,12 +178,12 @@
 								<td class="formBox9" colspan="2">
 									<input type="text" class="formResult6" value="결재 도장 이미지" readonly>
 								</td>
-							</tr>
+							</tr> --%>
 						</table>
-						<table>
+						<table><!-- 댓글 전송 버튼 박스 구간 -->
 							<tr>
-								<td class="formBox8" colspan="2"><input type="text" class="formInput1">
-									<button class="formBtn0">전송</button>
+								<td class="formBox8" colspan="2"><textarea class="replyArea"></textarea>
+									<div class="formBtn0" id="submitReply">전송</div>
 								</td>
 							</tr>
 <!-- 						<tr>
@@ -194,6 +220,96 @@
 		</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <!-- 로드 시 가져올 일부 본문 값 -->
+    <script>
+    var txtArea = $(".replyNote");
+    	if (txtArea) {
+    	    txtArea.each(function(){
+            $(this).height(this.scrollHeight);
+        });
+    }
+	</script>
+	
+    <!-- 왼쪽바 고정 추가 옵션 시작-->
+	<script>
+		$(function() {
+    		var leftBar = $(".leftBar").offset().top;
+    			$(window).scroll(function() {
+    		var window = $(this).scrollTop();
+    		if(leftBar <= window) {
+    			$(".leftBar").addClass("fixed");
+    		} else {
+    			$(".leftBar").removeClass("fixed");
+    			}
+    		})
+    	});
+    </script>
+<!--     <script>
+		$(document).ready(function(){
+				var base = "${pageContext.request.contextPath}";
+				var signCode = document.location.href.split("=");
+				
+				$.ajax({
+					url: base + "/signResult/signFileList",
+					type: "get",
+					data: {signCode : signCode[1]},
+					success: function(data) {
+						var objDragAndDrop = $(".dragAndDropDiv");
+						
+						for(var key in data) {
+							var $statusbar = $("<div class='statusbar'>");
+							var $filename = $("<div class='filename'>").text(data[key].files_oname);
+
+							var size = data[key].files_size/1024;
+								if(size > 1024) {
+									size = size.toFixed(2) + " MB";
+								} else {
+									size = size.toFixed(2) + " KB";
+								}
+							var $size = $("<div class='filesize'>").text(size);
+
+							var $filecode = $("<div class='filecode' style='display: none;'>").text(data[key].files_code);
+							
+							$statusbar.append($filename);
+							$statusbar.append($size);
+							$statusbar.append($filecode);
+							
+							objDragAndDrop.after($statusbar);
+						}
+					}
+				});
+		});
+	</script> -->
+<!-- 	<script>
+		$(document).on("click",".statusbar",function(){
+			var base = "${pageContext.request.contextPath}";
+			var tag = $(this);
+			var fileCode = tag.children().eq(2).text();
+			$.ajax({
+				url: base + "/signResult/signFileDownload",
+				type: "get",
+				data: {fileCode : fileCode},
+				success: function(response, status, xhr, data) {
+					var tab1 = xhr.getResponseHeader('content-disposition').split('filename=')[1].split(';')[0];
+					var	tab2 = tab1.replace(/\"/g, ""); 
+					var fileName = decodeURI(tab2);
+					
+				    if (response !== null && navigator.msSaveBlob)
+				        return navigator.msSaveBlob(new Blob([response], {type: 'application/octet-stream'}), fileName);
+				    
+				    var a = $("<a style='display: none;'/>");
+				    var url = window.URL.createObjectURL(new Blob([response], {type: 'application/octet-stream'}));
+				    a.attr("href", url);
+				    a.attr("download", fileName);
+				    $("body").append(a);
+				    a[0].click();
+				    window.URL.revokeObjectURL(url);
+				    a.remove();
+				}
+			});
+			
+		});
+	</script> -->
     <script>
 		$(".signSelectOneModifyBtn").click(function(){
 			var base = "${pageContext.request.contextPath}";
@@ -290,19 +406,32 @@
 		});
 	</script>
 	
-    <!-- 왼쪽바 고정 추가 옵션 시작-->
+	<!-- 결재 댓글 전송 -->
 	<script>
-		$(function() {
-    		var leftBar = $(".leftBar").offset().top;
-    			$(window).scroll(function() {
-    		var window = $(this).scrollTop();
-    		if(leftBar <= window) {
-    			$(".leftBar").addClass("fixed");
-    		} else {
-    			$(".leftBar").removeClass("fixed");
-    			}
-    		})
-    	});
-    </script>
+		$("#submitReply").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			var signEmpCode = ${empInfo.emp_info_emp_no};
+			var signContent = $(".replyArea").val();
+
+			$.ajax({
+				url: base + "/sign/signReplyInsert",
+				type: "post",
+				data: {sign_code : signCode[1]
+					 , sign_reply_emp_code : signEmpCode
+					 , sign_reply_content : signContent},
+				success: function(){
+					
+				}
+			});
+		});
+	</script>
+	
+	<!-- 결재 댓글 로드 -->
+	<script>
+		function signReply() {
+			
+		}
+	</script>
 </body>
 </html>

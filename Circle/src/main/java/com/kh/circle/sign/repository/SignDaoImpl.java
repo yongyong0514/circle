@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.sign.vo.SignFiles;
+import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Repository
@@ -107,5 +108,25 @@ public class SignDaoImpl implements SignDao {
 		byte[] data = FileUtils.readFileToByteArray(target);
 		
 		return data;
+	}
+
+	//결재 댓글 등록
+	@Override
+	public void add(SignReplyInsert signReplyInsert) {
+		
+		//시퀀스 번호 생성 및 파일 등록
+		String seqReply = sqlSession.selectOne("sign.seqSignReply");
+		
+		//결재 댓글 등록
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignReply", seqReply);
+		map.put("sign_code", signReplyInsert.getSign_code());
+		map.put("sign_reply_content", signReplyInsert.getSign_reply_content());
+		map.put("emp_info_emp_code", signReplyInsert.getSign_reply_emp_code());
+		
+		sqlSession.insert("sign.signReplyInsert", map);
+		
 	}
 }
