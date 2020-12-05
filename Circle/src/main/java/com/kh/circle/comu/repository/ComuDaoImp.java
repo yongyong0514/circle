@@ -71,22 +71,20 @@ public class ComuDaoImp implements ComuDao {
 		
 	}
 	
-	//수정하기로 입장
-	@Override
-	public List<Comu> comuCheck(String comu_post_ordr) {
-		
-		List<Comu> comu = sqlSession.selectList("comu.comuCheck",comu_post_ordr);
-		
-		return comu;
-	}
-	
 	//수정하기
 	@Override
 	public void comuUpdate(Comu comu) {
-
-		sqlSession.update("comu.ComuUpdate",comu);
+		
+		sqlSession.update("comuUpdate",comu);
 	}
 	
+	@Override
+	public Comu comuCheck(String comu_post_ordr) {
+		
+		Comu comu = sqlSession.selectOne("comu.comuCheck",comu_post_ordr);
+		
+		return comu;
+	}
 	//삭제하기
 	@Override
 	public void comuDelete(String comu_post_ordr) {

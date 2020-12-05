@@ -24,6 +24,7 @@ import com.kh.circle.comu.entity.ComuList;
 import com.kh.circle.comu.entity.ComuPager;
 import com.kh.circle.comu.service.ComuService;
 import com.kh.circle.login.entity.EmpInfo;
+import com.kh.circle.post.entity.Post;
 
 @Controller
 @RequestMapping("/community")
@@ -110,9 +111,19 @@ public class ComuController {
 	@GetMapping("/comuUpdate")
 	public String comuUpdate(Model model,@RequestParam("comu_post_ordr")String comu_post_ordr) {
 		
-		model.addAttribute("comuCheck", service.comuCheck(comu_post_ordr));
+		Comu comuCheck = service.comuCheck(comu_post_ordr);
+		model.addAttribute("comuCheck",comuCheck);
 		
 		return "community/comuUpdate";
+	}
+	@PostMapping("/comuUpdate")
+	public String comuUpdate(@ModelAttribute Comu comu,HttpSession session,
+			@RequestParam("comu_post_ordr")String comu_post_ordr) {
+		
+		service.comuUpdate(comu);
+		
+		//return "redirect:/community/comuList";
+		return "redirect:/community/comuDetail?comu_post_ordr="+comu.getComu_post_ordr(); 
 	}
 	
 	//게시글 삭제
@@ -151,10 +162,10 @@ public class ComuController {
 		model.addAttribute("comuApp", service.comuApp(comu_list_code));
 		
 		
+		
 		System.out.println("comuApp으로 가는길임??"+model);
 		return "community/comuApp";
 	}
-	
 }
 
 

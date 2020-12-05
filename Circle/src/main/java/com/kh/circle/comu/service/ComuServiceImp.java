@@ -68,13 +68,13 @@ public class ComuServiceImp implements ComuService {
 		return dao.comuDetail(comu_post_ordr);
 	}
 	
-	//수정화면 들어가기
+	//수정화면
 	@Override 
-	public List<Comu> comuCheck(String comu_post_ordr) {
+	public Comu comuCheck(String comu_post_ordr) {
 		
 		return dao.comuCheck(comu_post_ordr);
 	}
-	//수정하기
+
 	@Override
 	public void comuUpdate(Comu comu) {
 		

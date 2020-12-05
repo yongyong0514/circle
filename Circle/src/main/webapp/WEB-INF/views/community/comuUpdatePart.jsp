@@ -60,7 +60,8 @@ li{
 </style>
 <div class="container">
 				<div class="main">
-				<c:forEach var="comuCheck" items="${comuCheck }">
+				<form name="comuUpdate" id="comuUpdate" action="${pageContext.request.contextPath}/community/comuUpdate"method="POST">
+				<%-- <c:forEach var="comuCheck" items="${comuCheck }"> --%>
 				<div class="table-area">
 			<table align="center" width="800px" height="50px">
 				<tr>
@@ -86,7 +87,7 @@ li{
 				</tr>
 			</table>
 		</div>
-		</c:forEach>
+		<%-- </c:forEach> --%>
 		
 		
 		<div class="reply-area">
@@ -95,13 +96,18 @@ li{
 			<a href='<c:url value='/community/comuList'/>'>[목록으로 돌아가기]</a>
 			</li>
 		
-		 	<br>
-			<li align="right"><a href='<c:url value='/community/comuUpdate?comu_post_ordr=${postView.comu_post_ordr}'/>'>[수정하기]</a>
 		
-		</li>
+		 	<li  align="right">
+		 	 <div class="inputfield">
+			<%-- <label><input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></label>  --%>
+			<br>
+			<label><input type="submit" value="수정하기" class="btn" id="submit"></label>
+
+			</div> 
+			</li>
 		</ul>
 		</div>
-		
+		</form>
 		
 			</div>
 		</div>
