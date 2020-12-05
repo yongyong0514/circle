@@ -5,7 +5,13 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="address">
-	<select id="pagingEmp" parameterType="map" resultType="addressInfo">
+	<select id="total" resultType="int">
+		select count(*)
+		  from emp_info
+		 where emp_info_edat is not null
+	</select>
+
+	<select id="pagingEmp" parameterType="pagingInfo" resultType="addressInfo">
 		select name
 			 , photo
 			 , deptName

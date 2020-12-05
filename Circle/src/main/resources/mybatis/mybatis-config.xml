@@ -79,6 +79,7 @@
 		<typeAlias type="com.kh.circle.organChart.entity.OrganEmp" alias="organEmp"/>
 		
 		<typeAlias type="com.kh.circle.addressBook.entity.AddressInfo" alias="addressInfo"/>
+		<typeAlias type="com.kh.circle.addressBook.entity.PagingInfo" alias="pagingInfo"/>
 	</typeAliases>
 
 	<!-- 

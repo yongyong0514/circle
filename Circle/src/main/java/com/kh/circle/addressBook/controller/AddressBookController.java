@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.addressBook.entity.AddressInfo;
+import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.service.AddressBookService;
 
 @Controller
@@ -34,13 +35,14 @@ public class AddressBookController {
 						@RequestParam(value="perPage", defaultValue="20") int perPage,
 						Model model) {
 		
-		Map<String, Object> inputMap = new HashMap<String, Object>();
-		inputMap.put("nowPage", nowPage);
-		inputMap.put("perPage", perPage);
+		PagingInfo pInfo = PagingInfo.builder()
+									.nowPage(nowPage)
+									.perPage(perPage)
+									.build();
 		// 전체 리스트 반환
 		
 		// 1. 페이징 처리
-		List<AddressInfo> aList = addressBookService.pagingEmp(inputMap);
+		List<AddressInfo> aList = addressBookService.pagingEmp(pInfo);
 		
 		model.addAttribute("aList", aList);
 		
