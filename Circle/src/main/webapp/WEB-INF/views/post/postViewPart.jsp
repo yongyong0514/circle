@@ -31,10 +31,10 @@
 </div>
 
 <!--  덧글 -->
-
-<c:if test="${sessionScopt.emp_info_emp_no != null }">
+<div>
+<c:if test="${sessionScope.emp_info_emp_no != null }">
 	
-	<input type="hidden" name="post_code" value="${ostCheck.post_code}">
+	<input type="hidden" name="post_code" value="${postCheck.post_code}">
 
 	<textarea id="post_repl_cont" name="post_repl_cont">
 	
@@ -44,5 +44,60 @@
 	<button type="button" id="btnReply" name="btnReply">댓글 작성</button>
 	</span>
 	</c:if>
+	</div>
+	<div id="listReply">
+	</div>
 	<div id="listReply"></div>
 		<jsp:include page="../post/PostReply.jsp" />
+
+
+<!--  댓글 script -->		
+<script>
+
+$(#btnReply).click(function(){
+			var reply_repl_cont = $("#reply_repl_cont").val.(); //댓글내용
+			var post_code = "${postView.post_code}"; //게시물 번호
+			var param = {"post_repl_cont" : post_repl_cont, "post_code" : postCode};
+			
+			$.ajax({
+				type: "post",
+				url : "${path}/reply/insert",
+				data:param,
+				success:function(){
+					alert("댓글이 등록 완료되었습니다.");
+					listReply();//목록출력
+				}
+				
+			});
+});
+
+
+
+
+<!-- 댓글 목록 script -->
+function.listReply(){
+$.ajax({
+type: "get",
+url: "${path}/reply/list?post_code=${postView.post_code}"
+sucess:function(result){
+$("#listReply").html(result);
+}
+});
+
+
+<!-- 댓글 목록  -->
+
+function listReply(num){
+	
+	$.ajax({
+		type: "post",
+		url: = "${path}/reply/list?post_code?{postView.post_code}&curPage",
+		success: funtion(result){
+			console.log(result);
+			$("#listReply").html(result);
+		}
+	});
+	
+}
+</script>
+}

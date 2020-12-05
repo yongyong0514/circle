@@ -31,7 +31,8 @@
 
 	<!-- 부분 게시판 -->
 	<select id="postParts" parameterType="string" resultType="post">
-		select *
+		select
+		*
 		from post p
 		join emp_info e on (p.post_emp = e.emp_info_emp_no)
 		join
@@ -44,7 +45,8 @@
 
 	<!-- 총 게시글 갯수 -->
 	<select id="postCount" resultType="int">
-		select count(*) from post
+		select count(*)
+		from post
 	</select>
 
 
@@ -57,12 +59,47 @@
 		from (
 		select *
 		from post
+		p
+		join emp_info e
+		on (p.post_emp =
+		e.emp_info_emp_no)
+		join post_type t on
+		(p.post_type =
+		t.post_type_code)
+		where p.post_type in
+		('POTY000002',
+		'POTY000003')
 		order by post_code desc
 		) a
 		)
-		where rn between #{start} and #{end}
+		where rn between #{start} and
+		#{end}
 
 	</select>
+	<select id="postSelect2" parameterType="postPaging"
+		resultType="post">
+		select *
+		from (
+		select rownum rn, a.*
+		from (
+		select *
+		from post
+		p
+		join emp_info e
+		on (p.post_emp = e.emp_info_emp_no)
+		join
+		post_type t on
+		(p.post_type =
+		t.post_type_code)
+		where p.post_type =
+		#{post_type}
+		) a
+		)
+		where rn between
+		#{start} and #{end}
+
+	</select>
+
 
 	<!-- postList 호출 -->
 	<select id="postList" resultType="post">
@@ -80,11 +117,15 @@
 
 	<insert id="postInsert" parameterType="post">
 
-		INSERT INTO POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
-		POST_WDAT, POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF,
+		INSERT INTO
+		POST(POST_CODE, POST_EMP, POST_TYPE, POST_TITLE, POST_COMT,
+		POST_WDAT,
+		POST_MDAT, POST_CVP, POST_SEC, POST_NOTI, POST_CODE_REF,
 		POST_STAT)
-		VALUES(CONCAT('POST', LPAD(POST_SEQ.NEXTVAL, 6, 0)), #{post_emp}, #{post_type},
-		#{post_title}, #{post_comt} , DEFAULT ,TO_DATE('', 'YYYY/MM/DD'), 0,
+		VALUES(CONCAT('POST', LPAD(POST_SEQ.NEXTVAL, 6, 0)), #{post_emp},
+		#{post_type},
+		#{post_title}, #{post_comt} , DEFAULT ,TO_DATE('',
+		'YYYY/MM/DD'), 0,
 		#{post_sec}, 'N', '', 'N')
 	</insert>
 
@@ -95,7 +136,8 @@
 	</select>
 
 	<select id="empInfo" resultType="string" parameterType="string">
-		select emp_info_name
+		select
+		emp_info_name
 		from emp_info
 		where emp_info_emp_no = #{emp_no}
 
@@ -109,76 +151,93 @@
 		select *
 		from post p
 		join post_type t on (p.post_type = t.post_type_code)
-		join emp_info e on (p.post_emp = e.emp_info_emp_no)
-		where p.post_code = #{post_code}
+		join
+		emp_info e on (p.post_emp = e.emp_info_emp_no)
+		where p.post_code =
+		#{post_code}
 	</select>
 
-<update id="CountDetail">
-update post
-set post_cvp = post_cvp + 1
-where post_code = #{post_code}
+	<update id="CountDetail">
+		update post
+		set post_cvp = post_cvp + 1
+		where post_code
+		= #{post_code}
 
-</update>
+	</update>
 
-<!--  update -->
+	<!-- update -->
 
-<update id="postUpdate" parameterType="post">
-update post
- set post_title = #{post_title}, post_comt=#{post_comt}, post_sec=#{post_sec}, post_mdat=SYSDATE
- where post_code = #{post_code}
-</update>
+	<update id="postUpdate" parameterType="post">
+		update post
+		set post_title
+		= #{post_title}, post_comt=#{post_comt},
+		post_sec=#{post_sec},
+		post_mdat=SYSDATE
+		where post_code = #{post_code}
+	</update>
 
-<select id="postCheck" parameterType="string" resultType="post">
-	select *
+	<select id="postCheck" parameterType="string" resultType="post">
+		select
+		*
 		from post p
 		join post_type t on (p.post_type = t.post_type_code)
+		join
+		emp_info e on (p.post_emp = e.emp_info_emp_no)
+		where p.post_code =
+		#{post_code}
+	</select>
+
+	<!-- 삭제 -->
+
+	<delete id="postDelete" parameterType="string">
+		delete from post where
+		post_code = #{post_code}
+
+	</delete>
+
+
+	<!-- 검색 -->
+	<sql id="postSearch">
+		<trim prefixOverrides="OR" suffix=") AND " prefix="(">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">post_title like '%'||#{keyword}||'%' </when>
+						<when test="type == 'C'.toString()">post_comt like '%'||#{keyword}||'%' </when>
+						<when test="type == 'W'.toString()">post_emp like '%'||#{keyword}||'%' </when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<select id="getSearch" resultType="post"
+		parameterType="postPaging">
+
+		select *
+		from post p
 		join emp_info e on (p.post_emp = e.emp_info_emp_no)
-		where p.post_code = #{post_code}
-</select>
+		<where>
+			<if test="type != null and keyword != null">
+				<choose>
+					<when test="type == 'post_title'">
+						${type} = #{keyword}
+					</when>
+					<when test="type == 'post_comt'">
+						${type} = #{keyword}
+					</when>
+					<when test="type == 'emp_info_name'">
+						${type} = #{keyword}
+					</when>
+				</choose>
+			</if>
+		</where>
+	</select>
 
-<delete id="postDelete" parameterType="string">
-delete from post where post_code = #{post_code}
-
-</delete>
-
-
-<!--  검색 -->
-<sql id="postSearch">
-<![CDATA[
-select *
-from
- (select rownum rn, post_code, post_title, post_comt, post_emp, post_wdat, post_wdat, psot_mdat
-from post
-where
-]]>
-
-<trim prefix="(" suffix=") AND" prefixOverrides="OR">
-<foreach collection="typeArr" item='type'>
-
-<choose>
-<when test ="type == 'T'.toString()">
-
-post_title like '%' || #{keyword} || '%'
-</when>
-<when test="type == 'C'.toString()">
-
-post_comt like '%' || #{keyword}} || '%'
-</when>
-<when test="type == 'W'.toString()">
-post_emp like '%'||#{keyword}||'%'
-</when>
-
-</choose>
-</foreach>
-
-</trim>
-
-<![CDATA[
-rownum <= #{nowPage} *#{cntPage} 
-)
-where rn > (#{nowPage} - 1) * #{cntPage}
-]]>
-)
-</sql>
+	<select id="countSearch" resultType="int">
+		select count(*)
+		from post
+	</select>
+	
 
 </mapper>

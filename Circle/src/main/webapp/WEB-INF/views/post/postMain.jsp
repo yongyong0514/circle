@@ -26,12 +26,7 @@
 			
 			<!-- 본문 -->
 		
-		<script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="postList?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
-</script>
+
 
 <!-- 개수로 보기 -->
 <div style="float: right;">
@@ -47,7 +42,6 @@
 		</select>
 	</div>
 	<!-- 전체 게시판 불러오기 -->
-
 	<table class="postParts">
 		<tr>
 			<th class="post_codes">글번호</th>
@@ -73,8 +67,6 @@
 <c:set var="Post"/>
 <c:if test="${paging.startPage != 1}">
 <a href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
-	<a href="post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
-
 </c:if>
 <c:forEach begin="${paging.startPage }" end="${paging.endPage}" var="p">
 <c:choose>
@@ -98,17 +90,24 @@
 	 
 	 
 	<!-- 검색 -->
-	<form>
-	<select name="opt">
-	<option value="0">글쓴이</option>
-	<option value="1">제목</option>
-	<option value="2">제목+내용</option>
-	<option value="3">내용</option>
-	</select>
-	<input type="text" size="20" name="contidtion" />&nbsp;
-	<input type="submit" value="검색하기"/>
 	
+	<div id="postSearch">
+	<form id="searchForm" method="get" action="${pageContext.request.contextPath}/post/postSearch">
+	<select name="type">
+	<option value="">선택하기</option>
+	<option value="post_title">제목</option>
+	<option value="post_comt">내용</option>
+	<option value="emp_info_name">작성자</option>
+	
+	</select>
+	<input type="text" name="keyword">
+	<input type="submit" id="searchBtn" value="검색">
 	</form>
+	
+	</div>
+	
+	
+	
 	
 		<!--  본문 종료 -->
 			</div>

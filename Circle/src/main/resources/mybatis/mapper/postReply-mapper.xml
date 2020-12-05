@@ -10,7 +10,7 @@
 
 
 <!-- 댓글 입력 -->
-<insert id="postReplytInsert" parameterType="postReply">
+<insert id="insertReply" parameterType="postReply">
 INSERT INTO POST_REPL
 (POST_REPL_CODE,POST_REPL_POST, POST_REPL_EMP, POST_REPL_CONT,
 POST_REPL_WDAT, POST_REPL_CRP,POST_REPL_MDAT,POST_REPL_REF)
@@ -20,30 +20,14 @@ POST_REPL_WDAT, POST_REPL_CRP,POST_REPL_MDAT,POST_REPL_REF)
 
 </insert>
 
-<!-- 댓글 목록 -->
-<select id="postReplyList" resultType="postReply">
+<select id="listReply" resultType="postReply">
 select *
-from  post_repl r
-join post p on (r.post_repl_post = p.post_code)
-join emp_info e on (r.post_repl_emp = e.emp_info_emp_no)
-where post_repl_psot = #{post_repl_post}
-</select>
-
-<update id="postReplyUpdate" parameterType="postReply">
-update post_repl
-set 
-post_repl_cont = #{post_repl_cont}
-where post_repl_code = #{post_repl_code}
-</update>
-
-<delete id="postReplyDelete" parameterType="String">
-delete from post_repl where post_repl_code = #{post_repl_code}
-</delete>
-
-
-<select id="postReplyCount" resultType="int">
-select count(*)
-from post_repl
+from post_repl r
+, post p, emp_info e
+join post p on (p.post_code = r.post_repl_post)
+join emp_info e (r.post_rep_emp = e.emp_info_emp_no)
+where post_code = #{post_code}
+order by post_repl_code 
 </select>
 
 </mapper>
