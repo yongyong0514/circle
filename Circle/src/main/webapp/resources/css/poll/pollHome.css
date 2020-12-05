@@ -2,6 +2,11 @@ html body .poll-content-container 	{width:100%;
 									 height:100%;
 									 word-break: break-all;
 									 }
+a {
+	color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
 .poll-content-bar			{width:100%;}
 
 .my-poll-list-container 	{height:30%;
