@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="address">
+	<select id="total" resultType="int">
+		select count(*)
+		  from emp_info
+		 where emp_info_edat is not null
+	</select>
+
+	<select id="pagingEmp" parameterType="pagingInfo" resultType="addressInfo">
+		select name
+			 , photo
+			 , deptName
+			 , jobName
+			 , email
+			 , tel
+			 , cmpName
+			 , remark
+		  from (select rownum as rm
+		  			 , EI.emp_info_name as name
+					 , EI.emp_info_phto as photo
+					 , DI.dept_info_name as deptName
+					 , JI.job_info_name as jobName
+					 , EI.emp_info_email as email
+					 , EI.emp_info_mtel as tel
+					 , CI.cmp_info_name as cmpName
+					 , null as remark
+				  from emp_info EI
+				 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
+				 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
+				 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
+				 where emp_info_edat is null
+				 order by EI.emp_info_name		  
+		  	   )
+		 where rm between ( #{nowPage} * #{perPage} - #{perPage} + 1 ) 
+		 			  and ( #{nowPage} * #{perPage} )	
+	</select>
+	
+</mapper>

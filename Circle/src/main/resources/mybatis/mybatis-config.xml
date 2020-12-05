@@ -77,9 +77,13 @@
 		<typeAlias type="com.kh.circle.empInfo.entity.InfoModify" alias="infoModify"/>
 		
 		<typeAlias type="com.kh.circle.vacation.entity.Vacation" alias="vacation"/>
-		
+		<typeAlias type="com.kh.circle.vacation.entity.VacationInfo" alias="vacationInfo"/>
+			
 		<typeAlias type="com.kh.circle.organChart.entity.OrganDept" alias="organDept"/>
 		<typeAlias type="com.kh.circle.organChart.entity.OrganEmp" alias="organEmp"/>
+		
+		<typeAlias type="com.kh.circle.addressBook.entity.AddressInfo" alias="addressInfo"/>
+		<typeAlias type="com.kh.circle.addressBook.entity.PagingInfo" alias="pagingInfo"/>
 	</typeAliases>
 
 	<!-- 

@@ -54,5 +54,29 @@
 		       )
 	</select>
 	
+	<insert id="addVacation" parameterType="vacationInfo">
+		insert into anva_hstr
+			 ( anva_hstr_ordr
+			 , anva_hstr_emp_no
+			 , anva_hstr_type
+			 , anva_hstr_rdat
+			 , anva_hstr_sdat
+			 , anva_hstr_edat
+			 , anva_hstr_cont
+			 , anva_hstr_conf
+			 , anva_hstr_sign_code
+			)
+		values
+			 ( anhs_seq.nextval
+			 , #{empNo}
+			 , #{vacationType}
+			 , #{regitDate}
+			 , #{startDate}
+			 , #{endDate}
+			 , #{content}
+			 , #{confirm}
+			 , #{sign_code}
+			 )
+	</insert>
 	
 </mapper>
