@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.kh.circle.addressBook.entity.AddressInfo;
 import com.kh.circle.addressBook.entity.PagingInfo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 public class AddressBookRepositoryImpl implements AddressBookRepository{
 	@Autowired
