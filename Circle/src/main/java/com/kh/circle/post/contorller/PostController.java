@@ -1,7 +1,9 @@
 package com.kh.circle.post.contorller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,34 +51,41 @@ public class PostController {
 	// post Mainpage
 
 	@GetMapping("/postMain")
-	public String postMain(Model model, Post post, PostPaging postPaging,
-			@RequestParam(value = "nowPage", required = false) String nowPage,
-			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+	public String postMain(Model model, Post post,
+			PostPaging postPaging, //뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, //뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, //뷰페이징
+			@RequestParam(required = false) String type,//검색
+			@RequestParam(required = false) String keyword //검색
+			) {
 
-		List<Post> list = postService.postMain(model);
-
-		int total = postService.countPost();
-
-
-		if (nowPage == null && cntPerPage == null) {
+		List<Post> list = postService.postMain(model, postPaging); //리스트
+		
+		
+		/* 뷰페이징 시작 */
+		int total = postService.countPost(); 
+		if (nowPage == null && cntPerPage == null) { 
 			nowPage = "1";
 			cntPerPage = "5";
-
+			
 		} else if (nowPage == null) {
 			nowPage = "1";
 		} else if (cntPerPage == null) {
 			cntPerPage = "5";
 		}
-
-		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-
-
+		
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+		
+		
+		/* 뷰페이징 종료  */
+	
 
 		model.addAttribute("postParts", list);
 		model.addAttribute("paging", postPaging);
 		model.addAttribute("postPaging", postService.selecePost(postPaging));
 		model.addAttribute("postSelect", postService.selecePost(postPaging));
-	
+
 		return "post/postMain";
 	}
 
@@ -95,7 +104,7 @@ public class PostController {
 		// 게시판별 이름 찾기
 		String postName = "";
 		String post_type = "";
-		
+
 		switch (url) {
 
 		case "test":
@@ -120,9 +129,14 @@ public class PostController {
 			postName = "전체게시글";
 			break;
 		}
+		
 
 		List<Post> list = postService.postParts(post_type);
 
+
+		//이름 및 코드 찾기 종료
+
+		//뷰페이징
 		int total = postService.countPost();
 
 		if (nowPage == null && cntPerPage == null) {
@@ -135,16 +149,17 @@ public class PostController {
 			cntPerPage = "5";
 		}
 
-		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
 
-		model.addAttribute("post_type", post_type);
+		//뷰페이징
+		
 		model.addAttribute("url", url);
+		model.addAttribute("post_type", post_type);
 		model.addAttribute("postParts", list);
 		model.addAttribute("paging", postPaging);
-		model.addAttribute("postSelect", postService.selecePost(postPaging));
+		model.addAttribute("postPaging", postService.selecePost2(postPaging));
+		model.addAttribute("postSelect2", postService.selecePost2(postPaging));
 
-		
-		
 		return "post/postList";
 	}
 
@@ -214,7 +229,48 @@ public class PostController {
 
 		return "redirect: postMain";
 	}
-	
+
+	// 게시글 검색
+
+	@GetMapping("/postSearch")
+	public String postSearch(Model model,  PostPaging postPaging,
+			@RequestParam(value = "nowPage", required = false) String nowPage,
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage,
+			@RequestParam(required = false) String type,//검색
+			@RequestParam(required = false) String keyword //검색
+			) {
+
 		
+		
+		
+		System.out.println("dhodhodhodhod" + postPaging);
+		List<Post> list = postService.postSearch(postPaging);
+		
+		int count = postService.countPostSearch(postPaging);
+		int total = postService.countPost();
+		String post_type = "";
+
+		
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		System.out.println("cont list : : " + list);
+		System.out.println("cont paging : : " + postPaging);
+		
+		
+		model.addAttribute("getSearch", list);
+		model.addAttribute("paging", new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type));
+		
+		return "post/postSearch";
 	}
 
+}

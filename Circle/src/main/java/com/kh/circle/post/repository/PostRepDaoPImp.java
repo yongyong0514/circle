@@ -16,38 +16,22 @@ public class PostRepDaoPImp implements PostRepDao{
 
 	@Autowired
 	SqlSession sqlSession;
+
+	@Override
+	public void replyInsert(PostReply postReply) {
+		sqlSession.insert("Postreply.insertreply", postReply);
+	}
+
+	@Override
+	public List<PostReply> replyList(String post_code) {
+		return sqlSession.selectList("Postreply.listReply", post_code);
+	}
+
+	@Override
+	public int countRep(PostReply post_code) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
-
-	
-	@Override
-	public List<PostReply> replyList(Model model) {
-		List<PostReply> list  = sqlSession.selectList("postReplyList");
-		model.addAttribute("postReplyList", list);
-		return list;
-	}
-
-	@Override
-	public String replyInsert(PostReply postReply) {
-		
-		return null;
-	}
-
-	@Override
-	public String replyUpdate(PostReply postReply) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String replyDelete(String post_repl_code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void postInsert(PostReply postReply) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

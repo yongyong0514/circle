@@ -19,6 +19,7 @@ import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostFile;
 import com.kh.circle.post.entity.PostFile.PostFileBuilder;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.repository.PostDao;
 import com.kh.circle.post.repository.PostFileDao;
 import com.kh.circle.post.repository.PostSaveDao;
@@ -40,9 +41,9 @@ public class PostServiceImp implements PostService {
 
 	// 게시글 리스트
 	@Override
-	public List<Post> postMain(Model model) {
+	public List<Post> postMain(Model model, PostPaging postPaging) {
 
-		return postDao.postMain(model);
+		return postDao.postMain(model, postPaging);
 	}
 
 	@Override
@@ -61,6 +62,13 @@ public class PostServiceImp implements PostService {
 
 		return postDao.selectPost(postPaging);
 	}
+	
+	
+	@Override
+	public List<Post> selecePost2(PostPaging postPaging) {
+		return postDao.selectPost2(postPaging);
+	}
+
 
 	// 입력하기
 	@Override
@@ -105,11 +113,30 @@ public class PostServiceImp implements PostService {
 
 		return postDao.postCheck(post_code);
 	}
+	
+	
+	//삭제하기
 
 	@Override
 	public void postDelete(String post_code) {
 
 		postDao.postDelete(post_code);
 	}
+
+	
+	//검색하기
+	@Override
+	public List<Post> postSearch(PostPaging postSearch) {
+		System.out.println("ser :: : " + postSearch);
+		return postDao.postSearch(postSearch);
+	}
+
+	@Override
+	public int countPostSearch(PostPaging postSearch) {
+		
+		System.out.println("ser :: : " + postSearch);
+		return postDao.countPostSearch(postSearch);
+	}
+
 
 }

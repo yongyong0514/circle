@@ -9,13 +9,14 @@ import com.kh.circle.post.entity.PostReply;
 
 public interface PostRepService {
 
-	String replyInsert(PostReply postReply);
+	void replyInsert(PostReply postReply);
 
-	List<PostReply> replyList(Model model);
+	List<PostReply> replyList(String post_code);
 
 	String replyUpdate(PostReply postReply);
 
 	String replyDelete(String post_repl_code);
 
+	public int countRep(PostReply post_code);
 
 }

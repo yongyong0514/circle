@@ -1,34 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Circle</title>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/reset.css">
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-</head>
-<body>
-	<div class="wrap">
-		<div class="header">
-			<jsp:include page="../common/menuTopBar.jsp" />
-			<jsp:include page="../common/menuAlertBar.jsp" />
-		</div>
-		<div class="leftBar">
-			<jsp:include page="../post/postSidebar.jsp" />
-		</div>
-		<div class="container">
-			<div class="contentBar">
-				 <jsp:include page="../post/postHomebar.jsp" />
-			</div>
-	
-		<div class="content">
-		
+
 <!-- 개수로 보기 -->
 <div style="float: right;">
 		<select id="cntPerPage" name="sel" onchange="selChange()">
@@ -42,6 +16,7 @@
 				<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
 		</select>
 	</div>
+
 <!-- 게시판 불러오기 -->
 <table class="postParts">
 		<tr>
@@ -52,13 +27,13 @@
 			<th class="post_dates">작성일</th>
 			<th class="post_cvps">조회수</th>
 		</tr>
-	<c:forEach var="getSearch" items="${getSearch}">
+	<c:forEach var="postSelect2" items="${postSelect2}">
 		<tr>
-			<td>${getSearch.post_code}</td>
-			<td><a href='<c:url value='/post/postView?post_code=${getSearch.post_code}'/>'>${getSearch.post_title}</a></td>
-			<td>${getSearch.emp_info_name}</td>
-			<td>${getSearch.post_wdat}</td>
-			<td>${getSearch.post_cvp}</td>
+			<td>${postSelect2.post_code}</td>
+			<td><a href='<c:url value='/post/postView?post_code=${postSelect2.post_code}'/>'>${postSelect2.post_title}</a></td>
+			<td>${postSelect2.emp_info_name}</td>
+			<td>${postSelect2.post_wdat}</td>
+			<td>${postSelect2.post_cvp}</td>
 		</tr>
 	</c:forEach>
 	</table>
@@ -88,8 +63,8 @@
 
 </div>
 
-<!-- 검색 -->
-	
+<!--  검색 -->
+
 	<div id="postSearch">
 	<form id="searchForm" method="get" action="${pageContext.request.contextPath}/post/postSearch">
 	<select name="type">
@@ -104,31 +79,3 @@
 	</form>
 	
 	</div>
-
-
-			<!-- 옵션선택 끝 -->
-
-
-		</div>
-	</div>
-	</div>
-
-
-	<script>
-		$(function() {
-			$('tbody tr[href]').click(function() {
-				console.log($(this).attr('href'));
-				//window.location = $(this).attr('href');
-			}).find('a').hover(function() {
-				$(this).parents('tr').unbind('click');
-			}, function() {
-				$(this).parents('tr').click(function() {
-					console.log($(this).attr('href'));
-					//window.location = $(this).attr('href');
-				});
-			});
-
-		});
-	</script>
-</body>
-</html>

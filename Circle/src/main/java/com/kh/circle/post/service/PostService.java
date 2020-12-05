@@ -11,12 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.repository.PostDao;
 
 public interface PostService {
 
 	// 자세히보기
-	List<Post> postMain(Model model);
+	List<Post> postMain(Model model, PostPaging postPaging);
 
 	List<Post> postParts(String post_type);
 
@@ -42,4 +43,10 @@ public interface PostService {
 	
 	//삭제하기
 	void postDelete(String post_code);
+
+	List<Post> selecePost2(PostPaging postPaging);
+
+	List<Post> postSearch(PostPaging postPaging);
+
+	int countPostSearch(PostPaging postPaging);
 }

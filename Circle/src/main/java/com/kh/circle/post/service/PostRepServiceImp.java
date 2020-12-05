@@ -12,32 +12,37 @@ import com.kh.circle.post.repository.PostRepDao;
 @Service
 public class PostRepServiceImp implements PostRepService{
 
+	
 	@Autowired
 	PostRepDao repDao;
 	
-
 	@Override
-	public List<PostReply> replyList(Model model) {
-		
-		
-		return repDao.replyList(model);
+	public void replyInsert(PostReply postReply) {
+		 repDao.replyInsert(postReply);
 	}
 
-	
 	@Override
-	public String replyInsert(PostReply postReply) {
-		return repDao.replyInsert(postReply);
+	public List<PostReply> replyList(String post_code) {
+		return repDao.replyList(post_code);
 	}
 
 	@Override
 	public String replyUpdate(PostReply postReply) {
-		return repDao.replyUpdate(postReply);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String replyDelete(String post_repl_code) {
-		return repDao.replyDelete(post_repl_code);
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public int countRep(PostReply post_code) {
+		return repDao.countRep(post_code);
+	}
+
 
 	
 }

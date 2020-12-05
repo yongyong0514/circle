@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.service.PostService;
 
 @Repository
@@ -31,9 +32,9 @@ public class PostDaoImp implements PostDao {
 
 // postMain page 진입 : 전체 게시판 : 공지 + 전사
 	@Override
-	public List<Post> postMain(Model model) {
+	public List<Post> postMain(Model model, PostPaging postPaging) {
 
-		List<Post> postMain = sqlSession.selectList("postMain");
+		List<Post> postMain = sqlSession.selectList("post.postMain", postPaging);
 		model.addAttribute("postMain", postMain);
 
 		return postMain;
@@ -61,6 +62,14 @@ public class PostDaoImp implements PostDao {
 		List<Post> paging = sqlSession.selectList("post.postSelect", postPaging);
 
 		return paging;
+	}
+	
+	@Override
+	public List<Post> selectPost2(PostPaging postPaging) {
+		
+		List<Post> paging2 = sqlSession.selectList("post.postSelect2", postPaging);
+
+		return paging2;
 	}
 
 	// 작성하기
@@ -125,5 +134,30 @@ public class PostDaoImp implements PostDao {
 
 		sqlSession.delete("post.postDelete", post_code);
 	}
+
+	
+	//검색하기
+	
+	
+	
+	@Override
+	public List<Post> postSearch(PostPaging postSearch) {
+
+		List<Post> list = sqlSession.selectList("post.getSearch", postSearch);		
+	
+		System.out.println("dao  list : : " + list);
+		return list;
+	}
+
+	@Override
+	public int countPostSearch(PostPaging postSearch) {
+		int num = sqlSession.selectOne("post.countSearch", postSearch);
+		
+		System.out.println("dao postSearch: : " + postSearch);
+		
+		System.out.println("dao in : : " + num);
+		return num;
+	}
+
 
 }

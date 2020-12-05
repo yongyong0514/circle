@@ -28,7 +28,7 @@
 			</div>
 	
 		<div class="content">
-		<jsp:include page="../post/postPart.jsp"/>
+		<jsp:include page="../post/postListPart.jsp"/>
 			<!-- 옵션선택 끝 -->
 
 

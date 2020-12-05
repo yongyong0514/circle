@@ -8,14 +8,11 @@ import com.kh.circle.post.entity.PostReply;
 
 public interface PostRepDao {
 
-	void postInsert(PostReply postReply);
+	void replyInsert(PostReply postReply);
 
-	List<PostReply> replyList(Model model);
+	List<PostReply> replyList(String post_code);
 
-	String replyInsert(PostReply postReply);
+	int countRep(PostReply post_code);
 
-	String replyUpdate(PostReply postReply);
-
-	String replyDelete(String post_repl_code);
 
 }

@@ -38,31 +38,33 @@ public class PostReplyController {
 
 	}
 	
-	@PostMapping("/replyInsert")
-	public String insert(@RequestParam String post_repl_post, @RequestParam String post_repl_cont, HttpSession session) {
+	@PostMapping("/insert")
+	public void replyInsert(PostReply postReply,HttpSession session) {
+
 		
-		PostReply postReply = new PostReply();
-		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		String emp_info_emp_no =(String)session.getAttribute("emp_info_emp_no");
 		
-		String emp_name = postService.postEmpInfo(emp_no);
+		postReply.setEmp_info_emp_no(emp_info_emp_no);
 		
-		postReply.setPost_repl_post(post_repl_post);
-		postReply.setPost_repl_emp(emp_no);
-		postReply.setPost_repl_cont(post_repl_cont);
-		
-		
-		
-		return repService.replyInsert(postReply);
-		
-		
+		repService.replyInsert(postReply);
 	}
 	
 	
 	@GetMapping("/list")
-	private List<PostReply> replyList(Model model){
+	private String replyList(String post_code,
+			Model model,
+			PostReply reply){
 		
-		return repService.replyList(model);
+		List<PostReply> replyList = repService.replyList(post_code);
+		
+		return "reply/list";
 	}
+	
+	@GetMapping("list_json")
+	public List<PostReply> list_json(String post_code){
+		return repService.replyList(post_code);
+	}
+	
 	
 	@GetMapping("/update")
 	private String replyUpdate(@RequestParam String post_repl_code, @RequestParam String post_repl_cont) {
