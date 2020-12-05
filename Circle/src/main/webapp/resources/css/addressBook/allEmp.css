@@ -1,0 +1,22 @@
+.addressListTable{
+	width:100%;
+}
+
+.addressListTable th,
+.addressListTable td{
+	font-size: small;
+	text-align: left;
+	padding: 0.5rem;
+}
+
+.addressListTable th{
+	border-top:1px solid black;
+	border-bottom:1px solid black;
+}
+
+.thumbnail{
+	display:inline-block;
+	background:red;
+	width:20px;
+	height:20px;
+}

@@ -39,8 +39,7 @@ body {
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
-
-/* 추가 css 영역 */
+/* 내부 틀 css */
 body{
 	font-size: small;
 }
@@ -65,25 +64,4 @@ body{
 a{
 	text-decoration: none;
 	color: inherit;
-}
-
-.addressListTable{
-	width:100%;
-}
-
-.addressListTable th,
-.addressListTable td{
-	padding: 0.5rem;
-}
-
-.addressListTable th{
-	border-top:1px solid black;
-	border-bottom:1px solid black;
-}
-
-.thumbnail{
-	display:inline-block;
-	background:red;
-	width:20px;
-	height:20px;
 }

@@ -77,6 +77,8 @@
 			
 		<typeAlias type="com.kh.circle.organChart.entity.OrganDept" alias="organDept"/>
 		<typeAlias type="com.kh.circle.organChart.entity.OrganEmp" alias="organEmp"/>
+		
+		<typeAlias type="com.kh.circle.addressBook.entity.AddressInfo" alias="addressInfo"/>
 	</typeAliases>
 
 	<!-- 
