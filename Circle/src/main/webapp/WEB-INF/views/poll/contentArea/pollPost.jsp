@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +51,7 @@
 			<div class="poll-post-article-main-container">
 				<div class="poll-post-article-wrap">
 					<header class="poll-post-article-header">
-						<h1><c:out value="미참여 설문 제목 적는 부분"></c:out></h1>
+						<h1><c:out value="${post[0].POLL_POST_NAME}"></c:out></h1>
 						<table class="poll-post-info-list">
 							<tbody>
 								<tr>
@@ -70,7 +71,9 @@
 											</a>
 										</span>
 										<span class="writer-info txt" data-userid="200101090031">
-											김정훈 본부장
+											<c:out value="${post[0].EMP_INFO_NAME}"></c:out>
+											<c:out value=" "></c:out>
+											<c:out value="${post[0].JOB_INFO_NAME}"></c:out>
 										</span>
 									</td>
 								</tr>
@@ -84,7 +87,7 @@
 											<span class="title">작성일 :</span>
 										</th>
 										<td>
-											<span class="date">2020-11-25(수) 12:34</span>
+											<span class="date"><fmt:formatDate value="${post[0].POLL_POST_WDAT }" pattern="yyyy-MM-dd"/></span>
 										</td>
 									</tr>
 									<tr>
@@ -92,7 +95,11 @@
 											<span class="title">설문기간 :</span>
 										</th>
 										<td>
-											<span class="date">2020-11-25 ~ 2020-12-31</span>
+											<span class="date">
+												<fmt:formatDate value="${post[0].POLL_POST_SDAT }" pattern="yyyy-MM-dd"/>
+												<c:out value=" ~ "></c:out>
+												<fmt:formatDate value="${post[0].POLL_POST_EDAT }" pattern="yyyy-MM-dd"/>
+											</span>
 										</td>
 									</tr>
 									<tr>
@@ -100,7 +107,16 @@
 											<span class="title">참여 후 수정 :</span>
 										</th>
 										<td>
-											<span class="date">허용</span>
+											<span class="date">
+												<c:choose>
+													<c:when test="${post[0].POLL_POST_MOD_ADMT eq 'Y' }">
+														<c:out value="허용"></c:out>
+													</c:when>
+													<c:otherwise>
+														<c:out value="불허"></c:out>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</td>
 									</tr>
 									<tr>
@@ -108,7 +124,16 @@
 											<span class="title">설문결과 :</span>
 										</th>
 										<td>
-											<span class="date">공개</span>
+											<span class="date">
+												<c:choose>
+													<c:when test="${post[0].POLL_POST_SEC eq 'Y'}">
+														<c:out value="공개"></c:out>
+													</c:when>
+													<c:otherwise>
+														<c:out value="공개"></c:out>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</td>
 									</tr>
 								</tbody>
@@ -119,23 +144,23 @@
 						<div class="poll-post-join-info-wrap">
 							<span class="txt">
 								전체 참여자
-								<strong>36</strong>
+								<strong><c:out value="${totalAttend }"/></strong>
 							</span>
 							<span class="inline-space"></span>
 							<span class="txt">
 								참여 완료
-								<strong>0</strong>
+								<strong><c:out value="${realAttend }"/></strong>
 							</span>
 							<span class="inline-space"></span>
 							<span class="txt">
 								미참여
-								<strong>36</strong>
+								<strong><c:out value="${totalAttend - realAttend }"/></strong>
 							</span>
 						</div>
 					</div>
 					<article class="poll-post-question-container">
 						<div class="question-guide">
-							시작 안내 문구
+							<c:out value="${post[0].POLL_POST_CONT }"></c:out>
 						</div>
 						<div id=poll-response-form>
 							<div class="question-list-container">

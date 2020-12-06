@@ -73,6 +73,17 @@ public class PollServiceImpl implements PollService{
 		List<HashMap<String, String>> list = pollDao.getQuestion(params);
 		return list;
 	}
+	@Override
+	public int getTotalAttend(HashMap<String, String> params) {
+		int totalAttend = pollDao.getTotalAttend(params);
+		return totalAttend;
+	}
+	@Override
+	public int getRealAttend(HashMap<String, String> params) {
+		return pollDao.getRealAttend(params);
+	}
+
+
 	
 
 }

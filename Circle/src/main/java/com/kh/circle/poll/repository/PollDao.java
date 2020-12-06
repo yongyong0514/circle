@@ -21,6 +21,10 @@ public interface PollDao {
 	List<HashMap<String, String>> myList(Pagination pageInfo);
 
 	List<HashMap<String, String>> getQuestion(HashMap<String, String> params);
+	int getTotalAttend(HashMap<String, String> params);
+	int getRealAttend(HashMap<String, String> params);
+
+
 
 
 }
