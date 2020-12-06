@@ -31,24 +31,23 @@
 				<button value="alertAll">이 그룹에게 전체쪽지 보내기</button>
 				<br>
 				<br>
-				<form class="searchAddress">
+				<form class="searchAddress" action="${pageContext.request.contextPath}/addressBook/allEmp">
 					<!-- 검색창 시작 -->
-					<input class="searchBox" type="text" name="name"
-						placeholder="이름(표시명)" /> <input class="searchBox" type="text"
-						name="email" placeholder="이메일 주소" /> <input class="searchBox"
-						type="text" name="tel" placeholder="휴대전화번호" /> <input
-						type="submit" value="검색하기" />&nbsp; <input type="submit"
-						value="추가하기" />
+					<input class="name" type="text" name="name" placeholder="이름(표시명)" value="${name }"/>
+					<input class="email" type="text" name="email" placeholder="이메일 주소" value="${email }"/>
+					<input class="tel" type="text" name="tel" placeholder="휴대전화번호" value="${tel }"/>
+					<input type="submit" value="검색하기"></input>&nbsp;
+					<button value="insert">추가하기</button>
 					<!-- 검색창 끝 -->
 
 					&nbsp;
 					<!-- 주소록 출력설정 시작-->
  					<button value="field">필드설정</button>
 					&nbsp; <label>페이지 당 출력개수</label>
-					<select class="perPage" name="perPage"  onchange="location.href=this.value">
-						<option value="${pageContext.request.contextPath }/addressBook/allEmp?perPage=10">10</option>
-						<option value="${pageContext.request.contextPath }/addressBook/allEmp?perPage=20">20</option>
-						<option value="${pageContext.request.contextPath }/addressBook/allEmp?perPage=50">50</option>
+					<select class="perPage" name="perPage"  onchange="movePerPage(this)">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
 					</select>
 					<!-- 주소록 출력설정 끝 -->
 
@@ -102,7 +101,7 @@
 							</tr>
 						</c:forEach>
 						<!-- 주소 리스트 끝 -->
-				
+				 
 					</table>
 					<!-- 주소록 테이블 끝 -->
 					<br><br>
@@ -110,27 +109,27 @@
 					<!-- 페이지 이동 목록 시작 -->					
 					<div class="changeBtn">
 						<c:if test="${map.pInfo.nowPage != 1 }">
-							<a href="${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${map.pInfo.nowPage-1}&perPage=${map.pInfo.perPage}">
+							<span onclick="moveAll(${map.pINfo.nowPage-1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
 								<i class='fas fa-angle-left'></i>
-							</a>			
+							</span>			
 						</c:if>
 						
 						<c:forEach var="page" begin="${map.pInfo.startPage }" end="${map.pInfo.endPage}">
 							<c:choose>
 								<c:when test="${ page eq map.pInfo.nowPage }">
-									<a class="nowPageNum">${page}</a>
+									<span class="nowPageNum">${page}</span>
 								</c:when>
 								
 								<c:when test="${ page != map.pInfo.nowPage }">
-									<a href="${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${page}&perPage=${map.pInfo.perPage}">${page}</a>	
+									<span onclick="moveAll(${page},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">${page}</span>	
 								</c:when>
 							</c:choose>
 						</c:forEach>		
 				
 						<c:if test="${map.pInfo.endPage != map.pInfo.maxPage}">
-							<a href="${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${map.pInfo.nowPage+1}&perPage=${map.pInfo.perPage}">
+							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
 								<i class='fas fa-angle-right'></i>
-							</a>			
+							</span>			
 						</c:if>
 					</div>
 					<!-- 페이지 이동 목록 끝 -->	
@@ -167,6 +166,33 @@
 			$(".nowPageNum").css({"font-size":"large", "color":"#0072C6"});
 		
 		});
+		
+		
+		function movePerPage(obj){
+			location.href="${pageContext.request.contextPath}/addressBook/allEmp?perPage=" + obj.value;
+		};
+		
+		function moveAll(nowPage, perPage, name, email, tel){
+			var url = "nowPage=" + nowPage + "&perPage" + perPage;
+			url.concat(nowPage, "&perPage=", perPage);
+			
+			if(name != null){
+				url += "&name=" + name;
+			}
+			
+			if(email != null){
+				url += "&email=" + email;
+			}
+			
+			if(tel != null){
+				url += "&tel=" + tel;
+			}
+			
+			console.log(url);
+			
+			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
+		}
+		
 	</script>
 	
 	

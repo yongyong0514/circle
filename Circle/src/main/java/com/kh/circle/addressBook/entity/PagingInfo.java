@@ -22,6 +22,10 @@ public class PagingInfo {
 	private int minPage;		// 전체 첫 페이지
 	private int maxPage;		// 전체 마지막 페이지
 	
+	private String name;		// 검색: 이름
+	private String email;		// 검색: 이메일
+	private String tel;			// 검색: 전화번호
+	
 	public void calcValues() {
 		this.calcMax();
 		this.calcStartAndEndPage();
