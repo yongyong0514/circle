@@ -31,10 +31,10 @@ public class AddressBookController {
 	
 	@GetMapping("/allEmp")
 	public String allEmp(@RequestParam(value="nowPage", defaultValue="1") int nowPage,
-						@RequestParam(value="perPage", defaultValue="10") int perPage,
-						@RequestParam(value="name", defaultValue="") String name,
-						@RequestParam(value="email", defaultValue="") String email,
-						@RequestParam(value="tel", defaultValue="") String tel,
+						@RequestParam(value="perPage", defaultValue="5") int perPage,
+						@RequestParam(value="name", required=false) String name,
+						@RequestParam(value="email", required=false) String email,
+						@RequestParam(value="tel", required=false) String tel,
 						Model model) {
 
 		PagingInfo pInfo = PagingInfo.builder()

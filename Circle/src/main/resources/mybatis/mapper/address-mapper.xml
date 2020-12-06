@@ -51,7 +51,7 @@
 						 	
 						 	<if test="email != ''">
 						 		AND
-						 		EI.emp_info_email like '%' || #{email} || '%'
+						 		upper(EI.emp_info_email) like '%' || upper(#{email}) || '%'
 						 	</if>
 						 	
 						 	<if test="tel != ''">

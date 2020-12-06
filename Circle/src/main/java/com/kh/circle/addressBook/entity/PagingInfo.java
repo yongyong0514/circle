@@ -27,6 +27,7 @@ public class PagingInfo {
 	private String tel;			// 검색: 전화번호
 	
 	public void calcValues() {
+		this.minPage = 1;
 		this.calcMax();
 		this.calcStartAndEndPage();
 	}

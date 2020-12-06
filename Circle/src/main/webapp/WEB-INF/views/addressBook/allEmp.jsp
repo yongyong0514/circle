@@ -45,6 +45,7 @@
  					<button value="field">필드설정</button>
 					&nbsp; <label>페이지 당 출력개수</label>
 					<select class="perPage" name="perPage"  onchange="movePerPage(this)">
+						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
 						<option value="50">50</option>
@@ -105,32 +106,42 @@
 					</table>
 					<!-- 주소록 테이블 끝 -->
 					<br><br>
-					
+
 					<!-- 페이지 이동 목록 시작 -->					
 					<div class="changeBtn">
+						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage } )">
+							<i class='fas fa-angle-double-left'></i>
+						</span>
+						&nbsp;&nbsp;&nbsp;
 						<c:if test="${map.pInfo.nowPage != 1 }">
-							<span onclick="moveAll(${map.pINfo.nowPage-1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
-								<i class='fas fa-angle-left'></i>
+							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage} );">
+								<i class='fas fa-caret-left'></i>
 							</span>			
 						</c:if>
-						
+						&nbsp;&nbsp;
 						<c:forEach var="page" begin="${map.pInfo.startPage }" end="${map.pInfo.endPage}">
 							<c:choose>
 								<c:when test="${ page eq map.pInfo.nowPage }">
 									<span class="nowPageNum">${page}</span>
+									&nbsp;
 								</c:when>
 								
 								<c:when test="${ page != map.pInfo.nowPage }">
-									<span onclick="moveAll(${page},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">${page}</span>	
+									<span onclick="moveAll( ${page}, ${map.pInfo.perPage} );">${page}</span>	
+									&nbsp;
 								</c:when>
 							</c:choose>
-						</c:forEach>		
-				
+						</c:forEach>
+						&nbsp;		
 						<c:if test="${map.pInfo.endPage != map.pInfo.maxPage}">
-							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
-								<i class='fas fa-angle-right'></i>
+							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage});">
+								<i class='far fa-arrow-alt-circle-right'></i>
 							</span>			
 						</c:if>
+						&nbsp;&nbsp;&nbsp;
+						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage } )">
+							<i class='fas fa-caret-right'></i>
+						</span>
 					</div>
 					<!-- 페이지 이동 목록 끝 -->	
 
@@ -154,12 +165,14 @@
 			
 			<!-- 페이지 당 출력 개수 선택 표시 -->
 			switch(${map.pInfo.perPage}){
-			case 10: 
+			case 5: 
 				$(".perPage option:eq(0)").prop("selected",true); break;	
-			case 20:
+			case 10: 
 				$(".perPage option:eq(1)").prop("selected",true); break;	
-			case 50:
+			case 20:
 				$(".perPage option:eq(2)").prop("selected",true); break;	
+			case 50:
+				$(".perPage option:eq(3)").prop("selected",true); break;	
 			}
 			
 			<!-- 현재 페이지 강조 -->
@@ -172,25 +185,30 @@
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?perPage=" + obj.value;
 		};
 		
-		function moveAll(nowPage, perPage, name, email, tel){
+		function moveAll(nowPage, perPage){
 			var url = "nowPage=" + nowPage + "&perPage" + perPage;
 			url.concat(nowPage, "&perPage=", perPage);
 			
-			if(name != null){
-				url += "&name=" + name;
+			if( !isNull(${name}) ){
+				url += "&name=".concat(${name});
 			}
 			
-			if(email != null){
-				url += "&email=" + email;
+			if( !isNull(${email}) ){
+				url += "&email=".concat(${email});
 			}
 			
-			if(tel != null){
-				url += "&tel=" + tel;
+			if( !isNull(${tel}) ){
+				url += "&tel=".concat(${tel});
 			}
 			
 			console.log(url);
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
+		}
+		
+		
+		function isNull(value){
+			return ( value === undefined || value === null || value === "" ) ? true : false;
 		}
 		
 	</script>
