@@ -29,10 +29,15 @@
 						<div class="poll-post-list">
 							<label>
 								<select name="poll-table-length">
-									<option value="20" selected="selected">20</option>
-									<option value="40">40</option>
-									<option value="60">60</option>
-									<option value="80">80</option>
+									<option value="1" <c:if test="${pageInfo.cntPerPage eq '1'}">selected</c:if>>1</option>
+									<option value="2" <c:if test="${pageInfo.cntPerPage eq '2'}">selected</c:if>>2</option>
+									<option value="3" <c:if test="${pageInfo.cntPerPage eq '3'}">selected</c:if>>3</option>
+									<option value="5" <c:if test="${pageInfo.cntPerPage eq '5'}">selected</c:if>>5</option>
+									<option value="10" <c:if test="${pageInfo.cntPerPage eq '10'}">selected</c:if>>10</option>
+									<option value="20" <c:if test="${pageInfo.cntPerPage eq '20'}">selected</c:if>>20</option>
+									<option value="40" <c:if test="${pageInfo.cntPerPage eq '40'}">selected</c:if>>40</option>
+									<option value="60" <c:if test="${pageInfo.cntPerPage eq '60'}">selected</c:if>>60</option>
+									<option value="80" <c:if test="${pageInfo.cntPerPage eq '80'}">selected</c:if>>80</option>
 								</select>
 							</label>
 						</div>
@@ -237,6 +242,19 @@
 				//주소 리턴
 			 	location.href="${pageContext.request.contextPath}/poll/progress?" + searchKeyword;
 			})
+			
+			//페이지당 post출력 개수 변경
+			$('.poll-toolbar .poll-post-list select[name=poll-table-length]').on('change', function(){
+				var i = $(this).val();
+				location.href = "${pageContext.request.contextPath}/poll/progress?cntPerPage=" + i;
+			});
+			
+			//설문 post 클릭시
+			$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+				var code = $(this).parent().parent().find('.post-code').text();
+				location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+			});
+			
 		});
 		
 		/************************ 함수 부분 ***************************/

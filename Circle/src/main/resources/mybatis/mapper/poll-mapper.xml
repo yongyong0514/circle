@@ -262,6 +262,32 @@
 	<![CDATA[ where X.rnum >= ]]>#{start}
 	</select>
 	<resultMap type="hashMap" id="myMap"></resultMap>
+		
+	<select id="getQuestion" parameterType="map" resultMap="questionMap">
+		 select poll_post_name
+		      , emp_info_name
+		      , job_info_name
+		      , poll_post_wdat
+		      , poll_post_sdat
+		      , poll_post_edat
+		      , poll_post_mod_admt
+		      , poll_post_sec
+		      , poll_post_cont
+		      , poll_post_qust_code
+		      , poll_post_qust_cont
+		      , poll_post_qust_type
+		      , poll_post_qust_lowtype
+		      , POLL_POST_QUST_NECESS
+		      , POLL_POST_QUST_LIMIT
+		      , poll_post_qust_answ_cont
+		   from poll_post
+		   join emp_info on (poll_post_emp = emp_info_emp_no)
+		   join job_info on (EMP_INFO_JOB_CODE = JOB_INFO_CODE)
+		   join poll_post_qust on (poll_post_code = poll_post_qust_post)
+		   join poll_post_qust_answ on (poll_post_qust_code = poll_post_qust_answ_qust)
+		  where poll_post_code = #{postCode}
+	</select>
+	<resultMap type="hashMap" id="questionMap"></resultMap>
 	
 	
 	

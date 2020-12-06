@@ -10,16 +10,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/part/toolBar.css">
 <title>Insert title here</title>
 </head>
-<script>
-	$(document).ready(function(){
-		//메뉴바 내설문 부분 색상 변경
-		$('#poll-my').css('color','black');
-		
-		//topBar title 변경
-		$('.pollHomeTitle').text('내 설문');
-	});
 
-</script>
 
 <body>
 	<!-- 오늘날짜 변수화 -->
@@ -58,12 +49,16 @@
 						<div class="poll-post-list">
 							<label>
 								<select name="poll-table-length">
-									<option value="20" selected="selected">20</option>
-									<option value="40">40</option>
-									<option value="60">60</option>
-									<option value="80">80</option>
+									<option value="1" <c:if test="${pageInfo.cntPerPage eq '1'}">selected</c:if>>1</option>
+									<option value="2" <c:if test="${pageInfo.cntPerPage eq '2'}">selected</c:if>>2</option>
+									<option value="3" <c:if test="${pageInfo.cntPerPage eq '3'}">selected</c:if>>3</option>
+									<option value="5" <c:if test="${pageInfo.cntPerPage eq '5'}">selected</c:if>>5</option>
+									<option value="10" <c:if test="${pageInfo.cntPerPage eq '10'}">selected</c:if>>10</option>
+									<option value="20" <c:if test="${pageInfo.cntPerPage eq '20'}">selected</c:if>>20</option>
+									<option value="40" <c:if test="${pageInfo.cntPerPage eq '40'}">selected</c:if>>40</option>
+									<option value="60" <c:if test="${pageInfo.cntPerPage eq '60'}">selected</c:if>>60</option>
+									<option value="80" <c:if test="${pageInfo.cntPerPage eq '80'}">selected</c:if>>80</option>
 								</select>
-							</label>
 						</div>
 					</div>
 					<table class="poll-list">
@@ -136,16 +131,111 @@
 							</c:forEach>
 						</tbody>
 					</table>	
-					<div class="paging-bar">
+					<div class="pageInfo-bar">
 						<div class="data-page-bar">
-							<a class="first page-button page-button-disabled"></a>
-							<a class="previous page-button page-button-disabled"></a>
+							<!-- 처음페이지로 가는 버튼 -->
+							<c:choose>
+								<c:when test="${pageInfo.startPage ne pageInfo.nowPage}">
+									<c:choose>
+										<c:when test="${not empty pageInfo.searchTitle }">
+											<a class="first page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage}&cntPerPage=${pageInfo.cntPerPage}&searchTitle=${pageInfo.searchTitle}"/>"></a>
+										</c:when>
+										<c:when test="${not empty pageInfo.searchWriter }">
+											<a class="first page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage}&cntPerPage=${pageInfo.cntPerPage}%searchWriter=${pageInfo.searchWriter}"/>"></a>
+										</c:when>
+										<c:otherwise>
+											<a class="first page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage}&cntPerPage=${pageInfo.cntPerPage}"/>"></a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<a class="first page-button page-button-disabled"></a>
+								</c:otherwise>
+							</c:choose>
+							
+							<!-- 이전페이지로 가는 버튼 -->
+							<c:choose>
+								<c:when test="${pageInfo.startPage ne 1 }">
+									<c:choose>
+										<c:when test="${not empty pageInfo.searchTitle }">
+											<a class="previous page-button " href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage - 1 }&cntPerPage=${pageInfo.cntPerPage}&searchTitle=${pageInfo.searchTitle}"></a>
+										</c:when>
+										<c:when test="${not empty pageInfo.searchWriter }">
+											<a class="previous page-button " href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage - 1 }&cntPerPage=${pageInfo.cntPerPage}%searchWriter=${pageInfo.searchWriter}"></a>
+										</c:when>
+										<c:otherwise>
+											<a class="previous page-button " href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.startPage - 1 }&cntPerPage=${pageInfo.cntPerPage}"></a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<a class="previous page-button page-button-disabled"></a>
+								</c:otherwise>
+							</c:choose>
+							
+							<!-- 페이지 버튼 숫자 -->
 							<span>
-								<a class="page-active">1</a>
-								<a class="page-button">2</a>
+								<c:forEach begin="${pageInfo.startPage }" end="${pageInfo.endPage }" var="p">
+									<c:choose>
+										<c:when test="${p eq pageInfo.nowPage }">
+											<a class="page-active">${p}</a>
+										</c:when>
+										<c:when test="${p ne pageInfo.nowPage }">
+											<c:choose>
+												<c:when test="${not empty pageInfo.searchTitle }">
+													<a class="page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${p}&cntPerPage=${pageInfo.cntPerPage}&searchTitle=${pageInfo.searchTitle}"/>">${p}</a>						
+												</c:when>
+												<c:when test="${not empty pageInfo.searchWriter }">
+													<a class="page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${p}&cntPerPage=${pageInfo.cntPerPage}%searchWriter=${pageInfo.searchWriter}"/>">${p}</a>						
+												</c:when>
+												<c:otherwise>
+													<a class="page-button" href="<c:out value="${pageContext.request.contextPath}/poll/my?nowPage=${p}&cntPerPage=${pageInfo.cntPerPage}"/>">${p}</a>						
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+									</c:choose>
+								</c:forEach>
 							</span>
-							<a class="next page-button"></a>
-							<a class="last page-button"></a>						
+							
+							<!-- 다음 페이지 버튼 -->
+							<c:choose>
+								<c:when test="${pageInfo.endPage ne pageInfo.lastPage}">
+									<c:choose>
+										<c:when test="${not empty pageInfo.searchTitle }">
+											<a class="next page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.endPage + 1}&cntPerPage=${pageInfo.cntPerPage}&searchTitle=${pageInfo.searchTitle}"></a>
+										</c:when>
+										<c:when test="${not empty pageInfo.searchWriter }">
+											<a class="next page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.endPage + 1}&cntPerPage=${pageInfo.cntPerPage}%searchWriter=${pageInfo.searchWriter}"></a>
+										</c:when>
+										<c:otherwise>
+											<a class="next page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.endPage + 1}&cntPerPage=${pageInfo.cntPerPage}"></a>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<a class="next page-button page-button-disabled"></a>
+								</c:otherwise>
+							</c:choose>
+							
+							<!-- 마지막 페이지 버튼 조건 -->
+							<c:choose>
+								<c:when test="${pageInfo.lastPage ne pageInfo.nowPage}">
+									<c:choose>
+										<c:when test="${not empty pageInfo.searchTitle }">
+											<a class="last page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.lastPage}&cntPerPage=${pageInfo.cntPerPage}&searchTitle=${pageInfo.searchTitle}"></a>						
+										</c:when>
+										<c:when test="${not empty pageInfo.searchWriter }">
+											<a class="last page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.lastPage}&cntPerPage=${pageInfo.cntPerPage}%searchWriter=${pageInfo.searchWriter}"></a>						
+										</c:when>
+										<c:otherwise>
+											<a class="last page-button" href="${pageContext.request.contextPath}/poll/my?nowPage=${pageInfo.lastPage}&cntPerPage=${pageInfo.cntPerPage}"></a>						
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<a class="last page-button page-button-disabled"></a>						
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -155,15 +245,49 @@
 					</select>
 					<section class="search-box">
 						<div class="search-wrap">
-							<input class="search-box" type="text" name="keyword" placeholder="검색">
+							<c:choose>
+								<c:when test="${not empty pageInfo.searchTitle}">
+									<input class="search-box" type="text" name="keyword" placeholder="검색" value="${pageInfo.searchTitle}">
+								</c:when>
+								<c:otherwise>
+									<input class="search-box" type="text" name="keyword" placeholder="검색">
+								</c:otherwise>
+							</c:choose>
 							<span class="search-btn" title="search"></span>
 						</div>
 					</section>
 				</div>
 			</div>
 		</div>
-
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+			//메뉴바 내설문 부분 색상 변경
+			$('#poll-my').css('color','black');
+			
+			//topBar title 변경
+			$('.pollHomeTitle').text('내 설문');
+			
+			//검색버튼 클릭시 기능
+			$('.search-bar .search-btn').on('click', function(){
+				
+				//검색어 가공후 전역변수에 저장(searchKeyword)
+				var searchKeyword = $('section.search-box input.search-box').val();
+								
+				//주소 리턴
+			 	location.href="${pageContext.request.contextPath}/poll/my?searchTitle=" + searchKeyword;
+			})
+			
+			//페이지당 post출력 개수 변경
+			$('.poll-toolbar .poll-post-list select[name=poll-table-length]').on('change', function(){
+				var i = $(this).val();
+				location.href = "${pageContext.request.contextPath}/poll/my?cntPerPage=" + i;
+			});
+			
+		});
+
+	</script>
 
 </body>
 </html>

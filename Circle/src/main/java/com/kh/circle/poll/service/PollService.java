@@ -20,5 +20,7 @@ public interface PollService {
 	int countTotalMyPost(Pagination prePageInfo);
 	List<HashMap<String, String>> myList(Pagination pageInfo);
 
+	List<HashMap<String, String>> getQuestion(HashMap<String, String> params);
+
 
 }
