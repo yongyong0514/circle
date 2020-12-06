@@ -118,7 +118,6 @@ public class SignController {
 	public String signSelectOne(@RequestParam String signCode, Model model) {
 		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
 		model.addAttribute("signSelectOne", signSelectOne);
-		System.out.println(signSelectOne.getSign_note());
 		
 		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signJoinerCode", signCode);	
 		model.addAttribute("signListJoiner", signListJoiner);
@@ -154,6 +153,12 @@ public class SignController {
 		return "sign/signList";
 	}
 
+// 결재 설정 화면
+	@GetMapping("/signConfig")
+	public String signConfig() {
+		
+		return "sign/signConfig";
+	}
 	
 // 문서 첫화면
 	@GetMapping("/docuList")

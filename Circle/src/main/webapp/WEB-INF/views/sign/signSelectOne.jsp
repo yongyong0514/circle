@@ -104,7 +104,7 @@
 							</tr>
 							<tr>
 								<td class="formBox5" colspan="2">
-									<div id="viewer" data-content="${signSelectOne.sign_note}"></div>
+									<div id="viewer">${signSelectOne.sign_note}</div>
 								</td>
 							</tr>
 							<tr>
@@ -332,7 +332,6 @@
 	<!-- 결재 전송 -->
 	<script>
 		$(".submitAgree").click(function(){
-			alert("check");
 			var base = "${pageContext.request.contextPath}";
 			var signCode = document.location.href.split("=");
 			var signEmpCode = ${empInfo.emp_info_emp_no};
@@ -366,7 +365,6 @@
 						 , sign_reply_emp_code : signEmpCode
 						 , sign_reply_content : signContent},
 					success: function(){
-						alert("success");
 							signReply();
 							$(".replyArea").val("");
 					},

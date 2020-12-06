@@ -12,6 +12,11 @@
 <body>
 	<div class="wrap">
 		<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
+		<c:if test="${empInfo != null }">
+			<script>
+				location.href="${pageContext.request.contextPath}/common/mainPage";
+			</script>
+		</c:if>
 		<c:if test="${empInfo == null }">
 		<div class="loginBox">
 			<table>
