@@ -54,8 +54,7 @@ public class SignServiceImpl implements SignService {
 
 	//결재 댓글 등록
 	@Override
-	public void insert(SignReplyInsert signReplyInsert) {
+	public void insertReply(SignReplyInsert signReplyInsert) {
 		signDao.add(signReplyInsert);
-		
 	}
 }

@@ -1,3 +1,9 @@
+br {
+	content: " ";
+	display: block;
+	margin: 0.4em 0;
+}
+
 body {
 	overflow-x: hidden;
 }
@@ -5,15 +11,9 @@ body {
 .container {
 	position: absolute;
 	left: 180px;
-	width: 100%;
+	width: calc(100% - 180px);
 	min-width: 1500px;
 	height: 2000px;
-}
-
-br {
-	content: " ";
-	display: block;
-	margin: 0.4em 0;
 }
 
 .content {

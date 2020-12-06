@@ -283,11 +283,9 @@
 			$.ajax({
 				url : base + "/signResult/signTypeContent",
 				type : "get",
-				data : {
-					typeCode : typeCode
-				},
+				data : {typeCode : typeCode},
 				success : function(data) {
-					editor.setHtml(data.result);
+					editor.setMarkdown(data.result);
 				}
 			});
 		});
@@ -607,6 +605,7 @@
 			var isSubmit = false;
 			var editorValue = editor.getHtml();
 			$("#sign_note").val(editorValue);
+			console.log(editorValue);
 			
 			/*Load Session Data*/
 			var jsonData1 = sessionStorage.getItem("joiner");
@@ -704,7 +703,7 @@
 				return false;
 			}
 
- 			if(isSubmit) this.submit();
+ 			/* if(isSubmit) this.submit(); */
 		});
 	</script>
 </body>

@@ -20,7 +20,7 @@ public interface SignService {
 	ResponseEntity<ByteArrayResource> download(String fileCode) throws IOException;
 
 	//결재 댓글 등록
-	void insert(SignReplyInsert signReplyInsert);
+	void insertReply(SignReplyInsert signReplyInsert);
 
 }
 	

@@ -45,7 +45,7 @@
 					</div>
 				</div>					
 			</li>
-			<li><button class="menuBtn" onclick="">회사이름불러올자리</button></li>
+			<li><button class="menuBtn" onclick="mainPage();">페이퍼컴퍼니</button></li>
 			<li><button class="menuBtn2">My Page</button></li>
 			<li><button class="menuBtn2">My Profile</button></li>
 			
@@ -74,7 +74,7 @@
 	</div> --%>
 </nav>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
+<script>
 	$(".menuBtnLeft").mouseenter(function(){
 		$(".menuBox").fadeIn(150);
 	});
@@ -89,12 +89,16 @@
 	$(".menuBox1").mouseleave(function(){
 		$(".menuBox1").fadeOut(100);
 	});
-	
-	 $(function(){
-			$("#logout").click(function(){
-				location.href = "logout";
-			})
-  });
+</script>
+<script>
+	function logout(){
+		location.href = "logout";
+	}
+</script>
+<script>
+	function mainPage(){
+		location.href = "${pageContext.request.contextPath}/mainPage";
+	}
 </script>
 	</c:if>
 </body>
