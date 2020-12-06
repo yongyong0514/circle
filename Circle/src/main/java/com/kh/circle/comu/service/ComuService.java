@@ -28,10 +28,9 @@ public interface ComuService {
 	//글 보기
 	public List<Comu> comuDetail(String comu_post_ordr);
 	
-	//글 수정으로 입장
-	List<Comu> comuCheck(String comu_post_ordr);
-	
 	//글 수정
+	Comu comuCheck(String comu_post_ordr);
+	
 	void comuUpdate(Comu comu);
 	
 	//글 삭제하기

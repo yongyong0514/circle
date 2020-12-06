@@ -26,9 +26,13 @@ public interface ComuDao {
 	//조회수
 	void CountView(String comu_post_ordr);
 	//수정하기로 들어가기
-	List<Comu> comuCheck(String comu_post_ordr);
+//	List<Comu> comuCheck(String comu_post_ordr);
+	
 	//수정하기
 	void comuUpdate(Comu comu);
+	
+	Comu comuCheck(String comu_post_ordr);
+	
 	//삭제
 	void comuDelete(String comu_post_ordr);
 	

@@ -75,7 +75,8 @@ li{
 					<th align="center">조회수</th>
 					<td><span>${ comuDetail.comu_post_view }</span></td>
 					<th align="center" >작성일</th>
-					<td><span>${ comuDetail.comu_post_dat}</span></td>
+					
+					<td><span><fmt:formatDate value="${comuDetail.comu_post_dat}" pattern="yyyy.MM.dd" /></span></td>
 				</tr>
 				<tr>
 					<th colspan="6" align="center" style="font-weight: bold;">내용</th>
@@ -100,8 +101,6 @@ li{
 		 	<br>
 		 	<c:forEach var="comuDetail" items="${comuDetail}">
 			<li align="right"><a href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
-			
-			
 			
 			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li>
 			</c:forEach>

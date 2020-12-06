@@ -12,7 +12,7 @@
 
 <mapper namespace="comu">
 
-<resultMap type="com.kh.circle.comu.entity.Comu" id="comuList">
+<!-- <resultMap type="com.kh.circle.comu.entity.Comu" id="comuList">
 	<id property="comu_post_ordr" column="comu_post_ordr"/>
 	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
 	<id property="comu_post_title" column="comu_post_title"/>
@@ -47,7 +47,7 @@
 <collection property="comu_repl_content" resultMap="comu_repl_content"/>
 <collection property="comu_repl_date" resultMap="comu_repl_date"/>
 <collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
-</resultMap>
+</resultMap> -->
 
 <!-- 게시글 목록 -->
 
@@ -136,24 +136,25 @@ where rn between #{start} and #{end}
 	</update>
 	
 	
-	<!-- 수정글로 입장 -->
-	<select id="comuCheck" parameterType="String" resultType="comu">
+
+	<!-- 게시글 수정 -->
+	<select id="comuCheck" parameterType="String" resultType="Comu">
 			select *
 		from comu_post c
 		join comu_list l on (c.comu_post_comu_code = l.comu_list_code)
 		join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 		where c.comu_post_ordr = #{comu_post_ordr}
 	</select>
-	
-	
-	<!-- 게시글 수정 -->
-	<update id="ComuUpdate">
+	<update id="comuUpdate" parameterType="String">
 		update comu_post
-		set 
+		set comu_post_title
+		= #{comu_post_title}, comu_post_cont=#{comu_post_cont},
+		comu_post_dat=SYSDATE
+		where comu_post_ordr=#{comu_post_ordr}
 	</update>
 	
 	<!-- 글 삭제 -->
-	<delete id="comuDelete" parameterType="string">
+	<delete id="comuDelete" parameterType="String">
 		delete from comu_post where comu_post_ordr=#{comu_post_ordr}
 	</delete>
 	
@@ -172,10 +173,8 @@ where rn between #{start} and #{end}
 		select * 
 		from 
 		comu_list
-		where comu_list_code=#{comu_list_code}
+	 where comu_list_code=#{comu_list_code} 
 	</select>
 </mapper>
-
-
 
 
