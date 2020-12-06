@@ -37,12 +37,42 @@
 							 , EI.emp_info_mtel as tel
 							 , CI.cmp_info_name as cmpName
 							 , null as remark
-						  from emp_info EI
+						  from (select
+						  		  case when emp_info_name <![CDATA[<]]> '가' then 15
+						  		  	   when emp_info_name <![CDATA[<]]> '나' then 1
+						  		  	   when emp_info_name <![CDATA[<]]> '다' then 2
+						  		  	   when emp_info_name <![CDATA[<]]> '라' then 3
+						  		  	   when emp_info_name <![CDATA[<]]> '마' then 4
+						  		  	   when emp_info_name <![CDATA[<]]> '바' then 5
+						  		  	   when emp_info_name <![CDATA[<]]> '사' then 6
+						  		  	   when emp_info_name <![CDATA[<]]> '아' then 7
+						  		  	   when emp_info_name <![CDATA[<]]> '자' then 8
+						  		  	   when emp_info_name <![CDATA[<]]> '차' then 9
+						  		  	   when emp_info_name <![CDATA[<]]> '카' then 10
+						  		  	   when emp_info_name <![CDATA[<]]> '타' then 11
+						  		  	   when emp_info_name <![CDATA[<]]> '파' then 12
+						  		  	   when emp_info_name <![CDATA[<]]> '하' then 13
+									   when emp_info_name >= '하' then 14
+						  		   end as indexNum
+						  		   	 , emp_info_name
+						  		   	 , emp_info_phto
+						  		   	 , emp_info_dept_code
+						  		   	 , emp_info_job_code
+						  		   	 , emp_info_email
+						  		   	 , emp_info_mtel
+						  		   	 , emp_info_cmp_code
+						  		   	 , emp_info_edat
+						  		  from emp_info
+						  	   ) EI
 						 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
 						 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
 						 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
 						 <where>
-						 	emp_info_edat is null
+						 	   EI.emp_info_edat is null
+							<if test="index != 0">
+							   AND
+							   EI.indexNum = #{index}
+							</if>
 						 
 						 	<if test="name != ''">
 						 		AND

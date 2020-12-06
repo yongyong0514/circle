@@ -112,7 +112,7 @@
 						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage } )">
 							<i class='fas fa-angle-double-left'></i>
 						</span>
-						&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${map.pInfo.nowPage != 1 }">
 							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage} );">
 								<i class='fas fa-caret-left'></i>
@@ -135,12 +135,12 @@
 						&nbsp;		
 						<c:if test="${map.pInfo.endPage != map.pInfo.maxPage}">
 							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage});">
-								<i class='far fa-arrow-alt-circle-right'></i>
+								<i class='fas fa-caret-right'></i>
 							</span>			
 						</c:if>
-						&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;
 						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage } )">
-							<i class='fas fa-caret-right'></i>
+							<i class='fas fa-angle-double-right'></i>
 						</span>
 					</div>
 					<!-- 페이지 이동 목록 끝 -->	
@@ -176,8 +176,18 @@
 			}
 			
 			<!-- 현재 페이지 강조 -->
-			$(".nowPageNum").css({"font-size":"large", "color":"#0072C6"});
-		
+			$(".nowPageNum").addClass("selectedNum");
+			
+			<!-- 인덱스 강조 -->
+			$(".index").eq(${index}).closest("td").addClass("selectedIndex");
+			
+			<!-- 인덱스 선택 시  -->
+			$(".index").on("click", function(){
+				var idx = $(".index").index(this);
+
+				location.href = "${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${map.pInfo.nowPage}&perPage=${map.pInfo.perPage}&index=" + idx;
+			});
+			
 		});
 		
 		

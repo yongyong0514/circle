@@ -35,6 +35,7 @@ public class AddressBookController {
 						@RequestParam(value="name", required=false) String name,
 						@RequestParam(value="email", required=false) String email,
 						@RequestParam(value="tel", required=false) String tel,
+						@RequestParam(value="index", defaultValue="0") int index,
 						Model model) {
 
 		PagingInfo pInfo = PagingInfo.builder()
@@ -43,7 +44,9 @@ public class AddressBookController {
 									.name(name)
 									.email(email)
 									.tel(tel)
+									.index(index)
 									.build();
+		
 		// 전체 리스트 반환
 		
 		// 페이징 처리 
@@ -54,6 +57,7 @@ public class AddressBookController {
 		model.addAttribute("name", pInfo.getName());
 		model.addAttribute("email", pInfo.getEmail());
 		model.addAttribute("tel", pInfo.getTel());
+		model.addAttribute("index", pInfo.getIndex());
 		
 		return "addressBook/allEmp";
 	}

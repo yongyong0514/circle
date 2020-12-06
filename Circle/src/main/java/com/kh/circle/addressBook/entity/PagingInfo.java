@@ -26,6 +26,8 @@ public class PagingInfo {
 	private String email;		// 검색: 이메일
 	private String tel;			// 검색: 전화번호
 	
+	private int index;		// 이름 초성 인덱스
+	
 	public void calcValues() {
 		this.minPage = 1;
 		this.calcMax();
