@@ -8,36 +8,44 @@
 	<select id="total" resultType="int">
 		select count(*)
 		  from emp_info
-		 where emp_info_edat is not null
+		 where emp_info_edat is null
 	</select>
 
 	<select id="pagingEmp" parameterType="pagingInfo" resultType="addressInfo">
-		select name
-			 , photo
-			 , deptName
-			 , jobName
-			 , email
-			 , tel
-			 , cmpName
-			 , remark
-		  from (select rownum as rm
-		  			 , EI.emp_info_name as name
-					 , EI.emp_info_phto as photo
-					 , DI.dept_info_name as deptName
-					 , JI.job_info_name as jobName
-					 , EI.emp_info_email as email
-					 , EI.emp_info_mtel as tel
-					 , CI.cmp_info_name as cmpName
-					 , null as remark
-				  from emp_info EI
-				 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
-				 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
-				 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
-				 where emp_info_edat is null
-				 order by EI.emp_info_name		  
-		  	   )
-		 where rm between ( #{nowPage} * #{perPage} - #{perPage} + 1 ) 
-		 			  and ( #{nowPage} * #{perPage} )	
+		select step2.name
+			 , step2.photo
+			 , step2.deptName
+			 , step2.jobName
+			 , step2.email
+			 , step2.tel
+			 , step2.cmpName
+			 , step2.remark
+		  from (select rownum rm
+		  			 , step1.name
+					 , step1.photo
+					 , step1.deptName
+					 , step1.jobName
+					 , step1.email
+					 , step1.tel
+					 , step1.cmpName
+					 , step1.remark
+				  from (select EI.emp_info_name as name
+							 , EI.emp_info_phto as photo
+							 , DI.dept_info_name as deptName
+							 , JI.job_info_name as jobName
+							 , EI.emp_info_email as email
+							 , EI.emp_info_mtel as tel
+							 , CI.cmp_info_name as cmpName
+							 , null as remark
+						  from emp_info EI
+						 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
+						 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
+						 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
+						 where emp_info_edat is null
+						 order by EI.emp_info_name
+				  	   ) step1
+				 where rownum <![CDATA[<=]]> (#{nowPage} * #{perPage})
+		  	   ) step2
+		 where step2.rm >= (#{nowPage} * #{perPage} - #{perPage} + 1)
 	</select>
-	
 </mapper>
