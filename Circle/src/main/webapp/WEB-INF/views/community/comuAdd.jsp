@@ -110,8 +110,8 @@ border: 1px solid black;
 									<td><br></td>
 								</tr>
 								<tr>
-									
-									<td><select name="comu_post_comu_code" id="comuName">
+									<c:out value="${list }"/>
+									<td><select name="comu_post_list_code" id="comuName">
 											<option value="0">동호회 이름을 선택하세요</option>
 												 <c:forEach var="comuName" items="${list}">
 											<option value="${comuName.comu_list_code}">
