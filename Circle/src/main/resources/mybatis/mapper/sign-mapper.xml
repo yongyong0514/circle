@@ -151,7 +151,7 @@
 	<select id="signSelectOne" parameterType="string" resultType="signSelectOne">
 		SELECT ST.SIGN_TYPE_NAME
     		 , SI.SIGN_TITLE
-             , DBMS_LOB.SUBSTR(SI.SIGN_NOTE, DBMS_LOB.GETLENGTH(SI.SIGN_NOTE)) AS SIGN_NOTE
+             , SI.SIGN_NOTE
              , SI.SIGN_EMP_CODE
     		 , EI.EMP_INFO_NAME
     		 , JI.JOB_INFO_NAME

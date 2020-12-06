@@ -703,7 +703,7 @@
 				return false;
 			}
 
- 			/* if(isSubmit) this.submit(); */
+ 			if(isSubmit) this.submit();
 		});
 	</script>
 </body>
