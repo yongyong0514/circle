@@ -66,6 +66,13 @@ public class PollServiceImpl implements PollService{
 		List<HashMap<String, String>> list = pollDao.myList(pageInfo);
 		return list;
 	}
+
+
+	@Override
+	public List<HashMap<String, String>> getQuestion(HashMap<String, String> params) {
+		List<HashMap<String, String>> list = pollDao.getQuestion(params);
+		return list;
+	}
 	
 
 }

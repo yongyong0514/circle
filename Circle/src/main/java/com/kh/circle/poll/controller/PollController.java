@@ -41,7 +41,7 @@ public class PollController {
 	@GetMapping("/progress")
 	public String progress(HttpSession session
 							, @RequestParam(value="nowPage", required=false)String nowPage
-							, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
+							, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 							, @RequestParam(value="searchTitle", required=false)String searchTitle
 							, @RequestParam(value="searchWriter", required=false)String searchWriter
 							, ModelMap modelMap) {
@@ -84,7 +84,7 @@ public class PollController {
 	@GetMapping("/finished")
 	public String my(HttpSession session
 			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 			, @RequestParam(value="searchTitle", required=false)String searchTitle
 			, ModelMap modelMap) {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
@@ -115,18 +115,18 @@ public class PollController {
 	@GetMapping("/my")
 	public String finished(HttpSession session
 			, @RequestParam(value="nowPage", required=false)String nowPage
-			, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 			, @RequestParam(value="searchTitle", required=false)String searchTitle
 			, @RequestParam(value="searchWriter", required=false)String searchWriter
 			, ModelMap modelMap) {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		if(nowPage == null && cntPerPage == null) {
 		nowPage = "1";
-		cntPerPage = "10";
+		cntPerPage = "1";
 		} else if(nowPage == null) {
 		nowPage = "1";
 		} else if(cntPerPage == null) {
-		cntPerPage = "10";
+		cntPerPage = "1";
 		}
 		Pagination prePageInfo = new Pagination(empNo, searchTitle, searchWriter);
 		//총 페이지수 DB추출
@@ -146,9 +146,21 @@ public class PollController {
 		return "/poll/my";
 	}
 	@GetMapping("/post")
-	public String post(@RequestParam String postCode) {
+	public String post(HttpSession session, @RequestParam String postCode, ModelMap modelMap) {
 		
-		System.out.println(postCode);
+		log.info(postCode);
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		HashMap<String, String> params = new HashMap<>();
+		params.put("postCode", postCode);
+		params.put("empNo", empNo);
+		
+		List<HashMap<String, String>> list = pollService.getQuestion(params);
+		
+		modelMap.put("post", list);
+		
+		log.info(modelMap.toString());
+		
 		return "/poll/post";
 	}
 	@GetMapping("/result")
