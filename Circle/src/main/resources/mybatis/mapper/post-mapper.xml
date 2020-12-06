@@ -151,8 +151,8 @@
 		select *
 		from post p
 		join post_type t on (p.post_type = t.post_type_code)
-		join
-		emp_info e on (p.post_emp = e.emp_info_emp_no)
+		join emp_info e on (p.post_emp = e.emp_info_emp_no)
+		join dept_info d on (e.emp_info_dept_code = d.dept_info_code)
 		where p.post_code =
 		#{post_code}
 	</select>

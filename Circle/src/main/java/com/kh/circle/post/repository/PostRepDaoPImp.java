@@ -10,28 +10,46 @@ import org.springframework.ui.Model;
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostReply;
 
-
 @Repository
-public class PostRepDaoPImp implements PostRepDao{
+public class PostRepDaoPImp implements PostRepDao {
 
 	@Autowired
 	SqlSession sqlSession;
 
+	// list
 	@Override
-	public void replyInsert(PostReply postReply) {
-		sqlSession.insert("Postreply.insertreply", postReply);
+	public List<Post> replyList(String post_code) {
+		return sqlSession.selectList("postReply.replyList", post_code);
 	}
 
+//insert
 	@Override
-	public List<PostReply> replyList(String post_code) {
-		return sqlSession.selectList("Postreply.listReply", post_code);
+	public void replyInsert(Post post) {
+
+
+		sqlSession.insert("postReply.replyInsert", post);
 	}
 
+//update
 	@Override
-	public int countRep(PostReply post_code) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void replyUpdate(Post post) {
+		sqlSession.update("postReply.replyUpdate", post);
 	}
-	
+
+//delete
+	@Override
+	public void replyDelte(Post post) {
+
+		sqlSession.delete("postReply.replyDelete", post);
+		
+	}
+
+//select
+	@Override
+	public Post replySelect(String post_repl_code) {
+
+		
+		return sqlSession.selectOne("postReply.replySelect", post_repl_code);
+	}
 
 }

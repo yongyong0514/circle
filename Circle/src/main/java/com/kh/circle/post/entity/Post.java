@@ -54,4 +54,9 @@ public class Post {
 	private String emp_info_email;
 	private String emp_info_mtel;
 	private String emp_info_etel;
+	
+	/*postdept*/
+	
+	private String dept_info_code;
+	private String dept_info_name;
 }
