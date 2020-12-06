@@ -9,14 +9,21 @@ import com.kh.circle.post.entity.PostReply;
 
 public interface PostRepService {
 
-	void replyInsert(PostReply postReply);
 
-	List<PostReply> replyList(String post_code);
+	//list
+	List<Post> replyList(String post_code);
 
-	String replyUpdate(PostReply postReply);
+	//insert
+	void replyInsert(Post post);
 
-	String replyDelete(String post_repl_code);
-
-	public int countRep(PostReply post_code);
-
+	//update
+	void replyUpdate(Post post);
+	
+	//delete
+	void replyDelete(Post post);
+	
+	//select
+	Post selectReply(String post_repl_code);
+	
+	
 }

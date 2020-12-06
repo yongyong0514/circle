@@ -21,8 +21,6 @@ import com.kh.circle.post.entity.PostFile.PostFileBuilder;
 import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.repository.PostDao;
-import com.kh.circle.post.repository.PostFileDao;
-import com.kh.circle.post.repository.PostSaveDao;
 
 @Service
 public class PostServiceImp implements PostService {
@@ -30,14 +28,7 @@ public class PostServiceImp implements PostService {
 	@Autowired
 	private PostDao postDao;
 
-	@Autowired
-	private PostFileDao postFileDao;
 
-	@Autowired
-	private PostSaveDao postSaveDao;
-
-	@Autowired
-	private SqlSession sqlSession;
 
 	// 게시글 리스트
 	@Override

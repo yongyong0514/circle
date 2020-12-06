@@ -2,14 +2,38 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Circle</title>
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/reset.css">
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="header">
+			<jsp:include page="../common/menuTopBar.jsp" />
+			<jsp:include page="../common/menuAlertBar.jsp" />
+		</div>
+		<div class="leftBar">
+			<jsp:include page="../post/postSidebar.jsp" />
+		</div>
+		<div class="container">
+			<div class="contentBar">
+				 <jsp:include page="../post/postHomebar.jsp" />
+			</div>
+	
+		<div class="content">
 
 	<!--  본문 -->
 	<div class="main">
 		<c:forEach var="postView" items="${postView}">
 			<div>
 				<h2>${postView.post_title}</h2>
-				<h5>${postView.dept_info_name}</h5>
 				<h5>${postView.emp_info_name},
 					<fmt:formatDate value="${postView.post_wdat}" pattern="yyyy.MM.dd" />
 				</h5>
@@ -21,9 +45,8 @@
 	
 	
 <!-- 버튼 부분 -->
-<div>
 <c:forEach var="postView" items="${postView }">
-<div><a href='<c:url value='/post/postUpdate?post_code=${postView.post_code}'/>'>수정하기</a></div>
+<div><a href='<c:url value='/post/postUpdate?post_code=${postCheck.post_code}'/>'>수정하기</a></div>
 </c:forEach>
 <c:forEach var="postView" items="${postView }">
 <div><a href='<c:url value='/post/postDelete?post_code=${postView.post_code}'/>'>삭제하기</a></div>
@@ -60,12 +83,9 @@
 
 <p> ${listReply.post_repl_cont}</p>
 <div>
-<c:forEach var="postView" items="${postView }">
-<div><a href='<c:url value='/post/postReplyUpdate?post_code=${postCheck.post_code}'/>'>수정하기</a></div>
-</c:forEach>
-<c:forEach var="postView" items="${postView }">
-<div><a href='<c:url value='/post/postReplyDelete?post_code=${postView.post_code}'/>'>삭제하기</a></div>
-</c:forEach></div>
+<button type="button" class="replyUpdateBtn" data-post_repl_code="${listReply.post_repl_code}">수정</button>
+<button type="button" class="replyDeleteBtn" data-post_repl_code="${listReply.post_repl_code}">삭제</button>
+</div>
 </li>
 </c:forEach>
 </ol>
@@ -75,8 +95,8 @@
 
 <!--  덧글 작성 -->
 <form name="replyForm"  action="${pageContext.request.contextPath}/post/replyInsertAdd"  method="post">
-<input type="hidden" id="post_repl_post" name="post_repl_post" value="${post.post_code}"/>
-<input type="hidden" id="post_repl_emp" name="post_repl_emp" value="${post.post_emp}"/>
+<input type="hidden" id="post_repl_post" name="post_repl_post" value="${postView.post_code}"/>
+<input type="hidden" id="post_repl_emp" name="post_repl_emp" value="${postView.post_emp}"/>
 <div>
 <label for="post_repl_cont">댓글</label><input type="text" id="post_repl_cont" name="post_repl_cont"/>
 </div>
@@ -87,3 +107,27 @@
 </form>
 
 
+
+
+<!--  종료 -->
+
+		</div>
+	</div>
+	</div>
+
+<!-- 댓글 -->
+<script>
+//댓글 수정 View
+$(".replyUpdateBtn").on("click", function(){
+	location.href = "/post/postReplyUpdate?post_code=${postView.post_code}"
+					
+});
+		
+//댓글 삭제 View
+$(".replyDeleteBtn").on("click", function(){
+	location.href = "/post/postReplyDelete?post_code=${postView.post_code}"
+					
+});
+</script>
+</body>
+</html>

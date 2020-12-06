@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostReply;
 import com.kh.circle.post.repository.PostRepDao;
 
@@ -16,31 +17,41 @@ public class PostRepServiceImp implements PostRepService{
 	@Autowired
 	PostRepDao repDao;
 	
+//list
 	@Override
-	public void replyInsert(PostReply postReply) {
-		 repDao.replyInsert(postReply);
-	}
-
-	@Override
-	public List<PostReply> replyList(String post_code) {
+	public List<Post> replyList(String post_code) {
 		return repDao.replyList(post_code);
 	}
 
+//insert
 	@Override
-	public String replyUpdate(PostReply postReply) {
-		// TODO Auto-generated method stub
-		return null;
+	public void replyInsert(Post post) {
+
+		repDao.replyInsert(post);
 	}
 
+//update
 	@Override
-	public String replyDelete(String post_repl_code) {
-		// TODO Auto-generated method stub
-		return null;
+	public void replyUpdate(Post post) {
+
+		repDao.replyUpdate(post);
+		
 	}
 
+//delete
 	@Override
-	public int countRep(PostReply post_code) {
-		return repDao.countRep(post_code);
+	public void replyDelete(Post post) {
+
+		
+		repDao.replyDelte(post);
+	}
+
+//select
+	@Override
+	public Post selectReply(String post_repl_code) {
+
+		
+		return repDao.replySelect(post_repl_code);
 	}
 
 
