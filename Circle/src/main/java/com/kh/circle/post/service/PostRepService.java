@@ -16,14 +16,9 @@ public interface PostRepService {
 	//insert
 	void replyInsert(Post post);
 
-	//update
-	void replyUpdate(Post post);
 	
 	//delete
-	void replyDelete(Post post);
-	
-	//select
-	Post selectReply(String post_repl_code);
+	void replyDelete(String post_repl_code);
 	
 	
 }

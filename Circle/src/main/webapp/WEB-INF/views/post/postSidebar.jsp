@@ -16,16 +16,16 @@ z-index:99;
 </style>
 </head>
 <body>
-	<div>
-		<div class="menuLeftBar">
-			<div class="menuLeftListTop">게시판</div>
-			<div class="menuLeftListTitle"><a href="#">전체 게시글</a></div><!-- 공지 + 전사만 -->
-			<div class="menuLeftListTitle"><a href="#">공지 사항</a></div>
-			<div class="menuLeftListTitle"><a href="#">전사 게시판</a></div>
-		</div>
-		<div class="organChart">
-			<c:import url="/organChart/getInfo"/>
-		</div>
-	</div>
+   <div>
+      <div class="menuLeftBar">
+         <div class="menuLeftListTop">게시판</div>
+         <div class="menuLeftListTitle"><a href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">전체 게시글</a></div><!-- 공지 + 전사만 -->
+         <div class="menuLeftListTitle"><a href="${pageContext.request.contextPath}/post/postList/notice?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">공지 사항</a></div>
+         <div class="menuLeftListTitle"><a href="${pageContext.request.contextPath}/post/postList/employee?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">전사 게시판</a></div>
+      </div>
+      <div class="organChart">
+         <c:import url="/organChart/getInfo"/>
+      </div>
+   </div>
 </body>
 </html>

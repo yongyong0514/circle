@@ -26,27 +26,9 @@ INSERT INTO POST_REPL(POST_REPL_CODE,POST_REPL_POST, POST_REPL_EMP, POST_REPL_CO
 </insert>
 
 
-<!-- 댓글 업뎃 -->
-<update id="replyUpdate" parameterType="post">
-update post_repl set
-post_repl_cont = #{post_repl_cont}
-where post_repl_code = #{post_repl_code}
-</update>
-
-
-<!-- 댓글 삭제 -->
-<delete id="replyDelete" parameterType="post">
-delete from post_repl
-where post_repl_code = #{post_repl_code}
-</delete>
-
-<!--  댓글 조회 -->
-<select id="replySelect" resultType="post">
-
-select *
+<delete id="replyDelete">
+delete 
 from post_repl
 where post_repl_code = #{post_repl_code}
-</select>
-
-<!--  페이징처리 -->
+</delete>
 </mapper>

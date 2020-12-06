@@ -15,14 +15,9 @@ public interface PostRepDao {
 	//insert
 	void replyInsert(Post post);
 
-	//update
-	void replyUpdate(Post post);
 
 	//delete
-	void replyDelte(Post post);
-
-	//select
-	Post replySelect(String post_repl_code);
+	void replyDelte(String post_repl_code);
 
 
 }

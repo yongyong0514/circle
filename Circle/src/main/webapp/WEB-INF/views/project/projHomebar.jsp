@@ -24,7 +24,7 @@
 			</c:if>
 			</c:when>
 			<c:otherwise>
-				<c:out value="전체 프로젝트"/>
+				<c:out value="프로젝트"/>
 			</c:otherwise>
 			</c:choose>
 		</div>

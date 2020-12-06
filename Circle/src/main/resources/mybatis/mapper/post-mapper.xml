@@ -24,7 +24,7 @@
 		and p.post_type =
 		t.post_type_code
 		and p.post_type in
-		('POTY000002', 'POTY000003')
+		('POTY000001', 'POTY000002')
 		order by
 		p.post_code desc
 	</select>
@@ -67,8 +67,8 @@
 		(p.post_type =
 		t.post_type_code)
 		where p.post_type in
-		('POTY000002',
-		'POTY000003')
+		('POTY000001',
+		'POTY000002')
 		order by post_code desc
 		) a
 		)
@@ -93,6 +93,7 @@
 		t.post_type_code)
 		where p.post_type =
 		#{post_type}
+		order by post_code desc
 		) a
 		)
 		where rn between
@@ -156,6 +157,7 @@
 		where p.post_code =
 		#{post_code}
 	</select>
+	
 
 	<update id="CountDetail">
 		update post
@@ -193,6 +195,11 @@
 		delete from post where
 		post_code = #{post_code}
 
+
+	</delete>
+	<delete id="postDelete2" parameterType="string">
+delete from post_repl
+where post_repl_post = #{post_code}	
 	</delete>
 
 
@@ -211,7 +218,7 @@
 		</trim>
 	</sql>
 
-	<select id="getSearch" resultType="post"
+		<select id="getSearch" resultType="post"
 		parameterType="postPaging">
 
 		select *
@@ -221,13 +228,13 @@
 			<if test="type != null and keyword != null">
 				<choose>
 					<when test="type == 'post_title'">
-						${type} = #{keyword}
+						${type}  like '%'||#{keyword}||'%'
 					</when>
 					<when test="type == 'post_comt'">
-						${type} = #{keyword}
+						${type}  like '%'||#{keyword}||'%'
 					</when>
 					<when test="type == 'emp_info_name'">
-						${type} = #{keyword}
+						${type}  like '%'||#{keyword}||'%'
 					</when>
 				</choose>
 			</if>

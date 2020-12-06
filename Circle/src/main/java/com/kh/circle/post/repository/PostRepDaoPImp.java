@@ -30,26 +30,11 @@ public class PostRepDaoPImp implements PostRepDao {
 		sqlSession.insert("postReply.replyInsert", post);
 	}
 
-//update
+
+
 	@Override
-	public void replyUpdate(Post post) {
-		sqlSession.update("postReply.replyUpdate", post);
-	}
-
-//delete
-	@Override
-	public void replyDelte(Post post) {
-
-		sqlSession.delete("postReply.replyDelete", post);
-		
-	}
-
-//select
-	@Override
-	public Post replySelect(String post_repl_code) {
-
-		
-		return sqlSession.selectOne("postReply.replySelect", post_repl_code);
+	public void replyDelte(String post_repl_code) {
+		sqlSession.delete("postReply.replyDelete", post_repl_code);		
 	}
 
 }
