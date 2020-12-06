@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.service.AddressBookService;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
 @RequestMapping("/addressBook")
 public class AddressBookController {

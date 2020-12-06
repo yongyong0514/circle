@@ -42,9 +42,8 @@
 
 					&nbsp;
 					<!-- 주소록 출력설정 시작-->
- 					<button value="field">필드설정</button>
 					&nbsp; <label>페이지 당 출력개수</label>
-					<select class="perPage" name="perPage"  onchange="movePerPage(this)">
+					<select class="perPage" name="perPage"  onchange="movePerPage()">
 						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
@@ -109,12 +108,12 @@
 
 					<!-- 페이지 이동 목록 시작 -->					
 					<div class="changeBtn">
-						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage } )">
+						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage}, ${index} )">
 							<i class='fas fa-angle-double-left'></i>
 						</span>
 						&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${map.pInfo.nowPage != 1 }">
-							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage} );">
+							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage}, ${index} );">
 								<i class='fas fa-caret-left'></i>
 							</span>			
 						</c:if>
@@ -127,19 +126,19 @@
 								</c:when>
 								
 								<c:when test="${ page != map.pInfo.nowPage }">
-									<span onclick="moveAll( ${page}, ${map.pInfo.perPage} );">${page}</span>	
+									<span onclick="moveAll( ${page}, ${map.pInfo.perPage}, ${index} );">${page}</span>	
 									&nbsp;
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						&nbsp;		
-						<c:if test="${map.pInfo.endPage != map.pInfo.maxPage}">
-							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage});">
+						<c:if test="${map.pInfo.nowPage != map.pInfo.maxPage}">
+							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${index});">
 								<i class='fas fa-caret-right'></i>
 							</span>			
 						</c:if>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage } )">
+						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage}, ${index} )">
 							<i class='fas fa-angle-double-right'></i>
 						</span>
 					</div>
@@ -164,16 +163,7 @@
 			})
 			
 			<!-- 페이지 당 출력 개수 선택 표시 -->
-			switch(${map.pInfo.perPage}){
-			case 5: 
-				$(".perPage option:eq(0)").prop("selected",true); break;	
-			case 10: 
-				$(".perPage option:eq(1)").prop("selected",true); break;	
-			case 20:
-				$(".perPage option:eq(2)").prop("selected",true); break;	
-			case 50:
-				$(".perPage option:eq(3)").prop("selected",true); break;	
-			}
+			$(".perPage").val(${map.pInfo.perPage});
 			
 			<!-- 현재 페이지 강조 -->
 			$(".nowPageNum").addClass("selectedNum");
@@ -190,13 +180,18 @@
 			
 		});
 		
-		
-		function movePerPage(obj){
-			location.href="${pageContext.request.contextPath}/addressBook/allEmp?perPage=" + obj.value;
+		// 페이지 당 출력 개수 변경 시
+		function movePerPage(){
+			var selectedValue = $(".perPage").val();
+			
+			var url = "nowPage=" + 1 + "&perPage=" + selectedValue + "&index=" + ${index};
+			
+			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
 		};
 		
-		function moveAll(nowPage, perPage){
-			var url = "nowPage=" + nowPage + "&perPage" + perPage;
+		// 페이지 이동버튼(숫자 또는 화살표) 선택 시
+		function moveAll(nowPage, perPage, index){
+			var url = "nowPage=" + nowPage + "&perPage=" + perPage + "&index=" + index;
 			url.concat(nowPage, "&perPage=", perPage);
 			
 			if( !isNull(${name}) ){
@@ -214,12 +209,12 @@
 			console.log(url);
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
-		}
+		};
 		
 		
 		function isNull(value){
 			return ( value === undefined || value === null || value === "" ) ? true : false;
-		}
+		};
 		
 	</script>
 	

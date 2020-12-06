@@ -25,7 +25,7 @@ public class AddressBookServiceImpl implements AddressBookService{
 		
 		// 1. pagingInfo 객체 완성
 		pInfo.setPerGroup(5);
-		pInfo.setTotal(addressBookRepository.total());
+		pInfo.setTotal(addressBookRepository.total(pInfo));
 		pInfo.calcValues();
 		
 		map.put("pInfo", pInfo);
