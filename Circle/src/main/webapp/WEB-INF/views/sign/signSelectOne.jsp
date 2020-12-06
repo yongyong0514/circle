@@ -127,8 +127,8 @@
 											<button id="formBtn3">결재</button>
 												<ul id="signSelect">
 													<li>
-														<button>승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
-														<button>반려<br><a class="fontSize1">결재를 거부합니다</a></button>
+														<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
+														<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
 													</li>
 												</ul>
 											</c:if>
@@ -220,16 +220,6 @@
 		</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-    <!-- 로드 시 가져올 일부 본문 값 -->
-    <script>
-    var txtArea = $(".replyNote");
-    	if (txtArea) {
-    	    txtArea.each(function(){
-            $(this).height(this.scrollHeight);
-        });
-    }
-	</script>
-	
     <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {
@@ -244,6 +234,152 @@
     		})
     	});
     </script>
+    
+    <!-- 로드 시 가져올 일부 본문 값 -->
+    <script>
+    var txtArea = $(".replyNote");
+    	if (txtArea) {
+    	    txtArea.each(function(){
+            $(this).height(this.scrollHeight);
+        });
+    }
+	</script>
+	
+	<!-- 결재 초기 로드 -->
+	<script>
+		$(function(){
+			signDecision();
+		});
+	</script>
+	
+	<!-- 결재 댓글 초기 로드 -->
+	<script>
+		$(function(){
+			signReply();
+			
+		});
+	</script>
+	
+	<!-- 결재 로드 -->
+	<script>
+		function signDecision(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			
+			$.ajax({
+				type: "get",
+				url: base + "/signResult/signDecision",
+				data: {signCode: signCode[1]},
+				success: function(data){
+					if(data != null) {
+						
+					}
+				});
+			});
+		}
+	</script>
+	
+	<!-- 결재 댓글 로드 -->
+	<script>
+		function signReply(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			
+			$.ajax({
+				type: "get",
+				url: base + "/signResult/signReply",
+				data: {signCode: signCode[1]},
+				success: function(data){
+					if(data != null) {
+						var $signListReply = $(".signAndReply");
+						$signListReply.html('');
+						
+						for(var key in data) {
+							var $tbody = $("<tbody class='replyBox'>");
+							var $tr1 = $("<tr>");
+							var $tr2 = $("<tr>");
+							var $replyImage = $("<td class='replyImage' rowspan='2'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='img3'>");
+							var $replyUser = $("<td class='replyUser'>");
+							var $empName = $("<input type='text' class='formResult2' readonly>").val(data[key].emp_info_name);
+							var $jobName = $("<input type='text' class='formResult2' readonly>").val(data[key].job_info_name);
+							var $replyDate = $("<input type='text' class='formResult4' readonly>").val(data[key].sign_reply_date);
+							var $formReply = $("<td class='formReply'>");
+							var $replyNote = $("<textarea class='replyNote' readonly></textarea>").text(data[key].sign_reply_content);
+							
+							$replyUser.append($empName);
+							$replyUser.append($jobName);
+							$replyUser.append($replyDate);
+							
+							$tr1.append($replyImage);
+							$tr1.append($replyUser);
+							
+							$formReply.append($replyNote);
+							
+							$tr2.append($formReply);
+							
+							$tbody.append($tr1);
+							$tbody.append($tr2);
+							
+							$signListReply.append($tbody);
+
+						}
+					}
+				}
+			});
+		}
+	</script>
+	
+	<!-- 결재 전송 -->
+	<script>
+		$(".submitAgree").click(function(){
+			alert("check");
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			var signEmpCode = ${empInfo.emp_info_emp_no};
+			
+			$.ajax({
+				url: base + "/signResult/signDecisionInsert",
+				type: "post",
+				data: {sign_code : signCode[1]
+					 , sign_join_emp_code : signEmpCode},
+				success: function(){
+					signList();
+				}
+			}
+			});
+		});
+	</script>
+	
+	<!-- 결재 댓글 전송 -->
+	<script>
+		$("#submitReply").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var signCode = document.location.href.split("=");
+			var signEmpCode = ${empInfo.emp_info_emp_no};
+			var signContent = $(".replyArea").val();
+
+			if(!signContent == ""){ 
+				$.ajax({
+					url: base + "/signResult/signReplyInsert",
+					type: "post",
+					data: {sign_code : signCode[1]
+						 , sign_reply_emp_code : signEmpCode
+						 , sign_reply_content : signContent},
+					success: function(){
+						alert("success");
+							signReply();
+							$(".replyArea").val("");
+					},
+					error: function(){
+						alert("error");
+					}
+				});
+			} else {
+				alert("댓글을 입력해주세요.");
+			}
+		});
+	</script>
+	
 <!--     <script>
 		$(document).ready(function(){
 				var base = "${pageContext.request.contextPath}";
@@ -404,34 +540,6 @@
 				}
 			});
 		});
-	</script>
-	
-	<!-- 결재 댓글 전송 -->
-	<script>
-		$("#submitReply").click(function(){
-			var base = "${pageContext.request.contextPath}";
-			var signCode = document.location.href.split("=");
-			var signEmpCode = ${empInfo.emp_info_emp_no};
-			var signContent = $(".replyArea").val();
-
-			$.ajax({
-				url: base + "/sign/signReplyInsert",
-				type: "post",
-				data: {sign_code : signCode[1]
-					 , sign_reply_emp_code : signEmpCode
-					 , sign_reply_content : signContent},
-				success: function(){
-					
-				}
-			});
-		});
-	</script>
-	
-	<!-- 결재 댓글 로드 -->
-	<script>
-		function signReply() {
-			
-		}
 	</script>
 </body>
 </html>

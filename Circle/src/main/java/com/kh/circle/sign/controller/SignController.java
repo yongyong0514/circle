@@ -27,7 +27,6 @@ import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignListJoiner;
 import com.kh.circle.sign.vo.SignModify;
-import com.kh.circle.sign.vo.SignReply;
 import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
@@ -119,15 +118,13 @@ public class SignController {
 	public String signSelectOne(@RequestParam String signCode, Model model) {
 		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
 		model.addAttribute("signSelectOne", signSelectOne);
+		System.out.println(signSelectOne.getSign_note());
 		
 		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signJoinerCode", signCode);	
 		model.addAttribute("signListJoiner", signListJoiner);
 		
 		List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
 		model.addAttribute("list3", list3);
-		
-		List<SignReply> list4 = sqlSession.selectList("sign.signReply", signCode);
-		model.addAttribute("list4", list4);
 		
 		return "sign/signSelectOne";
 	}
@@ -157,13 +154,6 @@ public class SignController {
 		return "sign/signList";
 	}
 
-// 결재 리플 작성
-	@PostMapping("/signReplyInsert")
-	public String signReplyInsert(@ModelAttribute SignReplyInsert signReplyInsert) {
-		signService.insert(signReplyInsert);
-		
-		return "success";
-	}
 	
 // 문서 첫화면
 	@GetMapping("/docuList")

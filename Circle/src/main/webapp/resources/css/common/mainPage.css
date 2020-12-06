@@ -1,0 +1,97 @@
+br {
+    content: " ";
+    display: block;
+    margin: 0.4em 0;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+.container {
+	min-width: 1300px;
+	position: absolute;
+	left: 180px;
+	width: calc(100% - 180px);
+}
+
+.content {
+}
+
+.boardArea {
+}
+
+.boardList0 {
+	min-width: 1250px;
+	width: 100%;
+	height: 70px;
+}
+
+.boardList0_1 {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 10px;
+	min-width: 1220px;
+	width: calc(100% - 30px);
+	height: 50px;
+	border-radius: 10px;
+	background: white;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+
+.boardList1 {
+	min-width: 1250px;
+	width: 100%;
+	height: 200px;
+}
+
+.boardList1_1 {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 10px;
+	min-width: 1220px;
+	width: calc(100% - 30px);
+	height: 180px;
+	border-radius: 10px;
+	background: white;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+
+.boardList2, .boardList3 {
+	float: left;
+	min-width: 610px;
+	width: 50%;
+	height: 200px;
+}
+
+.boardList2_1, .boardList3_1 {
+	margin-top: 10px;
+	margin-left: 10px;
+	width: calc(100% - 30px);
+	height: 180px;
+	border-radius: 10px;
+	background: white;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+
+.boardList4, .boardList5, .boardList6 {
+	float: left;
+	min-width: 406px;
+	width: 33.1%;
+	height: 200px;
+}
+
+.boardList4_1, .boardList5_1, .boardList6_1 {
+	float: left;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: calc(100% - 20px);
+	height: 180px;
+	border-radius: 10px;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+

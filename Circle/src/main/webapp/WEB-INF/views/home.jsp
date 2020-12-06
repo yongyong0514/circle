@@ -1,232 +1,83 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-
-<style>
-
-html{
-background:#C5D4E7;
-}
-#aside{
-	background:#C5D4E7;
-	
-}
-#top{
-	background:#DBE5F1;
-	background: -webkit-linear-gradient(to top, #DBE5F1;, #FFFFFF);
-	background: linear-gradient(to top, #DBE5F1;, #FFFFFF);
-	border: 1px solid lightgrey;
-}
-
-#rectangle354{
-	margin:0 auto; 
-	width: 500px;
-	height: 600px;
-	left: 1600px;
-	top: 250px;
-	margin-top:50px;
-	background: white;
-	border: 1px solid #4486AB;
-	box-sizing: border-box;
-	
-	}
-#rectangle355{
-	margin:0 auto; 
-	width: 500px;
-	height: 100px;
-	left: 1600px;
-	top: 900px;
-	
-	background:#DBE5F1;
-	border: 1px solid #4486AB;
-	box-sizing: border-box;
-	
-	}
-
-body{
-background: #F3F3F3;
-}
-.group1{
-width:120px;
-height: 120px;
-display:inline-block;
-margin-left:20px;
-margin-top:20px;
-}
-#group2{
-	font-style: normal;
-	font-weight: bold;
-	font-size: 20px;
-	width: 300px;
-	color:gray;
-}
-
-#title{
-
-	
-	font-weight: bold;
-	font-size: 30px;
-	align:center;
-	margin-left:320px;
-	width:480px;
-	
-}	
-	#titleS{
-	font-size:15px;
-	font-weight: bold;
-	
-	}
-#id{
-font-family: 맑은고딕;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 15px;
-	margin-left:30px;
-	 border-radius: 10px;
-	
-}
-#password{
-font-family: 맑은고딕;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 15px;
-	margin-left:30px;
-	 border-radius: 10px;
-	
-}
-#login{
-font-family: 맑은고딕;
-margin-left:150px;
-width: 200px;
-height:80px;
- border-radius: 15px;
-}
-#makeId{
-	
-	font-family: Monospace;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 18px;
-	margin-left:120px;
-
-
-}#join{
-font-family: Monospace;
-	font-style: normal;
-	font-weight: bold;
-	font-size: 20px;
-	color:blue;
-
-}
-.id{
- background:#E8F0FD;
- width:450px; 
- height:45px;
- margin-left:20px;
-  border-radius: 10px;
-}
-.pwd{
- background:#E8F0FD;
- width:450px; 
- height:45px;
- margin-left:20px;
-  border-radius: 10px;
-}
-#login{
-	color:#4A5BF9;
-	background:#E8F0FD;
-	width:200px; 
- 	height:50px;
-}
-
-#pwdfind{
-margin-left:20px;
-	font-weight: bold;
-	font-size: 15px;
-}
-#foot{
-	margin-left:35%;
-	color:#4A5BF9;
-	font-weight: bold;
-}
-	#lf{
-	align:center;
-	font-size: 15px;
-	
-	}
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>Circle</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/home.css">
 </head>
 <body>
-	
-	
-	<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
-	<c:if test="${empInfo == null }">
-	<section id="container">
-			<aside id="aside" >
-			
-			<div id="rectangle354">
-			
-			<div id="top">
-			<label id="title">Circle<a id="titleS">&nbsp;professional</a></label>
-			</div>
-			
-			<div>
-			<img alt="" src="/circle/resources/img/sign/circleIcon.png" class="group1">
-			<a class="group1" id="group2">간편하고 깔끔하게 circle<br>(환영 메세지)</a>
-			
-				</div>
-			<label id="id">UserName</label><br><input type="text" name="emp_info_emp_no"  class="id">
-			<br><br>
-			<label id="password">PassWord</label><br> <input type="password" name="emp_info_pwd"  class="pwd">
-			<br><br>
-				<input type="submit" value="로그인" id="login">
-				<!-- <a href="login" type="submit" id="login">로그인</a> -->
-				<br><br><br>	
-			<!-- <label id="pwdfind" onclick="pwdfind();">비밀번호를 잊었습니다.</label> -->
-			
-			</div>
-			
-			<div id="rectangle355">
-			<br>
-			<label id="foot">서비스 이용</label>&nbsp;&nbsp;<label id="" onclick="join();">약관보기</label> 
-			</div>
-		</aside>
-	</section>
-	 </c:if>
-		
+	<div class="wrap">
+		<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
+		<c:if test="${empInfo == null }">
+		<div class="loginBox">
+			<table>
+				<tr>
+					<th class="row1"><img class="imgSize1" src="${pageContext.request.contextPath}/resources/img/common/circle.png">Circle Professional&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				</tr>
+				<tr>
+					<th class="row2">&nbsp;&nbsp;&nbsp;&nbsp;로그인</th>
+				</tr>
+				<tr>
+					<th class="row3">서비스를 이용하시려면 로그인이 필요합니다</th>
+				</tr>
+				<tr>
+					<th class="row4">&nbsp;&nbsp;&nbsp;&nbsp;소속</th>
+				</tr>
+				<tr>
+					<th class="row5"><img class="imgSize2" src="${pageContext.request.contextPath}/resources/img/common/paperlogo.png">&nbsp;&nbsp;페이퍼컴퍼니</th>
+				</tr>
+				<tr>
+					<th class="row0"></th>
+				</tr>
+				<tr>
+					<th class="row4">&nbsp;&nbsp;&nbsp;&nbsp;사원번호</th>
+				</tr>
+				<tr>
+					<th class="row6">
+						<input class="input" type="text" name="emp_info_emp_no">
+					</th>
+				</tr>
+				<tr>
+					<th class="row4">&nbsp;&nbsp;&nbsp;&nbsp;비밀번호</th>
+				</tr>
+				<tr>
+					<th class="row6">
+						<input class="input" type="password" name="emp_info_pwd">
+					</th>
+				</tr>
+				<tr>
+					<th class="row7" onclick="pwdfind();">&nbsp;&nbsp;&nbsp;&nbsp;사원번호나 비밀번호를 잊어버렸습니다</th>
+				</tr>
+				<tr>
+					<th class="row6">
+						<input class="submit" type="submit" value="로그인">
+					</th>
+				</tr>
+				<tr>
+					<th class="row0"></th>
+				</tr>
+				<tr>
+					<th class="row8" onclick="join();">서비스 이용약관</th>
+				</tr>
+			</table>
+		</div>
+		</c:if>
 		<c:if test="${message == false}">
-			<p style="color:red" id="lf" align="center">로그인실패 아이디 비밀번호가 틀렸습니다.</p>
-			</c:if>
-	</form>
-	
-		<%--  <c:if test="${ member != null}">
-		 
-		<form name="logout" action="logout" method="GET">
-		<p>${member.EMP_INFO_NAME } ${joinmember.JOB_INFO_NAME } 님 환영합니다.</p>
-			
-			<button class="logout">로그아웃</button>
+			<p>로그인실패: 사원번호 비밀번호가 틀렸습니다</p>
+		</c:if>
 		</form>
-		
-		</c:if>  --%> 
-		<!-- <script>
-	
-		/function login(){
-		//var login = document.getElementById("login").setAttribute("onclick","login()")
-		location.href='/views/community/comuList.jsp';
-		
-	} */
-	function join(){
-		location.href='/circle/sign/signList';
-		//http://localhost:8888/circle/sign/signList
-	}
-	
-	</script> -->
+	</div>
 
+<!-- SCRIPT 영역 -->
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	
+	<script>
+	</script>
 </body>
 </html>

@@ -128,6 +128,11 @@ public class HomeController {
 		return "../views/home";
 	}
 	
+	@GetMapping("/mainPage")
+	public String mainPage() {
+		return "common/mainPage";
+	}
+	
 	//로그아웃 처리 컨트롤러
 	// - 세션에 있는 user 정보를 삭제
 	// - 루트 페이지(/)로 리다이렉트	

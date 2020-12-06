@@ -9,7 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignListJoiner;
+import com.kh.circle.sign.vo.SignReply;
+import com.kh.circle.sign.vo.SignReplyInsert;
 
 @RestController
 @RequestMapping("/signResult")
@@ -51,6 +56,7 @@ public class SignResultController {
 	}
 	
 //	결재 작성 매핑 시작
+//	결재 타입 지정
 	@GetMapping("/signTypeContent")
 	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
 		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
@@ -75,6 +81,20 @@ public class SignResultController {
 		
 		return entity;
 	}
-
+	
+// 결재 댓글 로드
+	@GetMapping("/signReply")
+	public List<SignReply> signReply(@RequestParam String signCode, Model model) {
+		List<SignReply> list = sqlSession.selectList("sign.signReply", signCode);
+		model.addAttribute("list", list);
+			
+		return list;
+	}
+	
+// 결재 댓글 작성
+	@PostMapping("/signReplyInsert")
+	public void signReplyInsert(@ModelAttribute SignReplyInsert signReplyInsert) {
+		signService.insertReply(signReplyInsert);
+	}
 
 }
