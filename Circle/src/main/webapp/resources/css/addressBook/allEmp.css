@@ -94,3 +94,7 @@ a{
 	widht:100%;
 	text-align: center;
 }
+
+.changeBtn span:hover{
+	cursor: pointer;
+}

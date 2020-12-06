@@ -14,7 +14,6 @@ import com.kh.circle.addressBook.service.AddressBookService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequestMapping("/addressBook")
 public class AddressBookController {
@@ -33,21 +32,28 @@ public class AddressBookController {
 	@GetMapping("/allEmp")
 	public String allEmp(@RequestParam(value="nowPage", defaultValue="1") int nowPage,
 						@RequestParam(value="perPage", defaultValue="10") int perPage,
+						@RequestParam(value="name", defaultValue="") String name,
+						@RequestParam(value="email", defaultValue="") String email,
+						@RequestParam(value="tel", defaultValue="") String tel,
 						Model model) {
 
 		PagingInfo pInfo = PagingInfo.builder()
 									.nowPage(nowPage)
 									.perPage(perPage)
+									.name(name)
+									.email(email)
+									.tel(tel)
 									.build();
 		// 전체 리스트 반환
 		
-		// 1. 페이징 처리
+		// 페이징 처리 
 		Map<String, Object> map = addressBookService.pagingEmp(pInfo);
 		
 		model.addAttribute("map", map);
 		model.addAttribute("url", "allEmp");
-		
-		log.info("pInfo: " + map.get("pInfo"));
+		model.addAttribute("name", pInfo.getName());
+		model.addAttribute("email", pInfo.getEmail());
+		model.addAttribute("tel", pInfo.getTel());
 		
 		return "addressBook/allEmp";
 	}

@@ -41,7 +41,24 @@
 						 inner join dept_info DI on (EI.emp_info_dept_code = DI.dept_info_code)
 						 inner join job_info JI on (EI.emp_info_job_code = JI.job_info_code)
 						 inner join cmp_info CI on (EI.emp_info_cmp_code = CI.cmp_info_code)
-						 where emp_info_edat is null
+						 <where>
+						 	emp_info_edat is null
+						 
+						 	<if test="name != ''">
+						 		AND
+						 		EI.emp_info_name like '%' || #{name} || '%'
+						 	</if>
+						 	
+						 	<if test="email != ''">
+						 		AND
+						 		EI.emp_info_email like '%' || #{email} || '%'
+						 	</if>
+						 	
+						 	<if test="tel != ''">
+						 		AND
+						 		EI.emp_info_mtel like '%' || #{tel} || '%'
+						 	</if>
+						 </where>
 						 order by EI.emp_info_name
 				  	   ) step1
 				 where rownum <![CDATA[<=]]> (#{nowPage} * #{perPage})
