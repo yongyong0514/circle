@@ -146,6 +146,14 @@ span.poll-state.complete{
 	background-color: #A3A3A3;
     border: 1px solid #A3A3A3;
 }
+span.poll-state.temp{
+	background-color: #F6B3B3;
+    border: 1px solid #F6B3B3;
+}
+span.poll-state.pause{
+	background-color: #A3A3A3;
+    border: 1px solid #A3A3A3;
+}
 
 
 .poll-rate-td strong{
