@@ -26,43 +26,20 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/poll")
 public class PollController {
-	
-	/*******************
-	 ** 페이지 이동용 ** 
-	 *******************/
-//	@GetMapping("/pollMain/{url}")
-//	public String pollMain(@PathVariable String url, Model model) {
-//		model.addAttribute("url", url);
-//		
-//		return "/poll/pollMain";
-//	}
-	
+
 	@Autowired
 	private PollService pollService;
 	
 
 	@GetMapping("/pollMain")
 	public String pollMain(HttpSession session, ModelMap modelMap) {
-		
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		log.info(empNo);
-		
 		List<HashMap<String, String>> list = pollService.homeList(empNo);
-		
 		modelMap.addAttribute("post", list);
-		
-		log.info(modelMap.toString());
-		
 		return "/poll/pollMain";
 	}
-	@GetMapping("/post")
-	public String post(@RequestParam String postCode) {
-		
-		System.out.println(postCode);
-		return "/poll/post";
-	}
 	@GetMapping("/progress")
-	public String progress(HttpSession session, Pagination pageInfo
+	public String progress(HttpSession session
 							, @RequestParam(value="nowPage", required=false)String nowPage
 							, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
 							, @RequestParam(value="searchTitle", required=false)String searchTitle
@@ -74,22 +51,27 @@ public class PollController {
 		//페이지정보 없을시 현재페이지 첫페이지로 고정, 한페이지 출력 게시물수 5개로 고정
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
-			cntPerPage = "2";
+			cntPerPage = "10";
 		} else if(nowPage == null) {
 			nowPage = "1";
 		} else if(cntPerPage == null) {
-			cntPerPage = "2";
+			cntPerPage = "10";
 		}
 		
-		Pagination totalPageInfo = new Pagination(empNo, searchTitle, searchWriter);
-	
-		int total = pollService.countTotalProgressPost(totalPageInfo);
-
-		//사번,검색어, 페이지정보 객체화
-		pageInfo = new Pagination(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), empNo, searchTitle, searchWriter);
-		//총 페이지수 추출
+		//사번/검색어 페이지정보 객체화
+		Pagination prePageInfo = new Pagination(empNo, searchTitle, searchWriter);
 		
+		//총 페이지수 DB추출
+		int total = pollService.countTotalProgressPost(prePageInfo);
+		
+		//페이지 정보 변수 추가 재생성
+		Pagination pageInfo = new Pagination(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage)
+											, prePageInfo.getEmpNo(), prePageInfo.getSearchTitle(), prePageInfo.getSearchWriter());
+		
+		//페이지 DB추출
 		List<HashMap<String,String>> list = pollService.progressList(pageInfo);
+		
+		log.info(pageInfo.toString());
 		
 		//post정보 담기
 		modelMap.put("post", list);
@@ -97,13 +79,77 @@ public class PollController {
 		//page정보 담기
 		modelMap.put("pageInfo", pageInfo);
 		
-		//검색어 정보 담기
-		modelMap.put("searchTitle", searchTitle);
-		modelMap.put("searchWriter", searchWriter);
-		
-		log.info("modelMap : {}",modelMap.toString());
-		
 		return "/poll/progress";
+	}
+	@GetMapping("/finished")
+	public String my(HttpSession session
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
+			, @RequestParam(value="searchTitle", required=false)String searchTitle
+			, ModelMap modelMap) {
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		if(nowPage == null && cntPerPage == null) {
+		nowPage = "1";
+		cntPerPage = "10";
+		} else if(nowPage == null) {
+		nowPage = "1";
+		} else if(cntPerPage == null) {
+		cntPerPage = "10";
+		}
+		Pagination prePageInfo = new Pagination(empNo, searchTitle);
+		//총 페이지수 DB추출
+		int total = pollService.countTotalFinishedPost(prePageInfo);
+		//페이지 정보 변수 추가 재생성
+		Pagination pageInfo = new Pagination(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage)
+									, prePageInfo.getEmpNo(), prePageInfo.getSearchTitle());
+		
+		//페이지 DB추출
+		List<HashMap<String,String>> list = pollService.finishedList(pageInfo);
+		//post정보 담기
+		modelMap.put("post", list);
+		//page정보 담기
+		modelMap.put("pageInfo", pageInfo);
+		
+		return "/poll/finished";
+	}
+	@GetMapping("/my")
+	public String finished(HttpSession session
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="ctnPerPage", required=false)String cntPerPage
+			, @RequestParam(value="searchTitle", required=false)String searchTitle
+			, @RequestParam(value="searchWriter", required=false)String searchWriter
+			, ModelMap modelMap) {
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		if(nowPage == null && cntPerPage == null) {
+		nowPage = "1";
+		cntPerPage = "10";
+		} else if(nowPage == null) {
+		nowPage = "1";
+		} else if(cntPerPage == null) {
+		cntPerPage = "10";
+		}
+		Pagination prePageInfo = new Pagination(empNo, searchTitle, searchWriter);
+		//총 페이지수 DB추출
+		int total = pollService.countTotalMyPost(prePageInfo);
+		//페이지 정보 변수 추가 재생성
+		Pagination pageInfo = new Pagination(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage)
+									, prePageInfo.getEmpNo(), prePageInfo.getSearchTitle());
+		
+		
+		//페이지 DB추출
+		List<HashMap<String,String>> list = pollService.myList(pageInfo);
+		log.info(list.toString());
+		//post정보 담기
+		modelMap.put("post", list);
+		//page정보 담기
+		modelMap.put("pageInfo", pageInfo);
+		return "/poll/my";
+	}
+	@GetMapping("/post")
+	public String post(@RequestParam String postCode) {
+		
+		System.out.println(postCode);
+		return "/poll/post";
 	}
 	@GetMapping("/result")
 	public String result(HttpSession session, @RequestParam String postCode, ModelMap modelMap) {
@@ -123,10 +169,6 @@ public class PollController {
 		
 		return "/poll/result";
 	}
-	@GetMapping("/finished")
-	public String finished() {
-		return "/poll/finished";
-	}
 	@GetMapping("/insert")
 	public String insert() {
 		return "/poll/insert";
@@ -134,9 +176,5 @@ public class PollController {
 	@GetMapping("/questionInsert")
 	public String questionInsert() {
 		return "/poll/questionInsert";
-	}
-	@GetMapping("/my")
-	public String my() {
-		return "/poll/my";
 	}
 }

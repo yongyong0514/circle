@@ -28,12 +28,28 @@ public class Pagination {
 		this.searchTitle = searchTitle;
 		this.searchWriter = searchWriter;
 	}
+	//내 설문 페이지용 객체
+	public Pagination(int total, int nowPage, int cntPerPage, String empNo, String searchTitle) {
+		setNowPage(nowPage);
+		setCntPerPage(cntPerPage);
+		setTotal(total);
+		calcLastPage(getTotal(), getCntPerPage());
+		calcStartEndPage(getNowPage(), cntPage);
+		calcStartEnd(getNowPage(), getCntPerPage());
+		this.empNo = empNo;
+		this.searchTitle = searchTitle;
+	}
 	
 	//총 페이지수 도출용 객체
 	public Pagination(String empNo, String searchTitle, String searchWriter) {
 		this.empNo = empNo;
 		this.searchTitle = searchTitle;
 		this.searchWriter = searchWriter;
+	}
+	//내 설문 총 페이지수 도출용 객체
+	public Pagination(String empNo, String searchTitle) {
+		this.empNo = empNo;
+		this.searchTitle = searchTitle;
 	}
 	
 	// 제일 마지막 페이지 계산

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,10 @@
 </script>
 
 <body>
+	<!-- 오늘날짜 변수화 -->
+	<jsp:useBean id="now" class="java.util.Date" scope="request"/>
+	<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowNum" scope="request"/>
+
 	<div class="poll-content-container">
 		<div class="poll-content-bar">
 			<jsp:include page="../contentTopBar/pollHomeBar.jsp"/>
@@ -61,6 +67,7 @@
 						</div>
 					</div>
 					<table class="poll-list">
+						<thead>
 							<tr>
 								<th>
 									<input type="checkbox" id="checkedAll">
@@ -71,42 +78,63 @@
 								<th>설문기간</th>
 								<th>참여율</th>
 							</tr>
-							<tr>
-								<td class="check">
-									<input type="checkbox" name="code" value="1">
-								</td>
-								<td class="num">1</td>
-								<td class="poll-state-td">
-									<span class="poll-state progress">진행중</span>
-								</td>
-								<td class="poll-title-td">설문제목 적는 공간</td>
-								<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
-								<td class="poll-rate-td">
-									<span class="txt">
-										0/5
-										<strong> (20.00%)</strong>
-									
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<td class="check">
-									<input type="checkbox" name="code" value="2">
-								</td>
-								<td class="num">2</td>
-								<td class="poll-state-td">
-									<span class="poll-state complete">완료</span>
-								</td>
-								<td class="poll-title-td">설문제목 적는 공간</td>
-								<td class="poll-term-td">xxxx/xx/xx ~ xxxx/xx/xx</td>
-								<td class="poll-rate-td">
-									<span class="txt">
-										0/5
-										<strong> (20.00%)</strong>
-									
-									</span>
-								</td>
-							</tr>
+						</thead>
+						<tbody>
+							
+							
+							<c:forEach var="item" items="${post}" varStatus="number">
+								<tr>
+									<td class="check">
+										<input type="checkbox" name="code" value="${number.count }">
+									</td>
+									<!-- 행 숫자 컬럼 -->
+									<td>
+										<c:out value="${pageInfo.total - ((pageInfo.nowPage - 1) * cntPerPage + number.index)}"/>
+									</td>
+										
+										<!-- 날짜 계산용 변수 초기화 -->
+										<c:set var="sdat" value="${item.POLL_POST_SDAT }"></c:set>
+										<c:set var="edat" value="${item.POLL_POST_EDAT }"></c:set>
+										<fmt:parseDate var="sdat" value="${sdat}" pattern="yyyy-MM-dd" />
+										<fmt:parseDate var="edat" value="${edat}" pattern="yyyy-MM-dd" />
+										<fmt:parseNumber value="${sdat.time / (1000*60*60*24)}" integerOnly="true" var="sdatNum" scope="request"/>
+										<fmt:parseNumber value="${edat.time / (1000*60*60*24)}" integerOnly="true" var="edatNum" scope="request"/>
+										
+									<!-- 진행/완료 등 상태 컬럼 -->
+									<td class="poll-state-td">
+										<c:choose>
+											<c:when test="${nowNum < sdatNum}">
+												<span class="poll-state temp">준비중</span>
+											</c:when>
+											<c:when test="${nowNum > edatNum}">
+												<span class="poll-state complete">완료</span>
+											</c:when>
+											<c:when test="${item.POLL_POST_CLOSING eq 'Y'}">
+												<span class="poll-state pause">중지</span>
+											</c:when>
+											<c:otherwise>
+												<span class="poll-state progress">진행중</span>
+											</c:otherwise>
+										</c:choose>
+										</span>
+									</td>
+									<td class="poll-title-td">
+										<a>
+										 	<span class="txt"><c:out value="${item.POLL_POST_NAME}"/></span>
+										</a>									
+									</td>
+									<td class="poll-term-td"><c:out value="${item.POLL_POST_SDAT} ~ ${item.POLL_POST_EDAT}"></c:out></td>
+									<td class="poll-rate-td">
+										<span class="txt">
+											0/5
+											<strong> (20.00%)</strong>
+										</span>
+									</td>
+									<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
+									<td class="post-join" hidden="true"><c:out value="${item.item.POLL_POST_QUST_ANSW_JOIN_EMP}"></c:out></td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>	
 					<div class="paging-bar">
 						<div class="data-page-bar">

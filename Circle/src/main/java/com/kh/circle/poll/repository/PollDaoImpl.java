@@ -24,21 +24,44 @@ public class PollDaoImpl implements PollDao{
 		return list;
 	}
 
+	
 	@Override
 	public List<HashMap<String, String>> getResult(HashMap<String, String> params) {
 		List<HashMap<String, String>> list = sqlSession.selectList("poll.getResult", params);
 		return list;
 	}
 
+	
+	@Override
+	public int countTotalProgressPost(Pagination prePageInfo) {
+		return sqlSession.selectOne("poll.countTotalProgressPost", prePageInfo);
+	}
 	@Override
 	public List<HashMap<String, String>> progressList(Pagination pageInfo) {
 		List<HashMap<String, String>> list = sqlSession.selectList("poll.progressList", pageInfo);
 		return list;
 	}
 
+	
 	@Override
-	public int countTotalProgressPost(Pagination totalPageInfo) {
-		return sqlSession.selectOne("poll.countTotalProgressPost", totalPageInfo);
+	public int countTotalFinishedPost(Pagination prePageInfo) {
+		return sqlSession.selectOne("poll.countTotalFinishedPost", prePageInfo);
+	}
+	@Override
+	public List<HashMap<String, String>> finishedList(Pagination pageInfo) {
+		List<HashMap<String, String>> list = sqlSession.selectList("poll.finishedList", pageInfo);
+		return list;
+	}
+
+	
+	@Override
+	public int countTotalMyPost(Pagination prePageInfo) {
+		return sqlSession.selectOne("poll.countTotalMyPost", prePageInfo);
+	}
+	@Override
+	public List<HashMap<String, String>> myList(Pagination pageInfo) {
+		List<HashMap<String, String>> list = sqlSession.selectList("poll.myList", pageInfo);
+		return list;
 	}
 
 }

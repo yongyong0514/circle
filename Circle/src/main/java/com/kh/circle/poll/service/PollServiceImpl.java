@@ -24,24 +24,47 @@ public class PollServiceImpl implements PollService{
 		return list;
 	}
 
+	
 	@Override
 	public List<HashMap<String, String>> getResult(HashMap<String, String> params) {
 		List<HashMap<String, String>> list = pollDao.getResult(params);
 		return list;
 	}
 
+	
+	@Override
+	public int countTotalProgressPost(Pagination prePageInfo) {
+		int total = pollDao.countTotalProgressPost(prePageInfo);
+		return total;
+	}
 	@Override
 	public List<HashMap<String, String>> progressList(Pagination pageInfo) {
-
 		List<HashMap<String, String>> list = pollDao.progressList(pageInfo);
-		
 		return list;
 	}
 
+	
 	@Override
-	public int countTotalProgressPost(Pagination totalPageInfo) {
-		int total = pollDao.countTotalProgressPost(totalPageInfo);
+	public int countTotalFinishedPost(Pagination prePageInfo) {
+		int total = pollDao.countTotalFinishedPost(prePageInfo);
 		return total;
+	}
+	@Override
+	public List<HashMap<String, String>> finishedList(Pagination pageInfo) {
+		List<HashMap<String, String>> list = pollDao.finishedList(pageInfo);
+		return list;
+	}
+
+	
+	@Override
+	public int countTotalMyPost(Pagination prePageInfo) {
+		int total = pollDao.countTotalMyPost(prePageInfo);
+		return total;
+	}
+	@Override
+	public List<HashMap<String, String>> myList(Pagination pageInfo) {
+		List<HashMap<String, String>> list = pollDao.myList(pageInfo);
+		return list;
 	}
 	
 
