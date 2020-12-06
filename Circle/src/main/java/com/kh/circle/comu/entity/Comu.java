@@ -17,7 +17,8 @@ public class Comu {
 	private String comu_post_cont;
 	private Date comu_post_dat;
 	private int comu_post_view;
-	private String comu_post_comu_code;
+	//private String comu_post_comu_code;
+	private String comu_post_list_code;
 	private String comu_post_type;
 	private String emp_info_name;
 	private String comu_list_name;

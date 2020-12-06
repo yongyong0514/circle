@@ -79,12 +79,12 @@ public class ComuController {
 					@ModelAttribute Comu comu)throws Exception{
 		//여기까지가 1번째 단계
 		
-		System.out.println("대충 : " + comu);
+		//System.out.println("대충 : " + comu);
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		System.out.println("DDD : " + emp_no);		
+		//System.out.println("DDD : " + emp_no);		
 		String emp_name = service.comuAdd2(emp_no);
 		
-		System.out.println("DDFD : " + emp_name);
+		//System.out.println("DDFD : " + emp_name);
 		//2번째 단계 끝
 		
 		comu.setComu_post_wrtr_emp_no(emp_no);
@@ -158,12 +158,26 @@ public class ComuController {
 	}
 	//동호회 가입 신청서로 넘어가기
 	@GetMapping("/comuApp")
-	public String comuApp(Model model,@RequestParam("comu_list_code")String comu_list_code ) {
-		model.addAttribute("comuApp", service.comuApp(comu_list_code));
+	public String comuApp(HttpSession session ,
+			@ModelAttribute ComuList comuList)throws Exception{
 		
 		
+		System.out.println("대충 : " + comuList);
+		String comu_list_code = ((EmpInfo) session.getAttribute("empInfo")).getComu_list_code();
+		System.out.println("DDD : " + comu_list_code);		
+		String list_name = service.comuApp(comu_list_code);
 		
-		System.out.println("comuApp으로 가는길임??"+model);
+		System.out.println("list name : " + list_name);
+		//2번째 단계 끝
+		
+		comuList.setComu_list_name(comu_list_code);
+		//comuList.setEmp_info_name(list_name);
+		
+		service.comuApp(comu_list_code);
+		
+		System.out.println("App last : " + comuList);
+		
+		System.out.println("comuApp으로 가는길임??");
 		return "community/comuApp";
 	}
 }

@@ -63,19 +63,19 @@
 				<br>
 				<h5 class="n" id="nti">가입 신청서 작성</h5>
 				<br>
-				<form name="comuApp" id="comuApp" action="${pageContext.request.contextPath}/comu/comuApp"
+				<form name="comuApp" id="comuApp" action="${pageContext.request.contextPath}/community/comuApp"
 						method="POST" >
-              <c:forEach var="comuApp" items="${comuApp}">  
+              <%-- <c:forEach var="empInfo" items="${empInfo}">   --%>
             <table id="all">
                <tr>
                   <th class="n">동호회</th>
-                  <tr id="comuApp">
+                  <tr id="empInfo">
                      <th>
                      
-                    <input type="text" class="formInput1" id="comu_list_code" value="${comuApp.comu_list_code}" readonly>
+                    <input type="text" class="formInput1" id="comu_list_code" value="${empInfo.comu_list_code}" readonly>
                     </th>
                     <th>
-                     <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${comuApp.comu_list_name}" readonly> 
+                     <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${empInfo.comu_list_name}" readonly> 
                      </th>
                   </tr>
              
@@ -91,7 +91,7 @@
                   </td>
                </tr>
             </table>
-               </c:forEach>  -
+              <%--  </c:forEach>  - --%>
             <br>
             <div id="submit" >
                <button type="reset" class="btn">취소하기</button>

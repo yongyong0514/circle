@@ -19,7 +19,7 @@
 	<id property="comu_post_cont" column="comu_post_cont"/>
 	<id property="comu_post_dat" column="comu_post_dat"/>
 	<id property="comu_post_view" column="comu_post_view"/>
-	<id property="comu_post_comu_code" column="comu_post_comu_code"/>
+	<id property="comu_post_list_code" column="comu_post_list_code"/>
 	<id property="comu_post_type" column="comu_post_type"/>
 </resultMap>
 
@@ -60,7 +60,7 @@
 		select * 
 from comu_post c, emp_info e, comu_list l
 where c.COMU_POST_WRTR_EMP_NO = e.emp_info_emp_no 
-and c.COMU_POST_COMU_CODE = l.COMU_LIST_CODE
+and c.COMU_POST_LIST_CODE = l.COMU_LIST_CODE
 order by comu_post_ordr desc
 	<include refid="paging_footer"></include>
 </select>
@@ -98,32 +98,37 @@ where rn between #{start} and #{end}
 	<insert id="insert" parameterType="comu">
 		insert into comu_post(
 		comu_post_ordr,
-		comu_post_wrtr_emp_no,
 		comu_post_title,
 		comu_post_cont,
 		comu_post_dat,
 		comu_post_view,
-		comu_post_comu_code,
-		comu_post_type
+		comu_post_type,
+		comu_post_list_code,
+		comu_post_wrtr_emp_no
 		)
 		values
 		(
 				copo_seq.nextval
-			, #{comu_post_wrtr_emp_no}
 			, #{comu_post_title}
 			, #{comu_post_cont}
 			, sysdate
 			, 0
-			, #{comu_post_comu_code}
 			, '1'
+			, #{comu_post_list_code}
+			, #{comu_post_wrtr_emp_no}
 		)
+		
+<!-- INSERT INTO COMU_POST(COMU_POST_ORDR,COMU_POST_TITLE,COMU_POST_CONT,COMU_POST_DAT,COMU_POST_VIEW,COMU_POST_TYPE,COMU_POST_LIST_CODE,COMU_POST_WRTR_EMP_NO)
+    VALUES(copo_seq.nextval,'예시데이터33','예시데이터글내용',sysdate,0,'1','COLI000001','200101090031');
+		 -->
+		
 	</insert>
 	
 	<!-- 게시글 상세 보기 -->
 	<select id="comuDetail" resultType="comu" parameterType="String">
 	select *
 	from comu_post c
-	join comu_list l on(c.comu_post_comu_code = l.comu_list_code)
+	join comu_list l on(c.comu_post_list_code = l.comu_list_code)
 	join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 	where c.comu_post_ordr = #{comu_post_ordr}
 	</select>
@@ -141,7 +146,7 @@ where rn between #{start} and #{end}
 	<select id="comuCheck" parameterType="String" resultType="Comu">
 			select *
 		from comu_post c
-		join comu_list l on (c.comu_post_comu_code = l.comu_list_code)
+		join comu_list l on (c.comu_post_list_code = l.comu_list_code)
 		join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 		where c.comu_post_ordr = #{comu_post_ordr}
 	</select>
@@ -170,7 +175,7 @@ where rn between #{start} and #{end}
 	</select>
 	
 	<select id="comuApp" parameterType="String" resultType="String">
-		select * 
+		select comu_list_name
 		from 
 		comu_list
 	 where comu_list_code=#{comu_list_code} 
