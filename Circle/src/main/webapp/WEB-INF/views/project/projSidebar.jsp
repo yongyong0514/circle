@@ -1,27 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common/menuBar/menuLeftBar.css">
+<style type="text/css">
+.organChart{
+position:absolute;
+z-index:99;
+}
+
+</style>
 </head>
 <body>
 	<div>
 		<div class="menuLeftBar">
-			<div class="menuLeftListTop">게시판</div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn">프로젝트 생성</button></div>
-			<div class="menuLeftListBtn"><button class="menuLeftBtn">업무 생성</button></div>
-			<div class="menuLeftList"></div>
-			<div class="menuLeftListTitle">개인 프로젝트</div>
-			<div class="menuLeftList"><a href="#">To-Do</a></div>
-			<div class="menuLeftList"><a href="#">Kanban</a></div>
-			<div class="menuLeftListTitle">팀 프로젝트</div>
-			<div class="menuLeftList"><a href="#">To-Do</a></div>
-			<div class="menuLeftList"><a href="#">Kanban</a></div>
-			<div class="menuLeftListTitle">부서 프로젝트</div>
-			<div class="menuLeftList"><a href="#">To-Do</a></div>
-			<div class="menuLeftList"><a href="#">Kanban</a></div>															
+			<div class="menuLeftListTop">프로젝트</div>
+			<div class="menuLeftListTitle"><a href="#">프로젝트 리스트</a></div><!-- 공지 + 전사만 -->
+			<div class="menuLeftListTitle"><a href="#">프로젝트 1</a></div>
+			<div class="menuLeftListTitle"><a href="#">프로젝트 2</a></div>
+		</div>
+		<div class="organChart">
+			<c:import url="/organChart/getInfo"/>
 		</div>
 	</div>
 </body>

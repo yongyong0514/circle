@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class Project {
 
 	
+	// iss table
 	private String iss_code;
 	private String iss_emp_no;
 	private String iss_title;
@@ -26,16 +27,23 @@ public class Project {
 	private String iss_ref_no;
 	private String iss_stat;
 
+	
+	//proj table
 	private String prog_code;
 	private String prog_title;
 
+	
+	//situ table
 	private String situ_code;
 	private String situ_title;
 
+	
+	//mem table
 	private String mem_iss_code;
 	private String mem_emp_no;
 	
 	
+	//project table
 	private String pro_code;
 	private String pro_manager;
 	private String pro_title;
@@ -45,6 +53,8 @@ public class Project {
 	private String pro_key;
 	private String pro_stat;
 	
+	
+	//emp table
 	private String emp_info_emp_no;
 	private String emp_info_name;
 	private String emp_info_dept_code;
@@ -53,4 +63,8 @@ public class Project {
 	private String emp_info_mtel;
 	private String emp_info_etel;
 	
+	
+	//deptinfo
+	private String dept_info_code;
+	private String dept_info_name;
 }
