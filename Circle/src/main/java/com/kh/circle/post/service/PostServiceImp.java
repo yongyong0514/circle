@@ -16,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
-import com.kh.circle.post.entity.PostFile;
-import com.kh.circle.post.entity.PostFile.PostFileBuilder;
 import com.kh.circle.post.entity.PostPaging;
 import com.kh.circle.post.entity.PostSearch;
 import com.kh.circle.post.repository.PostDao;
@@ -128,6 +126,7 @@ public class PostServiceImp implements PostService {
 		System.out.println("ser :: : " + postSearch);
 		return postDao.countPostSearch(postSearch);
 	}
+
 
 
 }

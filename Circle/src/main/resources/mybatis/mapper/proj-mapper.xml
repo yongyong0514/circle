@@ -24,7 +24,7 @@
 	from iss i
 	join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
 	join project p on (i.iss_pro_code = p.pro_code)
-	join progress g on (i.iss_prog_code = g.prog_code)
+	join prog g on (i.iss_prog_code = g.prog_code)
 	join situ s on (i.iss_situ_code = s.situ_code)
 	where p.pro_code = #{pro_code}
 	</select>

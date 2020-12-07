@@ -132,6 +132,7 @@ public class PostDaoImp implements PostDao {
 	@Override
 	public void postDelete(String post_code) {
 
+		sqlSession.delete("post.postDelete2", post_code);
 		sqlSession.delete("post.postDelete", post_code);
 	}
 
@@ -158,6 +159,7 @@ public class PostDaoImp implements PostDao {
 		System.out.println("dao in : : " + num);
 		return num;
 	}
+
 
 
 }

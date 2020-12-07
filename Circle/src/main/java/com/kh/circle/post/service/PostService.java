@@ -49,4 +49,5 @@ public interface PostService {
 	List<Post> postSearch(PostPaging postPaging);
 
 	int countPostSearch(PostPaging postPaging);
+
 }

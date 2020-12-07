@@ -28,7 +28,7 @@ public class Project {
 	private String iss_stat;
 
 	
-	//proj table
+	//prog table
 	private String prog_code;
 	private String prog_title;
 

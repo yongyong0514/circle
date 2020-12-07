@@ -18,9 +18,9 @@
 	<div class="postHomeBar">
 		<div>
 		<c:choose>
-		<c:when test="${! empty postName }">
-			<c:if test="${! empty postName }">
-				<c:out value="${postName }" />
+		<c:when test="${! empty post_title }">
+			<c:if test="${! empty post_title }">
+				<c:out value="${post_title }" />
 			</c:if>
 			</c:when>
 			<c:otherwise>
@@ -35,13 +35,12 @@
 			<select name="post_type" onchange="location.href=this.value">
 				<option value="">이동할 게시판</option>
 				<option  value="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">게시판 메인</option>
-				<!--  error -->
 				<option  value="${pageContext.request.contextPath}/post/postList/notice?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">공지사항</option>
 				<option  value="${pageContext.request.contextPath}/post/postList/employee?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">전사게시판</option>
+				<option  value="${pageContext.request.contextPath}/post/postList/team?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">개발본부</option>
 			<!--  선택이 안됨 -->
 			
 			</select>
-			
 			
 			<button type="button" id="postInsert" onclick="location.href='${pageContext.request.contextPath}/post/postInsert'">글쓰기</button>
 		</div>

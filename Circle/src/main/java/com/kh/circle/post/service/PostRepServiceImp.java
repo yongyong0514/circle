@@ -30,28 +30,13 @@ public class PostRepServiceImp implements PostRepService{
 		repDao.replyInsert(post);
 	}
 
-//update
-	@Override
-	public void replyUpdate(Post post) {
-
-		repDao.replyUpdate(post);
-		
-	}
 
 //delete
+
 	@Override
-	public void replyDelete(Post post) {
-
+	public void replyDelete(String post_repl_code) {
+		repDao.replyDelte(post_repl_code);
 		
-		repDao.replyDelte(post);
-	}
-
-//select
-	@Override
-	public Post selectReply(String post_repl_code) {
-
-		
-		return repDao.replySelect(post_repl_code);
 	}
 
 
