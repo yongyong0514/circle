@@ -90,8 +90,11 @@
 				
 						<!-- 주소 리스트 시작 -->
 				 		<c:forEach var="AddressInfo" items="${map.aList }">
-							<tr>
-								<td><input type="checkbox"></td>
+							<tr class="addressTr">
+								<td>
+									<input type="checkbox">
+									<input type="hidden" value="${AddressInfo.empNo }"/>
+								</td>
 								<td><img class="thumbnail" src="#">&nbsp;
 									<c:out value="${AddressInfo.name }"/>	
 								</td>
@@ -143,7 +146,11 @@
 						</span>
 					</div>
 					<!-- 페이지 이동 목록 끝 -->	
-
+				</form>
+				
+				<!-- 상세정보 post 정보 전달용 form -->
+				<form class="detailForm" action="${pageContext.request.contextPath}/addressBook/detail" method="Post">
+					<input class="emp_no" name="emp_no" type="hidden">
 				</form>
 			</div>
 		</div>
@@ -178,6 +185,11 @@
 				location.href = "${pageContext.request.contextPath}/addressBook/allEmp?nowPage=1&perPage=${map.pInfo.perPage}&index=" + idx;
 			});
 			
+			<!-- 1명 클릭 시 -->
+			$(".addressTr").click(function(){
+					$(".emp_no").val($(this).find("input[type=hidden]").val());
+				$(".detailForm").submit();
+			});
 		});
 		
 		// 페이지 당 출력 개수 변경 시

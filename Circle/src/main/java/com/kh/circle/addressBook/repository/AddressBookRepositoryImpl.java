@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.addressBook.entity.AddressInfo;
 import com.kh.circle.addressBook.entity.PagingInfo;
+import com.kh.circle.empInfo.entity.EmpInfoAll;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,5 +31,13 @@ public class AddressBookRepositoryImpl implements AddressBookRepository{
 		List<AddressInfo> aList = sqlSession.selectList("address.pagingEmp", pInfo);
 		
 		return aList;
+	}
+
+	@Override
+	public EmpInfoAll detail(String emp_no) {
+		
+		EmpInfoAll empInfo = sqlSession.selectOne("address.detail", emp_no);
+		
+		return empInfo;
 	}
 }

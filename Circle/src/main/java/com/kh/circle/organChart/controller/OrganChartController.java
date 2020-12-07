@@ -23,7 +23,7 @@ public class OrganChartController {
 		
 		model.addAttribute("oDList", oDList);
 		
-		return "/common/menuOrganChart";
+		return "common/menuOrganChart";
 	}
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.circle.addressBook.entity.AddressInfo;
 import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.repository.AddressBookRepository;
+import com.kh.circle.empInfo.entity.EmpInfoAll;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +36,14 @@ public class AddressBookServiceImpl implements AddressBookService{
 		map.put("aList", aList);
 		
 		return map;
+	}
+
+	@Override
+	public EmpInfoAll detail(String emp_no) {
+		
+		EmpInfoAll empInfo = addressBookRepository.detail(emp_no);
+		
+		return empInfo;
 	}
 
 }

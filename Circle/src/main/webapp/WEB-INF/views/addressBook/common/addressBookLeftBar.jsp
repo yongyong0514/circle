@@ -32,4 +32,20 @@
 		</div>
 	</div>
 </body>
+
+	<script>
+ 		$(function() {
+    		var leftBar = $(".leftBar").offset().top;
+    			$(window).scroll(function() {
+    		var window = $(this).scrollTop();
+    		console.log(leftBar+"left");
+    		console.log(window+"window");
+    		if(leftBar <= window) {
+    			$(".leftBar").addClass("fixed");
+    		} else {
+    			$(".leftBar").removeClass("fixed");
+    			}
+    		})
+    	});
+    </script>
 </html>
