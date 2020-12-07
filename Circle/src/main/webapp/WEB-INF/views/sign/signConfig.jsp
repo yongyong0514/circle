@@ -42,6 +42,40 @@
 							</li>
 						</ul>
 					</div>
+					<div id="signModalForm">
+						<div class="signModalArea">
+							<table>
+								<tr>
+									<th>
+										<div class="signModalTitle">${empInfo.emp_info_name}&nbsp;${empInfo.job_info_name}&nbsp;님께서 등록하신 결재 서명입니다</div>
+									</th>
+									<th>
+										<div class="signModalClose">x</div>
+									</th>
+								</tr>
+								<tr>
+									<th colspan="2">
+										<div class="signModalImgList">
+											<div>&nbsp;</div>
+											<c:forEach var="file" items="${list}">
+												<div class="case1">
+													<img class="imgSize2" src="${pageContext.request.contextPath}/signResult/signFileDownload?fileCode=${file.files_code}">
+												</div>
+											</c:forEach>
+											<div class="casePlus">
+												<img class="imgSize1" src="${pageContext.request.contextPath}/resources/img/sign/addImage.png">
+												<br>
+												<br>
+												이미지 추가
+											</div>
+										</div>
+									</th>
+								</tr>
+							</table>
+						</div>
+						<div class="signModalLayer"></div>
+					</div>
+
 					
 					<div class="signConfigBtnSet">
 						<div class="signConfigArea"></div>
@@ -52,7 +86,7 @@
 		</div>
 	</div>
 <!-- SCRIPT 영역 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/common/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -81,41 +115,91 @@
     		$("#signSelect").fadeOut(100);
     	});
     </script>
+    
+    
+<!-- 결재 서명 파일 초기 로드 -->
+<!-- 	<script>
+		$(function(){
+			signSignature();
+		});
+	</script> -->
+	
+<!-- 결재 서명 파일 로드 -->
+	<!-- <script>
+		function signSignature(){
+			var base = "${pageContext.request.contextPath}";
+			var uploadURL = base + "/signResult/signFilesSignatureList";
+			var empCode = ${empInfo.emp_info_emp_no};
+			
+			$.ajax({
+				type: "get",
+				url: uploadURL,
+				data: {empCode: empCode},
+				success: function(data){
+					if(data != null){
+						var $signModalImgList = $("#signModalImgList");
+						$signModalImgList.html('');
+						
+						for(var key in data){
+							var $div = $("<div class='case1'>");
+							var imgsource = data[key].files_route;
+							console.log(imgsource);
+							var $img = $("<img class='imgSize2'>");
+							
+							$div.append($img);
+							
+							$signModalImgList.append($div);
+						}
+					}
+				}
+			});
+		};
+	</script> -->
 
-<!-- 첨부 파일 시작 -->
- 	<script>
+<!-- 결재 서명 파일 시작 -->
+	<script>
+		$(".submitAgree").click(function(){
+			$("#signModalForm").attr("style", "display: block");
+		});
+	</script>
+	<script>
+		$(".signModalClose").click(function(){
+			$("#signModalForm").attr("style", "display: none");
+		});
+	</script>
+<!--  	<script>
 		$(".submitAgree").click(function(e){
 			 $('input[type=file]').trigger('click');
 		});
-		
-		$('input[type=file]').on('change', function(e) {
-			var base = "${pageContext.request.contextPath}";
-			var uploadURL = base + "/sign/signFilesSignature";
-			var empCode = ${empInfo.emp_info_emp_no};
-			var formData = new FormData();
-			var reader = new FileReader;
-			var inputFile = this.files;
-			if(this.files && this.files[0]) {
-				reader.onload = function(data) {
-					$("#signPreview img").attr("src", data.target.result).width(100).height(100);        
-				}
-			}
-			
-			formData.append('file', inputFile[0]);
-			
-			console.log(formData);
-			$.ajax({
-				url : uploadURL,
-				type: "POST",
-                contentType:false,
-                processData: false,
-                cache: false,
-                data: {formData
-                	 , empCode: empCode}, 
-                success: function(data){
-                }
-			});
-		});
 	</script>
+	<script>
+		$('input[type=file]').on('change', function(e) {
+			if(this.files){
+				var base = "${pageContext.request.contextPath}";
+				var uploadURL = base + "/signResult/signFilesSignature";
+				var empCode = ${empInfo.emp_info_emp_no};
+				var inputFile = this.files;
+				var formData = new FormData();
+				
+				formData.append('file', inputFile[0]);
+				formData.append('empCode', empCode);
+				
+				$.ajax({
+					url : uploadURL,
+					type: "POST",
+	                contentType:false,
+	                processData: false,
+	                cache: false,
+	                data: formData, 
+	                success: function(data){
+	                	alert("success");
+	                }, 
+	                error: function(data){
+	                	alert("error");
+	                }
+	            });
+			}
+		});
+	</script> -->
 </body>
 </html>

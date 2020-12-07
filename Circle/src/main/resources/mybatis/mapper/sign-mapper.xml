@@ -414,7 +414,7 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 <!-- insert signSelectOne reply end -->
 
 <!-- insert sign signature start -->
-	<insert id="signFilesSignature" parameterType="map">
+	<insert id="signFilesSignatureInsert" parameterType="map">
 		INSERT INTO FILES(FILES_CODE
 						, FILES_ONAME
 						, FILES_CNAME
@@ -427,11 +427,26 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 										   , #{files_cname}
 										   , #{files_route}
 										   , SYSDATE
-										   , ('SIGN'||TRIM(TO_CHAR(#{seqSignFilesCurrval},'000000')))
+										   , #{empCode}
 										   , 'N'
 										   , #{files_size})
 	</insert>
 <!-- insert sign signature end -->
+
+<!-- select sign signature start -->
+	<select id="signFilesSignatureList" resultType="signFiles" parameterType="String">
+		SELECT FILES_CODE
+    		 , FILES_ONAME
+    		 , FILES_CNAME
+    		 , FILES_ROUTE
+    		 , FILES_SIZE
+  		  FROM FILES
+		 WHERE FILES_TYPE = #{empCode}
+ 		   AND FILES_STATUS = 'N'
+		 ORDER BY FILES_DATE DESC
+	</select>
+<!-- select sign signature end -->
+
 
 <!-- uodate signDecision start -->
 <!-- 결재는 SIGN_JOIN 에서 해당 결재자의 사인 여부 업데이트 N -> Y

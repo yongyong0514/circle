@@ -57,4 +57,11 @@ public class SignServiceImpl implements SignService {
 	public void insertReply(SignReplyInsert signReplyInsert) {
 		signDao.add(signReplyInsert);
 	}
+
+	//결재 서명 파일 등록
+	@Override
+	public void insertFilesSignature(String files_oname, long files_size, String files_type, String files_cname,
+			String files_route, String empCode) {
+		signDao.add(files_oname, files_size, files_type, files_cname, files_route, empCode);
+	}
 }

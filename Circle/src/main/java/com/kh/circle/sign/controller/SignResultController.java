@@ -55,7 +55,6 @@ public class SignResultController {
 		return list;
 	}
 	
-//	결재 작성 매핑 시작
 //	결재 타입 지정
 	@GetMapping("/signTypeContent")
 	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
@@ -74,7 +73,7 @@ public class SignResultController {
 		return list;
 	}
 
-// 결재 첨부 파일 다운로드
+// 	결재 첨부 파일 다운로드
 	@GetMapping("/signFileDownload")
 	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
 		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
@@ -82,7 +81,7 @@ public class SignResultController {
 		return entity;
 	}
 	
-// 결재 댓글 로드
+// 	결재 댓글 로드
 	@GetMapping("/signReply")
 	public List<SignReply> signReply(@RequestParam String signCode, Model model) {
 		List<SignReply> list = sqlSession.selectList("sign.signReply", signCode);
@@ -91,10 +90,17 @@ public class SignResultController {
 		return list;
 	}
 	
-// 결재 댓글 작성
+// 	결재 댓글 작성
 	@PostMapping("/signReplyInsert")
 	public void signReplyInsert(@ModelAttribute SignReplyInsert signReplyInsert) {
 		signService.insertReply(signReplyInsert);
 	}
 
+// 결재 서명 파일 다운로드
+	@GetMapping("/signFiileSignatureDownload")
+	ResponseEntity<ByteArrayResource> signFiileSignatureDownload(@RequestParam String fileCode) throws IOException {
+		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
+	
+		return entity;
+	}
 }

@@ -129,4 +129,25 @@ public class SignDaoImpl implements SignDao {
 		sqlSession.insert("sign.signReplyInsert", map);
 		
 	}
+
+	//결재 서명 파일 등록
+	@Override
+	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
+			String empCode) {
+		
+		//시퀀스 번호 생성 및 파일 등록
+		String seqSignFiles = sqlSession.selectOne("sign.seqSignFiles");	
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignFiles", seqSignFiles);
+		map.put("files_oname", files_oname);
+		map.put("files_size", files_size);
+		map.put("files_type", files_type);
+		map.put("files_cname", files_cname);
+		map.put("files_route", files_route);
+		map.put("empCode", empCode);
+		
+		sqlSession.insert("sign.signFilesSignature", map);
+	}
 }
