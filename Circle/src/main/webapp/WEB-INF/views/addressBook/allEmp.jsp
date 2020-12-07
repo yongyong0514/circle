@@ -175,7 +175,7 @@
 			$(".index").on("click", function(){
 				var idx = $(".index").index(this);
 
-				location.href = "${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${map.pInfo.nowPage}&perPage=${map.pInfo.perPage}&index=" + idx;
+				location.href = "${pageContext.request.contextPath}/addressBook/allEmp?nowPage=1&perPage=${map.pInfo.perPage}&index=" + idx;
 			});
 			
 		});
