@@ -42,9 +42,9 @@
 
 					&nbsp;
 					<!-- 주소록 출력설정 시작-->
- 					<button value="field">필드설정</button>
 					&nbsp; <label>페이지 당 출력개수</label>
-					<select class="perPage" name="perPage"  onchange="movePerPage(this)">
+					<select class="perPage" name="perPage"  onchange="movePerPage()">
+						<option value="5">5</option>
 						<option value="10">10</option>
 						<option value="20">20</option>
 						<option value="50">50</option>
@@ -105,32 +105,42 @@
 					</table>
 					<!-- 주소록 테이블 끝 -->
 					<br><br>
-					
+
 					<!-- 페이지 이동 목록 시작 -->					
 					<div class="changeBtn">
+						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage}, ${index} )">
+							<i class='fas fa-angle-double-left'></i>
+						</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
 						<c:if test="${map.pInfo.nowPage != 1 }">
-							<span onclick="moveAll(${map.pINfo.nowPage-1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
-								<i class='fas fa-angle-left'></i>
+							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage}, ${index} );">
+								<i class='fas fa-caret-left'></i>
 							</span>			
 						</c:if>
-						
+						&nbsp;&nbsp;
 						<c:forEach var="page" begin="${map.pInfo.startPage }" end="${map.pInfo.endPage}">
 							<c:choose>
 								<c:when test="${ page eq map.pInfo.nowPage }">
 									<span class="nowPageNum">${page}</span>
+									&nbsp;
 								</c:when>
 								
 								<c:when test="${ page != map.pInfo.nowPage }">
-									<span onclick="moveAll(${page},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">${page}</span>	
+									<span onclick="moveAll( ${page}, ${map.pInfo.perPage}, ${index} );">${page}</span>	
+									&nbsp;
 								</c:when>
 							</c:choose>
-						</c:forEach>		
-				
-						<c:if test="${map.pInfo.endPage != map.pInfo.maxPage}">
-							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${name }, ${email }, ${tel });">
-								<i class='fas fa-angle-right'></i>
+						</c:forEach>
+						&nbsp;		
+						<c:if test="${map.pInfo.nowPage != map.pInfo.maxPage}">
+							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${index});">
+								<i class='fas fa-caret-right'></i>
 							</span>			
 						</c:if>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage}, ${index} )">
+							<i class='fas fa-angle-double-right'></i>
+						</span>
 					</div>
 					<!-- 페이지 이동 목록 끝 -->	
 
@@ -153,45 +163,58 @@
 			})
 			
 			<!-- 페이지 당 출력 개수 선택 표시 -->
-			switch(${map.pInfo.perPage}){
-			case 10: 
-				$(".perPage option:eq(0)").prop("selected",true); break;	
-			case 20:
-				$(".perPage option:eq(1)").prop("selected",true); break;	
-			case 50:
-				$(".perPage option:eq(2)").prop("selected",true); break;	
-			}
+			$(".perPage").val(${map.pInfo.perPage});
 			
 			<!-- 현재 페이지 강조 -->
-			$(".nowPageNum").css({"font-size":"large", "color":"#0072C6"});
-		
+			$(".nowPageNum").addClass("selectedNum");
+			
+			<!-- 인덱스 강조 -->
+			$(".index").eq(${index}).closest("td").addClass("selectedIndex");
+			
+			<!-- 인덱스 선택 시  -->
+			$(".index").on("click", function(){
+				var idx = $(".index").index(this);
+
+				location.href = "${pageContext.request.contextPath}/addressBook/allEmp?nowPage=${map.pInfo.nowPage}&perPage=${map.pInfo.perPage}&index=" + idx;
+			});
+			
 		});
 		
-		
-		function movePerPage(obj){
-			location.href="${pageContext.request.contextPath}/addressBook/allEmp?perPage=" + obj.value;
+		// 페이지 당 출력 개수 변경 시
+		function movePerPage(){
+			var selectedValue = $(".perPage").val();
+			
+			var url = "nowPage=" + 1 + "&perPage=" + selectedValue + "&index=" + ${index};
+			
+			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
 		};
 		
-		function moveAll(nowPage, perPage, name, email, tel){
-			var url = "nowPage=" + nowPage + "&perPage" + perPage;
+		// 페이지 이동버튼(숫자 또는 화살표) 선택 시
+		function moveAll(nowPage, perPage, index){
+			var url = "nowPage=" + nowPage + "&perPage=" + perPage + "&index=" + index;
 			url.concat(nowPage, "&perPage=", perPage);
 			
-			if(name != null){
-				url += "&name=" + name;
+			if( !isNull(${name}) ){
+				url += "&name=".concat(${name});
 			}
 			
-			if(email != null){
-				url += "&email=" + email;
+			if( !isNull(${email}) ){
+				url += "&email=".concat(${email});
 			}
 			
-			if(tel != null){
-				url += "&tel=" + tel;
+			if( !isNull(${tel}) ){
+				url += "&tel=".concat(${tel});
 			}
 			
 			console.log(url);
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
-		}
+		};
+		
+		
+		function isNull(value){
+			return ( value === undefined || value === null || value === "" ) ? true : false;
+		};
 		
 	</script>
 	

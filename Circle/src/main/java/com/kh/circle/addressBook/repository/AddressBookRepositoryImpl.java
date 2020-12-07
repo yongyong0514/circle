@@ -18,8 +18,8 @@ public class AddressBookRepositoryImpl implements AddressBookRepository{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int total() {
-		int total = sqlSession.selectOne("address.total");
+	public int total(PagingInfo pInfo) {
+		int total = sqlSession.selectOne("address.total", pInfo);
 		
 		return total;
 	}

@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.service.AddressBookService;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
 @RequestMapping("/addressBook")
 public class AddressBookController {
@@ -31,10 +29,11 @@ public class AddressBookController {
 	
 	@GetMapping("/allEmp")
 	public String allEmp(@RequestParam(value="nowPage", defaultValue="1") int nowPage,
-						@RequestParam(value="perPage", defaultValue="10") int perPage,
-						@RequestParam(value="name", defaultValue="") String name,
-						@RequestParam(value="email", defaultValue="") String email,
-						@RequestParam(value="tel", defaultValue="") String tel,
+						@RequestParam(value="perPage", defaultValue="5") int perPage,
+						@RequestParam(value="name", required=false) String name,
+						@RequestParam(value="email", required=false) String email,
+						@RequestParam(value="tel", required=false) String tel,
+						@RequestParam(value="index", defaultValue="0") int index,
 						Model model) {
 
 		PagingInfo pInfo = PagingInfo.builder()
@@ -43,7 +42,9 @@ public class AddressBookController {
 									.name(name)
 									.email(email)
 									.tel(tel)
+									.index(index)
 									.build();
+		
 		// 전체 리스트 반환
 		
 		// 페이징 처리 
@@ -54,6 +55,7 @@ public class AddressBookController {
 		model.addAttribute("name", pInfo.getName());
 		model.addAttribute("email", pInfo.getEmail());
 		model.addAttribute("tel", pInfo.getTel());
+		model.addAttribute("index", pInfo.getIndex());
 		
 		return "addressBook/allEmp";
 	}
