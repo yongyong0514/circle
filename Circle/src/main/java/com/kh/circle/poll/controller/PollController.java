@@ -110,6 +110,8 @@ public class PollController {
 		//page정보 담기
 		modelMap.put("pageInfo", pageInfo);
 		
+		log.info("마감페이지 조회 : {}", modelMap);
+		
 		return "/poll/finished";
 	}
 	@GetMapping("/my")
@@ -169,19 +171,24 @@ public class PollController {
 	}
 	@GetMapping("/result")
 	public String result(HttpSession session, @RequestParam String postCode, ModelMap modelMap) {
-		System.out.println(postCode);
+		log.info(postCode);
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
-		//로그인 아이디 추출
-		String emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		
-		//설문코드, 사원번호 맵에 담기
 		HashMap<String, String> params = new HashMap<>();
 		params.put("postCode", postCode);
-		params.put("emp_no", emp_no);
+		params.put("empNo", empNo);
 		
-		List<HashMap<String, String>> list = pollService.getResult(params);
+		List<HashMap<String, String>> list = pollService.getQuestion(params);
+		int totalAttend = pollService.getTotalAttend(params);
+		int realAttend = pollService.getRealAttend(params);
+		List<HashMap<String, String>> qustRealAttend = pollService.getQustRealAttend(params);
 		
-		modelMap.put("result", list);
+		modelMap.put("post", list);
+		modelMap.put("totalAttend", totalAttend);
+		modelMap.put("realAttend", realAttend);
+		modelMap.put("qustRealAttend", qustRealAttend);
+		
+		log.info(modelMap.toString());
 		
 		return "/poll/result";
 	}

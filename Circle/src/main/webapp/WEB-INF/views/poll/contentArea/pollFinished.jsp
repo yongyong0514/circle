@@ -247,6 +247,13 @@
 				location.href = "${pageContext.request.contextPath}/poll/finished?cntPerPage=" + i;
 			});
 			
+			//설문 post 클릭시
+			$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+				var code = $(this).parent().parent().find('.post-code').text();
+				location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+			});
+			
+			
 		});
 		
 		/************************ 함수 부분 ***************************/

@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollPost.css">
+<link rel="shortcut icon" href="#"><!-- favicon 에러 제거용 -->
 
 <script src="/circle/resources/js/poll/jquery.min.js"></script>
 <script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
@@ -165,147 +166,139 @@
 						<div id=poll-response-form>
 							<div class="question-list-container">
 								<ul class="question-list">
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">1</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"1번 질문 선택형"
-										</span>
-										<ul class="answer-wrap">
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code1" type="checkbox">
-													<label for="checkbox-code1">선택형</label>
+									<c:forEach var="item" items="${post}" varStatus="status">
+										<c:if test="${status.count eq 1 || qustCode ne item.POLL_POST_QUST_CODE}">
+										<!-- 첫문항이거나 문항 첫머리인 경우 -->
+											<c:choose>
+												<c:when test="${status.count eq 1}">
+												<!-- 첫 문항 -->
+													<c:set var="seq" value="${status.count }"/>
+													<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
+												</c:when>
+												<c:when test="${qustCode ne item.POLL_POST_QUST_CODE}">	
+												<!-- 문항 첫머리 -->
+													<c:set var="seq" value="${seq + 1 }"/>
+													<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
+														</ul>
+													</li>
+												</c:when>
+											</c:choose>
+											<li class=question-response>
+												<span class="question">
+													<span class="seq">
+														<c:out value="${seq}"></c:out>
+													</span>
+													.
+													<c:if test="${item.POLL_POST_QUST_NECESS eq 'Y'}">
+													<!-- 필수 체크된 경우 -->
+														<span class="necessary">
+														<c:out value="[필수]"/>
+														</span>
+													</c:if>
+													<c:out value="${item.POLL_POST_QUST_CONT }"></c:out>
 												</span>
+											<c:choose>
+												<c:when test="${item.POLL_POST_QUST_TYPE eq 'score' }">
+												<!-- 점수형일 경우 클래스 추가 -->
+													<ul class="answer-wrap rank">
+												</c:when>
+												<c:otherwise>
+													<ul class="answer-wrap">
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+										<!-- 첫문항 아님 / 문항 첫머리 아님 -->
+										<c:choose>
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'select'}">
+											<!-- 선택형 질문 -->	
+												<c:choose>
+													<c:when test="${item.POLL_POST_QUST_ANSW_TYPE ne 'etc'}">
+													<!-- 기타 선택지 아님 -->
+														<c:choose>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
+															<!-- radio 선택지 -->
+																<li>
+																	<span class="answer-option-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}">
+															</c:when>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
+															<!-- checkbox 선택지 -->
+																<li>
+																	<span class="answer-option-wrap">
+																		<p class="data" hidden="true"><c:out value="${item.POLL_POST_QUST_LIMIT}"/></p>
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+															</c:when>
+														</c:choose>
+															<label for="${item.POLL_POST_QUST_ANSW_CODE }">
+																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+															</label>
+														</span>
+														</li>
+													</c:when>
+													<c:otherwise>
+													<!-- 기타 선택지 -->
+														<c:choose>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
+																<li class="etc">
+																	<span class="txt-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
+															</c:when>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
+																<li class="etc">
+																	<span class="txt-wrap">
+																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+															</c:when>
+														</c:choose>
+															<label for="${item.POLL_POST_QUST_ANSW_CODE } txt">
+																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+															</label>
+															<input class="txt w-fix-max" type="text">
+														</span>
+														</li>
+													</c:otherwise>
+												</c:choose>
+											</c:when>	
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'text'}">
+											<!-- 텍스트형 -->
+												<c:choose>
+													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'long' }">
+													<!-- 장문 선택 -->
+														<li>
+															<div class="text-area-wrap">
+																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5">
+																</textarea>
+															</div>
+														</li>
+													</c:when>
+													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'short' }">
+													<!-- 단문 선택 -->
+														<li>
+															<div class="text-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" class="text w-max" type="text">
+															</div>
+														</li>
+													</c:when>
+												</c:choose>
+											</c:when>														
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'score'}">
+											<!-- 점수형일 경우 -->
+												<li>
+													<span class="answer-option-wrap">
+														<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
+														<label for="${item.POLL_POST_QUST_ANSW_CODE }">
+															<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+														</label>
+													</span>
+												</li>
+											</c:when>														
+										</c:choose>
+										<c:if test="${status.last eq true}">
+										<!-- 배열 마지막일 경우 -->
+												</ul>
 											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code2" type="checkbox">
-													<label for="checkbox-code2">필수답변</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code3" type="checkbox">
-													<label for="checkbox-code3">복수선택</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="checkbox-code4" type="checkbox">
-													<label for="checkbox-code4">최대선택개수 제한없음</label>
-												</span>
-											</li>
-											<li class="etc">
-												<span class="txt-wrap">
-													<input id="checkbox-code5" type="checkbox">
-													<label for="checkbox-code5 txt" class="label-wrap">기타</label>
-													<input class="txt w-fix-max" type="text">
-												</span>
-											</li>
-										</ul>
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">2</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"2번 텍스트형 필수 장문"
-										</span>	
-										<ul class="answer-wrap">
-											<li>
-												<div class="text-area-wrap">
-													<textarea class="textarea w-max" rows="5">
-													</textarea>
-												</div>
-											</li>
-										</ul>						
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">3</span>
-											"."
-											"3번 텍스트형 단문"
-										</span>	
-										<ul class="answer-wrap">
-											<li>
-												<div class="text-wrap">
-													<input class="text w-max" type="text">
-												</div>
-											</li>
-										</ul>						
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">4</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"4번 필수 점수형 10점"
-										</span>	
-										<ul class="answer-wrap rank">
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id1" type="radio">
-													<label for="radio-id1">1</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id2" type="radio">
-													<label for="radio-id2">2</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id3" type="radio">
-													<label for="radio-id3">3</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id4" type="radio">
-													<label for="radio-id4">4</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id5" type="radio">
-													<label for="radio-id5">5</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id6" type="radio">
-													<label for="radio-id6">6</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id7" type="radio">
-													<label for="radio-id7">7</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id8" type="radio">
-													<label for="radio-id8">8</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id9" type="radio">
-													<label for="radio-id9">9</label>
-												</span>
-											</li>
-											<li>
-												<span class="answer-option-wrap">
-													<input id="radio-id10" type="radio">
-													<label for="radio-id10">10</label>
-												</span>
-											</li>
-										</ul>						
-									</li>
+										</c:if>
+									</c:forEach>
 	
 								</ul>
 							</div>
@@ -447,279 +440,41 @@
 
 	</div>
 	
-
-
-<!-- 문항추가 입력 폼 -->
-<script type="text/html" id="question-form-template">
-<li class="question-item question-item-edit">
-<form class="question-form">
-	<table class="poll-form form-table">
-		<tbody>
-			<tr>
-				<th>
-					<span class="title">질문</span>
-				</th>
-				<td>
-					<div class="txt-wrap">
-						<input class="txt w-large" type="text" name="question">
-						<span class="alert-wrap desc-top-wrap warn-error">
-							<span class="desc caution">2 ~ 255자 까지 입력할 수 있습니다.</span>
-						</span>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>
-					<span class="title">설문 문항 타입</span>
-				</th>
-				<td>
-					<div class="flex-info">
-						<span class="select-wrap">
-							<select name="question-type">
-								<option value="select">선택형</option>
-								<option value="text">텍스트형</option>
-								<option value="score">점수형</option>
-							</select>
-						</span>
-						<span class="select-wrap">
-							<select name="question-sub-type">
-								<option value="single">하나만 선택</option>
-								<option value="plural">복수 선택</option>
-							</select>
-						</span>
-						<span class="spacing1"></span>
-						<span class="option-wrap">
-							<input id="checkbox-required" type="checkbox" name="required" value="Y">
-							<label for="checkbox-required">필수 답변</label>
-						</span>
-					</div>
-				</td>
-			</tr>
-			<tr class="question-answer-row">
-				<th>
-					<span class="title">보기</span>
-				</th>
-				<td class="question-answer-container">
-					<ul class="answer-wrap">
-						<li>
-							<span class="add-question-btn txt-wrap disable">
-								<input type="radio" name="radio" value="-1" disabled="disabled">
-								<input class="txt wfix-max" type="text" readonly="readonly" value="보기를 추가하려면 이곳을 클릭하세요.">
-							</span>
-						</li>
-						<li class="create">
-							<span class="add-etc-question-btn btn-wrap btn-create">
-								<span class="icon-form icon-addlist"></span>
-								<span class="txt">기타 추가</span>
-							</span>
-						</li>
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="poll-action">
-		<a class="submit-btn main-btn">
-			<span class="txt">완료</span>
-		</a>
-		<a class="cancle-btn sub-btn">
-			<span class="txt">취소</span>
-		</a>
-	</div>
-</form>
-</li>
-</script>
-
-<!-- 보기 추가 옵션 템플릿 radio -->
-<script type="text/html" id="question-option-template-radio">
-<li class="question-option-item">
-	<span class="txt-wrap">
-		<input type="radio" name="radio" value="1">
-		<input class="txt wfix-max question-option-desc" type="text" name="option-2">
-		<span class="alert-wrap desc-top-wrap warn-error">
-			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
-		</span>
-	</span>
-	<span class="m-btn-wrap del-question-option-btn">
-		<span class="icon-classic icon-del"></span>
-	</span>
-</li>
-</script>
-
-<!-- 보기 추가 옵션 템플릿 checkbox -->
-<script type="text/html" id="question-option-template-checkbox">
-<li class="question-option-item">
-	<span class="txt-wrap">
-		<input type="checkbox" name="checkbox" value="1">
-		<input class="txt wfix-max question-option-desc" type="text" name="option-2">
-		<span class="alert-wrap desc-top-wrap warn-error">
-			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
-		</span>
-	</span>
-	<span class="m-btn-wrap del-question-option-btn">
-		<span class="icon-classic icon-del"></span>
-	</span>
-</li>
-</script>
-
-<!-- 기타 추가 옵션 템플릿 radio -->
-<script type="text/html" id="question-etc-option-template-radio">
-<li class="question-option-item-etc etc">
-	<span class="txt-wrap">
-		<input type="radio" name="radio" value="1">
-		<input class="txt wfix-max question-option-desc" type="text" name="option-2" value="기타">
-		<span class="alert-wrap desc-top-wrap warn-error">
-			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
-		</span>
-	</span>
-	<span class="m-btn-wrap del-question-option-btn">
-		<span class="icon-classic icon-del del-etc"></span>
-	</span>
-</li>
-</script>
-<!-- 기타 추가 옵션 템플릿 checkbox-->
-<script type="text/html" id="question-etc-option-template-checkbox">
-<li class="question-option-item-etc etc">
-	<span class="txt-wrap">
-		<input type="checkbox" name="checkbox" value="1">
-		<input class="txt wfix-max question-option-desc" type="text" name="option-2" value="기타">
-		<span class="alert-wrap desc-top-wrap warn-error">
-			<span class="desc caution">1 ~ 64자 까지 입력할 수 있습니다.</span>
-		</span>
-	</span>
-	<span class="m-btn-wrap del-question-option-btn">
-		<span class="icon-classic icon-del del-etc"></span>
-	</span>
-</li>
-</script>
-
-<script type="text/html" id="question-option-plural-only">
-<tr class="plural-only" style="display:table-row;">
-	<th>
-		<span class="title">최대 선택 개수</span>
-	</th>
-	<td>
-		<select id="maxSelectCase" name="maxSelectCase">
-			<option value="0"> 제한없음 </option>
-		</select>
-	</td>
-</tr>
-</script>
-
-<!-- 선택형 추가완료 폼 샘플 -->
-<script type="text/html" id="question-select-complete-form 샘플">
-<li class="question-item sort">
-	<div class="question-preview">
-		<span class="question">
-			<span class="seq">1</span>
-			.
-			<span class="necessary">[필수]</span>
-			제목
-		</span>
-		<ul class="answer-wrap">
-			<li>
-				<span class="option-wrap">
-					<input id="radio-question-1001-1" name="question-1001" type="radio">
-					<label for="radio-question-1001-2">
-						보기1 입력
-					</label>
-				</span>
-			</li>
-			<li class="etc">
-				<span class="txt-wrap">
-					<input type="radio" name="question-1001">
-					<span class="label-wrap txt">기타입력</span>
-					<input class="wfix-max txt" type="text" name="answer">
-				</span>
-			</li>
-		</ul>
-	</div>
-	<div class="action-wrap">
-		<a class="icon24-btn edit-question-btn" title="수정">
-			<span class="toolbar-icon write"></span>
-		</a>
-		<a class="icon24-btn remove-question-btn" title="삭제">
-			<span class="toolbar-icon del"></span>
-		</a>
-	</div>
-</li>
-</script>
-
-<!-- 미리보기 생성 -->
-<script type="text/html" id="optionable-preview">
-<li class="question-item sort">
-	<div class="question-preview">
-		<span class="question">
-			<span class="seq">\${seq}</span>
-			.
-			<span class="necessary">\${necessary}</span>
-			\${title}
-		</span>
-		<ul class="answer-wrap">
-
-
-		</ul>
-	</div>
-	<div class="action-wrap">
-		<a class="icon24-btn edit-question-btn" title="수정">
-			<span class="toolbar-icon write"></span>
-		</a>
-		<a class="icon24-btn remove-question-btn" title="삭제">
-			<span class="toolbar-icon del"></span>
-		</a>
-	</div>
-</li>
-</script>
-<!-- 미리보기 - 보기 생성 -선택형  -->
-<script type="text/html" id="optionable-preview-content">
-			<li>
-				<span class="option-wrap">
-					<input id="\${checkType}-question-\${seq}-\${subSeq}" name="question-\${seq}" type="\${checkType}">
-					<label for="\${checkType}-question-\${seq}-\${subSeq}">
-						\${content}
-					</label>
-				</span>
-			</li>
-</script>
-<!-- 미리보기 - 기타 - 보기 생성 -선택형  -->
-<script type="text/html" id="optionable-preview-etc-content">
-			<li class="etc">
-				<span class="txt-wrap">
-					<input type="\${checkType}" name="question-\${seq}">
-					<span class="label-wrap txt">\${content}</span>
-					<input class="wfix-max txt" type="text" name="answer">
-				</span>
-			</li>
-</script>
-<!-- 미리보기 보기 생성 -텍스트형/단문  -->
-<script type="text/html" id="text-short-type-preview">
-			<li>
-				<span class="txt-wrap">
-					<input class="wfix-max txt" type="text" name="answer">
-				</span>
-			</li>
-</script>
-<!-- 미리보기 보기 생성 -텍스트형/장문  -->
-<script type="text/html" id="text-long-type-preview">
-			<li>
-				<span class="txt-wrap">
-					<textarea class="wfix-max textarea"  name="answer" rows="5">
-					</textarea>
-				</span>
-			</li>
-</script>
-
-<!-- 미리보기 생성 - 점수형 -->
-<script type="text/html" id="score-preview">
-			<li>
-				<span class="option-wrap">
-					<input id="radio-question-\${seq}-\${subSeq}" name="question-\${seq}" type="radio">
-					<label for="radio-question-\${seq}-\${subSeq}">
-						\${subSeq}
-					</label>
-				</span>
-			</li>
-</script>
+	<script>
+		/* 클릭한 체크박스에서 최대개수 제한 추출/방지 */
+		function checkLimit(e){
+			
+			/* 추출된 아이디로 선택자 조립 */			
+			var selector = '#' + $(e).prop('id');
+			
+			/* 개수제한 추출 */
+			var limit = $(selector).siblings('p').text();
+			
+			
+			/* 체크박스 변수화 */
+			var name = "input[name=" + $(e).prop('name') + "]";
+			var checkbox = $(name)
+			
+			/* 카운트 변수 초기화 */
+			var count = 0;
+			
+			/* 반복문으로 체크상태 확인 */
+			for(var i = 0; i < checkbox.length; i++	){
+				if(checkbox[i].checked){
+					count ++;
+				}
+			}
+			
+			/* 무제한(0) 일때 카운트 설정 */
+			limit == 0 ? limit = count : limit = limit;
+					
+			/* 최대개수 초과시 경고/체크해제 */
+			if(count > limit){
+				alert("해당질문은 " + limit + "개 까지 선택이 가능합니다");
+				$(selector).prop('checked', false);
+			}
+		}
+	</script>
 
 </body>
 </html>

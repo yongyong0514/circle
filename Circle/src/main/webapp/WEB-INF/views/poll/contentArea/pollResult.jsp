@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +53,7 @@
 			<div class="poll-post-article-main-container">
 				<div class="poll-post-article-wrap">
 					<header class="poll-post-article-header">
-						<h1>이미 참여한 설문 메인 제목</h1>
+						<h1><c:out value="${post[0].POLL_POST_NAME}"></c:out></h1>
 						<table class="poll-post-info-list">
 							<tbody>
 								<tr>
@@ -61,7 +63,7 @@
 												<span class="toggle-icon">
 												</span>
 											</span>
-											<span class="title">작성자 :</span>
+											<span class="title">작성자 : </span>
 										</div>
 									</th>
 									<td>
@@ -71,7 +73,9 @@
 											</a>
 										</span>
 										<span class="writer-info txt" data-userid="200101090031">
-											김정훈 본부장
+											<c:out value="${post[0].EMP_INFO_NAME}"></c:out>
+											<c:out value=" "></c:out>
+											<c:out value="${post[0].JOB_INFO_NAME}"></c:out>
 										</span>
 									</td>
 								</tr>
@@ -85,7 +89,7 @@
 											<span class="title">작성일 :</span>
 										</th>
 										<td>
-											<span class="date">2020-11-25(수) 12:34</span>
+											<span class="date"><fmt:formatDate value="${post[0].POLL_POST_WDAT }" pattern="yyyy-MM-dd"/></span>
 										</td>
 									</tr>
 									<tr>
@@ -93,7 +97,11 @@
 											<span class="title">설문기간 :</span>
 										</th>
 										<td>
-											<span class="date">2020-11-25 ~ 2020-12-31</span>
+											<span class="date">
+												<fmt:formatDate value="${post[0].POLL_POST_SDAT }" pattern="yyyy-MM-dd"/>
+												<c:out value=" ~ "></c:out>
+												<fmt:formatDate value="${post[0].POLL_POST_EDAT }" pattern="yyyy-MM-dd"/>
+											</span>
 										</td>
 									</tr>
 									<tr>
@@ -101,7 +109,16 @@
 											<span class="title">참여 후 수정 :</span>
 										</th>
 										<td>
-											<span class="date">허용</span>
+											<span class="date">
+												<c:choose>
+													<c:when test="${post[0].POLL_POST_MOD_ADMT eq 'Y' }">
+														<c:out value="허용"></c:out>
+													</c:when>
+													<c:otherwise>
+														<c:out value="불허"></c:out>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</td>
 									</tr>
 									<tr>
@@ -109,7 +126,16 @@
 											<span class="title">설문결과 :</span>
 										</th>
 										<td>
-											<span class="date">공개</span>
+											<span class="date">
+												<c:choose>
+													<c:when test="${post[0].POLL_POST_SEC eq 'Y'}">
+														<c:out value="공개"></c:out>
+													</c:when>
+													<c:otherwise>
+														<c:out value="공개"></c:out>
+													</c:otherwise>
+												</c:choose>
+											</span>
 										</td>
 									</tr>
 								</tbody>
@@ -120,27 +146,209 @@
 						<div class="poll-post-join-info-wrap">
 							<span class="txt">
 								전체 참여자
-								<strong>36</strong>
+								<strong><c:out value="${totalAttend }"/></strong>
 							</span>
 							<span class="inline-space"></span>
 							<span class="txt">
 								참여 완료
-								<strong>0</strong>
+								<strong><c:out value="${realAttend }"/></strong>
 							</span>
 							<span class="inline-space"></span>
 							<span class="txt">
 								미참여
-								<strong>36</strong>
+								<strong><c:out value="${totalAttend - realAttend }"/></strong>
 							</span>
 						</div>
 					</div>
 					<article class="poll-post-question-container">
 						<div class="question-guide">
-							시작 안내 문구
+							<c:out value="${post[0].POLL_POST_CONT }"></c:out>
 						</div>
 						<div id=poll-response-form>
 							<div class="question-list-container">
 								<ul class="question-list">
+									<c:forEach var="item" items="${post}" varStatus="status">
+										<c:if test="${status.count eq 1 || qustCode ne item.POLL_POST_QUST_CODE}">
+										<!-- 첫문항이거나 문항 첫머리인 경우 -->
+											<c:choose>
+												<c:when test="${status.count eq 1}">
+												<!-- 첫 문항 -->
+													<c:set var="seq" value="${status.count }"/>
+													<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
+													<c:set var="qustType" value="${item.POLL_POST_QUST_TYPE}"/>
+												</c:when>
+												<c:when test="${qustCode ne item.POLL_POST_QUST_CODE}">	
+												<!-- 첫문항이 아닌 문항 첫머리 -->
+												<!-- 앞 문항의 결과를 여기에 출력 -->
+													<c:choose>
+														<c:when test="${ qustType eq 'select'}">
+															<dl class=result-chart-info>
+																<dt>
+																	<span class="txt">전체 참여자 : </span>
+																</dt>
+																<dd>
+																	<span class="number">5</span>
+																	<span class="txt">명</span>
+																</dd>
+																<dt>
+																	<span class="txt">참여율 : </span>
+																</dt>
+																<dd>
+																	<span class="number">1</span>
+																	<span class="txt">명</span>
+																	<span class="gage-wrap">
+																		<span class="gage" style="width:20.00%"></span>
+																	</span>
+																	<span class="number">20.00%</span>
+																</dd>
+															</dl>										
+															<div id="result-chart" style="width:895px;height:250px;"></div>
+														</c:when>
+													
+													</c:choose>
+													
+													
+													
+												
+													<c:set var="seq" value="${seq + 1 }"/>
+													<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
+													<c:set var="qustType" value="${item.POLL_POST_QUST_TYPE}"/>
+														</div>
+													</li>
+												</c:when>
+											</c:choose>
+											<li class=question-response>
+												<span class="question">
+													<span class="seq">
+														<c:out value="${seq}"></c:out>
+													</span>
+													.
+													<c:if test="${item.POLL_POST_QUST_NECESS eq 'Y'}">
+													<!-- 필수 체크된 경우 -->
+														<span class="necessary">
+														<c:out value="[필수]"/>
+														</span>
+													</c:if>
+													<c:out value="${item.POLL_POST_QUST_CONT }"></c:out>
+												</span>
+												<div class=result-chart-wrap>
+										</c:if>
+										<!-- 첫문항 아님 / 문항 첫머리 아님 -->
+									<%-- 	<c:choose>
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'select'}">
+											<!-- 선택형 질문 -->	
+												<c:choose>
+													<c:when test="${item.POLL_POST_QUST_ANSW_TYPE ne 'etc'}">
+													<!-- 기타 선택지 아님 -->
+														<c:choose>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
+															<!-- radio 선택지 -->
+																<li>
+																	<span class="answer-option-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}">
+															</c:when>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
+															<!-- checkbox 선택지 -->
+																<li>
+																	<span class="answer-option-wrap">
+																		<p class="data" hidden="true"><c:out value="${item.POLL_POST_QUST_LIMIT}"/></p>
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+															</c:when>
+														</c:choose>
+															<label for="${item.POLL_POST_QUST_ANSW_CODE }">
+																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+															</label>
+														</span>
+														</li>
+													</c:when>
+													<c:otherwise>
+													<!-- 기타 선택지 -->
+														<c:choose>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
+																<li class="etc">
+																	<span class="txt-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
+															</c:when>
+															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
+																<li class="etc">
+																	<span class="txt-wrap">
+																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+															</c:when>
+														</c:choose>
+															<label for="${item.POLL_POST_QUST_ANSW_CODE } txt">
+																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+															</label>
+															<input class="txt w-fix-max" type="text">
+														</span>
+														</li>
+													</c:otherwise>
+												</c:choose>
+											</c:when>	
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'text'}">
+											<!-- 텍스트형 -->
+												<c:choose>
+													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'long' }">
+													<!-- 장문 선택 -->
+														<li>
+															<div class="text-area-wrap">
+																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5">
+																</textarea>
+															</div>
+														</li>
+													</c:when>
+													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'short' }">
+													<!-- 단문 선택 -->
+														<li>
+															<div class="text-wrap">
+																<input id="${item.POLL_POST_QUST_ANSW_CODE }" class="text w-max" type="text">
+															</div>
+														</li>
+													</c:when>
+												</c:choose>
+											</c:when>														
+											<c:when test="${item.POLL_POST_QUST_TYPE eq 'score'}">
+											<!-- 점수형일 경우 -->
+												<li>
+													<span class="answer-option-wrap">
+														<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
+														<label for="${item.POLL_POST_QUST_ANSW_CODE }">
+															<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
+														</label>
+													</span>
+												</li>
+											</c:when>														
+										</c:choose>	
+											 --%>
+										
+										
+										<c:if test="${status.last eq true}">
+										<!-- 배열 마지막일 경우 -->
+												</ul>
+											</li>
+										</c:if>
+									</c:forEach>
+											
+					
+										
+											
+											
+											
+											
+											
+								
+							
+								
+								
+								
+								
+								
+								
+								
+								
+								
+																	
+									<!-- 샘플 결과 -->
 									<li class=question-response>
 										<span class="question">
 											<span class="seq">1</span>
