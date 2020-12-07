@@ -41,7 +41,8 @@ public class Project {
 	//mem table
 	private String mem_iss_code;
 	private String mem_emp_no;
-	
+	private String mem_code;
+	private String mem_type;
 	
 	//project table
 	private String pro_code;

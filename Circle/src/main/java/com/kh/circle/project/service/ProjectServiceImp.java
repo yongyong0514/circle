@@ -17,15 +17,35 @@ public class ProjectServiceImp implements ProjectService{
 	private ProjectDao projDao;
 	
 	
-	@Override
-	public List<Project> projMain(Project project) {
-		return projDao.projMain(project);
-	}
 
 
 	@Override
 	public List<Project> projIssMain(String pro_code) {
 		return projDao.projIssMain(pro_code);
+	}
+
+
+	@Override
+	public int countPost() {
+		return projDao.countProj();
+	}
+
+
+	@Override
+	public String projEmpNo(String emp_no) {
+		return projDao.projEmpNo(emp_no);
+	}
+
+
+	@Override
+	public List<Project> projMain(String emp_no) {
+		return projDao.projMain(emp_no);
+	}
+
+
+	@Override
+	public List<Project> projCheck(String emp_no) {
+		return projDao.projCheck(emp_no);
 	}
 
 

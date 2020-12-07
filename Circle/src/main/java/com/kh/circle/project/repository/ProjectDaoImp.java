@@ -17,9 +17,9 @@ public class ProjectDaoImp implements ProjectDao{
 	
 	
 	@Override
-	public List<Project> projMain(Project project) {
+	public List<Project> projMain(String emp_no) {
 
-		List<Project> projMain = sqlSession.selectList("project.projMain", project); 
+		List<Project> projMain = sqlSession.selectList("project.projMain", emp_no); 
 		
 		return projMain;
 	}
@@ -32,6 +32,31 @@ public class ProjectDaoImp implements ProjectDao{
 		List<Project> projIssMain = sqlSession.selectList("project.projIssMain", post_code);
 		
 		return projIssMain;
+	}
+
+
+	@Override
+	public int countProj() {
+
+		int num = sqlSession.selectOne("project.projCount");
+		
+		return 0;
+	}
+
+
+	@Override
+	public String projEmpNo(String emp_no) {
+
+		String myEmp = sqlSession.selectOne("project.empNo", emp_no);
+		return null;
+	}
+
+
+	@Override
+	public List<Project> projCheck(String emp_no) {
+		List<Project> check = sqlSession.selectList("project.projCheck", emp_no);
+		System.out.println("dao : : : " + check);
+		return check;
 	}
 
 }
