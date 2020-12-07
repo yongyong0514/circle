@@ -50,4 +50,9 @@ public interface PostService {
 
 	int countPostSearch(PostPaging postPaging);
 
+	String postEmpNo(String emp_no);
+
+	String viewEmpNo(String post_code);
+
+
 }

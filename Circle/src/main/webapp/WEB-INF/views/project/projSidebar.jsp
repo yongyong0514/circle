@@ -19,7 +19,8 @@ z-index:99;
 	<div>
 		<div class="menuLeftBar">
 			<div class="menuLeftListTop">프로젝트</div>
-			<div class="menuLeftListTitle"><a href="#">프로젝트 리스트</a></div><!-- 공지 + 전사만 -->
+			<div class="menuLeftListTitle"><a href="#">프로젝트 리스트</a></div>
+			
 			<div class="menuLeftListTitle"><a href="#">이슈 리스트</a></div>
 			<div class="menuLeftListTitle"><a href="#">칸반 보드</a></div>
 		</div>

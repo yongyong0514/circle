@@ -19,5 +19,7 @@ public interface PostRepDao {
 	//delete
 	void replyDelte(String post_repl_code);
 
+	List<Post> replyEmp(String post_code);
+
 
 }

@@ -31,4 +31,11 @@ delete
 from post_repl
 where post_repl_code = #{post_repl_code}
 </delete>
+
+
+<select id="replyEmp" resultType="post" parameterType="string">
+select post_repl_emp
+from post_repl
+where post_repl_post = #{post_code}
+</select>
 </mapper>

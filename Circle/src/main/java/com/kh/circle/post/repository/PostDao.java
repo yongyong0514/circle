@@ -48,6 +48,11 @@ public interface PostDao {
 
 	int countPostSearch(PostPaging postSearch);
 
+	String postEmpNo(String emp_no);
+
+	String viewEmpNo(String post_code);
+
+
 
 	
 }

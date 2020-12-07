@@ -18,6 +18,8 @@
 	</div>
 
 <!-- 게시판 불러오기 -->
+
+
 <table class="postParts">
 		<tr>
 			<th class="post_codes">글번호</th>

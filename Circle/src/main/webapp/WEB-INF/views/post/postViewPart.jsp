@@ -21,26 +21,25 @@
 	</c:forEach>
 </div>
 
-
 <!-- 버튼 부분 -->
+
 <div>
-	<c:forEach var="postView" items="${postView }">
-		<div>
-			<a
-				href='<c:url value='/post/postUpdate?post_code=${postView.post_code}'/>'>수정하기</a>
-		</div>
+<c:if test="${empNo eq viewEmpNo }">
+	<c:forEach var="postView" items="${postView}">
+			<div>
+				<a
+					href='<c:url value='/post/postUpdate?post_code=${postView.post_code}'/>'>수정하기</a>
+			</div>
+			<div>
+				<a
+					href='<c:url value='/post/postDelete?post_code=${postView.post_code}'/>'>삭제하기</a>
+			</div>
 	</c:forEach>
-	<c:forEach var="postView" items="${postView }">
-		<div>
-			<a
-				href='<c:url value='/post/postDelete?post_code=${postView.post_code}'/>'>삭제하기</a>
-		</div>
-	</c:forEach>
+	</c:if>
 	<div>
 		<a
 			href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">돌아가기</a>
 	</div>
-	
 </div>
 
 <!--  덧글 -->
@@ -64,25 +63,28 @@
 	<div id="reply">
 		<ol class="listReply">
 			<c:forEach var="listReply" items="${listReply}">
+				${listReply.post_repl_emp }
 				<li>
 					<p>
 						작성자 : ${listReply.emp_info_name} 작성날짜 :
 						<fmt:formatDate value="${listReply.post_repl_wdat}"
 							pattern="yyyy-MM-dd" />
 					</p>
-					<div id="post_repl_code"> ${listReply.post_repl_code}</div>
+					<div id="post_repl_code">${listReply.post_repl_code}</div>
 					<p>${listReply.post_repl_cont}</p>
 					
+					<c:if test="${empNo eq listReply.post_repl_emp }">
 					<div>
-							<div>
-								<a
-									href='<c:url value='/post/postReplyUpdate?post_code=${listReply.post_repl_post}'/>'>수정하기</a>
-							</div>
-							<div>
-								<a
-									href='<c:url value='/post/postReplyDelete?post_code=${listReply.post_repl_post}'/>'>삭제하기</a>
-							</div>
+						<div>
+							<a
+								href='<c:url value='/post/postReplyUpdate?post_code=${listReply.post_repl_post}'/>'>수정하기</a>
+						</div>
+						<div>
+							<a
+								href='<c:url value='/post/postReplyDelete?post_code=${listReply.post_repl_post}'/>'>삭제하기</a>
+						</div>
 					</div>
+					</c:if>
 				</li>
 			</c:forEach>
 		</ol>

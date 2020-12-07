@@ -39,6 +39,11 @@ public class PostRepServiceImp implements PostRepService{
 		
 	}
 
+	@Override
+	public List<Post> replyEmp(String post_code) {
+		return repDao.replyEmp(post_code);
+	}
+
 
 	
 }

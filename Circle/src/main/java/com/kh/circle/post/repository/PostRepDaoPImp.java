@@ -37,4 +37,11 @@ public class PostRepDaoPImp implements PostRepDao {
 		sqlSession.delete("postReply.replyDelete", post_repl_code);		
 	}
 
+	@Override
+	public List<Post> replyEmp(String post_code) {
+
+		
+		return sqlSession.selectList("postReply.replyEmp" , post_code);
+	}
+
 }
