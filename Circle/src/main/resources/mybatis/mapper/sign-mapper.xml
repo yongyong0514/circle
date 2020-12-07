@@ -413,6 +413,26 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	</insert>
 <!-- insert signSelectOne reply end -->
 
+<!-- insert sign signature start -->
+	<insert id="signFilesSignature" parameterType="map">
+		INSERT INTO FILES(FILES_CODE
+						, FILES_ONAME
+						, FILES_CNAME
+						, FILES_ROUTE
+						, FILES_DATE
+						, FILES_TYPE
+						, FILES_STATUS
+						, FILES_SIZE) VALUES ('FILE'||TRIM(TO_CHAR(#{seqSignFiles},'000000'))
+										   , #{files_oname}
+										   , #{files_cname}
+										   , #{files_route}
+										   , SYSDATE
+										   , ('SIGN'||TRIM(TO_CHAR(#{seqSignFilesCurrval},'000000')))
+										   , 'N'
+										   , #{files_size})
+	</insert>
+<!-- insert sign signature end -->
+
 <!-- uodate signDecision start -->
 <!-- 결재는 SIGN_JOIN 에서 해당 결재자의 사인 여부 업데이트 N -> Y
 	 결재 SIGN 테이블의 SIGN_COUNT 업데이트 -1 -->

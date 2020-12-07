@@ -337,7 +337,6 @@
                 $('input[type=file]').on('change', function(e) {
                     var files = e.originalEvent.targezst.files;
                     
-                    console.log(files);
                     handleFileUpload(files,objDragAndDrop);
                 });
                 
