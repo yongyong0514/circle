@@ -23,6 +23,8 @@ public interface PollService {
 	List<HashMap<String, String>> getQuestion(HashMap<String, String> params);
 	int getTotalAttend(HashMap<String, String> params);
 	int getRealAttend(HashMap<String, String> params);
+	List<HashMap<String, String>> getQustRealAttend(HashMap<String, String> params);
+
 
 
 

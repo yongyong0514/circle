@@ -82,6 +82,12 @@ public class PollServiceImpl implements PollService{
 	public int getRealAttend(HashMap<String, String> params) {
 		return pollDao.getRealAttend(params);
 	}
+	@Override
+	public List<HashMap<String, String>> getQustRealAttend(HashMap<String, String> params) {
+		return pollDao.getQuesRealAttend(params);
+	}
+
+
 
 
 	

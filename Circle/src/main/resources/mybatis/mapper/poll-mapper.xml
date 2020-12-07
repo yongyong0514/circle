@@ -196,6 +196,7 @@
 		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
 	                 	 and <![CDATA[ poll_post_edat < sysdate ]]>
 		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
+		                 and POLL_POST_SEC = 'Y'
 		                 and poll_post_name like '%${searchTitle}%'
                		 	 and emp_info_name like '%${searchWriter}%'
 		            group by poll_post_code          
@@ -281,6 +282,7 @@
 		      , POLL_POST_QUST_NECESS
 		      , POLL_POST_QUST_LIMIT
 		      , poll_post_qust_answ_code
+		      , poll_post_qust_answ_type
 		      , poll_post_qust_answ_cont
 		      , count(POLL_POST_QUST_ANSW_JOIN_EMP)
 		   from poll_post
@@ -306,6 +308,7 @@
 		      , POLL_POST_QUST_NECESS
 		      , POLL_POST_QUST_LIMIT
 		      , poll_post_qust_answ_code
+		      , poll_post_qust_answ_type
 		      , poll_post_qust_answ_cont)
 		 order by POLL_POST_QUST_CODE
 	</select>
@@ -328,5 +331,20 @@
 				          LEFT JOIN POLL_POST_QUST_ANSW_JOIN ON (POLL_POST_QUST_ANSW_CODE = POLL_POST_QUST_ANSW_JOIN_CODE)
 				         WHERE poll_post_code = #{postCode}))
 	</select>
+	
+	<select id="getQustRealAttend" parameterType="map" resultMap="qustAttendMap">
+		 select poll_post_qust_code
+		      , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP)
+		   from poll_post
+		   join emp_info on (poll_post_emp = emp_info_emp_no)
+		   join job_info on (EMP_INFO_JOB_CODE = JOB_INFO_CODE)
+		   join poll_post_qust on (poll_post_code = poll_post_qust_post)
+		   join poll_post_qust_answ on (poll_post_qust_code = poll_post_qust_answ_qust)
+		   full outer join poll_post_qust_answ_join on (poll_post_qust_answ_code = POLL_POST_QUST_ANSW_JOIN_CODE)
+		  where poll_post_code = #{postCode}
+		  group by( poll_post_qust_code)
+		 order by POLL_POST_QUST_CODE
+	</select>
+	<resultMap type="hashMap" id="qustAttendMap"></resultMap>
 	
 </mapper>
