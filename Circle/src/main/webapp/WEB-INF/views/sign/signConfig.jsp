@@ -28,36 +28,31 @@
 			</div>
 			<div class="content">
 				<div class="signConfigBtnArea">
-					<table>
-						<tr>
-							<td>
-								<div class="signConfigArea"></div>
-							</td>
-							<td>
-								<div class="signConfigArea"></div>
-								</td>
-						</tr>
-						<tr>
-							<td>
-								<button class="signConfigBtn">결재 확인 인장 설정</button>
-								<ul id="signSelect">
-									<li>
-										<button class="submitAgree">이미지 선택<br><a class="fontSize1">선택한 이미지로 결재합니다</a></button>&nbsp;&nbsp;&nbsp;
-										<button class="submitDenied">서명 작성하기<br><a class="fontSize1">입력한 서명으로 결재합니다</a></button>
-									</li>
-								</ul>
-							</td>
-							<td>
-								<button class="signConfigBtn">전자 결재 문서 등록</button>
-							</td>
-						</tr>
-					</table>
+					<div class="signConfigBtnSet">
+						<div class="signConfigArea" id="signPreview">
+							<img class="imgBox" src=""/>
+							<input type="file" name="fileUpload" id="fileUpload" accept="img/*">
+						</div>
+						<button class="signConfigBtn">결재 서명 등록</button>
+						<ul id="signSelect">
+							<li>
+								<button class="submitAgree">이미지 선택<br><a class="fontSize1">선택한 이미지로 결재합니다</a></button>&nbsp;&nbsp;&nbsp;
+								
+								<button class="submitDenied">서명 작성하기<br><a class="fontSize1">입력한 서명으로 결재합니다</a></button>
+							</li>
+						</ul>
+					</div>
+					
+					<div class="signConfigBtnSet">
+						<div class="signConfigArea"></div>
+						<button class="signConfigBtn">결재 문서 양식 등록</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 <!-- SCRIPT 영역 -->
-	<script src="${pageContext.request.contextPath}/resources/js/common/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -86,5 +81,41 @@
     		$("#signSelect").fadeOut(100);
     	});
     </script>
+
+<!-- 첨부 파일 시작 -->
+ 	<script>
+		$(".submitAgree").click(function(e){
+			 $('input[type=file]').trigger('click');
+		});
+		
+		$('input[type=file]').on('change', function(e) {
+			var base = "${pageContext.request.contextPath}";
+			var uploadURL = base + "/sign/signFilesSignature";
+			var empCode = ${empInfo.emp_info_emp_no};
+			var formData = new FormData();
+			var reader = new FileReader;
+			var inputFile = this.files;
+			if(this.files && this.files[0]) {
+				reader.onload = function(data) {
+					$("#signPreview img").attr("src", data.target.result).width(100).height(100);        
+				}
+			}
+			
+			formData.append('file', inputFile[0]);
+			
+			console.log(formData);
+			$.ajax({
+				url : uploadURL,
+				type: "POST",
+                contentType:false,
+                processData: false,
+                cache: false,
+                data: {formData
+                	 , empCode: empCode}, 
+                success: function(data){
+                }
+			});
+		});
+	</script>
 </body>
 </html>

@@ -160,6 +160,44 @@ public class SignController {
 		return "sign/signConfig";
 	}
 	
+// 결재 첨부 파일 등록
+	@PostMapping("/signFilesSignature")
+	public String uploadSignature(MultipartHttpServletRequest multipartRequest, @RequestParam String empCode) { 
+		String code = empCode;
+		
+		System.out.println(code);
+		
+		Iterator<String> itr =  multipartRequest.getFileNames();
+				
+	    String filePath = "d:/resources/files/empInfo/Signature";
+	       
+	    while (itr.hasNext()) {
+	    	MultipartFile multipartFile = multipartRequest.getFile(itr.next());  
+	    	
+	        String files_oname = multipartFile.getOriginalFilename();
+	           
+	        String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
+	           
+	        long files_size = multipartFile.getSize();
+	           
+	        String files_type = multipartFile.getContentType();
+	           
+	        String files_cname = UUID.randomUUID().toString() + extension;
+	           
+	        String files_route = filePath + "/" + files_cname;
+	    
+	        try {
+	     	   multipartFile.transferTo(new File(files_route));
+
+	           signService.insertFile(files_oname, files_size, files_type, files_cname, files_route);
+	        	   
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	   }
+	    return "success";	
+	}
+	
 // 문서 첫화면
 	@GetMapping("/docuList")
 	public String docuList() {
