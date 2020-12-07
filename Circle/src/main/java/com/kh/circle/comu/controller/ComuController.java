@@ -57,7 +57,7 @@ public class ComuController {
 		for (Comu a : comuList) {
 			System.out.println("comuController 값 넘어오나?" + a.getComu_list_name() + a.getEmp_info_name());
 		}
-
+			//주석
 		return mav;
 	}
 	//게시글 작성
