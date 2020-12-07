@@ -5,6 +5,12 @@
 
 
 <div>
-
+		<div>
+			<div>프로젝트 생성</div>
+			<div>업무 생성</div>
+			<div>프로젝트로 가기</div>
+			<div>업무로 가기</div>
+			<div>칸반보드</div>
+		</div>
 
 </div>

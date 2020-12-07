@@ -146,7 +146,6 @@ public class PostDaoImp implements PostDao {
 
 		List<Post> list = sqlSession.selectList("post.getSearch", postSearch);		
 	
-		System.out.println("dao  list : : " + list);
 		return list;
 	}
 
@@ -154,10 +153,22 @@ public class PostDaoImp implements PostDao {
 	public int countPostSearch(PostPaging postSearch) {
 		int num = sqlSession.selectOne("post.countSearch", postSearch);
 		
-		System.out.println("dao postSearch: : " + postSearch);
 		
-		System.out.println("dao in : : " + num);
 		return num;
+	}
+
+
+	@Override
+	public String postEmpNo(String emp_no) {
+		String emp_info_no = sqlSession.selectOne("post.empNo", emp_no);	
+		return emp_info_no;
+	}
+
+	@Override
+	public String viewEmpNo(String post_code) {
+		String post = sqlSession.selectOne("post.viewEmpNo", post_code);
+
+			return post;
 	}
 
 

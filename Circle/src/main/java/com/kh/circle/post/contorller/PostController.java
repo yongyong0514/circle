@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,13 +200,34 @@ public class PostController {
 
 	// post View page
 	@GetMapping("/postView")
-	public String postView(Post post, Model model, @RequestParam("post_code") String post_code,
+	public String postView(Post post, Model model, @RequestParam("post_code") String post_code, 
+			HttpSession session, @ModelAttribute Post test, //제약 조건용
 			 PostPaging postPaging, // 뷰페이징
 				@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 				@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
+		
+		// 내정보 제약 조건용
+
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+
+		
+		String emp_name = postService.postEmpNo(emp_no);
+		
+		model.addAttribute("empNo", emp_name);
+
+		
+		
+		//게시글 정보
+		List<Post> detail =  postService.viewDetail(post_code);
+		String post_emp = postService.viewEmpNo(post_code);
+		model.addAttribute("viewEmpNo", post_emp);
+		
+		
+		
+		
 		// view
-		model.addAttribute("postView", postService.viewDetail(post_code));
+		model.addAttribute("postView", detail);
 		// end
 
 		/* 뷰페이징 시작 */
@@ -223,17 +245,21 @@ public class PostController {
 		String post_type = "";
 		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
 
-		/* 뷰페이징 종료 */
-
 		model.addAttribute("paging", postPaging);
 		model.addAttribute("postPaging", postService.selecePost(postPaging));
+		/* 뷰페이징 종료 */
+
 		
 		
 		// 댓글
 
 		List<Post> replyList = repService.replyList(post.getPost_code());
 
-
+		List<Post> reply = repService.replyEmp(post.getPost_code());
+		
+		
+		
+		model.addAttribute("replyEmp", reply);
 		model.addAttribute("listReply", replyList);
 		// 댓글 끝
 
@@ -243,11 +269,32 @@ public class PostController {
 	// post update
 
 	@GetMapping("/postUpdate")
-	public String postUpdate(Model model, @RequestParam("post_code") String post_code) {
+	public String postUpdate(Model model, @RequestParam("post_code") String post_code, PostPaging postPaging, // 뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
 		Post postCheck = postService.postCheck(post_code);
 
 		model.addAttribute("postCheck", postCheck);
+		
+		/* 뷰페이징 시작 */
+		int total = postService.countPost();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
+		/* 뷰페이징 종료 */
 
 		return "post/postUpdate";
 	}
@@ -342,7 +389,6 @@ public class PostController {
 	@GetMapping("/postReplyDelete")
 	public String postReplyDelete(@RequestParam("post_repl_code")String post_repl_code, @RequestParam("post_code")String post_code, Post post){
 
-		System.out.println(post_repl_code);
 		
 		repService.replyDelete(post_repl_code);
 

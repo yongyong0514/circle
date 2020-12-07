@@ -93,7 +93,8 @@
 		t.post_type_code)
 		where p.post_type =
 		#{post_type}
-		order by post_code desc
+		order by
+		post_code desc
 		) a
 		)
 		where rn between
@@ -144,6 +145,19 @@
 
 	</select>
 
+	<select id="empNo" resultType="String" parameterType="string">
+		 select emp_info_emp_no
+		from  emp_info 
+		where emp_info_emp_no =  #{emp_no}
+
+	</select>
+	
+	<select id="viewEmpNo"  resultType="String" parameterType="string">
+	select post_emp
+	from post
+	where post_code = #{post_code}
+	</select>
+
 
 	<!-- view -->
 	<!-- 게시글 상세보기 -->
@@ -152,12 +166,14 @@
 		select *
 		from post p
 		join post_type t on (p.post_type = t.post_type_code)
-		join emp_info e on (p.post_emp = e.emp_info_emp_no)
-		join dept_info d on (e.emp_info_dept_code = d.dept_info_code)
+		join
+		emp_info e on (p.post_emp = e.emp_info_emp_no)
+		join dept_info d on
+		(e.emp_info_dept_code = d.dept_info_code)
 		where p.post_code =
 		#{post_code}
 	</select>
-	
+
 
 	<update id="CountDetail">
 		update post
@@ -198,8 +214,8 @@
 
 	</delete>
 	<delete id="postDelete2" parameterType="string">
-delete from post_repl
-where post_repl_post = #{post_code}	
+		delete from post_repl
+		where post_repl_post = #{post_code}
 	</delete>
 
 
@@ -218,7 +234,7 @@ where post_repl_post = #{post_code}
 		</trim>
 	</sql>
 
-		<select id="getSearch" resultType="post"
+	<select id="getSearch" resultType="post"
 		parameterType="postPaging">
 
 		select *
@@ -228,13 +244,13 @@ where post_repl_post = #{post_code}
 			<if test="type != null and keyword != null">
 				<choose>
 					<when test="type == 'post_title'">
-						${type}  like '%'||#{keyword}||'%'
+						${type} like '%'||#{keyword}||'%'
 					</when>
 					<when test="type == 'post_comt'">
-						${type}  like '%'||#{keyword}||'%'
+						${type} like '%'||#{keyword}||'%'
 					</when>
 					<when test="type == 'emp_info_name'">
-						${type}  like '%'||#{keyword}||'%'
+						${type} like '%'||#{keyword}||'%'
 					</when>
 				</choose>
 			</if>
@@ -245,6 +261,6 @@ where post_repl_post = #{post_code}
 		select count(*)
 		from post
 	</select>
-	
+
 
 </mapper>

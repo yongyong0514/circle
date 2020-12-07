@@ -116,16 +116,27 @@ public class PostServiceImp implements PostService {
 	//검색하기
 	@Override
 	public List<Post> postSearch(PostPaging postSearch) {
-		System.out.println("ser :: : " + postSearch);
 		return postDao.postSearch(postSearch);
 	}
 
 	@Override
 	public int countPostSearch(PostPaging postSearch) {
 		
-		System.out.println("ser :: : " + postSearch);
 		return postDao.countPostSearch(postSearch);
 	}
+
+
+	@Override
+	public String postEmpNo(String emp_no) {
+		return postDao.postEmpNo(emp_no);
+	}
+
+	@Override
+	public String viewEmpNo(String post_code) {
+		return postDao.viewEmpNo(post_code);
+	}
+
+
 
 
 

@@ -19,6 +19,8 @@ public interface PostRepService {
 	
 	//delete
 	void replyDelete(String post_repl_code);
+
+	List<Post> replyEmp(String post_code);
 	
 	
 }
