@@ -68,9 +68,10 @@
 		                join poll_post_join on (poll_post_code = poll_join_post)
 		               where poll_post_stat = 'Y'
 		                 and poll_join_emp = #{empNo}
+		                 and poll_join_type = '참여'
 		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
                			 and <![CDATA[ poll_post_edat >= sysdate ]]>
-		                 and poll_post_closing != 'Y'
+		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
 		                 and poll_post_name like '%${searchTitle}%'
            				 and emp_info_name like '%${searchWriter}%'
 		            group by poll_post_code)
@@ -117,7 +118,7 @@
 		                 and poll_join_emp = #{empNo}
 		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
 	                 	 and <![CDATA[ poll_post_edat >= sysdate ]]>
-		                 and poll_post_closing != 'Y'
+		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
 		                 and poll_post_name like '%${searchTitle}%'
                		 	 and emp_info_name like '%${searchWriter}%'
 		            group by poll_post_code          
@@ -147,7 +148,7 @@
 		                 and poll_join_emp = #{empNo}
 		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
                			 and <![CDATA[ poll_post_edat < sysdate ]]> 
-               			 and poll_post_closing != 'Y'
+               			 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
 		                 and poll_post_name like '%${searchTitle}%'
            				 and emp_info_name like '%${searchWriter}%'
 		            group by poll_post_code)
@@ -194,7 +195,7 @@
 		                 and poll_join_emp = #{empNo}
 		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
 	                 	 and <![CDATA[ poll_post_edat < sysdate ]]>
-		                 and poll_post_closing != 'Y'
+		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
 		                 and poll_post_name like '%${searchTitle}%'
                		 	 and emp_info_name like '%${searchWriter}%'
 		            group by poll_post_code          
@@ -279,16 +280,53 @@
 		      , poll_post_qust_lowtype
 		      , POLL_POST_QUST_NECESS
 		      , POLL_POST_QUST_LIMIT
+		      , poll_post_qust_answ_code
 		      , poll_post_qust_answ_cont
+		      , count(POLL_POST_QUST_ANSW_JOIN_EMP)
 		   from poll_post
 		   join emp_info on (poll_post_emp = emp_info_emp_no)
 		   join job_info on (EMP_INFO_JOB_CODE = JOB_INFO_CODE)
 		   join poll_post_qust on (poll_post_code = poll_post_qust_post)
 		   join poll_post_qust_answ on (poll_post_qust_code = poll_post_qust_answ_qust)
+		   full outer join poll_post_qust_answ_join on (poll_post_qust_answ_code = POLL_POST_QUST_ANSW_JOIN_CODE)
 		  where poll_post_code = #{postCode}
+		  group by(poll_post_name
+		      , emp_info_name
+		      , job_info_name
+		      , poll_post_wdat
+		      , poll_post_sdat
+		      , poll_post_edat
+		      , poll_post_mod_admt
+		      , poll_post_sec
+		      , poll_post_cont
+		      , poll_post_qust_code
+		      , poll_post_qust_cont
+		      , poll_post_qust_type
+		      , poll_post_qust_lowtype
+		      , POLL_POST_QUST_NECESS
+		      , POLL_POST_QUST_LIMIT
+		      , poll_post_qust_answ_code
+		      , poll_post_qust_answ_cont)
+		 order by POLL_POST_QUST_CODE
 	</select>
 	<resultMap type="hashMap" id="questionMap"></resultMap>
+		
+	<select id="getTotalAttend" parameterType="map" resultType="int">
+		select count(POLL_JOIN_EMP)
+		  from POLL_POST_JOIN
+		 where POLL_JOIN_POST = #{postCode}
+		   and POLL_JOIN_TYPE = '참여'
+		 group by POLL_JOIN_POST
+	</select>
 	
-	
+	<select id="getRealAttend" parameterType="map" resultType="int">
+		SELECT COUNT(POLL_POST_QUST_ANSW_JOIN_EMP)
+		  FROM (SELECT DISTINCT(POLL_POST_QUST_ANSW_JOIN_EMP)
+		  		  FROM (SELECT POLL_POST_QUST_ANSW_JOIN_EMP
+				          FROM POLL_POST
+				          JOIN POLL_POST_QUST_ANSW ON (POLL_POST_CODE = POLL_POST_QUST_ANSW_POST)
+				          LEFT JOIN POLL_POST_QUST_ANSW_JOIN ON (POLL_POST_QUST_ANSW_CODE = POLL_POST_QUST_ANSW_JOIN_CODE)
+				         WHERE poll_post_code = #{postCode}))
+	</select>
 	
 </mapper>

@@ -156,8 +156,12 @@ public class PollController {
 		params.put("empNo", empNo);
 		
 		List<HashMap<String, String>> list = pollService.getQuestion(params);
+		int totalAttend = pollService.getTotalAttend(params);
+		int realAttend = pollService.getRealAttend(params);
 		
 		modelMap.put("post", list);
+		modelMap.put("totalAttend", totalAttend);
+		modelMap.put("realAttend", realAttend);
 		
 		log.info(modelMap.toString());
 		

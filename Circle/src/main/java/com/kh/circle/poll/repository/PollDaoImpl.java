@@ -67,8 +67,21 @@ public class PollDaoImpl implements PollDao{
 
 	@Override
 	public List<HashMap<String, String>> getQuestion(HashMap<String, String> params) {
-		List<HashMap<String, String>> list = sqlSession.selectList("poll.getQuestion", params);
-		return list;
+		List<HashMap<String, String>> post = sqlSession.selectList("poll.getQuestion", params);
+		return post;
 	}
+	@Override
+	public int getTotalAttend(HashMap<String, String> params) {
+		int totalAttend = sqlSession.selectOne("poll.getTotalAttend", params);
+		return totalAttend;
+	}
+	@Override
+	public int getRealAttend(HashMap<String, String> params) {
+		return sqlSession.selectOne("poll.getRealAttend", params);
+	}
+
+
+
+
 
 }
