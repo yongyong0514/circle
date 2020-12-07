@@ -27,7 +27,6 @@ import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignListJoiner;
 import com.kh.circle.sign.vo.SignModify;
-import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
@@ -57,6 +56,7 @@ public class SignController {
 		return "sign/signList";
 	}
 	
+	
 //	결재 작성 화면
 	@GetMapping("/signWrite")
 	public String signWrite(Model model) {
@@ -77,6 +77,7 @@ public class SignController {
 		
 		return "redirect:signList";
 	}
+	
 	
 // 결재 첨부 파일 등록
 	@PostMapping("/signFiles")
@@ -113,6 +114,7 @@ public class SignController {
        return "success";
 	}
 	
+	
 // 결재 한건 선택
 	@GetMapping("/signSelectOne")
 	public String signSelectOne(@RequestParam String signCode, Model model) {
@@ -127,6 +129,7 @@ public class SignController {
 		
 		return "sign/signSelectOne";
 	}
+	
 	
 // 결재 한건 수정 화면
 	@GetMapping("/signModify")
@@ -146,6 +149,7 @@ public class SignController {
 		return "sign/signModify";
 	}
 	
+	
 // 결재 한건 수정
 	@PostMapping("/signModify")
 	public String signModify() {
@@ -153,49 +157,45 @@ public class SignController {
 		return "sign/signList";
 	}
 
+	
 // 결재 설정 화면
 	@GetMapping("/signConfig")
-	public String signConfig() {
+	public String signConfig(HttpSession session, Model model) {
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		List<SignFiles> list = sqlSession.selectList("sign.signFilesSignatureList", empCode);
+		model.addAttribute("list", list);
 		
 		return "sign/signConfig";
 	}
 	
-// 결재 첨부 파일 등록
+	
+// 	결재 서명 첨부 파일 등록
 	@PostMapping("/signFilesSignature")
-	public String uploadSignature(MultipartHttpServletRequest multipartRequest, @RequestParam String empCode) { 
-		String code = empCode;
-		
-		System.out.println(code);
-		
+	public String uploadSignature(MultipartHttpServletRequest multipartRequest) {
 		Iterator<String> itr =  multipartRequest.getFileNames();
-				
 	    String filePath = "d:/resources/files/empInfo/Signature";
-	       
+	    String[] empCodeList = multipartRequest.getParameterValues("empCode");
+	    String empCode = empCodeList[0];
+		       
 	    while (itr.hasNext()) {
 	    	MultipartFile multipartFile = multipartRequest.getFile(itr.next());  
-	    	
-	        String files_oname = multipartFile.getOriginalFilename();
-	           
-	        String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
-	           
-	        long files_size = multipartFile.getSize();
-	           
-	        String files_type = multipartFile.getContentType();
-	           
-	        String files_cname = UUID.randomUUID().toString() + extension;
-	           
-	        String files_route = filePath + "/" + files_cname;
-	    
-	        try {
-	     	   multipartFile.transferTo(new File(files_route));
-
-	           signService.insertFile(files_oname, files_size, files_type, files_cname, files_route);
-	        	   
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	   }
-	    return "success";	
+	    	String files_oname = multipartFile.getOriginalFilename();
+		    String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
+		    long files_size = multipartFile.getSize();
+		    String files_type = multipartFile.getContentType();
+		    String files_cname = UUID.randomUUID().toString() + extension;
+		    String files_route = filePath + "/" + files_cname;
+		    
+		    try {
+		    	multipartFile.transferTo(new File(files_route));
+		     	   
+		        signService.insertFilesSignature(files_oname, files_size, files_type, files_cname, files_route, empCode);
+		        	   
+		    } catch (Exception e) {
+		            e.printStackTrace();
+		    }
+	    }
+		return "sign/signConfig";	
 	}
 	
 // 문서 첫화면
@@ -203,4 +203,5 @@ public class SignController {
 	public String docuList() {
 		return "document/docuList";
 	}
+
 }

@@ -24,4 +24,8 @@ public interface SignDao {
 	//결재 댓글 등록
 	void add(SignReplyInsert signReplyInsert);
 
+	//결재 서명 파일 등록
+	void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
+			String empCode);
+
 }
