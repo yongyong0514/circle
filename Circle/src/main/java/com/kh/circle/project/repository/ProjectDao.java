@@ -15,4 +15,9 @@ public interface ProjectDao {
 	String projEmpNo(String emp_no);
 
 
+	List<Project> projMember();
+
+	void projInsert(Project project);
+
+
 }

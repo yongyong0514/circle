@@ -22,21 +22,29 @@
 		</div>
 			<div class="inputfield">
 			<label for="pro_sdate">시작일 </label>
-			<label><input type="radio" id="pro_sdate" name="pro_sdate" value="SYSDATE">오늘</label>
-			<label><input type="date" id="pro_sdate" name="pro_sdate" >날짜 선택</label>
+			<label>날짜 선택
+			<!-- 만약 체크가 되어있다면 -->
+			<input type="date" id="pro_sdate" name="pro_sdate" ></label>
 			
 		</div>
 
 		<div class="inputfield">
 <label for="pro_edate">종료일 </label>
-			<label><input type="radio" id="pro_sdate" name="pro_edate" value="SYSDATE">오늘</label>
-			<label><input type="date" id="pro_sdate" name="pro_edate" >날짜 선택</label>
+			<!-- 만약 체크가 되어있다면 --><label for="pro_edate">날짜 선택
+			<input type="date" id="pro_edate" name="pro_edate" ></label>
 			</div>
 		</div>
 	<div class="inputfield">
-<label for="pro_edate">담당자 </label>
-			<label><input type="radio" id="pro_sdate" name="pro_edate" value="SYSDATE">본인</label>
-			<label><input type="date" id="pro_sdate" name="pro_edate" >날짜 선택</label>
+<label for="pro_manager">담당자 </label>
+		
+<select id="pro_manager" name="pro_manager">
+<option>담당자 선택</option>
+
+<option id="pro_manager"  value="${empNo}">작성자</option>
+<c:forEach var="projMember" items="${projMember }">
+<option id="pro_manager"  value="${projMember.emp_info_emp_no }">${projMember.dept_info_name}  ${projMember.emp_info_name }</option>
+</c:forEach>
+</select>		
 			</div>
 	
 		<div class="inputfield">

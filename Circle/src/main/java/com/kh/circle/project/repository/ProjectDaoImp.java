@@ -48,7 +48,25 @@ public class ProjectDaoImp implements ProjectDao{
 	public String projEmpNo(String emp_no) {
 
 		String myEmp = sqlSession.selectOne("project.empNo", emp_no);
-		return null;
+		return myEmp;
+	}
+
+
+
+	@Override
+	public List<Project> projMember() {
+
+		List<Project> projMember = sqlSession.selectList("project.projMember");
+		
+		return projMember;
+	}
+
+
+	@Override
+	public void projInsert(Project project) {
+
+		
+		sqlSession.insert("project.projInsert", project);
 	}
 
 

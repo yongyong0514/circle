@@ -45,5 +45,20 @@ public class ProjectServiceImp implements ProjectService{
 
 
 
+	@Override
+	public List<Project> projMember() {
+		return projDao.projMember();
+	}
+
+
+	@Override
+	public void projInsert(Project project) {
+
+		projDao.projInsert(project);
+	}
+
+
+
+
 
 }
