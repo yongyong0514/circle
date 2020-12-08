@@ -125,7 +125,7 @@
 										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
 											<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
 											<button id="formBtn3">결재</button>
-												<ul id="signSelect">
+												<ul id="signSelect1">
 													<li>
 														<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
 														<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
@@ -137,6 +137,33 @@
 										<c:if test="${signSelectOne.sign_step == 'SIPC000003'}">
 											<button id="formBtn3" disabled>결재가 완료되었습니다</button>
 										</c:if>
+											<div id="signModalForm">
+												<div class="signModalArea">
+													<table>
+														<tr>
+															<th>
+																<div class="signModalTitle">${empInfo.emp_info_name}&nbsp;${empInfo.job_info_name}&nbsp;님께서 등록하신 결재 서명입니다(최대 5개까지 등록 가능합니다)</div>
+															</th>
+															<th>
+																<div class="signModalClose">x</div>
+															</th>
+														</tr>
+														<tr>
+															<th colspan="2">
+																<div class="signModalImgList">
+																	<div>&nbsp;</div>
+																	<c:forEach var="file" items="${list4}">
+																		<div class="case1">
+																			<img class="imgSize2" src="${pageContext.request.contextPath}/sign/sfsDownload?fileCode=${file.files_code}">
+																		</div>
+																	</c:forEach>
+																</div>
+															</th>
+														</tr>
+													</table>
+												</div>
+												<div class="signModalLayer"></div>
+											</div>
 								</td>
 							</tr>
 <!-- 					결재가 완료되었으면 메세지 변경 및 버튼 비활성화	
@@ -274,7 +301,7 @@
 					if(data != null) {
 						
 					}
-				});
+				}
 			});
 		}
 	</script>
@@ -344,7 +371,6 @@
 				success: function(){
 					signList();
 				}
-			}
 			});
 		});
 	</script>
@@ -468,13 +494,13 @@
     
     <script>
     	$("#formBtn3").click(function(){
-    		$("#signSelect").fadeIn(100);
+    		$("#signSelect1").fadeIn(100);
     	});
     </script>
     
     <script>
-    	$("#signSelect").mouseleave(function(){
-    		$("#signSelect").fadeOut(100);
+    	$("#signSelect1").mouseleave(function(){
+    		$("#signSelect1").fadeOut(100);
     	});
     </script>
     
@@ -535,6 +561,39 @@
 							$signListWatcher.append($tr);
 						}
 					}
+				}
+			});
+		});
+	</script>
+	
+	<!-- 결재 진행 -->
+	<script>
+    	$(".submitAgree").click(function(){
+    		$("#signModalForm").attr("style", "display: block");
+    	});
+    </script>
+    
+    <script>
+		$(".signModalClose").click(function(){
+			$("#signModalForm").attr("style", "display: none");
+		});
+	</script>
+	
+	<script>
+		$(".case1").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var uploadURL = base + "/sign/signProcess";
+			var tag1 = $(this).children();
+			var tag2 = tag1[0].currentSrc;
+			var fileCode = tag2.split("=");
+			var signCode = document.location.href.split("=");
+			$.ajax({
+				url: uploadURL,
+				type: "POST",
+				data: {fileCode: fileCode
+					, signCode: signCode},
+				success: function(){
+					location.reload(true);
 				}
 			});
 		});

@@ -148,6 +148,17 @@ public class SignDaoImpl implements SignDao {
 		map.put("files_route", files_route);
 		map.put("empCode", empCode);
 		
-		sqlSession.insert("sign.signFilesSignature", map);
+		sqlSession.insert("sign.signFilesSignatureInsert", map);
+	}
+	
+	//결재 서명 파일 경로
+	private final String path2 = "d:/resources/files/empInfo/signature";
+
+	//결재 서명 파일 다운
+	@Override
+	public byte[] loadFile(String files_cname) throws IOException {
+		File target = new File(path2, String.valueOf(files_cname));
+		byte[] data = FileUtils.readFileToByteArray(target);
+		return data;
 	}
 }

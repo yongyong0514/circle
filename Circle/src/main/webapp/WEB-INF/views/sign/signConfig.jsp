@@ -30,6 +30,11 @@
 				<div class="signConfigBtnArea">
 					<div class="signConfigBtnSet">
 						<div class="signConfigArea" id="signPreview">
+							<c:forEach var="file" items="${list2}">
+								<div class="case2">
+									<img class="imgSize3" src="${pageContext.request.contextPath}/sign/sfsDownload?fileCode=${file.files_code}">
+								</div>
+							</c:forEach>
 							<img class="imgBox" src=""/>
 							<input type="file" name="fileUpload" id="fileUpload" accept="img/*">
 						</div>
@@ -47,7 +52,7 @@
 							<table>
 								<tr>
 									<th>
-										<div class="signModalTitle">${empInfo.emp_info_name}&nbsp;${empInfo.job_info_name}&nbsp;님께서 등록하신 결재 서명입니다</div>
+										<div class="signModalTitle">${empInfo.emp_info_name}&nbsp;${empInfo.job_info_name}&nbsp;님께서 등록하신 결재 서명입니다(최대 5개까지 등록 가능합니다)</div>
 									</th>
 									<th>
 										<div class="signModalClose">x</div>
@@ -59,7 +64,8 @@
 											<div>&nbsp;</div>
 											<c:forEach var="file" items="${list}">
 												<div class="case1">
-													<img class="imgSize2" src="${pageContext.request.contextPath}/signResult/signFileDownload?fileCode=${file.files_code}">
+													<div class="imgDel">삭제</div>
+													<img class="imgSize2" src="${pageContext.request.contextPath}/sign/sfsDownload?fileCode=${file.files_code}">
 												</div>
 											</c:forEach>
 											<div class="casePlus">
@@ -167,8 +173,8 @@
 			$("#signModalForm").attr("style", "display: none");
 		});
 	</script>
-<!--  	<script>
-		$(".submitAgree").click(function(e){
+  	<script>
+		$(".casePlus").click(function(e){
 			 $('input[type=file]').trigger('click');
 		});
 	</script>
@@ -192,7 +198,7 @@
 	                cache: false,
 	                data: formData, 
 	                success: function(data){
-	                	alert("success");
+	                	location.href = "${pageContext.request.contextPath}/sign/signConfig";
 	                }, 
 	                error: function(data){
 	                	alert("error");
@@ -200,6 +206,11 @@
 	            });
 			}
 		});
-	</script> -->
+	</script>
+ 	<script>
+		$(".imgDel").click(function(){
+			
+		});
+	</script>
 </body>
 </html>

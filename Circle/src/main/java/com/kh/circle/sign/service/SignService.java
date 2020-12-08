@@ -24,5 +24,8 @@ public interface SignService {
 
 	//결재 서명 파일 등록
 	void insertFilesSignature(String files_oname, long files_size, String files_type, String files_cname, String files_route, String empCode);
+
+	//결재 서명 파일 다운로드
+	ResponseEntity<ByteArrayResource> sfsdownload(String fileCode) throws IOException;
 }
 	
