@@ -8,7 +8,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollResult.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
 <script src='${pageContext.request.contextPath}/resources/js/poll/echarts-en.min.js'></script>
+<script src='${pageContext.request.contextPath}/resources/js/poll/echarts.min.js'></script>
 
 <title>설문 결과보기</title>
 </head>
@@ -21,26 +23,61 @@
 		</header>
 		<div class="poll-post-inner-content-container">
 			<section class="poll-post-toolbar">
-				<ul class="poll-post-manage">
-					<li> 
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon modify"></span>
-							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon play"></span>
-							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon del"></span>
-							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
-						</a>
-					</li>
-				</ul>
+				<c:if test="${sessionScope.empInfo.emp_info_emp_no eq post[0].POLL_POST_EMP}">
+					<ul class="poll-post-manage">
+						<li> 
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon modify"></span>
+								<span class="poll-post-toolbar-modify-btn-txt">수정</span>
+							</a>
+						</li>
+						<c:choose>
+							<c:when test="${post[0].POLL_POST_CLOSING eq 'Y'}">
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon play"></span>
+										<span class="poll-post-toolbar-progress-btn-txt">진행</span>
+									</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon stop"></span>
+										<span class="poll-post-toolbar-stop-btn-txt">중지</span>
+									</a>
+								</li>
+								
+									<!-- 오늘날짜 변수화 -->
+									<jsp:useBean id="now" class="java.util.Date" scope="request"/>
+									<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowNum" scope="request"/>
+									<!-- 날짜 계산용 변수 초기화 -->
+									<c:set var="sdat" value="${item.POLL_POST_SDAT }"></c:set>
+									<c:set var="edat" value="${item.POLL_POST_EDAT }"></c:set>
+									<fmt:parseDate var="sdat" value="${sdat}" pattern="yyyy-MM-dd" />
+									<fmt:parseDate var="edat" value="${edat}" pattern="yyyy-MM-dd" />
+									<fmt:parseNumber value="${sdat.time / (1000*60*60*24)}" integerOnly="true" var="sdatNum" scope="request"/>
+									<fmt:parseNumber value="${edat.time / (1000*60*60*24)}" integerOnly="true" var="edatNum" scope="request"/>
+								
+								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
+									<li>
+										<a class="toolbar-btn-wrap">
+											<span class="toolbar-icon end"></span>
+											<span class="poll-post-toolbar-end-btn-txt">마감</span>
+										</a>
+									</li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						
+						<li>
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon del"></span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
+							</a>
+						</li>
+					</ul>
+				</c:if>
 				<ul class="poll-post-list">
 					<li>
 						<a class="toolbar-btn-wrap toolbar-list-btn">
@@ -53,7 +90,7 @@
 			<div class="poll-post-article-main-container">
 				<div class="poll-post-article-wrap">
 					<header class="poll-post-article-header">
-						<h1><c:out value="${post[0].POLL_POST_NAME}"></c:out></h1>
+ 						<h1><c:out value="${post[0].POLL_POST_NAME}"></c:out></h1>
 						<table class="poll-post-info-list">
 							<tbody>
 								<tr>
@@ -178,45 +215,13 @@
 													<c:set var="qustType" value="${item.POLL_POST_QUST_TYPE}"/>
 												</c:when>
 												<c:when test="${qustCode ne item.POLL_POST_QUST_CODE}">	
-												<!-- 첫문항이 아닌 문항 첫머리 -->
-												<!-- 앞 문항의 결과를 여기에 출력 -->
-													<c:choose>
-														<c:when test="${ qustType eq 'select'}">
-															<dl class=result-chart-info>
-																<dt>
-																	<span class="txt">전체 참여자 : </span>
-																</dt>
-																<dd>
-																	<span class="number">5</span>
-																	<span class="txt">명</span>
-																</dd>
-																<dt>
-																	<span class="txt">참여율 : </span>
-																</dt>
-																<dd>
-																	<span class="number">1</span>
-																	<span class="txt">명</span>
-																	<span class="gage-wrap">
-																		<span class="gage" style="width:20.00%"></span>
-																	</span>
-																	<span class="number">20.00%</span>
-																</dd>
-															</dl>										
-															<div id="result-chart" style="width:895px;height:250px;"></div>
-														</c:when>
-													
-													</c:choose>
-													
-													
-													
-												
+												<!-- 첫문항이 아닌 두번째문항부터 첫머리 -->
 													<c:set var="seq" value="${seq + 1 }"/>
 													<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
 													<c:set var="qustType" value="${item.POLL_POST_QUST_TYPE}"/>
-														</div>
-													</li>
 												</c:when>
 											</c:choose>
+											
 											<li class=question-response>
 												<span class="question">
 													<span class="seq">
@@ -232,245 +237,115 @@
 													<c:out value="${item.POLL_POST_QUST_CONT }"></c:out>
 												</span>
 												<div class=result-chart-wrap>
+													<dl class=result-chart-info>
+															<!-- 참여인원 숫자 변수에 저장 -->
+															<c:set var="qra" value="0"/>
+															<c:forEach var='inner' items="${qustRealAttend }" varStatus="number">
+																<c:if test="${inner.POLL_POST_QUST_CODE eq item.POLL_POST_QUST_CODE }">
+																	<c:set var="qra" value="${inner.QUSTREALATTEND }"></c:set>
+																</c:if>
+															</c:forEach>
+															
+															<!-- 총인원 숫자로 형변환 -->
+															<fmt:parseNumber value = "${totalAttend }" pattern = "0"  var="totalAttendNum"/>
+															<!-- 참여인원 숫자로 형변환 -->
+															<fmt:parseNumber value = "${qra}" pattern = "0"  var="qraNum"/>
+															<!-- 참여율 계산 -->
+															<fmt:formatNumber value="${ qraNum / totalAttendNum }" pattern="#,###.00%" var="percent"/>
+															
+															
+														<dt>
+															<span class="txt">전체 참여자 : </span>
+														</dt>
+														<dd>
+															<span class="number">
+																<c:out value="${totalAttendNum }"/>
+															</span>
+															<span class="txt">명</span>
+														</dd>
+														<dt>
+															<span class="txt">참여율 : </span>
+														</dt>
+														<dd>
+															
+															
+															<span class="number">
+																<c:out value="${qraNum}"/>
+															</span>
+															<span class="txt">명</span>
+											<c:choose>
+												<c:when test="${ qustType eq 'select' || qustType eq 'text'}">
+												<!-- 선택형이거나 텍스트형인 경우 -->
+															
+												
+															<span class="gage-wrap">
+																<span class="gage" style="width:<c:out value='${percent }'/>"></span>
+															</span>
+															<span class="number">
+																<c:out value="${percent }"/>
+															</span>
+														</dd>
+													</dl>										
+													<c:if test="${ qustType eq 'select'}">
+													<!-- 선택형 문항 -->
+													
+														<!-- 차트 그리기용 배열 -->
+														<table id="${item.POLL_POST_QUST_CONT}" class="drawTable">
+															<c:forEach var="i" items="${post }">
+																<c:if test="${item.POLL_POST_QUST_CONT eq i.POLL_POST_QUST_CONT}">
+																	<tr id="${i.POLL_POST_QUST_NAME }" class="drawTr">
+																		<td id="${i.POLL_POST_QUST_ANSW_CONT }"/>
+																		<td id="${i.ANSWERATTEND }"/>
+																	</tr>
+																</c:if>
+															</c:forEach>
+														</table>
+													
+													
+													
+														
+														<div id="result-chart"class="chart-class" style="width:600px;height:250px;"></div> 
+													</c:if>
+												</div>
+											</li>
+												</c:when>
+												<c:when test="${ qustType eq 'score'}">
+												<!-- 점수형 문항 -->
+												
+														<!-- 점수변환 -->
+														<c:set var="total" value="0"/>
+														<c:set var="qustCode" value="${item.POLL_POST_QUST_CODE }"/>
+														<c:forEach var="i" items="${post}">
+															<c:if test="${i.POLL_POST_QUST_CODE eq qustCode}">
+																<fmt:parseNumber value = "${i.POLL_POST_QUST_ANSW_CONT }" pattern = "0"  var="answerScore"/>
+																<fmt:parseNumber value = "${i.ANSWERATTEND }" pattern = "0"  var="answerPeople"/>
+																<c:set var="total" value="${total + answerScore * answerPeople  }"></c:set>
+															</c:if>
+														</c:forEach>
+														<fmt:formatNumber value="${total / qraNum}" pattern="0.00" var="avrScore"/>
+														
+																
+														</dd>
+														<dt>
+															<span class="txt">평균 점수 : </span>
+														</dt>
+														<dd>
+															<span class="average-txt number"><c:out value="${avrScore}"/></span>
+														</dd>
+													</dl>										
+												</div>					
+											</li>
+											
+												</c:when>
+											</c:choose>
+														
 										</c:if>
-										<!-- 첫문항 아님 / 문항 첫머리 아님 -->
-									<%-- 	<c:choose>
-											<c:when test="${item.POLL_POST_QUST_TYPE eq 'select'}">
-											<!-- 선택형 질문 -->	
-												<c:choose>
-													<c:when test="${item.POLL_POST_QUST_ANSW_TYPE ne 'etc'}">
-													<!-- 기타 선택지 아님 -->
-														<c:choose>
-															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
-															<!-- radio 선택지 -->
-																<li>
-																	<span class="answer-option-wrap">
-																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}">
-															</c:when>
-															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
-															<!-- checkbox 선택지 -->
-																<li>
-																	<span class="answer-option-wrap">
-																		<p class="data" hidden="true"><c:out value="${item.POLL_POST_QUST_LIMIT}"/></p>
-																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
-															</c:when>
-														</c:choose>
-															<label for="${item.POLL_POST_QUST_ANSW_CODE }">
-																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
-															</label>
-														</span>
-														</li>
-													</c:when>
-													<c:otherwise>
-													<!-- 기타 선택지 -->
-														<c:choose>
-															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'single'}">
-																<li class="etc">
-																	<span class="txt-wrap">
-																<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
-															</c:when>
-															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
-																<li class="etc">
-																	<span class="txt-wrap">
-																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
-																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
-															</c:when>
-														</c:choose>
-															<label for="${item.POLL_POST_QUST_ANSW_CODE } txt">
-																<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
-															</label>
-															<input class="txt w-fix-max" type="text">
-														</span>
-														</li>
-													</c:otherwise>
-												</c:choose>
-											</c:when>	
-											<c:when test="${item.POLL_POST_QUST_TYPE eq 'text'}">
-											<!-- 텍스트형 -->
-												<c:choose>
-													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'long' }">
-													<!-- 장문 선택 -->
-														<li>
-															<div class="text-area-wrap">
-																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5">
-																</textarea>
-															</div>
-														</li>
-													</c:when>
-													<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'short' }">
-													<!-- 단문 선택 -->
-														<li>
-															<div class="text-wrap">
-																<input id="${item.POLL_POST_QUST_ANSW_CODE }" class="text w-max" type="text">
-															</div>
-														</li>
-													</c:when>
-												</c:choose>
-											</c:when>														
-											<c:when test="${item.POLL_POST_QUST_TYPE eq 'score'}">
-											<!-- 점수형일 경우 -->
-												<li>
-													<span class="answer-option-wrap">
-														<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="radio" name="${item.POLL_POST_QUST_CODE}">
-														<label for="${item.POLL_POST_QUST_ANSW_CODE }">
-															<c:out value="${item.POLL_POST_QUST_ANSW_CONT }"></c:out>
-														</label>
-													</span>
-												</li>
-											</c:when>														
-										</c:choose>	
-											 --%>
-										
-										
 										<c:if test="${status.last eq true}">
 										<!-- 배열 마지막일 경우 -->
 												</ul>
 											</li>
 										</c:if>
 									</c:forEach>
-											
-					
-										
-											
-											
-											
-											
-											
-								
-							
-								
-								
-								
-								
-								
-								
-								
-								
-								
-																	
-									<!-- 샘플 결과 -->
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">1</span>
-											.
-											점심 뭐먹지(질문 선택형)
-										</span>
-										<div class=result-chart-wrap>
-											<dl class=result-chart-info>
-												<dt>
-													<span class="txt">전체 참여자 : </span>
-												</dt>
-												<dd>
-													<span class="number">5</span>
-													<span class="txt">명</span>
-												</dd>
-												<dt>
-													<span class="txt">참여율 : </span>
-												</dt>
-												<dd>
-													<span class="number">1</span>
-													<span class="txt">명</span>
-													<span class="gage-wrap">
-														<span class="gage" style="width:20.00%"></span>
-													</span>
-													<span class="number">20.00%</span>
-												</dd>
-											</dl>										
-											<div id="result-chart" style="width:895px;height:250px;"></div>
-										</div>
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">2</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"2번 텍스트형 필수 장문"
-										</span>	
-										<div class=result-chart-wrap>
-											<dl class=result-chart-info>
-												<dt>
-													<span class="txt">전체 참여자 : </span>
-												</dt>
-												<dd>
-													<span class="number">5</span>
-													<span class="txt">명</span>
-												</dd>
-												<dt>
-													<span class="txt">참여율 : </span>
-												</dt>
-												<dd>
-													<span class="number">1</span>
-													<span class="txt">명</span>
-													<span class="gage-wrap">
-														<span class="gage" style="width:20.00%"></span>
-													</span>
-													<span class="number">20.00%</span>
-												</dd>
-											</dl>										
-										</div>					
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">3</span>
-											"."
-											"3번 텍스트형 단문"
-										</span>	
-										<div class=result-chart-wrap>
-											<dl class=result-chart-info>
-												<dt>
-													<span class="txt">전체 참여자 : </span>
-												</dt>
-												<dd>
-													<span class="number">5</span>
-													<span class="txt">명</span>
-												</dd>
-												<dt>
-													<span class="txt">참여율 : </span>
-												</dt>
-												<dd>
-													<span class="number">1</span>
-													<span class="txt">명</span>
-													<span class="gage-wrap">
-														<span class="gage" style="width:20.00%"></span>
-													</span>
-													<span class="number">20.00%</span>
-												</dd>
-											</dl>										
-										</div>					
-									</li>
-									<li class=question-response>
-										<span class="question">
-											<span class="seq">4</span>
-											"."
-											<span class="necessary">[필수]</span>
-											"4번 필수 점수형 10점"
-										</span>	
-										<div class=result-chart-wrap>
-											<dl class=result-chart-info>
-												<dt>
-													<span class="txt">전체 참여자 : </span>
-												</dt>
-												<dd>
-													<span class="number">5</span>
-													<span class="txt">명</span>
-												</dd>
-												<dt>
-													<span class="txt">참여율 : </span>
-												</dt>
-												<dd>
-													<span class="number">1</span>
-													<span class="txt">명</span>
-												</dd>
-												<dt>
-													<span class="txt">평균 점수 : </span>
-												</dt>
-												<dd>
-													<span class="average-txt number">1</span>
-												</dd>
-											</dl>										
-										</div>					
-									</li>
-	
 								</ul>
 							</div>
 							<div class="question-submit-button">
@@ -572,26 +447,49 @@
 				</div>
 			</div>
 			<section class="poll-post-toolbar">
-				<ul class="poll-post-manage">
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon modify"></span>
-							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap progress-change-btn">
-							<span class="toolbar-icon play"></span>
-							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon del"></span>
-							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
-						</a>
-					</li>
-				</ul>
+				<c:if test="${sessionScope.empInfo.emp_info_emp_no eq post[0].POLL_POST_EMP}">
+					<ul class="poll-post-manage">
+						<li> 
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon modify"></span>
+								<span class="poll-post-toolbar-modify-btn-txt">수정</span>
+							</a>
+						</li>
+						<c:choose>
+							<c:when test="${post[0].POLL_POST_CLOSING eq 'Y'}">
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon play"></span>
+										<span class="poll-post-toolbar-progress-btn-txt">진행</span>
+									</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon stop"></span>
+										<span class="poll-post-toolbar-stop-btn-txt">중지</span>
+									</a>
+								</li>
+								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
+									<li>
+										<a class="toolbar-btn-wrap">
+											<span class="toolbar-icon end"></span>
+											<span class="poll-post-toolbar-end-btn-txt">마감</span>
+										</a>
+									</li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						
+						<li>
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon del"></span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
+							</a>
+						</li>
+					</ul>
+				</c:if>
 				<ul class="poll-post-list">
 					<li>
 						<a class="toolbar-btn-wrap toolbar-list-btn">
@@ -605,59 +503,81 @@
 
 	</div>
 	
-    <script>
-        // based on prepared DOM, initialize echarts instance
-        var myChart = echarts.init($('#result-chart')[0]);
+	<script type="text/html" id="chart-template">
 		
-        var data1 = "맥창";
+	</script>
+	
+    <script type="text/javascript">
+    	
+    	$(document).ready(function(){
+    		
+    		/* 챠트 그리기 */
+    		$('.drawTable').each(function(index, item){
+    			
+    			//챠트제목 추출
+   				qid = $(this).find('tr').prop('id');
+				
+    			//데이터 입력용 변수 생성
+				var chartMap = new Array();
+					chartMap = [];
+	    		var value;
+	    		var name;
+	    		var qid;
+					
+	    		//반복문으로 데이터 배열 생성
+    			$(this).children().children('.drawTr').each(function(innerIndex, innerItem){
+    				
+    				name = $(this).children(':eq(0)').prop('id');
+    				value = $(this).children(':eq(1)').prop('id');
+					chartMap.push({"name" : name, "value" : value}); 
+    			});
+	    			//챠트 생성/ 옵션 설정
+					var myChart = [];
+					myChart[index] = echarts.init($('.chart-class')[index]);
+			        myChart[index].setOption({
+			    		    title: false,
+			    		    tooltip: {
+			    		        trigger: 'item',
+			    		        formatter: '{a} <br/>{b} : {c} ({d}%)'
+			    		    },
+			    		    series: [
+			    		        {
+			    		            name: qid,
+			    		            type: 'pie',
+			    		            left:'10',
+			    		            height:'auto',
+			    		            alignTo:'default',
+			    		            radius : '60%',
+			    		            center: ['50%', '55%'],
+			    		            label: {
+			    		                position: 'outer',
+			    	                	formatter: '{b}：{c}명  ({d}%)  '
+			    		            },
+			    		            data:chartMap,
+			    		            itemStyle: {
+			    		                emphasis: {
+			    		                    shadowBlur: 0,
+			    		                    shadowOffsetX: 0,
+			    		                    shadowColor: 'rgba(0, 0, 0, 0)'
+			    		                }
+			    		            }
+			    		        }
+			    		    ]
+			        	});		
+    		});
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    		
+    	});
+    
         
-        // specify chart configuration item and data
-		option = {
-		    title: false,
-		    tooltip: {
-		        trigger: 'item',
-		        formatter: '{a} <br/>{b} : {c} ({d}%)'
-		    },
-		    legend: {
-		        type: 'scroll',
-		        orient: 'vertical',
-		        left: 10,
-		        bottom: 10,
-		        data: [data1,'솔낭구','뢰벤','순대국','청국장'],
-		
-		    },
-		    series: [
-		        {
-		            name: '점심 뭐먹지',
-		            type: 'pie',
-		            left:'10',
-		            radius : '55%',
-		            center: ['50%', '60%'],
-		            label: {
-		                position: 'outer',
-	                	formatter: '{b}：{c}명  ({d}%)  '
-		            },
-		            data:[
-		                {value:335, name:data1},
-		                {value:310, name:'솔낭구'},
-		                {value:234, name:'뢰벤'},
-		                {value:135, name:'순대국'},
-		                {value:1548, name:'청국장'}
-		            ],
-		            itemStyle: {
-		                emphasis: {
-		                    shadowBlur: 0,
-		                    shadowOffsetX: 0,
-		                    shadowColor: 'rgba(0, 0, 0, 0)'
-		                    
-		                }
-		            }
-		        }
-		    ]
-		};
-
-        // use configuration item and data specified to show chart
-        myChart.setOption(option);
     </script>
 
 </body>

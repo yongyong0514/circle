@@ -71,13 +71,13 @@ public class PollController {
 		//페이지 DB추출
 		List<HashMap<String,String>> list = pollService.progressList(pageInfo);
 		
-		log.info(pageInfo.toString());
-		
 		//post정보 담기
 		modelMap.put("post", list);
 		
 		//page정보 담기
 		modelMap.put("pageInfo", pageInfo);
+		
+		log.info("진행설문 조회 : {}", modelMap);
 		
 		return "/poll/progress";
 	}
@@ -124,11 +124,11 @@ public class PollController {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		if(nowPage == null && cntPerPage == null) {
 		nowPage = "1";
-		cntPerPage = "1";
+		cntPerPage = "10";
 		} else if(nowPage == null) {
 		nowPage = "1";
 		} else if(cntPerPage == null) {
-		cntPerPage = "1";
+		cntPerPage = "10";
 		}
 		Pagination prePageInfo = new Pagination(empNo, searchTitle, searchWriter);
 		//총 페이지수 DB추출

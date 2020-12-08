@@ -234,44 +234,46 @@
 		      , X.POLL_POST_SDAT
 		      , X.POLL_POST_EDAT   
 		      , X.POLL_POST_CLOSING
-		      , X.POLL_POST_QUST_ANSW_join_emp
-		   from (select ROWNUM rnum
+		      , X.join_count
+           from (select ROWNUM rnum
 		          , A.poll_post_code
 		          , A.POLL_POST_NAME
 		          , A.POLL_POST_SDAT
 		          , A.POLL_POST_EDAT   
 		          , A.POLL_POST_CLOSING
-		          , A.POLL_POST_QUST_ANSW_join_emp
-		       from (select  poll_post_code
+		          , A.join_count
+               from (select  poll_post_code
 		                   , POLL_POST_NAME
 		                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
 		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
 		                   , POLL_POST_CLOSING  
-		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
-		                from poll_post
+		                   , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP) as join_count
+                        from poll_post
 		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join poll_post_join on (poll_post_code = poll_join_post)
+		                join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
 		               where poll_post_stat = 'Y'
-		                 and poll_post_emp = #{empNo}
+		                 and poll_post_emp =#{empNo}
 		                 and poll_post_name like '%${searchTitle}%'
 		            group by poll_post_code          
 		                   , POLL_POST_NAME
 		                   , POLL_POST_SDAT
 		                   , POLL_POST_EDAT
-		                   , POLL_POST_CLOSING) A
-		        where <![CDATA[ rownum <=]]>#{end}) X 
+		                   , POLL_POST_CLOSING
+                           , POLL_POST_QUST_ANSW_JOIN_EMP) A
+                where <![CDATA[ rownum <=]]>#{end}) X 
 	<![CDATA[ where X.rnum >= ]]>#{start}
 	</select>
 	<resultMap type="hashMap" id="myMap"></resultMap>
 		
 	<select id="getQuestion" parameterType="map" resultMap="questionMap">
 		 select poll_post_name
+ 		      , POLL_POST_EMP
 		      , emp_info_name
 		      , job_info_name
 		      , poll_post_wdat
 		      , poll_post_sdat
 		      , poll_post_edat
+		      , POLL_POST_CLOSING
 		      , poll_post_mod_admt
 		      , poll_post_sec
 		      , poll_post_cont
@@ -284,7 +286,7 @@
 		      , poll_post_qust_answ_code
 		      , poll_post_qust_answ_type
 		      , poll_post_qust_answ_cont
-		      , count(POLL_POST_QUST_ANSW_JOIN_EMP)
+		      , count(POLL_POST_QUST_ANSW_JOIN_EMP) as answerAttend
 		   from poll_post
 		   join emp_info on (poll_post_emp = emp_info_emp_no)
 		   join job_info on (EMP_INFO_JOB_CODE = JOB_INFO_CODE)
@@ -293,11 +295,13 @@
 		   full outer join poll_post_qust_answ_join on (poll_post_qust_answ_code = POLL_POST_QUST_ANSW_JOIN_CODE)
 		  where poll_post_code = #{postCode}
 		  group by(poll_post_name
+  		      , POLL_POST_EMP
 		      , emp_info_name
 		      , job_info_name
 		      , poll_post_wdat
 		      , poll_post_sdat
 		      , poll_post_edat
+		      , POLL_POST_CLOSING
 		      , poll_post_mod_admt
 		      , poll_post_sec
 		      , poll_post_cont
@@ -334,7 +338,7 @@
 	
 	<select id="getQustRealAttend" parameterType="map" resultMap="qustAttendMap">
 		 select poll_post_qust_code
-		      , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP)
+		      , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP) as QustRealAttend
 		   from poll_post
 		   join emp_info on (poll_post_emp = emp_info_emp_no)
 		   join job_info on (EMP_INFO_JOB_CODE = JOB_INFO_CODE)
