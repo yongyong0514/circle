@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.service.AddressBookService;
+import com.kh.circle.empInfo.entity.EmpInfoAll;
 
 @Controller
 @RequestMapping("/addressBook")
@@ -46,7 +49,6 @@ public class AddressBookController {
 									.build();
 		
 		// 전체 리스트 반환
-		
 		// 페이징 처리 
 		Map<String, Object> map = addressBookService.pagingEmp(pInfo);
 		
@@ -60,8 +62,24 @@ public class AddressBookController {
 		return "addressBook/allEmp";
 	}
 	
-	@GetMapping("/detail")
-	public String detail() {
-		return "addressBook/addressBookDetail";
+	@RequestMapping(value="/detail", method= {RequestMethod.GET, RequestMethod.POST})
+//	@PostMapping("/detail")
+	public String detail(@ModelAttribute("emp_no") String emp_no,
+							Model model) {
+		
+		EmpInfoAll empInfo = addressBookService.detail(emp_no);
+
+		model.addAttribute("empInfo", empInfo);
+		
+		return "addressBook/detail";
 	}
+	
+	/*
+	 * @GetMapping("/detail") public String detail(@ModelAttribute EmpInfoAll
+	 * empInfo, Model model) {
+	 * 
+	 * model.addAttribute("empInfo", empInfo);
+	 * 
+	 * return "addressBook/detail"; }
+	 */
 }

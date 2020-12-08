@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AddressInfo {
+	private String empNo;		// 사원번호
 	private String name;
 	private String photo;		// 사진파일 코드
 	private String deptName;	// 부서명
