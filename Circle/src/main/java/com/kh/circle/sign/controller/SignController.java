@@ -29,6 +29,7 @@ import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
 import com.kh.circle.sign.vo.SignListJoiner;
 import com.kh.circle.sign.vo.SignModify;
+import com.kh.circle.sign.vo.SignReply;
 import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
@@ -137,6 +138,9 @@ public class SignController {
 		List<SignFiles> list4 = sqlSession.selectList("sign.sfsListMini2", empCode);
 		model.addAttribute("list4", list4);
 		
+		List<SignReply> list5 = sqlSession.selectList("sign.signResult", signCode);
+		model.addAttribute("list5", list5);
+		
 		return "sign/signSelectOne";
 	}
 	
@@ -190,30 +194,7 @@ public class SignController {
 		return entity;
 	}
 	
-	
-// 전자 결재 한명 결재 프로세스
-	@PostMapping("/signProcess")
-	public String updateSignProcess(@RequestParam String fileCode, String signCode, HttpSession session) {
-		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
-		
-		//1. 프로세스 상태 변경 대기->진행 insert
-		//보류(상태 변경 시점이 애매함)
-		//최초 상태 밴경시 -> 진행으로 바뀌는 트리거 필요
-		//카운트 0 일 때 작동하는 트리거로 완료 처리
-		
-		//2. 결재자 상태 변경 결재여부 N->Y 결재 날짜 입력 update
-		//진행가능
-		
-		//3. 결재 카운트 감소-1 update
-		//진행가능
-		
-		//4. 결재 댓글에 파일코드 가져와서 댓글형 결재 완료 작성 insert
-		//진행가능
-		
-		return "success";
-	}
-	
-	
+
 // 문서 첫화면
 	@GetMapping("/docuList")
 	public String docuList() {

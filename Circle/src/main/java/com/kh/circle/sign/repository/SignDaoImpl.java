@@ -161,4 +161,23 @@ public class SignDaoImpl implements SignDao {
 		byte[] data = FileUtils.readFileToByteArray(target);
 		return data;
 	}
+
+	//결재 동의 댓글 등록
+	@Override
+	public void addAgree(String empCode, String signCode, String fileCode) {
+		
+		//시퀀스 번호 생성 및 파일 등록
+		String seqReply = sqlSession.selectOne("sign.seqSignReply");
+		
+		//결재 댓글 등록
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignReply", seqReply);
+		map.put("sign_code", signCode);
+		map.put("sign_reply_content", fileCode);
+		map.put("emp_info_emp_code", empCode);
+		
+		sqlSession.insert("sign.signResultInsert", map);
+		
+	}
 }

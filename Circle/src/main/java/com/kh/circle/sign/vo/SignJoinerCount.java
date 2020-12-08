@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignListJoiner {
-	private String emp_info_name;
-	private String job_info_name;
-	private String emp_info_emp_no;
+public class SignJoinerCount {
 	private String sign_count;
-	private String sign_join_check;
+	private String sign_ocount;
+	
 }

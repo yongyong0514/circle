@@ -124,13 +124,15 @@
 									<c:forEach var="join" items="${signListJoiner}">
 										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
 											<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
-											<button id="formBtn3">결재</button>
-												<ul id="signSelect1">
-													<li>
-														<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
-														<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
-													</li>
-												</ul>
+												<c:if test="${join.sign_join_check == 'N' }">
+													<button id="formBtn3">결재</button>
+													<ul id="signSelect1">
+														<li>
+															<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
+															<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
+														</li>
+													</ul>
+												</c:if>
 											</c:if>
 										</c:if>
 									</c:forEach>
@@ -171,7 +173,25 @@
 							<td class="formBox7" colspan="2"><button class="formBtn3" disabled>결재가 완료되었습니다</button></td>
 						</tr> -->
 						</table>
-						<table class="signAndReply"><!-- 댓글과 서명박스 구현 공간 -->
+						
+						<table class="signAndReply1"><!-- 댓글과 서명박스 구현 공간 -->
+							<c:forEach var="sign" items="${list5}">
+								<tbody class='replyBox1'>
+									<tr>
+										<td class='replyImage' rowspan='2'><img src='${pageContext.request.contextPath}/resources/img/test/user.png' class='img3'></td>
+										<td class='replyUser'>
+											<input type="text" class="formResult2" value="${sign.emp_info_name}" readonly>
+											<input type="text" class="formResult2" value="${sign.job_info_name}" readonly>
+											<input type="text" class="formResult4" value="${sign.sign_reply_date}" readonly>		
+										</td>			
+									</tr>
+									<tr>
+										<td class="formReply">
+											<div class="replyNote"><img class="imgSize2" src="${pageContext.request.contextPath}/sign/sfsDownload?fileCode=${sign.sign_reply_content}"></div>
+										</td>
+									</tr>
+								</tbody>
+							</c:forEach>
 					<%-- 	<c:forEach var="reply" items="${list4}">
 							<tbody class="replyBox">
 								<tr>
@@ -206,6 +226,8 @@
 									<input type="text" class="formResult6" value="결재 도장 이미지" readonly>
 								</td>
 							</tr> --%>
+						</table>
+						<table class="signAndReply">
 						</table>
 						<table><!-- 댓글 전송 버튼 박스 구간 -->
 							<tr>
@@ -272,38 +294,12 @@
     }
 	</script>
 	
-	<!-- 결재 초기 로드 -->
-	<script>
-		$(function(){
-			signDecision();
-		});
-	</script>
-	
 	<!-- 결재 댓글 초기 로드 -->
 	<script>
 		$(function(){
 			signReply();
 			
 		});
-	</script>
-	
-	<!-- 결재 로드 -->
-	<script>
-		function signDecision(){
-			var base = "${pageContext.request.contextPath}";
-			var signCode = document.location.href.split("=");
-			
-			$.ajax({
-				type: "get",
-				url: base + "/signResult/signDecision",
-				data: {signCode: signCode[1]},
-				success: function(data){
-					if(data != null) {
-						
-					}
-				}
-			});
-		}
 	</script>
 	
 	<!-- 결재 댓글 로드 -->
@@ -332,7 +328,7 @@
 							var $replyDate = $("<input type='text' class='formResult4' readonly>").val(data[key].sign_reply_date);
 							var $formReply = $("<td class='formReply'>");
 							var $replyNote = $("<textarea class='replyNote' readonly></textarea>").text(data[key].sign_reply_content);
-							
+
 							$replyUser.append($empName);
 							$replyUser.append($jobName);
 							$replyUser.append($replyDate);
@@ -356,8 +352,8 @@
 		}
 	</script>
 	
-	<!-- 결재 전송 -->
-	<script>
+	<!-- 결재 전송-->
+<!-- 	<script>
 		$(".submitAgree").click(function(){
 			var base = "${pageContext.request.contextPath}";
 			var signCode = document.location.href.split("=");
@@ -373,7 +369,7 @@
 				}
 			});
 		});
-	</script>
+	</script> -->
 	
 	<!-- 결재 댓글 전송 -->
 	<script>
@@ -582,16 +578,17 @@
 	<script>
 		$(".case1").click(function(){
 			var base = "${pageContext.request.contextPath}";
-			var uploadURL = base + "/sign/signProcess";
+			var uploadURL = base + "/signResult/signProcess";
 			var tag1 = $(this).children();
 			var tag2 = tag1[0].currentSrc;
 			var fileCode = tag2.split("=");
 			var signCode = document.location.href.split("=");
+			
 			$.ajax({
 				url: uploadURL,
 				type: "POST",
-				data: {fileCode: fileCode
-					, signCode: signCode},
+				data: {fileCode: fileCode[1]
+					, signCode: signCode[1]},
 				success: function(){
 					location.reload(true);
 				}
