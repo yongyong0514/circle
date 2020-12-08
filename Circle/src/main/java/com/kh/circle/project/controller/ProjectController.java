@@ -1,8 +1,10 @@
 package com.kh.circle.project.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.post.entity.Post;
@@ -101,6 +104,7 @@ public class ProjectController {
 	}
 
 
+	//project insert
 	@GetMapping("/projInsertProject")
 	public String InsertProject( HttpSession session, 
 			PostPaging postPaging,Model model ,// 뷰페이징
@@ -132,7 +136,7 @@ public class ProjectController {
 	}
 
 	@PostMapping("/projInsertProject")
-	public String insert(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
+	public String insertProject(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
 			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model) {
 
@@ -165,4 +169,85 @@ public class ProjectController {
 		return "redirect:projMain";
 	}
 
+	//end
+	
+	
+	//iss insert
+	
+	@GetMapping("/projInsertIss")
+	public String InsertIss( HttpSession session, 
+			PostPaging postPaging,Model model ,// 뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage
+			) {
+		
+
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+
+		System.out.println("emp_no : " + emp_no);
+
+		String myEmp = projService.projEmpNo(emp_no);
+
+		model.addAttribute("empNo", myEmp);
+
+		// 회원 리스트
+
+		List<Project> issMember = projService.issMember();
+		model.addAttribute("projMember", issMember);
+
+		System.out.println("emp_no : " + emp_no);
+		System.out.println("issMember : " + issMember);
+
+
+		model.addAttribute("empNo", myEmp);
+
+		return "project/projInsertIss";
+	}
+	
+
+	@PostMapping("/projInsertIss")
+	public String insertIss(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model,
+			@RequestParam MultipartFile iss_file
+			) throws IllegalStateException, IOException {
+
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		project.setPro_manager(emp_no);
+		
+		projService.projInsertIss(project, iss_file);
+		
+		List<Project> issProg = projService.issProg();
+		List<Project> issSitu = projService.issSitu();
+		
+		
+		/* 뷰페이징 시작 */
+		int total = projService.countPost();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		/* 뷰페이징 종료 */
+		
+
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
+		
+		//파일 업로드
+		
+		
+		
+
+		return "redirect:projIssMain";
+	}
+	
 }

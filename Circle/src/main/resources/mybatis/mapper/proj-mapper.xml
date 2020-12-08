@@ -84,11 +84,26 @@
 	<!-- insert -->
 	<!-- project -->
 	<insert id="projInsert" parameterType="project">
-		NSERT INTO PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE,PRO_INTRO, PRO_SDATE,
-		PRO_EDATE, PRO_STAT)
-		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6, 0)), #{pro_manager}, #{pro_title},#{pro_intro}, #{pro_sdate}, #{pro_edate}, DEFAULT
+		INSERT INTO PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE, PRO_INTRO, PRO_SDATE, PRO_EDATE, PRO_STAT)
+		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6, 0)), #{pro_manager}, #{pro_title}, #{pro_intro}, #{pro_sdate}, #{pro_edate}, DEFAULT)
 
 	</insert>
+	
+	<select id="issProg" resultType="project">
+	select *
+	from prog
+	</select>
+	
+	<select id="issSitu" resultType="project">
+	select *
+	from situ
+	</select>
+
+<!-- file upload -->
+
+<select id="seq" resultType="String">
+		select CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+	</select>
 
 	<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">
