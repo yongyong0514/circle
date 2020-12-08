@@ -21,7 +21,7 @@
 		<div class="leftBar">
 			<jsp:include page="common/addressBookLeftBar.jsp" />
 		</div>
-		<div class="organChart">
+ 		<div class="organChart">
 			<c:import url="/organChart/getInfo" />
 		</div>
 		<div class="container">
@@ -93,7 +93,7 @@
 							<tr class="addressTr">
 								<td>
 									<input type="checkbox">
-									<input type="hidden" value="${AddressInfo.empNo }"/>
+									<input class="checkEmpNo" type="hidden" value="${AddressInfo.empNo }"/>
 								</td>
 								<td><img class="thumbnail" src="#">&nbsp;
 									<c:out value="${AddressInfo.name }"/>	
@@ -149,7 +149,8 @@
 				</form>
 				
 				<!-- 상세정보 post 정보 전달용 form -->
-				<form class="detailForm" action="${pageContext.request.contextPath}/addressBook/detail" method="Post">
+				<form class="detailForm"
+					action="${pageContext.request.contextPath}/addressBook/detailPage" method="Post">
 					<input class="emp_no" name="emp_no" type="hidden">
 				</form>
 			</div>
@@ -186,8 +187,9 @@
 			});
 			
 			<!-- 1명 클릭 시 -->
-			$(".addressTr").click(function(){
-					$(".emp_no").val($(this).find("input[type=hidden]").val());
+ 			$(".addressTr").click(function(){
+				$(".emp_no").val($(".checkEmpNo").val());
+				console.log("clicked");
 				$(".detailForm").submit();
 			});
 		});
@@ -222,7 +224,6 @@
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
 		};
-		
 		
 		function isNull(value){
 			return ( value === undefined || value === null || value === "" ) ? true : false;
