@@ -81,6 +81,13 @@
             WHERE ROWNUM &lt; 6
 	</select>
 	
+	<select id="signJoinerCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN_JOIN
+ 		 WHERE SIGN_CODE = #{signCode}
+ 		   AND SIGN_JOIN_TYPE = 'Y'
+ 		   AND SIGN_JOIN_CHECK = 'N'
+	</select>
 	
 	<select id="signJoinerCheck" resultType="signListJoiner">
 		SELECT EI.EMP_INFO_NAME
@@ -111,6 +118,7 @@
 
   	<select id="signJoinerCode" resultType="signListJoiner" >
 		SELECT EI.EMP_INFO_EMP_NO
+			 , SJ.SIGN_JOIN_CHECK
   		  FROM SIGN SI
  		  JOIN SIGN_JOIN SJ ON(SJ.SIGN_CODE = SI.SIGN_CODE)
   		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SJ.SIGN_JOIN_EMP_CODE)
@@ -192,7 +200,8 @@
 					   , SIGN_EDAT
 					   , SIGN_EMP_CODE
 					   , SIGN_STEP
-					   , SIGN_COUNT) VALUES ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
+					   , SIGN_COUNT
+					   , SIGN_OCOUNT) VALUES ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
      	         						  , #{sign_type_code}
       		     						  , SYSDATE+#{sign_keep}
               	 						  , #{sign_acc}
@@ -203,6 +212,7 @@
            	    						  , NULL
            	    						  , #{sign_emp_code}
                 						  , 'SIPC000001'
+                						  , #{sign_count}
                 						  , #{sign_count})
 	</insert>
 	
@@ -242,18 +252,6 @@
 	<insert id="signProcessAdd1" parameterType="String">
 		INSERT INTO SIGN_PROCESS VALUES('SIPC000001'
 				  , ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000')))
-				  , SYSDATE)
-	</insert>
-	
-	<insert id="signProcessAdd2" parameterType="map">
-		INSERT INTO SIGN_PROCESS VALUES('SIPC000002'
-				  , #{sign_code}
-				  , SYSDATE)
-	</insert>	
-	
-	<insert id="signProcessAdd3" parameterType="map">
-		INSERT INTO SIGN_PROCESS VALUES('SIPC000003'
-				  , #{sign_code}
 				  , SYSDATE)
 	</insert>
 
@@ -381,6 +379,22 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	</select>
 <!-- signWrite page mapper end -->
 
+<!-- select SignSelectOne signResult start -->
+	<select id="signResult" resultType="signReply">
+		SELECT SR.SIGN_REPLY_CODE
+   		     , SR.SIGN_REPLY_DATE
+   		     , SR.SIGN_REPLY_CONTENT
+   		     , EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_NAME
+  		  FROM SIGN_REPLY SR
+  		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SR.SIGN_REPLY_EMP_CODE)
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 		 WHERE SIGN_REPLY_SIGN_CODE = #{signCode}
+ 		   AND SIGN_REPLY_TYPE = '2'		
+	</select>
+<!-- select SignSelectOne signResult end -->
+
+
 <!-- select signSelectOne reply start-->
 	<select id="signReply" resultType="signReply">
 		SELECT SR.SIGN_REPLY_CODE
@@ -392,6 +406,7 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
   		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = SR.SIGN_REPLY_EMP_CODE)
   		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
  		 WHERE SIGN_REPLY_SIGN_CODE = #{signCode}
+ 		   AND SIGN_REPLY_TYPE = '1'
 	</select>	
 <!-- select signSelectOne reply end -->
 
@@ -405,11 +420,13 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
                       		  , SIGN_REPLY_SIGN_CODE
                       		  , SIGN_REPLY_CONTENT
                       	      , SIGN_REPLY_DATE
-                     		  , SIGN_REPLY_EMP_CODE) VALUES( 'SIRC'||TRIM(TO_CHAR(#{seqSignReply},'000000'))
+                     		  , SIGN_REPLY_EMP_CODE
+                     		  , SIGN_REPLY_TYPE) VALUES( 'SIRC'||TRIM(TO_CHAR(#{seqSignReply},'000000'))
                                                    		   , #{sign_code}
                                                  		   , #{sign_reply_content}
                                                  		   , SYSDATE
-                                                 		   , #{emp_info_emp_code})
+                                                 		   , #{emp_info_emp_code}
+                                                 		   , '1')
 	</insert>
 <!-- insert signSelectOne reply end -->
 
@@ -490,12 +507,89 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	</select>
 <!-- select sign signature mini2 end -->
 
-
 <!-- uodate signDecision start -->
-<!-- 결재는 SIGN_JOIN 에서 해당 결재자의 사인 여부 업데이트 N -> Y
-	 결재 SIGN 테이블의 SIGN_COUNT 업데이트 -1 -->
-	 
+	<!-- one person agrees to sign -->
+	<update id="sjDecisionAgree" parameterType="map">
+		UPDATE SIGN_JOIN 
+   		   SET SIGN_JOIN_CHECK = 'Y'
+   		   	 , SIGN_JOIN_DATE = SYSDATE
+ 		 WHERE SIGN_CODE = #{signCode}
+  		   AND SIGN_JOIN_EMP_CODE = #{empCode}		
+	</update>
 
+	<!-- count sign joiner -->
+	<select id="sjDecisionCount" parameterType="String" resultType="SignJoinerCount">
+		SELECT SI.SIGN_OCOUNT
+   		     , (SELECT COUNT (*)
+        		  FROM SIGN_JOIN
+        		 WHERE SIGN_JOIN_TYPE = 'Y'
+         		   AND SIGN_JOIN_CHECK = 'N'
+         		   AND SIGN_CODE = #{signCode}) AS SIGN_COUNT
+  		  FROM SIGN SI
+ 		 WHERE SIGN_CODE = #{signCode}
+	</select>
+
+	<!-- CASE1 START -->
+	<!-- insert sign process when count -1 -->
+	<insert id="signProcessAdd2" parameterType="String">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000002'
+				  , #{sign_code}
+				  , SYSDATE)
+	</insert>
+	
+	<!-- update sign when count -1 and status continue -->
+	<update id="signGo" parameterType="String">
+		UPDATE SIGN
+  		   SET SIGN_STEP = 'SIPC000002'
+     	     , SIGN_COUNT = SIGN_COUNT - 1
+ 		 WHERE SIGN_CODE = #{signCode}
+	</update>
+	<!-- CASE1 END -->
+
+
+	<!-- CASE2 START -->
+	<!-- insert sign process when count finish -->
+	<insert id="signProcessAdd3" parameterType="String">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000003'
+				  , #{sign_code}
+				  , SYSDATE)
+	</insert>
+	
+	<!-- update sign when count finish and status finish -->
+	<update id="signComplete" parameterType="String">
+		UPDATE SIGN
+		   SET SIGN_STEP = 'SIPC000003'
+		     , SIGN_COUNT = '0'
+		     , SIGN_EDAT = SYSDATE
+		 WHERE SIGN_CODE = #{signCode}
+	</update>
+	<!-- CASE2 END -->
+	
+	
+	<!-- CASE3 START -->
+	<!-- update sign process when count -1 default -->
+	<update id="signContinue" parameterType="String">
+		UPDATE SIGN
+		   SET SIGN_COUNT = SIGN_COUNT - 1
+		 WHERE SIGN_CODE = #{signCode}
+	</update>
+	<!-- CASE3 END -->
+
+	
+	<!-- insert signResult -->
+	<insert id="signResultInsert" parameterType="String">
+		INSERT INTO SIGN_REPLY( SIGN_REPLY_CODE
+                      		  , SIGN_REPLY_SIGN_CODE
+                      		  , SIGN_REPLY_CONTENT
+                      	      , SIGN_REPLY_DATE
+                     		  , SIGN_REPLY_EMP_CODE
+                     		  , SIGN_REPLY_TYPE) VALUES( 'SIRC'||TRIM(TO_CHAR(#{seqSignReply},'000000'))
+                                                   		   , #{sign_code}
+                                                 		   , #{sign_reply_content}
+                                                 		   , SYSDATE
+                                                 		   , #{emp_info_emp_code}
+                                                 		   , '2')	
+	</insert>
 <!-- update signDecision end -->
 
 <!-- select signDecision start -->

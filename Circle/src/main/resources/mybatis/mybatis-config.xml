@@ -60,6 +60,7 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignModify" alias="signModify"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignFiles" alias="signFiles"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignReply" alias="signReply"/>
+		<typeAlias type="com.kh.circle.sign.vo.SignJoinerCount" alias="signJoinerCount"/>
 
 		
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendanceInfo"/>
@@ -115,10 +116,6 @@
 		- mappers는 mapper 파일의 위치를 지정
 	 -->
 	<mappers>
-		<!-- <mapper resource="mybatis/mapper/example-mapper.xml" /> -->
-
-
-<!-- 		 <mapper resource="mybatis/mapper/sign-mapper.xml" /> -->
 	
 	</mappers>
 

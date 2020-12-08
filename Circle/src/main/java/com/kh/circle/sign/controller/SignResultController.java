@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.service.SignService;
 import com.kh.circle.sign.vo.SignFiles;
+import com.kh.circle.sign.vo.SignJoinerCount;
 import com.kh.circle.sign.vo.SignListJoiner;
 import com.kh.circle.sign.vo.SignReply;
 import com.kh.circle.sign.vo.SignReplyInsert;
@@ -41,6 +42,13 @@ public class SignResultController {
 	@Autowired
 	private SignService signService;
 
+	
+	@GetMapping("/signJoinerCount")
+	public int signJoinerCount(@RequestParam String signCode) {
+		int result = sqlSession.selectOne("sign.signJoinerCount", signCode);
+		
+		return result;
+	}
 	
 	@GetMapping("/signListJoinerCheck")
 	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {	
@@ -137,4 +145,59 @@ public class SignResultController {
 		}
 		return "sign/signConfig";	
 	}	
+
+	
+// 전자 결재 한명 결재 프로세스
+	@PostMapping("/signProcess")
+	public String updateSignProcess(@RequestParam String fileCode, String signCode, HttpSession session) {
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		//1. SIGN_JOINER 결재 여부 결재로 변경 N -> Y
+		Map<String, Object> map1 = new HashMap<>();
+		
+		map1.put("signCode", signCode);
+		map1.put("empCode", empCode);
+		
+		sqlSession.update("sign.sjDecisionAgree", map1);
+		
+		//2. 조건에 따라 결재 프로세스 상태 변경을 위한 결재 카운트 조회 및 변수 설정
+		List<SignJoinerCount> signJoinerCount = sqlSession.selectList("sign.sjDecisionCount", signCode);
+
+		int signCount = 0;
+		int signOCount = 0;
+		
+		for(SignJoinerCount value:signJoinerCount) {
+			signCount = Integer.parseInt(value.getSign_count());
+			signOCount = Integer.parseInt(value.getSign_ocount());
+		}
+
+		int result = signCount - signOCount;
+		
+		//3. 조건부에 따른 결재 반영
+		//카운트 값 1 감소일 때 진행 상태 프로세스 추가
+		//sign 한 건 카운트 1 감소 처리 및 진행 상태 진행으로 변경
+		if(Math.abs(result) == 1) {
+			sqlSession.insert("sign.signProcessAdd2", signCode);
+			sqlSession.update("sign.signGo", signCode);
+		}
+		
+		//카운트 값 0일 때 완료 상태 프로세스 추가
+		//카운트 값 0과 함께 sign 한 건 완료 처리 및 카운터 0 처리
+		else if(Math.abs(result) == signOCount) {
+			sqlSession.insert("sign.signProcessAdd3", signCode);
+			sqlSession.update("sign.signComplete", signCode);
+		}
+		
+		//위에 둘에 해당되지 않을 때 sign 한건 카운트 1감소 처리
+		else if(Math.abs(result) != 1 && Math.abs(result) != signOCount) {
+			sqlSession.update("sign.signContinue", signCode);
+		}
+		
+		//4. 댓글형 결재 폼 작성 후 페이지 새로고침
+			signService.insertReplyAgree(empCode, signCode, fileCode);
+	
+		
+		return "redirect:/sign/signSelecOne/?signCode="+signCode;
+	}	
+
 }

@@ -29,4 +29,7 @@ public interface SignDao {
 	//결서 서명 파일 로드
 	byte[] loadFile(String files_cname) throws IOException;
 
+	//결재 동의 댓글 등록
+	void addAgree(String empCode, String signCode, String fileCode);
+
 }

@@ -85,4 +85,11 @@ public class SignServiceImpl implements SignService {
 		
 		return entity;
 	}
+
+	//결재 동의 댓글 등록
+	@Override
+	public void insertReplyAgree(String empCode, String signCode, String fileCode) {
+		signDao.addAgree(empCode, signCode, fileCode);
+		
+	}
 }

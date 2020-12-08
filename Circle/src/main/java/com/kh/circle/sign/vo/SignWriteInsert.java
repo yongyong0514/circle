@@ -17,6 +17,7 @@ public class SignWriteInsert {
 	private String sign_note;
 	private String sign_emp_code;
 	private String sign_count;
+	private String sign_ocount;
 	private String seqSign;
 	private String jCodeList;
 	private String wCodeList;
