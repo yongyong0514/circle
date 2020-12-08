@@ -8,44 +8,41 @@
 <!-- mapper라는 영역 안에 구문을 작성한다 - namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수) -->
 <mapper namespace="project">
 
-<!-- get same proj -->
-<select id="projCheck" resultType="project" parameterType="project">
-  select p.pro_code
-        from project p
-        join iss i on (i.iss_pro_code = p.pro_code)
-        join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
-        where e.emp_info_emp_no = #{emp_no}
-       group by p.pro_code
-</select>
 
-<!--  proj list -->
-	<select id="projMain" resultType="project">
-select *
-        from project p
-        join iss i on (i.iss_pro_code = p.pro_code)
-        join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
-        where e.emp_info_emp_no = #{emp_no}
-		order by p.pro_code desc
+
+	<!-- proj list -->
+	<select id="projMain" resultType="project"
+		parameterType="project">
+		select *
+		from project p
+		join emp_info e on (p.pro_manager = e.emp_info_emp_no)
+		where pro_code in (select distinct iss_pro_code
+		from iss i
+		where iss_emp_no = #{emp_no}
+		)
+		order by pro_code desc
 	</select>
-	
-	<select id="projIssMain" resultType="project">
-	select *
-	from iss i
-	join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
-	join project p on (i.iss_pro_code = p.pro_code)
-	join prog g on (i.iss_prog_code = g.prog_code)
-	join situ s on (i.iss_situ_code = s.situ_code)
-	where p.pro_code = #{pro_code}
+
+	<select id="projIssMain" resultType="project"
+		parameterType="project">
+		select *
+		from iss i
+		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+		join project p on (i.iss_pro_code = p.pro_code)
+		join prog g on (i.iss_prog_code = g.prog_code)
+		join situ s on (i.iss_situ_code = s.situ_code)
+		where p.pro_code = #{pro_code}
+		order by i.iss_code desc
 	</select>
-	
-	
-	<!--  총 게시글 개수  -->
+
+
+	<!-- 총 게시글 개수 -->
 	<select id="projCount" resultType="int">
-	select count(*)
-	from project
+		select count(*)
+		from project
 	</select>
-	
-	
+
+
 	<select id="projSelect" parameterType="projPaging"
 		resultType="project">
 		select *
@@ -53,11 +50,13 @@ select *
 		select rownum rn, a.*
 		from (
 		select *
-		from project
+		from
+		project
 		p
 		join iss i on (p.pro_code = i.iss_pro_code)
-		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
-		where i.iss_emp_no  = #{iss_emp_no}
+		join emp_info e on
+		(i.iss_emp_no = e.emp_info_emp_no)
+		where i.iss_emp_no = #{iss_emp_no}
 		order by pro_code desc
 		) a
 		)
@@ -65,39 +64,59 @@ select *
 		#{end}
 
 	</select>
-	
-	
+
+
 	<!-- iss 내 정보 얻기 -->
-	
+
 	<select id="empNo" resultType="string" parameterType="string">
-	select emp_info_emp_no
-	from emp_info
-	where emp_info_emp_no = #{emp_no}
+		select emp_info_emp_no
+		from emp_info
+		where emp_info_emp_no = #{emp_no}
 	</select>
-	
-	
-	
-<!-- 정치적 중립선 -->
+
+	<!-- member list -->
+	<select id="projMember" resultType="project">
+		select e.emp_info_emp_no, e.emp_info_name, d.dept_info_name
+		from emp_info e
+		join dept_info d on(e.emp_info_dept_code = d.dept_info_code)
+	</select>
+
+	<!-- insert -->
+	<!-- project -->
+	<insert id="projInsert" parameterType="project">
+		NSERT INTO PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE,PRO_INTRO, PRO_SDATE,
+		PRO_EDATE, PRO_STAT)
+		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6, 0)), #{pro_manager}, #{pro_title},#{pro_intro}, #{pro_sdate}, #{pro_edate}, DEFAULT
+
+	</insert>
+
+	<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">
-	select *
+		select *
 		from project pr
 		join iss i on (i.iss_pro_code = pr.pro_code)
-		join emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
-		join prog p on (i.iss_prog_code = p.prog_code)
-		join situ s on (i.iss_situ_code = s.situ_code)
+		join
+		emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		join prog p on
+		(i.iss_prog_code = p.prog_code)
+		join situ s on (i.iss_situ_code =
+		s.situ_code)
 		order by pr.pro_code desc
-	
+
 	</select>
 
 
-<select id="projTodo" resultType="project">
-	select *
+	<select id="projTodo" resultType="project">
+		select *
 		from project pr
 		join iss i on (i.iss_pro_code = pr.pro_code)
-		join emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
-		join prog p on (i.iss_prog_code = p.prog_code)
-		join situ s on (i.iss_situ_code = s.situ_code)
+		join
+		emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		join prog p on
+		(i.iss_prog_code = p.prog_code)
+		join situ s on (i.iss_situ_code =
+		s.situ_code)
 		order by pr.pro_code desc
-	
+
 	</select>
 </mapper>

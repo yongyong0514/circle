@@ -31,23 +31,15 @@
 <div style="float: right;">
 		<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="5"
-				<c:if test="${postCount.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+				<c:if test="${projCount.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
 			<option value="10"
-				<c:if test="${postCount.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
+				<c:if test="${projCount.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
 			<option value="15"
-				<c:if test="${postCount.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
+				<c:if test="${projCount.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
 			<option value="20"
-				<c:if test="${postCount.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
+				<c:if test="${projCount.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
 		</select>
 	</div>
-	
-	${projMain}
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	${projCheck.pro_code}
 	<!-- 전체 게시판 불러오기 -->
 	<table class="projParts">
 		<tr>
@@ -60,7 +52,6 @@
 		</tr>
 		
 		
-	<c:if test="${projCheck eq projMain}">
 	<c:forEach var="projMain" items="${projMain}">
 		<tr>
 			<td>${projMain.pro_code}</td>
@@ -71,7 +62,6 @@
 			<td><input type="hidden" value="${projMain.pro_edate}"> <a href='<c:url value='/project/projDetail?pro_code=${projMain.pro_code}'/>'>자세히보기</a></td>
 		</tr>
 	</c:forEach>
-		</c:if>
 	</table>
 	
 		

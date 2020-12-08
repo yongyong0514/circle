@@ -43,10 +43,21 @@ public class ProjectServiceImp implements ProjectService{
 	}
 
 
+
+
 	@Override
-	public List<Project> projCheck(String emp_no) {
-		return projDao.projCheck(emp_no);
+	public List<Project> projMember() {
+		return projDao.projMember();
 	}
+
+
+	@Override
+	public void projInsert(Project project) {
+
+		projDao.projInsert(project);
+	}
+
+
 
 
 
