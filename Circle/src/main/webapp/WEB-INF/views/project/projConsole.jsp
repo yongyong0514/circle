@@ -16,6 +16,8 @@
 			<div> 업무로 가기</div>
 			<div> 칸반보드</div>
 			<div> TO-DO</div>
+			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/project/projInsertProject'">프로젝트 만들기</button></div>
+			
 			
 		</div>
 

@@ -43,10 +43,6 @@ public class ProjectServiceImp implements ProjectService{
 	}
 
 
-	@Override
-	public List<Project> projCheck(String emp_no) {
-		return projDao.projCheck(emp_no);
-	}
 
 
 

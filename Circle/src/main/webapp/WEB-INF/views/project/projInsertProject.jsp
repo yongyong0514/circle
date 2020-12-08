@@ -21,18 +21,24 @@
 			<textarea class="textarea" id="pro_intro" name="pro_intro"></textarea>
 		</div>
 			<div class="inputfield">
-			<label for="post_type">시작일 </label>
+			<label for="pro_sdate">시작일 </label>
+			<label><input type="radio" id="pro_sdate" name="pro_sdate" value="SYSDATE">오늘</label>
+			<label><input type="date" id="pro_sdate" name="pro_sdate" >날짜 선택</label>
 			
 		</div>
 
 		<div class="inputfield">
-			<label for="post_sec">종료일</label>
-			<div class="post_select">
-				<label><input type="radio" id="post_sec" name="post_sec" value="Y" checked>공개</label>
-				<label><input type="radio" id="post_sec" name="post_sec" value="N">비공개</label>
+<label for="pro_edate">종료일 </label>
+			<label><input type="radio" id="pro_sdate" name="pro_edate" value="SYSDATE">오늘</label>
+			<label><input type="date" id="pro_sdate" name="pro_edate" >날짜 선택</label>
 			</div>
 		</div>
-
+	<div class="inputfield">
+<label for="pro_edate">담당자 </label>
+			<label><input type="radio" id="pro_sdate" name="pro_edate" value="SYSDATE">본인</label>
+			<label><input type="date" id="pro_sdate" name="pro_edate" >날짜 선택</label>
+			</div>
+	
 		<div class="inputfield">
 			<input type="submit" value="글쓰기" class="btn" name="submit" id="submit">
 			<input	type="reset" value="초기화" class="btn" name="reset" id="reset">

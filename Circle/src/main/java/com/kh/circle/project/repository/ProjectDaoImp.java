@@ -52,11 +52,5 @@ public class ProjectDaoImp implements ProjectDao{
 	}
 
 
-	@Override
-	public List<Project> projCheck(String emp_no) {
-		List<Project> check = sqlSession.selectList("project.projCheck", emp_no);
-		System.out.println("dao : : : " + check);
-		return check;
-	}
 
 }

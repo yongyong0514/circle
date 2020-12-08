@@ -15,6 +15,5 @@ public interface ProjectService {
 
 	String projEmpNo(String emp_no);
 
-	List<Project> projCheck(String emp_no);
 
 }

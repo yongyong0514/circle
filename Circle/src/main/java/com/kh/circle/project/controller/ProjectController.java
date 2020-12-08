@@ -61,13 +61,9 @@ public class ProjectController {
 		System.out.println("tet" + projMain);
 		
 		model.addAttribute("projMain", projMain);
-		
 		//중복 프로젝트값 받
 		
-		List<Project> projCheck = projService.projCheck(emp_no);
 
-
-		model.addAttribute("projCheck", projCheck);
 		
 		/* 뷰페이징 시작 */
 		int total = projService.countPost();
@@ -126,9 +122,9 @@ public class ProjectController {
 	}
 	
 	
-	@GetMapping("/projInsert")
+	@GetMapping("/projInsertProject")
 	public String projInsert() {
-		return "project/projInsert";
+		return "project/projInsertProject";
 	}
 
 	
