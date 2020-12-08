@@ -8,15 +8,24 @@
 <!-- mapper라는 영역 안에 구문을 작성한다 - namespace : mapper간의 충돌을 방지 하기 위한 이름 (필수) -->
 <mapper namespace="project">
 
-
+<!-- get same proj -->
+<select id="projCheck" resultType="project" parameterType="project">
+  select p.pro_code
+        from project p
+        join iss i on (i.iss_pro_code = p.pro_code)
+        join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+        where e.emp_info_emp_no = #{emp_no}
+       group by p.pro_code
+</select>
 
 <!--  proj list -->
 	<select id="projMain" resultType="project">
-	select *
-		from project pr
-		join emp_info e on(pr.pro_manager = e.emp_info_emp_no)<!-- 참가인원수 카운팅? 도전 -->
-		 <!-- 프젝관련 단계별 숫자? -->
-		order by pr.pro_code desc
+select *
+        from project p
+        join iss i on (i.iss_pro_code = p.pro_code)
+        join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+        where e.emp_info_emp_no = #{emp_no}
+		order by p.pro_code desc
 	</select>
 	
 	<select id="projIssMain" resultType="project">
@@ -30,7 +39,45 @@
 	</select>
 	
 	
+	<!--  총 게시글 개수  -->
+	<select id="projCount" resultType="int">
+	select count(*)
+	from project
+	</select>
+	
+	
+	<select id="projSelect" parameterType="projPaging"
+		resultType="project">
+		select *
+		from (
+		select rownum rn, a.*
+		from (
+		select *
+		from project
+		p
+		join iss i on (p.pro_code = i.iss_pro_code)
+		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+		where i.iss_emp_no  = #{iss_emp_no}
+		order by pro_code desc
+		) a
+		)
+		where rn between #{start} and
+		#{end}
 
+	</select>
+	
+	
+	<!-- iss 내 정보 얻기 -->
+	
+	<select id="empNo" resultType="string" parameterType="string">
+	select emp_info_emp_no
+	from emp_info
+	where emp_info_emp_no = #{emp_no}
+	</select>
+	
+	
+	
+<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">
 	select *
 		from project pr

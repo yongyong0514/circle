@@ -9,6 +9,12 @@ public interface ProjectService {
 
 	List<Project> projIssMain(String pro_code);
 
-	List<Project> projMain(Project project);
+	List<Project> projMain(String emp_no);
+
+	int countPost();
+
+	String projEmpNo(String emp_no);
+
+	List<Project> projCheck(String emp_no);
 
 }
