@@ -22,7 +22,8 @@
 			<jsp:include page="common/addressBookLeftBar.jsp" />
 		</div>
 		<div class="organChart">
-			<c:import url="/organChart/getInfo" />
+			<c:import url="/menuOrganChart/getInfo"/>
+			<jsp:include page="../common/menuOrganChart.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">
