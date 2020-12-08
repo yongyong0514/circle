@@ -2,8 +2,6 @@ package com.kh.circle.sign.repository;
 
 import java.io.IOException;
 
-import org.springframework.ui.Model;
-
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignReplyInsert;
 import com.kh.circle.sign.vo.SignWriteInsert;
@@ -27,5 +25,8 @@ public interface SignDao {
 	//결재 서명 파일 등록
 	void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
 			String empCode);
+
+	//결서 서명 파일 로드
+	byte[] loadFile(String files_cname) throws IOException;
 
 }

@@ -64,4 +64,25 @@ public class SignServiceImpl implements SignService {
 			String files_route, String empCode) {
 		signDao.add(files_oname, files_size, files_type, files_cname, files_route, empCode);
 	}
+	
+	// 결재 서명 파일 다운로드
+	@Override
+	public ResponseEntity<ByteArrayResource> sfsdownload(String fileCode) throws IOException {
+		
+		SignFiles file = signDao.find(fileCode);
+		
+		if(file == null) {
+			return ResponseEntity.notFound().build();
+		}
+		byte[] data = signDao.loadFile(file.getFiles_cname());
+		ByteArrayResource resource = new ByteArrayResource(data);
+		ResponseEntity<ByteArrayResource> entity = 
+				ResponseEntity.ok()
+						.header("Content-Length", String.valueOf(file.getFiles_size()))
+						.header("Content-Type", "application/octet-stream; charset=UTF-8")
+						.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(file.getFiles_oname(), "UTF-8")+"\"")
+						.body(resource);
+		
+		return entity;
+	}
 }

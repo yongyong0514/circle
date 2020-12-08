@@ -433,6 +433,15 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	</insert>
 <!-- insert sign signature end -->
 
+<!-- select sign signature count start -->
+	<select id="sfsListCount" resultType="int" parameterType="String">
+		SELECT COUNT(*)
+		  FROM FILES
+		 WHERE FILES_TYPE = #{empCode}
+	</select>
+
+<!-- select sign signature count end -->
+
 <!-- select sign signature start -->
 	<select id="signFilesSignatureList" resultType="signFiles" parameterType="String">
 		SELECT FILES_CODE
@@ -446,6 +455,40 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 		 ORDER BY FILES_DATE DESC
 	</select>
 <!-- select sign signature end -->
+
+<!-- select sign signature mini start -->
+	<select id="sfsListMini" resultType="signFiles" parameterType="String">
+		SELECT *
+  		  FROM (SELECT FILES_CODE
+    				 , FILES_ONAME
+    				 , FILES_CNAME
+    				 , FILES_ROUTE
+    				 , FILES_SIZE
+  		 		  FROM FILES
+				 WHERE FILES_TYPE = #{empCode}
+ 		  		   AND FILES_STATUS = 'N'
+				 ORDER BY FILES_DATE DESC
+   			   )
+    	 WHERE ROWNUM &lt; 5
+	</select>
+<!-- select sign signature mini end -->
+
+<!-- select sign signature mini2 start -->
+	<select id="sfsListMini2" resultType="signFiles" parameterType="String">
+		SELECT *
+  		  FROM (SELECT FILES_CODE
+    				 , FILES_ONAME
+    				 , FILES_CNAME
+    				 , FILES_ROUTE
+    				 , FILES_SIZE
+  		 		  FROM FILES
+				 WHERE FILES_TYPE = #{empCode}
+ 		  		   AND FILES_STATUS = 'N'
+				 ORDER BY FILES_DATE DESC
+   			   )
+    	 WHERE ROWNUM &lt; 6
+	</select>
+<!-- select sign signature mini2 end -->
 
 
 <!-- uodate signDecision start -->
