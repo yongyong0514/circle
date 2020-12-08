@@ -65,8 +65,8 @@ public class ProjectController {
 		//중복 프로젝트값 받
 		
 		List<Project> projCheck = projService.projCheck(emp_no);
-		
-		
+
+
 		model.addAttribute("projCheck", projCheck);
 		
 		/* 뷰페이징 시작 */

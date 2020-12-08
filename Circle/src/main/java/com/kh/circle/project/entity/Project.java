@@ -10,10 +10,21 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class Project {
-
+	private String pro_code;
+	private String iss_code;
+	private String prog_code;
+	private String situ_code;
+	
+	//project table
+	private String pro_manager;
+	private String pro_title;
+	private String pro_intro;
+	private Date pro_sdate;
+	private Date pro_edate;
+	private String pro_key;
+	private String pro_stat;
 	
 	// iss table
-	private String iss_code;
 	private String iss_emp_no;
 	private String iss_title;
 	private String iss_pro_code;
@@ -29,12 +40,10 @@ public class Project {
 
 	
 	//prog table
-	private String prog_code;
 	private String prog_title;
 
 	
 	//situ table
-	private String situ_code;
 	private String situ_title;
 
 	
@@ -43,16 +52,7 @@ public class Project {
 	private String mem_emp_no;
 	private String mem_code;
 	private String mem_type;
-	
-	//project table
-	private String pro_code;
-	private String pro_manager;
-	private String pro_title;
-	private String pro_intro;
-	private Date pro_sdate;
-	private Date pro_edate;
-	private String pro_key;
-	private String pro_stat;
+
 	
 	
 	//emp table
