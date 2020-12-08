@@ -126,7 +126,7 @@
 										</span>
 									</td>
 									<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
-									<td class="post-join" hidden="true"><c:out value="${item.item.POLL_POST_QUST_ANSW_JOIN_EMP}"></c:out></td>
+									<td class="post-join" hidden="true"><c:out value="${item.JOIN_COUNT}"></c:out></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -284,6 +284,26 @@
 				var i = $(this).val();
 				location.href = "${pageContext.request.contextPath}/poll/my?cntPerPage=" + i;
 			});
+			
+			//설문 post 클릭시
+			$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+				/* 설문코드 추출 */
+				var code = $(this).parent().parent().find('.post-code').text();
+				
+				/* 참여여부 추출 */
+				var attend = $(this).parent().parent().find('.post-join').text();
+				
+				/* 마감여부 추출 */
+				var complete = $(this).parent().parent().find('.poll-state-td span').prop("class");
+				
+				if(complete == 'poll-state complete' || attend == 1) {
+					location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+				} else {
+					location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+				}
+				
+			});
+			
 			
 		});
 

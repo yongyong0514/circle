@@ -7,8 +7,9 @@ html body .poll-content-container{
 article, aside, figure, footer, header, hgroup, nav, section {
     display: block;
 }
-#content {
+.poll-post-content-container {
     word-break: break-all;
+    letter-spacing: -0.5px;
 }
 a{
     color: #333;
@@ -36,6 +37,7 @@ dl{
     margin-inline-start: 0px;
     margin-inline-end: 0px;
     line-height: 150%;
+    margin:0;
 }
 dt{
 	display: block;

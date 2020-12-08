@@ -62,20 +62,15 @@
 										<c:choose>
 											<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 												<span class="poll-state-span-no-attendance">
-											</c:when>
-											<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
-												<span class="poll-state-span-attendance">
-											</c:when>
-										</c:choose>
-											<c:choose>
-												<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 													<c:out value="미참여"></c:out>
-												</c:when>
-												<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
+												</span>
+											</c:when>
+											<c:otherwise>
+												<span class="poll-state-span-attendance">
 													<c:out value="참여 완료"></c:out>
-												</c:when>
-											</c:choose>
-										</span>
+												</span>
+											</c:otherwise>
+										</c:choose>
 									</td>
 									<td class="poll-title-td">
 										<a>

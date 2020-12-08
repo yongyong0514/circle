@@ -64,20 +64,15 @@
 										<c:choose>
 											<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 												<span class="poll-state-span-no-attendance">
-											</c:when>
-											<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
-												<span class="poll-state-span-attendance">
-											</c:when>
-										</c:choose>
-											<c:choose>
-												<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP eq 0}">
 													<c:out value="미참여"></c:out>
-												</c:when>
-												<c:when test="${item.POLL_POST_QUST_ANSW_JOIN_EMP ne 0}">
+												</span>
+											</c:when>
+											<c:otherwise>
+												<span class="poll-state-span-attendance">
 													<c:out value="참여 완료"></c:out>
-												</c:when>
-											</c:choose>
-										</span>
+												</span>
+											</c:otherwise>
+										</c:choose>
 									</td>
 									<td class="poll-title-td">
 										<a>
@@ -227,6 +222,7 @@
 	
 	<script>
 		$(document).ready(function(){
+			
 			//메뉴바 진행설문 부분 색상 변경
 			$('#poll-progress').css('color','black');
 			
@@ -251,8 +247,17 @@
 			
 			//설문 post 클릭시
 			$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+				/* 설문코드 추출 */
 				var code = $(this).parent().parent().find('.post-code').text();
-				location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+				
+				/* 참여 여부 확인 */
+				var attend = $(this).parent().parent().find('.poll-state-td span').prop("class");
+				
+				/* 참여 -> 결과창, 불참 -> 참여창 */
+				switch(attend) {
+				case 'poll-state-span-no-attendance' : location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+				default : location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+				}
 			});
 			
 		});

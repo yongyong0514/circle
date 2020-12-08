@@ -20,26 +20,61 @@
 		</header>
 		<div class="poll-post-inner-content-container">
 			<section class="poll-post-toolbar">
-				<ul class="poll-post-manage">
-					<li> 
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon modify"></span>
-							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon play"></span>
-							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon del"></span>
-							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
-						</a>
-					</li>
-				</ul>
+				<c:if test="${sessionScope.empInfo.emp_info_emp_no eq post[0].POLL_POST_EMP}">
+					<ul class="poll-post-manage">
+						<li> 
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon modify"></span>
+								<span class="poll-post-toolbar-modify-btn-txt">수정</span>
+							</a>
+						</li>
+						<c:choose>
+							<c:when test="${post[0].POLL_POST_CLOSING eq 'Y'}">
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon play"></span>
+										<span class="poll-post-toolbar-progress-btn-txt">진행</span>
+									</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon stop"></span>
+										<span class="poll-post-toolbar-stop-btn-txt">중지</span>
+									</a>
+								</li>
+								
+									<!-- 오늘날짜 변수화 -->
+									<jsp:useBean id="now" class="java.util.Date" scope="request"/>
+									<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowNum" scope="request"/>
+									<!-- 날짜 계산용 변수 초기화 -->
+									<c:set var="sdat" value="${item.POLL_POST_SDAT }"></c:set>
+									<c:set var="edat" value="${item.POLL_POST_EDAT }"></c:set>
+									<fmt:parseDate var="sdat" value="${sdat}" pattern="yyyy-MM-dd" />
+									<fmt:parseDate var="edat" value="${edat}" pattern="yyyy-MM-dd" />
+									<fmt:parseNumber value="${sdat.time / (1000*60*60*24)}" integerOnly="true" var="sdatNum" scope="request"/>
+									<fmt:parseNumber value="${edat.time / (1000*60*60*24)}" integerOnly="true" var="edatNum" scope="request"/>
+								
+								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
+									<li>
+										<a class="toolbar-btn-wrap">
+											<span class="toolbar-icon end"></span>
+											<span class="poll-post-toolbar-end-btn-txt">마감</span>
+										</a>
+									</li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						
+						<li>
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon del"></span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
+							</a>
+						</li>
+					</ul>
+				</c:if>
 				<ul class="poll-post-list">
 					<li>
 						<a class="toolbar-btn-wrap toolbar-list-btn">
@@ -407,26 +442,49 @@
 				</div>
 			</div>
 			<section class="poll-post-toolbar">
-				<ul class="poll-post-manage">
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon modify"></span>
-							<span class="poll-post-toolbar-modify-btn-txt">수정</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap progress-change-btn">
-							<span class="toolbar-icon play"></span>
-							<span class="poll-post-toolbar-progress-btn-txt">진행</span>
-						</a>
-					</li>
-					<li>
-						<a class="toolbar-btn-wrap">
-							<span class="toolbar-icon del"></span>
-							<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
-						</a>
-					</li>
-				</ul>
+				<c:if test="${sessionScope.empInfo.emp_info_emp_no eq post[0].POLL_POST_EMP}">
+					<ul class="poll-post-manage">
+						<li> 
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon modify"></span>
+								<span class="poll-post-toolbar-modify-btn-txt">수정</span>
+							</a>
+						</li>
+						<c:choose>
+							<c:when test="${post[0].POLL_POST_CLOSING eq 'Y'}">
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon play"></span>
+										<span class="poll-post-toolbar-progress-btn-txt">진행</span>
+									</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li>
+									<a class="toolbar-btn-wrap">
+										<span class="toolbar-icon stop"></span>
+										<span class="poll-post-toolbar-stop-btn-txt">중지</span>
+									</a>
+								</li>
+								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
+									<li>
+										<a class="toolbar-btn-wrap">
+											<span class="toolbar-icon end"></span>
+											<span class="poll-post-toolbar-end-btn-txt">마감</span>
+										</a>
+									</li>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+						
+						<li>
+							<a class="toolbar-btn-wrap">
+								<span class="toolbar-icon del"></span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
+							</a>
+						</li>
+					</ul>
+				</c:if>
 				<ul class="poll-post-list">
 					<li>
 						<a class="toolbar-btn-wrap toolbar-list-btn">
