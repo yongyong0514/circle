@@ -81,6 +81,13 @@
             WHERE ROWNUM &lt; 6
 	</select>
 	
+	<select id="signJoinerCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN_JOIN
+ 		 WHERE SIGN_CODE = #{signCode}
+ 		   AND SIGN_JOIN_TYPE = 'Y'
+ 		   AND SIGN_JOIN_CHECK = 'N'
+	</select>
 	
 	<select id="signJoinerCheck" resultType="signListJoiner">
 		SELECT EI.EMP_INFO_NAME
@@ -192,7 +199,8 @@
 					   , SIGN_EDAT
 					   , SIGN_EMP_CODE
 					   , SIGN_STEP
-					   , SIGN_COUNT) VALUES ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
+					   , SIGN_COUNT
+					   , SIGN_OCOUNT) VALUES ('SIGN'||TRIM(TO_CHAR(#{seqSign},'000000'))
      	         						  , #{sign_type_code}
       		     						  , SYSDATE+#{sign_keep}
               	 						  , #{sign_acc}
@@ -203,6 +211,7 @@
            	    						  , NULL
            	    						  , #{sign_emp_code}
                 						  , 'SIPC000001'
+                						  , #{sign_count}
                 						  , #{sign_count})
 	</insert>
 	

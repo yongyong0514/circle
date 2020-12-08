@@ -38,7 +38,7 @@
 							<img class="imgBox" src=""/>
 							<input type="file" name="fileUpload" id="fileUpload" accept="img/*">
 						</div>
-						<button class="signConfigBtn">결재 서명 등록</button>
+						<button class="signConfigBtn1">결재 서명 등록</button>
 						<ul id="signSelect">
 							<li>
 								<button class="submitAgree">이미지 선택<br><a class="fontSize1">선택한 이미지로 결재합니다</a></button>&nbsp;&nbsp;&nbsp;
@@ -85,7 +85,7 @@
 					
 					<div class="signConfigBtnSet">
 						<div class="signConfigArea"></div>
-						<button class="signConfigBtn">결재 문서 양식 등록</button>
+						<button class="signConfigBtn2">결재 문서 양식 등록</button>
 					</div>
 				</div>
 			</div>
@@ -111,7 +111,7 @@
 		});
 	</script>
     <script>
-    	$(".signConfigBtn").click(function(){
+    	$(".signConfigBtn1").click(function(){
     		$("#signSelect").fadeIn(100);
     	});
     </script>

@@ -46,15 +46,19 @@ public class SignController {
 //	결재 첫화면
 	@GetMapping("/signList")
 	public String signList(Model model, HttpSession session) {
-		String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
+		if(null != session.getAttribute("empInfo")) {
+		
+		String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
 		List<SignList> list = sqlSession.selectList("sign.list", emp_info_emp_no);
 		model.addAttribute("list", list);
 		
 		List<SignList> list2 = sqlSession.selectList("sign.listComplete", emp_info_emp_no);
 		model.addAttribute("list2", list2);
-
+		
+		}
+		
 		return "sign/signList";
 	}
 	

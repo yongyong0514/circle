@@ -103,6 +103,15 @@ body {
 	font-size: 17px;
 }
 
+.signJoinerBox {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
 .textBox3 {
 	float: right;
 	text-align: center;

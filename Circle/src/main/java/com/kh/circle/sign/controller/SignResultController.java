@@ -42,6 +42,13 @@ public class SignResultController {
 	private SignService signService;
 
 	
+	@GetMapping("/signJoinerCount")
+	public int signJoinerCount(@RequestParam String signCode) {
+		int result = sqlSession.selectOne("sign.signJoinerCount", signCode);
+		
+		return result;
+	}
+	
 	@GetMapping("/signListJoinerCheck")
 	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {	
 		List<SignListJoiner> list = sqlSession.selectList("sign.signJoinerCheck", signCode);
