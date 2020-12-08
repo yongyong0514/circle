@@ -1,0 +1,211 @@
+br {
+    content: " ";
+    display: block;
+    margin: 0.4em 0;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+.container {
+	position: absolute;
+	left: 180px;
+	width: calc(100% - 180px);
+}
+
+.content {
+}
+
+.resultArea1 {
+	width: 100%;
+	min-width: 1100px;
+	height: 350px;
+}
+
+#listArea {
+	width: 100%;
+	min-width: 1200px;
+}
+
+.result {
+	border: 1px solid #D8D8D8;
+}
+
+.result:hover {
+	background: #F1F9FF;
+	cursor: pointer;
+}
+
+.img0 {
+	padding-left: 0.6rem;
+	padding-top: 0.6rem;
+	width: 35px;
+	height: 35px;
+}
+
+.img1 {
+	margin-left: 5px;
+	margin-bottom: 15px;
+	width: 60px;
+	height: 30px;
+}
+
+.imgBox1 {
+	float: left;	
+	vertical-align: top;
+	width: 60px;
+	height: 60px;
+	background: #0072C6;
+}
+
+.imgBox2 {
+	float: left;	
+	vertical-align: top;
+	width: 60px;
+	height: 60px;
+	background: #D8D8D8;
+}
+
+.signJoiner {
+	margin-left: 10px;
+	margin-top: 14px;
+	width: 30px;
+	height: 30px;	
+}
+
+.signWatcher {
+	margin-left: 10px;
+	margin-top: 14px;
+	width: 30px;
+	height: 30px;	
+}
+
+.textBox0 {
+	display: none;
+}
+
+.textBox1 {
+	float: left;
+	padding-left: 0.5rem;
+	text-align: left;
+	width: 425px;
+	height: 60px;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+.textBox2 {
+	float: right;
+	text-align: center;
+	width: 120px;
+	height: 60px;
+	font-size: 17px;
+}
+
+.signJoinerBox {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+.textBox3 {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+.textBox5 {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 26px;
+	font-weight: bolder;
+}
+
+.signCount {
+	margin-left: -16px;
+	margin-top: -6px;
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	opacity: 0.3;
+}
+
+.textBox31 {
+	float: right;
+	text-align: center;
+	width: 80px;
+	height: 60px;
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+.textBox4 {
+	float: right;
+	text-align: center;
+	width: 120px;
+	height: 60px;
+	font-size: 16px;
+}
+
+.tName {
+	padding-top: 0.5rem;
+	padding-left: 0.5rem;
+	width:70px;
+	height: 30px;
+	text-align: left;
+	font-size: 18px;
+}
+
+.tClass {
+	padding-top: 0.5rem;
+	left: 80px;
+	width:70px;
+	height: 30px;
+	font-size: 18px;
+}
+
+.box {
+	position: absolute;
+	margin-left: -40px;
+	width: 160px;
+	height: auto;
+	background: white;
+	border: 2px solid #D8D8D8;
+	border-radius: 10px;
+	z-index: 1;
+	animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#paging {
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid black;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+#paging:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}

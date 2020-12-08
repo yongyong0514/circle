@@ -61,7 +61,7 @@
 		<typeAlias type="com.kh.circle.sign.vo.SignFiles" alias="signFiles"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignReply" alias="signReply"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignJoinerCount" alias="signJoinerCount"/>
-
+		
 		
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendanceInfo"/>
 		<typeAlias type="com.kh.circle.attendance.entity.WeekStackInfo" alias="weekStackInfo"/>

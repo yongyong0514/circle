@@ -110,6 +110,7 @@
 			})
 		});
 	</script>
+	
     <script>
     	$(".signConfigBtn1").click(function(){
     		$("#signSelect").fadeIn(100);
@@ -121,46 +122,7 @@
     		$("#signSelect").fadeOut(100);
     	});
     </script>
-    
-    
-<!-- 결재 서명 파일 초기 로드 -->
-<!-- 	<script>
-		$(function(){
-			signSignature();
-		});
-	</script> -->
-	
-<!-- 결재 서명 파일 로드 -->
-	<!-- <script>
-		function signSignature(){
-			var base = "${pageContext.request.contextPath}";
-			var uploadURL = base + "/signResult/signFilesSignatureList";
-			var empCode = ${empInfo.emp_info_emp_no};
-			
-			$.ajax({
-				type: "get",
-				url: uploadURL,
-				data: {empCode: empCode},
-				success: function(data){
-					if(data != null){
-						var $signModalImgList = $("#signModalImgList");
-						$signModalImgList.html('');
-						
-						for(var key in data){
-							var $div = $("<div class='case1'>");
-							var imgsource = data[key].files_route;
-							console.log(imgsource);
-							var $img = $("<img class='imgSize2'>");
-							
-							$div.append($img);
-							
-							$signModalImgList.append($div);
-						}
-					}
-				}
-			});
-		};
-	</script> -->
+ 
 
 <!-- 결재 서명 파일 시작 -->
 	<script>
@@ -168,16 +130,19 @@
 			$("#signModalForm").attr("style", "display: block");
 		});
 	</script>
+	
 	<script>
 		$(".signModalClose").click(function(){
 			$("#signModalForm").attr("style", "display: none");
 		});
 	</script>
+  	
   	<script>
 		$(".casePlus").click(function(e){
 			 $('input[type=file]').trigger('click');
 		});
 	</script>
+	
 	<script>
 		$('input[type=file]').on('change', function(e) {
 			if(this.files){
@@ -207,9 +172,23 @@
 			}
 		});
 	</script>
+	
  	<script>
 		$(".imgDel").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var uploadURL = base + "/signResult/sfsDelete";
+			var tag1 = $(this).next();
+			var tag2 = tag1[0].currentSrc;
+			var fileCode = tag2.split("=");
 			
+			$.ajax({
+				url: uploadURL,
+				type: "POST",
+				data: {fileCode: fileCode[1]},
+				success: function(){
+					location.reload(true);
+				}
+			});
 		});
 	</script>
 </body>

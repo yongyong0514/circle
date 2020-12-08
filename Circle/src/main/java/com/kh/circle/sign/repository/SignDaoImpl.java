@@ -180,4 +180,11 @@ public class SignDaoImpl implements SignDao {
 		sqlSession.insert("sign.signResultInsert", map);
 		
 	}
+
+	//결재 서명 파일 삭제 업데이트
+	@Override
+	public void update(String fileCode) {
+		sqlSession.update("sign.sfsDelete", fileCode);
+	}
+
 }

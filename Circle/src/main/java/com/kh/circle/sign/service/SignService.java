@@ -30,5 +30,9 @@ public interface SignService {
 
 	//결재 동의 댓글 등록
 	void insertReplyAgree(String empCode, String signCode, String fileCode);
+
+	//결재 서명 파일 삭제 업데이트
+	void update(String fileCode);
+
 }
 	

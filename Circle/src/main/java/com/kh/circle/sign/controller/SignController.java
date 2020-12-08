@@ -2,8 +2,10 @@ package com.kh.circle.sign.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.service.SignService;
+import com.kh.circle.sign.vo.PageInfo;
 import com.kh.circle.sign.vo.SignEmpList;
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
@@ -44,19 +47,71 @@ public class SignController {
 	@Autowired
 	private SignService signService;	
 
-//	결재 첫화면
+//	결재 전체 리스트
+	@GetMapping("/signListAll")
+	public String signListAll(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 8;
+			
+			int listCount = sqlSession.selectOne("sign.signListAllCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("sign.signListAll", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}
+		
+		return "sign/signListAll";
+	}
+
+	
+//	결재 메인 최신 선별 리스트
 	@GetMapping("/signList")
 	public String signList(Model model, HttpSession session) {
 		
 		if(null != session.getAttribute("empInfo")) {
 		
-		String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
-		List<SignList> list = sqlSession.selectList("sign.list", emp_info_emp_no);
-		model.addAttribute("list", list);
+			List<SignList> list = sqlSession.selectList("sign.list", emp_info_emp_no);
+			model.addAttribute("list", list);
 		
-		List<SignList> list2 = sqlSession.selectList("sign.listComplete", emp_info_emp_no);
-		model.addAttribute("list2", list2);
+			List<SignList> list2 = sqlSession.selectList("sign.listComplete", emp_info_emp_no);
+			model.addAttribute("list2", list2);
 		
 		}
 		

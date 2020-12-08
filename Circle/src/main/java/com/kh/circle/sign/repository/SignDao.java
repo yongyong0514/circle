@@ -32,4 +32,7 @@ public interface SignDao {
 	//결재 동의 댓글 등록
 	void addAgree(String empCode, String signCode, String fileCode);
 
+	//결재 서명 삭제 업데이트
+	void update(String fileCode);
+
 }

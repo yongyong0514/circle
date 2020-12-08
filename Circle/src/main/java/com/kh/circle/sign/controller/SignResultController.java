@@ -42,7 +42,6 @@ public class SignResultController {
 	@Autowired
 	private SignService signService;
 
-	
 	@GetMapping("/signJoinerCount")
 	public int signJoinerCount(@RequestParam String signCode) {
 		int result = sqlSession.selectOne("sign.signJoinerCount", signCode);
@@ -144,7 +143,13 @@ public class SignResultController {
 			System.out.println("denied");
 		}
 		return "sign/signConfig";	
-	}	
+	}
+	
+//	결재 서명 첨부 파일 삭제
+	@PostMapping("/sfsDelete")
+	public void sfsDelete(@RequestParam String fileCode) {
+		signService.update(fileCode);
+	}
 
 	
 // 전자 결재 한명 결재 프로세스
@@ -198,6 +203,13 @@ public class SignResultController {
 	
 		
 		return "redirect:/sign/signSelecOne/?signCode="+signCode;
-	}	
+	}
+	
+//	전자 결재 한명 반려 프로세스
+	@PostMapping("/signCancel")
+	public String signCancel(@RequestParam String signCode){
+		
+		return "redirect:/sign/signSelecOne/?signCode="+signCode;
+	}
 
 }
