@@ -112,4 +112,14 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 		return map;
 	}
 
+	@Override
+	public void insertStime(Map<String, Object> inputMap) {
+		attendanceInfoRepository.insertStime(inputMap);
+	}
+
+	@Override
+	public void insertEtime(Map<String, Object> inputMap) {
+		attendanceInfoRepository.insertEtime(inputMap);
+	}
+
 }
