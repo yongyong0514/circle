@@ -73,7 +73,7 @@
 								</c:forEach>
 								</select>
 							</div>
-
+ 
 							<div class="inputfield">
 								<label for="iss_intro">본문</label>
 								<textarea class="textarea" id="iss_intro" name="iss_intro"></textarea>
