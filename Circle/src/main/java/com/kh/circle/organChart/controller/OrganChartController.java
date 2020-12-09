@@ -17,8 +17,22 @@ public class OrganChartController {
 	@Autowired
 	private OrganChartService organChartService;
 	
+
 //	@GetMapping("/getInfo")
 	@RequestMapping(value="/getInfo", method= {RequestMethod.GET, RequestMethod.POST})
+
+	@GetMapping("/getInsertInfo")
+	public String getInsertInfo(Model model) {
+		List<OrganDept> oDList = organChartService.oDList();
+		
+		model.addAttribute("oDList", oDList);
+		
+		System.out.println(model);
+		
+		return "poll/contentArea/insertMemberOrganChart";
+	}
+
+	@GetMapping("/getInfo")
 	public String getInfo(Model model) {
 		List<OrganDept> oDList = organChartService.oDList();
 		
