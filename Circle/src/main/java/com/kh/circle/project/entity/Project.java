@@ -33,8 +33,8 @@ public class Project {
 	private String iss_situ_name;
 	private String iss_cont;
 	private Date iss_wdat;
-	private Date iss_sdat;
-	private Date iss_edat;
+	private Date iss_sdate;
+	private Date iss_edate;
 	private String iss_ref_no;
 	private String iss_stat;
 

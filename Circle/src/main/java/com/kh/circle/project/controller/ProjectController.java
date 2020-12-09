@@ -189,6 +189,18 @@ public class ProjectController {
 		String myEmp = projService.projEmpNo(emp_no);
 
 		model.addAttribute("empNo", myEmp);
+		
+		List<Project> projMain = projService.projMain(emp_no);
+
+		System.out.println("tet" + projMain);
+
+		model.addAttribute("projMain", projMain);
+		
+		List<Project> issSitu = projService.issSitu();
+		List<Project> issProg = projService.issProg();
+		
+		model.addAttribute("issProg", issProg);
+		model.addAttribute("issSitu", issSitu);
 
 		// 회원 리스트
 

@@ -33,15 +33,23 @@
 
 				<div class="form" id="iss">
 
-					<div class="title">프로젝트 생성</div>
+					<div class="title">업무 생성</div>
 					<form name="issInsertiss" id="postInsert"
-						action="${pageContext.request.contextPath}/iss/issInsertiss"
-						method="POST">
+						action="${pageContext.request.contextPath}/project/projInsertIss"
+						method="POST" enctype="multipart/form-data">
 						<div class="inputfield">
-							<label for="iss_title">프로젝트 명</label> <input type="text"
+							<label for="iss_title">업무 명</label> <input type="text"
 								class="input" id="post_title" name="post_title"
 								placeholder="이름을 입력하세요">
-
+							<div class="inputfield">
+								<label for="iss_sdate">프로젝트 선택 </label>
+								<select>
+								<c:forEach var="projMain" items="${projMain}">
+									<option id="iss_pro_code" value="${projMain.iss_pro_code }">${projMain.pro_title}
+									</option>
+								</c:forEach>
+								</select>
+							</div>
 							<div class="inputfield">
 								<label for="iss_file">파일</label> <input name="iss_file"
 									id="iss_file" type="file" class="input" accept="*.*"
@@ -49,17 +57,21 @@
 							</div>
 							<div class="inputfield">
 								<label for="iss_sdate">진행단계 </label>
+								<select>
 								<c:forEach var="issProg" items="${issProg}">
 									<option id="iss_prog_code" value="${issProg.prog_code }">${issProg.prog_title}
 										${issMember.emp_info_name }</option>
 								</c:forEach>
+								</select>
 							</div>
-								<div class="inputfield">
+							<div class="inputfield">
 								<label for="iss_sdate">업무상황</label>
-								<c:forEach var="issSitu" items="${issProg}">
-									<option id="iss_prog_code" value="${issSitu.situ_code }">${issSitu.situ_title}
-										${issMember.emp_info_name }</option>
+								<select>
+								<c:forEach var="issSitu" items="${issSitu}">
+									<option id="iss_situ_code" value="${issSitu.situ_code }">${issSitu.situ_title}
+								</option>
 								</c:forEach>
+								</select>
 							</div>
 
 							<div class="inputfield">

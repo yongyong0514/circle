@@ -98,12 +98,25 @@
 	select *
 	from situ
 	</select>
+	
+		<select id="issMember" resultType="project">
+		select e.emp_info_emp_no, e.emp_info_name, d.dept_info_name
+		from emp_info e
+		join dept_info d on(e.emp_info_dept_code = d.dept_info_code)
+	</select>
+<insert id="projInsertIss" parameterType="project">
+INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE, ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT, ISS_SDATE, ISS_EDATE,  ISS_STAT)
+    VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.CURRVAL, 6, 0)), #{iss_emp_no}, #{iss_title}, #{iss_pro_code}, #{iss_prog_code}, #{iss_situ_code}, #{iss_cont}, SYSDATE, #{iss_sdate}, #{iss_edate}, DEAFAULT)
 
+</insert>
 <!-- file upload -->
 
 <select id="seq" resultType="String">
 		select CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
 	</select>
+	
+	
+	
 
 	<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">
