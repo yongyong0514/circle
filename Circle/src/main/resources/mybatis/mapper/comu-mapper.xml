@@ -150,7 +150,7 @@ where rn between #{start} and #{end}
 		join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 		where c.comu_post_ordr = #{comu_post_ordr}
 	</select>
-	<update id="comuUpdate" parameterType="String">
+	<update id="comuUpdate" parameterType="comu">
 		update comu_post
 		set comu_post_title
 		= #{comu_post_title}, comu_post_cont=#{comu_post_cont},
@@ -179,6 +179,15 @@ where rn between #{start} and #{end}
 		from 
 		comu_list
 	 where comu_list_code=#{comu_list_code} 
+	</select>
+	
+	<!-- 동호회 LeftBar 리스트 가져오기 -->
+	<select id="leftList" parameterType="String" resultType="comuList">
+		select 
+        *
+from comu_list l
+join comu_info i on(l.comu_list_code=i.comu_info_comu_code)
+where i.comu_info_emp_no = #{comu_info_emp_no}
 	</select>
 </mapper>
 

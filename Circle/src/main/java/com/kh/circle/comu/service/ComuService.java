@@ -42,6 +42,9 @@ public interface ComuService {
 	//가입신청서에 동호회 이름 가져오기
 	public String comuApp(String comu_list_code);
 	
+	//leftBar 리스트 가져오기
+	public List<ComuList> leftList(String comu_info_emp_no);
+	
 	
 	 //void add(Comu comu, MultipartFile insert) throws IllegalStateException,IOException;
 	  

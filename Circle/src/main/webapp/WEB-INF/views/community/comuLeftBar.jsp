@@ -27,13 +27,15 @@
 			<div class="menuLeftList"></div>
 			
 			<div class="menuLeftListTitle"># 가입 동호회</div>
-			
+				<form>
+				<c:forEach var="leftList" items="${leftList}"> 
+			<div class="menuLeftList"><a>${leftList.comu_list_name}</a></div>
+			<!-- <div class="menuLeftList"></div>					
 			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>					
 			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>
-			
+			<div class="menuLeftList"></div> -->
+			</c:forEach>
+			</form>
 			<!-- <div class="menuLeftListTitle"># 가입 회원</div> -->
 									
 			<!-- <div class="menuLeftList">전체</div>

@@ -54,9 +54,10 @@ public class ComuController {
 		map.put("pager", pager);
 		mav.addObject("map", map);
 		// model.addAttribute("comuList",comuList);
-		for (Comu a : comuList) {
-			System.out.println("comuController 값 넘어오나?" + a.getComu_list_name() + a.getEmp_info_name());
-		}
+		/*
+		 * for (Comu a : comuList) { System.out.println("comuController 값 넘어오나?" +
+		 * a.getComu_list_name() + a.getEmp_info_name()); }
+		 */
 			
 		return mav;
 	}
@@ -70,7 +71,7 @@ public class ComuController {
 		List<ComuList> list = sqlSession.selectList("comu.comuNameList");
 		model.addAttribute("list",list);
 		
-		//위치변경
+		
 		return "community/comuAdd";
 	}
 	
@@ -115,6 +116,7 @@ public class ComuController {
 		Comu comuCheck = service.comuCheck(comu_post_ordr);
 		model.addAttribute("comuCheck",comuCheck);
 		
+		System.out.println("comuCheck controller"+model);
 		return "community/comuUpdate";
 	}
 	@PostMapping("/comuUpdate")
@@ -122,9 +124,9 @@ public class ComuController {
 			@RequestParam("comu_post_ordr")String comu_post_ordr) {
 		
 		service.comuUpdate(comu);
-		
+		System.out.println("comuUpdate controller"+comu);
 		//return "redirect:/community/comuList";
-		return "redirect:/community/comuDetail?comu_post_ordr="+comu.getComu_post_ordr(); 
+		return "redirect: comuDetail?comu_post_ordr="+comu.getComu_post_ordr(); 
 	}
 	
 	//게시글 삭제
@@ -180,6 +182,28 @@ public class ComuController {
 		
 		System.out.println("comuApp으로 가는길임??");
 		return "community/comuApp";
+	}
+	
+	//comuLeftBar에 가입한 동호회 리스트
+	@GetMapping("/leftList")
+	public String leftList(Model model, @RequestParam("comu_info_emp_no") String comu_info_emp_no) {
+		//comuList.getComu_list_code();
+		
+		//List<ComuList> leftList = sqlSession.selectList("comu.leftList");
+		
+		
+		model.addAttribute("leftList",service.leftList(comu_info_emp_no));
+		
+		System.out.println("controller ListName"+model);
+		
+		return "community/comuLeftBar";
+		
+//		public String comuDetail(Model model,@RequestParam("comu_post_ordr") String comu_post_ordr) {
+//			
+//			//번호가져와서 해당하는 번호를 볼수있게
+//			model.addAttribute("comuDetail",service.comuDetail(comu_post_ordr));
+//			
+//			return "community/comuDetail";
 	}
 }
 

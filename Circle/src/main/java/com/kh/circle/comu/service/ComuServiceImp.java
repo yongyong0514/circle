@@ -103,6 +103,12 @@ public class ComuServiceImp implements ComuService {
 		
 		return list_name;
 	}
+	//leftBar 리스트 가져오기
+	@Override
+	public List<ComuList> leftList(String comu_info_emp_no) {
+		
+		return dao.leftList(comu_info_emp_no);
+	}
 
 	
 	}
