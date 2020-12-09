@@ -23,53 +23,55 @@
 		</div>
 		<div class="organChart">
 			<c:import url="/menuOrganChart/getInfo"/>
-			<jsp:include page="../common/menuOrganChart.jsp" />
 		</div>
 		<div class="container">
 			<div class="content">
+				${empInfo }
+				<br><br>
+				${detailEmpInfo }
+				<br><br>
 				<table class="detailTable">
 					<tr>
 						<td>사진</td>
 						<td>
-							<img src="#">&nbsp;&nbsp;
-							<c:if test="${empInfo.emp_info_emp_no eq sessionScope.empInfo.emp_info_emp_no }">
+						 	<img src="">&nbsp;&nbsp;
+							<c:if test="${detailEmpInfo.emp_info_emp_no eq sessionScope.empInfo.emp_info_emp_no }">
 								<button value="remove">삭제하기</button>
 							</c:if>
 						</td>
 					</tr>
 					<tr>
 						<td>이름</td>
-						<td><input type="text" value="${empInfo.emp_info_name }"></td>
+						<td><input type="text" value="${detailEmpInfo.emp_info_name }"></td>
 					</tr>
 					<tr>
 						<td>휴대전화</td>
-						<td><input type="text" value="${empInfo.emp_info_mtel }"></td>
+						<td><input type="text" value="${detailEmpInfo.emp_info_mtel }"></td>
 					</tr>	
 					<tr>
 						<td>내선전화</td>
-						<td><input type="text" value="${empInfo.emp_info_etel }"></td>
+						<td><input type="text" value="${detailEmpInfo.emp_info_etel }"></td>
 					</tr>	
 					<tr>
 						<td>이메일</td>
-						<td><input type="text" value="${empInfo.emp_info_email }"></td>
+						<td><input type="text" value="${detailEmpInfo.emp_info_email }"></td>
 					</tr>
 					<tr>
 						<td>부서명</td>
-						<td><input type="text" value="${empInfo.dept_info_name }"></td>
+						<td><input type="text" value="${detailEmpInfo.dept_info_name }"></td>
 					</tr>
 					<tr>
 						<td>직위/직책</td>
-						<td><input type="text" value="${empInfo.job_info_name }"></td>
+						<td><input type="text" value="${detailEmpInfo.job_info_name }"></td>
 					</tr>
 					<tr>
 						<td>회사</td>
-						<td><input type="text" value="${empInfo.cmp_info_name }"></td>
+						<td><input type="text" value="${detailEmpInfo.cmp_info_name }"></td>
 					</tr>
 				</table>
 				<br><br>
 				<!-- 관리자 여부 확인 후 노출 -->
-				<c:if test="${empInfo.emp_info_emp_no == sessionScope.empInfo.emp_info_emp_no
-								or empInfo.dept_info_name == '인사팀' }">
+				<c:if test="${detailEmpInfo.emp_info_emp_no eq sessionScope.empInfo.emp_info_emp_no}">
 					<input class="actionBtn" id="edit" type="submit" value="수정"/>
 					<input class="actionBtn" id="reset" type="reset" value="원래대로"/>
 					<input class="actionBtn" id="remove" type="button" value="삭제"/>

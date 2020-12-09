@@ -81,7 +81,7 @@ public class VacationController {
 	}
 	
 	@PostMapping("/insertVacation")
-	public String insertVacation(@ModelAttribute("map") HashMap map) {
+	public String insertVacation(@ModelAttribute("map") Map<?, ?> map) {
 		
 		VacationInfo vacationInfo = (VacationInfo) map.get("vacationInfo");
 		

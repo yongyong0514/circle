@@ -49,4 +49,14 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 		return wsi;
 	}
 
+	@Override
+	public void insertStime(Map<String, Object> inputMap) {
+		sqlSession.insert("attendance.insertStime", inputMap);
+	}
+
+	@Override
+	public void insertEtime(Map<String, Object> inputMap) {
+		sqlSession.update("attendance.insertEtime", inputMap);		
+	}
+
 }

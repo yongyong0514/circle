@@ -14,4 +14,8 @@ public interface AttendanceInfoRepository {
 	public WeekStackInfo weekStackWorkTime(Map<String, Object> inputMap);
 	
 	public WeekStackInfo weekStackWorkTimeNull(Map<String, Object> inputMap);
+	
+	public void insertStime(Map<String, Object> inputMap);
+	
+	public void insertEtime(Map<String, Object> inputMap);
 }

@@ -50,6 +50,13 @@ public class LoginController {
 		HttpSession session = req.getSession();
 		EmpInfo login = service.login(empInfo, session);
 		
+		
+		
+		//출근 확인용
+		session.setAttribute("sTime", null);			//출근시간
+		session.setAttribute("working", "false");		//출근여부
+		
+		
 		/* JoinMember joinlogin = joinservice.login(joinmember, session); */
 		
 		/*

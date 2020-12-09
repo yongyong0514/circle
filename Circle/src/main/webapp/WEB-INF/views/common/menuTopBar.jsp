@@ -33,7 +33,7 @@
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/sign/signList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/068-pencil.png" class="menuIcon"><br>전자결재</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/storage/storageList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/120-diskette.png" class="menuIcon"><br>자료실</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/document/docuList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/041-folder.png" class="menuIcon"><br>문서관리</button></div>
-						<div><button class="buttonSize"  onclick='location.href="${pageContext.request.contextPath}/project/projMain"'>><img src="${pageContext.request.contextPath}/resources/img/common/menu/165-menu.png" class="menuIcon"><br>프로젝트</button></div>
+						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath}/project/projMain"'>><img src="${pageContext.request.contextPath}/resources/img/common/menu/165-menu.png" class="menuIcon"><br>프로젝트</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/schedule/schMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/163-calendar.png" class="menuIcon"><br>일정</button></div>
 						<div><button class="buttonSize" disabled><img src="${pageContext.request.contextPath}/resources/img/common/menu/167-wall-clock.png" class="menuIcon"><br>예약</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/poll/pollMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/121-paste.png" class="menuIcon"><br>설문</button></div>
@@ -56,8 +56,8 @@
 			<li><img src="${pageContext.request.contextPath}/resources/img/common/menuTopBar/hamburger50x50.png" class="menuBtnRight" id="menuBtnRight" onclick="">
 				<div class="menuBox1">
 					<div class="buttonArea1">
-						<div><button class="buttonSize2" onclick="">&nbsp;출근 기록</button></div>
-						<div><button class="buttonSize2" onclick="">&nbsp;퇴근 기록</button></div>
+						<div><button class="buttonSize2 sTimeBtn" onclick="sTimeCheck();">&nbsp;출근 기록</button></div>
+						<div><button class="buttonSize2 eTimeBtn" onclick="eTimeCheck();">&nbsp;퇴근 기록</button></div>
 						<div><button class="buttonSize2"></button></div>
 						<form name="logout" action="${pageContext.request.contextPath}/empInfo/logout" method="GET">
 						<div><button class="buttonSize3" onclick="logout();">&nbsp;로그 아웃</button></div>
@@ -102,4 +102,91 @@
 </script>
 	</c:if>
 </body>
+
+
+<script>
+	$(function(){
+		console.log("${sessionScope.sTime}");
+		
+		if(isNull("${sessionScope.sTime}")){
+			$(".eTimeBtn").prop("disabled", true);
+		} else{
+			$(".sTimeBtn").prop("disabled", true);
+		}
+	});
+
+	function sTimeCheck(){
+		var today = getFormatDate(new Date());
+		var sTime = getFormatDateAndTime(new Date());
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/attendance/sTimeCheck",
+			type: "post",
+			dataType: "text",
+			data: {"today": today,
+				   "sTime": sTime},
+			success: function(data){
+				$(".sTimeBtn").prop("disabled", true);
+				$(".eTimeBtn").prop("disabled", false);
+				console.log("출근 session:");
+				console.log("${sessionScope.sTime}");
+			}, error: function(err){
+				console.table(err);
+			}
+		});
+	};
+	
+	function eTimeCheck(){
+		var eTime = getFormatDateAndTime(new Date());
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/attendance/eTimeCheck",
+			type: "post",
+			dataType: "text",
+			data: {"eTime": eTime},
+			success: function(data){
+				$(".eTimeBtn").prop("disabled", true);
+				$(".sTimeBtn").prop("disabled", false);
+				console.log("퇴근 session: ");
+				console.log("${sessionScope.sTime}");
+			}, error: function(err){
+				console.table(err);
+			}
+		});
+	}
+	
+	/* 날짜포맷 변경 */
+	function getFormatDate(date){
+	    var year = date.getFullYear();				//yyyy
+	    var month = (1 + date.getMonth());			//M
+	    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+	    var day = date.getDate();					//d
+	    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+	    return  year + '-' + month + '-' + day;		//형태 생성
+	}
+	
+	
+	function getFormatDateAndTime(date){
+	    var year = date.getFullYear();				//yyyy
+	    var month = (1 + date.getMonth());			//M
+	    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+	    var day = date.getDate();					//d
+	    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+	    var hour = date.getHours();
+	    hour = hour >= 10 ? hour : '0' + hour;		//hour 두자리로 저장
+	    var minute = date.getMinutes();
+	    minute = minute >= 10 ? minute : '0' + minute;	//minute 두자리로 저장
+	    var second = date.getSeconds();
+	    second = second >= 10 ? second : '0' + second;	//second 두자리로 저장
+	    return  (year + '-' + month + '-' + day + " " + hour + ":" + minute + ":" + second);		//형태 생성
+	}
+
+	function isNull(data){
+		return ( data == undefined || data == null || data == "" );
+	}
+
+
+</script>
+
+
 </html>

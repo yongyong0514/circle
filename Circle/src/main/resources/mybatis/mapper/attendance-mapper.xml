@@ -54,4 +54,34 @@
 			 , 0 as "weekRemainWorktimeMinute"
 		  from dual
 	</select>
+	
+	<insert id="insertStime" parameterType="map">
+		insert into atdc_hstr
+			 ( atdc_hstr_ordr
+			 , atdc_hstr_emp_no
+			 , atdc_hstr_dat
+			 , atdc_hstr_writ_type
+			 , atdc_hstr_stim
+			 , atdc_hstr_etim
+			 , atdc_hstr_type
+			 )
+		values
+			 ( atho_seq.nextval
+			 , #{emp_no}
+			 , to_date(#{today}, 'yyyy/MM/dd')
+			 , '본인'
+			 , to_date(#{sTime}, 'yyyy/MM/dd HH24:mi:ss')
+			 , null
+			 , '내근'
+			 )
+	</insert>
+	
+	<update id="insertEtime" parameterType="map">
+		update atdc_hstr
+		   set atdc_hstr_etim = to_date(#{eTime}, 'yyyy/MM/dd HH24:mi:ss')
+		 where atdc_hstr_emp_no = #{emp_no}
+		   and atdc_hstr_stim = to_date(#{sTime}, 'yyyy/MM/dd HH24:mi:ss')
+	</update>
+	
+	
 </mapper>

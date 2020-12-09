@@ -59,10 +59,12 @@ public class AddressBookController {
 	public String detail(@ModelAttribute("emp_no") String emp_no
 			, Model model) {
 
-		EmpInfoAll empInfo = addressBookService.detail(emp_no);
+		EmpInfoAll detailEmpInfo = addressBookService.detail(emp_no);
 
-		model.addAttribute("empInfo", empInfo);
+		model.addAttribute("detailEmpInfo", detailEmpInfo);
 
+		System.out.println("detailEmpInfo: " + detailEmpInfo);
+		
 		return "addressBook/detail";
 	}
 
