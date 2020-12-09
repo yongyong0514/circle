@@ -18,20 +18,11 @@
 					<tr>
 						<th class="clock" colspan="2"></th>
 					</tr>
+					<tr><td><td></tr>
 					<tr>
 						<td>출근시간</td>
-						<td>08:57</td>
+						<td class="startWork"></td>
 					</tr>
-					<tr>
-						<td>퇴근시간</td>
-						<td>미등록</td>
-					</tr>
-					<tr>
-						<td>누적</td>
-						<td>18h 02m</td>
-					</tr>
-					<tr>
-						<td colspan="2">34%</td>
 				</table>
 			</div>
 			<!-- 현재 근태현황 상태표시 끝 -->
@@ -61,15 +52,53 @@
 </body>
 
 <script>
+	$(function(){
+	    displayTime();
+	    
+		var sTime = "${sessionScope.sTime}";
+		var time = new Date(sTime);
+		var text = "";
+		
+	    if(isNull(sTime)){
+	    	text = "미등록";
+		} else{
+			text = transformDateFormat(time, "time");
+		}
+	    	$(".startWork").text(text);
+	});
+
+	//시계 표시
 	function displayTime() {
 	    var time = moment().format('YYYY년 MM월 D일<br>HH시 mm분');
 	    $('.clock').html(time);
 	    setTimeout(displayTime, 1000);
 	}
+
+	//날짜 포맷 변경
+	function transformDateFormat(date, type){
+		if(type=="date"){
+		    var year = date.getFullYear();				//yyyy
+		    var month = (1 + date.getMonth());			//M
+		    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+		    var day = date.getDate();					//d
+		    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+		    
+		    return  year + '-' + month + '-' + day;		//형태 생성
+		} else if(type=="time"){
+			var hour = date.getHours();
+		    hour = hour >= 10 ? hour : '0' + hour;		//hour 두자리로 저장
+		    var minute = date.getMinutes();
+		    minute = minute >= 10 ? minute : '0' + minute;	//minute 두자리로 저장
+		    
+		    return  (hour + ":" + minute);		//형태 생성
+		}
+		
+	}
 	
-	$(document).ready(function() {
-	    displayTime();
-	});
+	// null여부 확인
+	function isNull(data){
+		return (data == undefined || data == null || data == "") ? true : false;
+	}
 	
 </script>
 

@@ -110,7 +110,7 @@
 }
 
 .attendanceStatus{
-	font-size: x-small;
+	font-size: small;
 	padding: 0.5rem;
 	text-align: left;
 }
@@ -122,15 +122,9 @@
 }
 
 .attendanceStatusTable td{
-	padding-top:0.5rem;
-	padding-bottom:0.5rem;
+	padding:0.5rem;
 }
 
 .attendanceStatusTable td:nth-of-type(2){
 	text-align: right;
 }
-
-.attendanceStatusTable tr:last-of-type{
-	text-align: center;
-	padding-bottom:0;
-}	

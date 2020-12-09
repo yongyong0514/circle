@@ -72,7 +72,8 @@
 					<input class="actionBtn" id="reset" type="reset" value="원래대로"/>
 					<input class="actionBtn" id="remove" type="button" value="삭제"/>
 				</c:if>
-				<input class="actionBtn" id="goList" type="button" value="목록으로 이동"/>
+				<input class="actionBtn" id="goList" type="button" value="목록으로 이동"
+					onclick="history.back();"/>
 			</div>
 		</div>
 	</div>

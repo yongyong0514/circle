@@ -31,7 +31,6 @@ public class OrganChartController {
 
 	@RequestMapping(value="/getInfo", method= {RequestMethod.POST, RequestMethod.GET})
 	public String getInfo(Model model) {
-		System.out.println("get 들어옴");
 		
 		List<OrganDept> oDList = organChartService.oDList();
 		

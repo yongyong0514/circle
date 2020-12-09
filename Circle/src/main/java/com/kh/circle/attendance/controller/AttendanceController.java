@@ -94,8 +94,6 @@ public class AttendanceController {
 							@ModelAttribute(value="sTime") String sTime,
 							HttpSession session) {
 		
-		System.out.println("stime 입력: " + sTime);
-		
 		Map<String, Object> inputMap = new HashMap<String, Object>();
 		inputMap.put("today", today);
 		inputMap.put("sTime", sTime);
