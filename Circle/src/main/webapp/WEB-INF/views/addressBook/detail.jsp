@@ -22,14 +22,10 @@
 			<jsp:include page="common/addressBookLeftBar.jsp" />
 		</div>
 		<div class="organChart">
-			<c:import url="/menuOrganChart/getInfo"/>
-		</div>
+			<c:import url="/organChart/getInfo"/>
+ 		</div>
 		<div class="container">
 			<div class="content">
-				${empInfo }
-				<br><br>
-				${detailEmpInfo }
-				<br><br>
 				<table class="detailTable">
 					<tr>
 						<td>사진</td>

@@ -17,8 +17,6 @@ import com.kh.circle.organChart.service.OrganChartService;
 public class OrganChartController {
 	@Autowired
 	private OrganChartService organChartService;
-	
-
 
 	@GetMapping("/getInsertInfo")
 	public String getInsertInfo(Model model) {
@@ -31,14 +29,14 @@ public class OrganChartController {
 		return "poll/contentArea/insertMemberOrganChart";
 	}
 
-//	@GetMapping("/getInfo")
-	@RequestMapping(value="/getInfo", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/getInfo", method= {RequestMethod.POST, RequestMethod.GET})
 	public String getInfo(Model model) {
+		System.out.println("get 들어옴");
+		
 		List<OrganDept> oDList = organChartService.oDList();
 		
 		model.addAttribute("oDList", oDList);
 		
 		return "common/menuOrganChart";
 	}
-	
 }
