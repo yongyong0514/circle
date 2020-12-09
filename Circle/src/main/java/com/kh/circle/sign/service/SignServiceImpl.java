@@ -92,4 +92,12 @@ public class SignServiceImpl implements SignService {
 		signDao.addAgree(empCode, signCode, fileCode);
 		
 	}
+
+	//결재 서명 파일 삭제 업데이트
+	@Override
+	public void update(String fileCode) {
+		signDao.update(fileCode);
+		
+	}
+
 }

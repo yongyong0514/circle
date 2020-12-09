@@ -595,5 +595,22 @@
 			});
 		});
 	</script>
+	
+	<script>
+		$(".submitDenied").click(function({
+			var base = "${pageContext.request.contextPath}";
+			var uploadURL = base + "/signResult/signCancel";
+			var signCode = document.location.href.split("=");
+			
+			$.ajax({
+				url: uploadURL,
+				type: "POST",
+				data: {signCode: signCode[1]},
+				success: function(){
+					location.reload(true);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

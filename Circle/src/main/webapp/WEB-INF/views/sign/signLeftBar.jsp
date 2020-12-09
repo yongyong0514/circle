@@ -13,14 +13,14 @@
 			<div class="menuLeftListBtn"><button class="menuLeftBtn" onclick="location='${pageContext.request.contextPath}/sign/signWrite'">새 결재 작성</button></div>
 			<div class="menuLeftList0" onclick="location='${pageContext.request.contextPath}/sign/signConfig'">전자결재 설정</div>
 			<div class="menuLeftListTitle">진행 중인 결재</div>
-			<div class="menuLeftList">전체</div>
-			<div class="menuLeftList">임시 저장</div>					
-			<div class="menuLeftList">대기</div>
+			<div class="menuLeftList" onclick="location='${pageContext.request.contextPath}/sign/signListAll'">전체</div>
+			<div class="menuLeftList">대기</div>					
 			<div class="menuLeftList">진행</div>
-			<div class="menuLeftList"></div>
+			<div class="menuLeftList0"></div>
+			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">결재 문서함</div>						
 			<div class="menuLeftList">전체</div>
-			<div class="menuLeftList"></div>															
+			<div class="menuLeftList0"></div>															
 		</div>
 	</div>
 </body>
