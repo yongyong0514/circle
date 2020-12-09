@@ -26,7 +26,30 @@
 		<div class="container">
 			<div class="content">
 				<h1>전사 근태현황</h1>
+				<br>
+				<!-- 날짜선택 시작 -->
+				<div class="dateSelectDiv">
+					<div class="title">
+						<div class="dateSelect">
+							<button onclick="changeDate(0);" value="thisWeek">이번주</button>&nbsp;&nbsp;
+							<button onclick="changeDate(0);" value="thisMonth">이번달</button>
+							<br><br>
+							<i onclick="changeDate(-1);" class='fas fa-angle-left'></i>
+							<div>&nbsp;<c:out value="오늘날짜가 표시됩니다"/>&nbsp;</div>
+							<i onclick="changeDate(1);" class='fas fa-angle-right'></i>
+						</div>
+					</div>
+				</div>
+				<!-- 날짜선택 끝 -->
 				<br><br>
+				<hr>
+				<c:out value="${mapList }"/>
+				
+				
+				
+				<hr>
+				
+				<!-- 검색 시작 -->
 				<form action="#" method="POST">
 					<div class="attendanceListTitle">
 						<div class="dateType">
@@ -54,6 +77,9 @@
 							<option value="jobName">직급명</option>
 						</select>
 					</div>
+				</form>
+				<!-- 검색 끝 -->
+				
 					<!-- 주간 근태현황 리스트 시작 -->
 					<br>
 					<div class="weekAttendanceList">
@@ -75,7 +101,7 @@
 									<td>
 										<div class="empInfo">
 											<div class="left">
-												<img src="#">
+									 			<img src="#">
 											</div>
 											<div class="right">
 												<span class="titleInfo">가나다</span>
@@ -236,8 +262,6 @@
 					</div>
 					
 					<!-- 월간 근태현황 리스트 끝 -->
-					
-				</form>
 			</div>
 		</div>
 	</div>
@@ -248,8 +272,6 @@
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
@@ -257,6 +279,36 @@
 				}
 			})
 		});
+		
+		
+		
+		<!-- 날짜변경 옵션 시작 -->
+		function changeDate(num){
+			if(num == 0){
+				var today = new Date();
+			} else{
+				var today = new Date("${today}");
+			}
+			var date = new Date(today.valueOf()+(24*60*60*1000)*num);
+			
+			var dateStr = getFormatDate(date);
+
+			location.href = "${pageContext.request.contextPath}/attendance/myAttendance?dateStr=" + dateStr;
+		};	
+			
+		<!-- 날짜변경 옵션 끝 -->
+		
+		<!-- 날짜포맷 변경 시작 -->
+		function getFormatDate(date){
+		    var year = date.getFullYear();				//yyyy
+		    var month = (1 + date.getMonth());			//M
+		    month = month >= 10 ? month : '0' + month;	//month 두자리로 저장
+		    var day = date.getDate();					//d
+		    day = day >= 10 ? day : '0' + day;			//day 두자리로 저장
+		    return  year + '-' + month + '-' + day;		//형태 생성
+		}
+		<!-- 날짜포맷 변경 끝 -->
+		
 	</script>
 </body>
 </html>

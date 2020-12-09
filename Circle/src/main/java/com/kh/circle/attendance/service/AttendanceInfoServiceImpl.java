@@ -1,5 +1,6 @@
 package com.kh.circle.attendance.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
 import com.kh.circle.attendance.entity.WeekStackInfo;
+import com.kh.circle.attendance.entity.WorkAndOff;
 import com.kh.circle.attendance.repository.AttendanceInfoRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -120,6 +122,15 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 	@Override
 	public void insertEtime(Map<String, Object> inputMap) {
 		attendanceInfoRepository.insertEtime(inputMap);
+	}
+
+	@Override
+	public List<Map<String, Object>> allAttendanceList(Map<String, Object> inputMap) {
+
+		//1.재직중인 전 사원의 해당 주간 근무시간 리스트 출력
+		
+		
+		return null;
 	}
 
 }

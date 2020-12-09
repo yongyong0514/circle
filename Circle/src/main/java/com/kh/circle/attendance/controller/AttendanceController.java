@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -69,7 +70,32 @@ public class AttendanceController {
 	}
 	
 	@GetMapping("/allAttendanceList")
-	public String allAttendanceList() {
+	public String allAttendanceList(HttpSession session,
+									@RequestParam(defaultValue="") String dateStr,
+									Model model) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String date = "";
+		
+		//입력된 날짜값이 없는 경우 오늘 날짜로 설정
+		if("".equals(dateStr)) {
+//			date = sdf.format(sdf.parse("2020-11-13"));
+			date = sdf.format(new Date(System.currentTimeMillis()));
+		} else {
+//예시값으로 2020-11-13 입력			
+//			date = sdf.format(sdf.parse("2020-11-13"));
+			date = sdf.format(sdf.parse(dateStr));
+		}
+		
+		Map<String, Object> inputMap = new HashMap<String, Object>();
+		
+		inputMap.put("date", date);
+		inputMap.put("today", date);
+		
+		List<Map<String, Object>> mapList = attendanceInfoService.allAttendanceList(inputMap);
+//		model.addAttribute("mapList", mapList);
+//		model.addAttribute("today", date);
+			
 		return "attendance/allAttendanceList";
 	}
 	

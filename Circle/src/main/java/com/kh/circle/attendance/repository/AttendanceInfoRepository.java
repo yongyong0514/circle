@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
 import com.kh.circle.attendance.entity.WeekStackInfo;
+import com.kh.circle.attendance.entity.WorkAndOff;
 
 public interface AttendanceInfoRepository {
 	public List<AttendanceInfo> attendanceList(Map<String, Object> inputMap);
