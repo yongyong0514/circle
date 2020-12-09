@@ -140,6 +140,7 @@ public class PollController {
 		
 		//페이지 DB추출
 		List<HashMap<String,String>> list = pollService.myList(pageInfo);
+		
 		log.info(list.toString());
 		//post정보 담기
 		modelMap.put("post", list);
