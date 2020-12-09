@@ -19,8 +19,6 @@ public class OrganChartController {
 	private OrganChartService organChartService;
 	
 
-//	@GetMapping("/getInfo")
-	@RequestMapping(value="/getInfo", method= {RequestMethod.GET, RequestMethod.POST})
 
 	@GetMapping("/getInsertInfo")
 	public String getInsertInfo(Model model) {
@@ -33,7 +31,8 @@ public class OrganChartController {
 		return "poll/contentArea/insertMemberOrganChart";
 	}
 
-	@GetMapping("/getInfo")
+//	@GetMapping("/getInfo")
+	@RequestMapping(value="/getInfo", method= {RequestMethod.GET, RequestMethod.POST})
 	public String getInfo(Model model) {
 		List<OrganDept> oDList = organChartService.oDList();
 		
