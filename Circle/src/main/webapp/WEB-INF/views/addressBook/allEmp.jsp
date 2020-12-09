@@ -189,7 +189,6 @@
 			<!-- 1명 클릭 시 -->
  			$(".addressTr").click(function(){
 				$(".emp_no").val($(".checkEmpNo").val());
-				console.log("clicked");
 				$(".detailForm").submit();
 			});
 		});
@@ -219,8 +218,6 @@
 			if( !isNull(${tel}) ){
 				url += "&tel=".concat(${tel});
 			}
-			
-			console.log(url);
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;
 		};

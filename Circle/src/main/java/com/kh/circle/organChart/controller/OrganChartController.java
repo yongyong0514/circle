@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.circle.organChart.entity.OrganDept;
 import com.kh.circle.organChart.service.OrganChartService;
@@ -17,7 +17,8 @@ public class OrganChartController {
 	@Autowired
 	private OrganChartService organChartService;
 	
-	@GetMapping("/getInfo")
+//	@GetMapping("/getInfo")
+	@RequestMapping(value="/getInfo", method= {RequestMethod.GET, RequestMethod.POST})
 	public String getInfo(Model model) {
 		List<OrganDept> oDList = organChartService.oDList();
 		
