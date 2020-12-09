@@ -59,11 +59,9 @@ public class ProjectController {
 
 		project.setEmp_info_emp_no(myEmp);
 
-		System.out.println("check myEmp: " + myEmp);
 
 		List<Project> projMain = projService.projMain(emp_no);
 
-		System.out.println("tet" + projMain);
 
 		model.addAttribute("projMain", projMain);
 		// 중복 프로젝트값 받
@@ -94,11 +92,9 @@ public class ProjectController {
 	@GetMapping("/projIssMain")
 	public String projIssMain(Model model, Project iss, @RequestParam("pro_code") String pro_code) {
 
-		System.out.println("DDDD" + pro_code);
 
 		model.addAttribute("projIssMain", projService.projIssMain(pro_code));
 
-		System.out.println("proj lsig :  " + model);
 
 		return "project/projIssMain";
 	}
@@ -115,7 +111,6 @@ public class ProjectController {
 
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 
-		System.out.println("emp_no : " + emp_no);
 
 		String myEmp = projService.projEmpNo(emp_no);
 
@@ -126,24 +121,22 @@ public class ProjectController {
 		List<Project> projMember = projService.projMember();
 		model.addAttribute("projMember", projMember);
 
-		System.out.println("emp_no : " + emp_no);
-		System.out.println("projMember : " + projMember);
 
 
-		model.addAttribute("empNo", myEmp);
 
 		return "project/projInsertProject";
 	}
 
-	@PostMapping("/projInsertProject")
+	@PostMapping("/projInsertProjectAdd")
 	public String insertProject(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
 			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model) {
 
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		project.setPro_manager(emp_no);
 		
-		projService.projInsert(project);
+		
+		
+		projService.projInsert(project, emp_no);
 		
 		/* 뷰페이징 시작 */
 		int total = projService.countPost();
@@ -184,54 +177,43 @@ public class ProjectController {
 
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 
-		System.out.println("emp_no : " + emp_no);
-
+		//내정보
 		String myEmp = projService.projEmpNo(emp_no);
-
-		model.addAttribute("empNo", myEmp);
-		
-		List<Project> projMain = projService.projMain(emp_no);
-
-		System.out.println("tet" + projMain);
-
-		model.addAttribute("projMain", projMain);
-		
-		List<Project> issSitu = projService.issSitu();
-		List<Project> issProg = projService.issProg();
-		
-		model.addAttribute("issProg", issProg);
-		model.addAttribute("issSitu", issSitu);
-
-		// 회원 리스트
-
+		//인원
 		List<Project> issMember = projService.issMember();
-		model.addAttribute("projMember", issMember);
-
-		System.out.println("emp_no : " + emp_no);
-		System.out.println("issMember : " + issMember);
+		//내 프로젝트 리스트
+		List<Project> projMain = projService.projMain(emp_no);
+		//situ 불러오기
+		List<Project> issSitu = projService.issSitu();
+		//prog 불러오기
+		List<Project> issProg = projService.issProg();
 
 
 		model.addAttribute("empNo", myEmp);
+		model.addAttribute("projMain", projMain);
+		model.addAttribute("issProg", issProg);
+		model.addAttribute("issSitu", issSitu);		
+		model.addAttribute("projMember", issMember);
+		
 
 		return "project/projInsertIss";
 	}
 	
 
-	@PostMapping("/projInsertIss")
+	@PostMapping("/projInsertIssAdd")
 	public String insertIss(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
 			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model,
 			@RequestParam MultipartFile iss_file
 			) throws IllegalStateException, IOException {
 
+		
+		
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		project.setPro_manager(emp_no);
+		project.setIss_emp_no(emp_no);
+		
 		
 		projService.projInsertIss(project, iss_file);
-		
-		List<Project> issProg = projService.issProg();
-		List<Project> issSitu = projService.issSitu();
-		
 		
 		/* 뷰페이징 시작 */
 		int total = projService.countPost();
@@ -254,11 +236,8 @@ public class ProjectController {
 		model.addAttribute("paging", postPaging);
 		model.addAttribute("postPaging", postService.selecePost(postPaging));
 		
-		//파일 업로드
 		
 		
-		
-
 		return "redirect:projIssMain";
 	}
 	

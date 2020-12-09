@@ -9,18 +9,17 @@
 <mapper namespace="projFile">
 
 <select id="seq" resultType="string">
-		select CONCAT('FILE', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+		select CONCAT('FILE', LPAD(ISSU_SEQ.CURRVAL, 6, 0)) from dual
 
 </select>
 
-<insert id="issFileInsert" parameterType="string">
+<insert id="issFileInsert" parameterType="projFile">
 
-insert into file(
-files_code, files_oname, files_cname, files_route,files_date, files_type, files_status,	files_size
-)
-values (
-#{files_code}, #{files_oname}, #{files_cname}, #{files_route}, SYSDATE, '', '', #{files_size}
-)
+insert into files(files_code, files_oname, files_cname, files_route, files_date, files_type, files_status, files_size)
+values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDATE, 'FILE', 'FILE', #{files_size})
+
+
+
 </insert>
 
  
