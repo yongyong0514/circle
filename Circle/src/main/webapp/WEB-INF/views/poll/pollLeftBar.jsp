@@ -20,9 +20,6 @@
 		<div class="menuLeftList" id="poll-finished">마감된 설문</div>					
 		<div class="menuLeftList" id="poll-my">내 설문</div>
 	</div>
-	<div class="organChart">
-		<c:import url="/organChart/getInfo"/>
-	</div>
 <script>
 	$(document).ready(function(){
 		/********************** 

@@ -1,0 +1,140 @@
+
+/* 조직도 버튼 */
+.insert-organChart{
+	position:absolute;
+	z-index:99;
+}
+
+.insert-organChartBorder{
+	box-sizing: border-box;
+	position:fixed;
+	
+	bottom: 0px;
+	left: 0px;
+	
+	width: 180px;
+	height: 40px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	background: rgba(0,0,0,0);
+}
+
+.insert-organChartBorder .insert-organChartBtn{
+	display: table;
+	width: 80%;
+	height: 55%;
+	border: 1px solid rgba(255,255,255,0.2);
+	border-radius: 0.5rem;
+	
+	color: white;
+	
+	text-align: center;
+}
+
+.insert-organChartBorder .insert-organChartBtn:hover{
+	border: 1px solid rgba(255,255,255,1);
+}
+
+/* 패널영역 */
+
+.insert-organPanel{
+	display: none;
+	position: fixed;
+	left: 80px;
+	bottom: 2.2rem;
+	width: 20vw;
+	height: 400px;
+	background: white;
+	border: 1px solid #0072C6;
+	border-radius: 0.2rem;
+	box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+	
+	font-size: small;
+}
+
+.insert-organPanel .topPanel{
+	box-sizing: border-box;
+	width: 100%;
+	display: table;
+	padding: 0.5rem;
+	padding-top: 1rem;
+}
+
+.insert-organPanel .topPanel .search{
+	display: table-cell;
+}
+
+.search  input[type=text]{
+	width: 75%;
+	border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.search  input[type=text]:focus{
+	outline: none;
+}
+
+.fa-level-down-alt{
+	font-size: small;
+	transform: rotate(90deg);
+}
+	
+.insert-organPanel .topPanel .closeBtnArea{
+	display: table-cell;
+	text-align: right;
+}
+
+.insert-organPanel .members{
+	box-sizing: border-box;
+	
+	width: 95%;
+	height:75%;
+	padding-left: 2rem;
+	overflow: auto;
+}
+
+.insert-organPanel ul,
+.insert-organPanel li{
+	list-style: none;
+	padding: 0.2rem;
+}
+
+.insert-organPanel ul li ul{
+	padding-left: 2rem;
+}
+
+.insert-button {
+	box-sizing: border-box;
+	width: 100%;
+	height:10%;
+	display: table;
+	padding: 0.5rem;
+	padding-top: 1rem;
+	text-align: center;
+}
+
+
+
+/* 트리구조 css */
+
+.deptBtn{
+	font-weight: bold;
+	color: #0072C6;
+}
+
+
+.tree div {margin-left:25px; background:transparent; border:0;}
+.tree ul {display:none; padding-left:17px;}
+.tree li.unfold>ul {display:block;}
+.tree li {position:relative; padding-left:10px; border-left:1px solid #ccc; min-height:23px; line-height:23px;}
+.tree li::before,.tree li::after {content:''; position:absolute;}
+.tree li::before {top:10px; left:0; width:17px; height:0; border-bottom:1px solid #ccc;}
+.tree li:first-child::after {top:0; left:-1px; width:1px; height:10px; background:#fff;}
+.tree li.last::after {top:11px; left:-1px; width:1px; height:100%; background:#fff;}
+.tree li span {position:absolute; top:4px; left:17px; width:17px; height:17px; background:#eee; text-align:center; line-height:17px; cursor:pointer; color:#333; border:1px solid #ccc;}
+.tree li.final span {cursor:default;}
+.tree li span::before {content:'+';}
+.tree li.unfold>span::before {content:'-';}
+.tree li ul li.unfold>span::before {content:'-';}

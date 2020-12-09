@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -190,8 +191,8 @@
 			</a>
 		</div>
 	</div>
-	<div class="organChart">
-		<jsp:include page="../../common/menuOrganChart.jsp"/>
+	<div class="insertMemberOrganChart">
+		<c:import url="/organChart/getInsertInfo"/>
 	</div>
 
 </body>
@@ -213,16 +214,10 @@
 					$("#organ-view").hide();
 				}
 		});
+		
 		//인원추가 버튼 클릭 인식/ 조직도 위치조정 후 오픈
-		$(".icon-addlist").on("click", function() {
-			var p = $(this).offset();
-			$(".organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
-		});
-		//메뉴바 조직도 클릭시 위치 조정
-		$(".organChart").click(function(){
-			$(".organPanel").css({"position":"fixed","left":"80px","bottom":"2.2rem"});
-		});
-		/* ******************* */
+		$(".icon-addlist").closest(".btn-wrap").on("click", organOpen);
+		
 		
 		/************************
 		** 다음/취소 버튼 기능 ** 
@@ -235,6 +230,15 @@
 		/* ******************* */
 		
 	});
+	
+	/*********************************************************** 함수 정의 부분 *******************************************************/
+	
+	//인원추가용 조직도 오픈 기능
+	function organOpen(){
+		console.log($(event.target).parent().parent().parent().parent());
+		var p = $(this).offset();
+		$(".insert-organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
+	}	
 	
 </script>
 </html>
