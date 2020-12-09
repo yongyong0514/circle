@@ -108,6 +108,18 @@ public class ComuDaoImp implements ComuDao {
 		
 		return list_name;
 	}
+	
+	
+	//leftBar 리스트 가져오기
+	@Override
+	public List<ComuList> leftList(String comu_info_emp_no) {
+		
+		//List<ComuList> leftList =sqlSession.selectList("comu.leftList",comu_list_code);
+		
+		
+		return sqlSession.selectList("comu.leftList",comu_info_emp_no);
+		
+	}
 
 
 

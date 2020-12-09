@@ -77,7 +77,7 @@ td{
 					
 				<c:forEach var="comuListName" items="${comuListName}"> 
 					<tr id="ListName">
-						<td ><br>${comuListName.comu_list_name}</td>
+						<td ><br><a href='<c:url value='/community/comuListPost?comu_list_name=${comuListName.comu_list_name}'/>'></a>${comuListName.comu_list_name}</td>
 						<td><br>${comuListName.emp_info_name}</td>
 						<td><br>${comuListName.job_info_name}</td>
 						<td><br><a href='<c:url value='/community/comuApp?comu_list_code=${comuListName.comu_list_code}'/>'>가입신청하기</a></td>
