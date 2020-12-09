@@ -73,7 +73,7 @@ public class ProjectDaoImp implements ProjectDao {
 		project.setIss_code(iss_code);		
 				sqlSession.insert("project.projInsertIss", project);
 				
-		return iss_code;
+		return iss_code; 
 		
 		
 

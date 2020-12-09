@@ -66,7 +66,7 @@
 	</select>
 
 
-	<!-- iss 내 정보 얻기 -->
+	<!-- iss 내 정보 얻기 --> 
 
 	<select id="empNo" resultType="string" parameterType="string">
 		select emp_info_emp_no

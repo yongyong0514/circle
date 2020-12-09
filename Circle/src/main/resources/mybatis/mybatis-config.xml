@@ -23,7 +23,7 @@
 
    		<typeAlias type="com.kh.circle.project.entity.Project" alias="project"/>
    		<typeAlias type="com.kh.circle.project.entity.ProjPaging" alias="projPaging"/>
-   		<typeAlias type="com.kh.circle.project.entity.ProjFile" alias="projFile"/>
+   		<typeAlias type="com.kh.circle.project.entity.ProjFile" alias="projFile"/> 
 
 
 

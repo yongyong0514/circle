@@ -19,4 +19,4 @@ public class ProjFile {
 	private String files_type;
 	private String files_status;
 	private long files_size;
-}
+} 

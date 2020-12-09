@@ -24,7 +24,7 @@ public interface ProjectDao {
 	String projInsertIss(Project project);
 
 	List<Project> issSitu();
-
+ 
 	List<Project> issProg();
 
 

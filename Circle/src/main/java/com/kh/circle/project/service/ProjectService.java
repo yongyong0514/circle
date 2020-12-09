@@ -28,7 +28,7 @@ public interface ProjectService {
 	void projInsertIss(Project project, MultipartFile iss_file) throws IllegalStateException, IOException;
 
 	List<Project> issProg();
-
+ 
 	List<Project> issSitu();
 
 
