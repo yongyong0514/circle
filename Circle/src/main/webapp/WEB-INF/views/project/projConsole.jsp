@@ -7,7 +7,7 @@
 <div>
 		<div>
 			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/project/projInsertProject'">신규 프로젝트 생성</button></div>
-			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/project/projInsertProject'">신규 업무 생성</button></div>
+			<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/project/projInsertIss'">신규 업무 생성</button></div>
 			<select name="proj_type" onchange="location.href=this.value">
 			<option>프로젝트로 가기</option>
 				<option >프로젝트 메인</option>

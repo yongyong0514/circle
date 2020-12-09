@@ -24,7 +24,7 @@
 		</div>
 		<div class="container">
 			<div class="contentBar">
-				 <jsp:include page="../post/postHomebar.jsp" />
+				 <jsp:include page="../post/postHomebar.jsp" /> 
 			</div>
 	
 		<div class="content">

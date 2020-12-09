@@ -19,5 +19,13 @@ public interface ProjectDao {
 
 	void projInsert(Project project);
 
+	List<Project> issMember();
+
+	String projInsertIss(Project project);
+
+	List<Project> issSitu();
+ 
+	List<Project> issProg();
+
 
 }
