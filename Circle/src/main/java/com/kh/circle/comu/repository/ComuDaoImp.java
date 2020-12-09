@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.comu.entity.Comu;
 import com.kh.circle.comu.entity.ComuList;
+import com.kh.circle.login.entity.EmpInfo;
 
 @Repository
 public class ComuDaoImp implements ComuDao {
@@ -28,6 +29,14 @@ public class ComuDaoImp implements ComuDao {
 		 
 		 return sqlSession.selectList("comu.comuList",map); 
 		 }
+	 
+	//게시글 별 동호회 리스트
+		@Override
+		public List<Comu> comuListPost(String comu_list_code) {
+			
+			System.out.println("controller 개별 리스트"+comu_list_code);
+			return sqlSession.selectList("comu.comuListPost",comu_list_code);
+			 }
 
 	@Override
 	public int comuListarticle() throws Exception {
@@ -103,8 +112,8 @@ public class ComuDaoImp implements ComuDao {
 	}
 	//가입신청서에 동호회 이름 가져오기
 	@Override
-	public String comuApp(String comu_list_code) {
-		String list_name = sqlSession.selectOne("comu.comuApp",comu_list_code);
+	public List<ComuList> comuApp(String comu_list_code) {
+		List<ComuList> list_name = sqlSession.selectList("comu.comuApp",comu_list_code);
 		
 		return list_name;
 	}
@@ -112,15 +121,19 @@ public class ComuDaoImp implements ComuDao {
 	
 	//leftBar 리스트 가져오기
 	@Override
-	public List<ComuList> leftList(String comu_info_emp_no) {
+	public List<EmpInfo> leftList(String emp_info_emp_no) {
 		
 		//List<ComuList> leftList =sqlSession.selectList("comu.leftList",comu_list_code);
 		
+		System.out.println("dao 레프트 바 가져오냐 " + emp_info_emp_no);
+		return sqlSession.selectList("comu.leftList",emp_info_emp_no);
 		
-		return sqlSession.selectList("comu.leftList",comu_info_emp_no);
-		
+	}
+	
+	
+	
 	}
 
 
 
-}
+
