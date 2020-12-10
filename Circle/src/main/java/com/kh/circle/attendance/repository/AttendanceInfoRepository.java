@@ -19,4 +19,6 @@ public interface AttendanceInfoRepository {
 	public void insertStime(Map<String, Object> inputMap);
 	
 	public void insertEtime(Map<String, Object> inputMap);
+	
+	public List<String> empNoList();
 }

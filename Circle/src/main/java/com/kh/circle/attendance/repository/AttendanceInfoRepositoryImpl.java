@@ -60,5 +60,11 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 		sqlSession.update("attendance.insertEtime", inputMap);		
 	}
 
+	@Override
+	public List<String> empNoList() {
+		
+		return sqlSession.selectList("attendance.empNoList");
+	}
+
 
 }
