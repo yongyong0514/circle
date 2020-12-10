@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,18 +55,28 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		
 		return list;
 	}
-
+	
 	@Override
-	public void insert(Map<String, String> insertEvent) {
-
+	public void insert(HashMap<String, Object> insertEvent) {
 		String seq = sqlSession.selectOne("sch.seq");
 		insertEvent.put("seq", seq);
 		
 		log.info("seq confirm : {}" , insertEvent.get("seq"));
 		log.info("final insert data : {}" , insertEvent);
 		
+		//일정 데이터 입력
 		sqlSession.insert("sch.insert", insertEvent);
-		sqlSession.insert("sch.insertJoinTable", insertEvent);
+		
+		String check = insertEvent.get("attender").toString();
+		
+		//일정 참가자 입력
+		if(check.length() < 13) {
+			log.info("한명 : {}",check);
+			sqlSession.insert("sch.insertOneMember",insertEvent);
+		} else {
+			log.info("여러명 : {}",check);
+			sqlSession.insert("sch.insertMember", insertEvent);
+		}
 		
 	}
 
@@ -76,9 +87,15 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	}
 
 	@Override
-	public void update(Map<String, String> updateEvent) {
+	public void update(HashMap<String, Object> updateEvent) {
+		//일정 데이터 수정
 		sqlSession.update("sch.update", updateEvent);
+		//일정 참가자 전체 삭제
+		sqlSession.delete("sch.allDeleteMember", updateEvent);
+		//일정 참가자 재입력
+		sqlSession.insert("sch.updateMember", updateEvent);
 	}
+	
 
 
 }

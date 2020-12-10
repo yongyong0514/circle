@@ -10,14 +10,8 @@
 <link rel="stylesheet" type="text/css"href="${pageContext.request.contextPath}/resources/css/poll/part/insertMemberOrganChart.css">
 </head>
 <body>
-	<!-- 조직도 버튼 시작 -->
-	<div class="insert-organChartBorder">
-		<div class="insert-organChartBtn">조직도</div>
-	</div>
-	<!-- 조직도 버튼 끝 -->
-
 	<!-- 조직도 패널 시작-->
-	<div class="insert-organPanel">
+	<div id="insert-organ-panel" class="insert-organPanel">
 		<div class="topPanel">
 			<div class="search">
 				<form action="$" method="POST">
@@ -45,8 +39,8 @@
 									<c:forEach var="OrganEmp" items="${OrganDept.empList }">
 										<li>
 											<div class="empBtn">
-												<input type="checkbox" name="select">
-												<c:out value="${OrganEmp.emp_info_name }" />
+												<input type="checkbox" name="select" data-name="${OrganEmp.emp_info_emp_no}">
+												<c:out value="${OrganEmp.emp_info_name }" /><c:out value=" "/><c:out value="${OrganEmp.job_info_name}"/>
 											</div>
 										</li>
 									</c:forEach>
@@ -64,8 +58,8 @@
 												<c:forEach var="OrganEmp" items="${OrganDept2.empList }">
 													<li>
 														<div class="empBtn">
-															<input type="checkbox" name="select">
-															<c:out value="${OrganEmp.emp_info_name }" />
+															<input type="checkbox" name="select" data-name="${OrganEmp.emp_info_emp_no }">
+															<c:out value="${OrganEmp.emp_info_name }" /><c:out value=" "/><c:out value="${OrganEmp.job_info_name}"/>
 														</div>
 													</li>
 												</c:forEach>
@@ -99,21 +93,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/poll/insertMemberOrganChart.js"></script>
 
 <script>
-	$(document).ready(function(){
-		
-		
-		$(".empBtn").on('click',function(){
-			var location = $(event.target).text();
-			console.log(location);
-		});
-		
-		$('#insert-organ-confirm').on('click', function(){
-			var checked = $('ul.tree .empBtn input[type=checkbox]:checked').parent().text();
-			console.log(checked);
-		});		
-		
-		
-	});
+
 </script>
 
 </html>

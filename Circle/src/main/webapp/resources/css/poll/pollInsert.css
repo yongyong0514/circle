@@ -162,6 +162,28 @@ input.txt{
 .name-tag-wrap{
 	padding: 2px 0;
 }
+ul.name-tag {
+    overflow: hidden;
+}
+ul.name-tag>li {
+    float: left;
+    line-height: 20px;
+   	display: inline-block;
+    padding: 0px 8px;
+    background: #A9D0F5;
+    border-radius: 13px;
+    border: 1px solid #c2dde6;
+    height: 21px;
+    line-height: 20px!important;
+    
+}
+.name-tag-wrap ul.name-tag{
+	margin-top: 0 !important;
+    display: inline-block;
+}
+.name-tag-wrap ul.name-tag li, .option-name-tag-wrap ul.name-tag li{
+	margin: 2px 4px 2px 0;
+}
 span.desc {
     display: inline-block;
     font-size: 13px;
@@ -174,17 +196,11 @@ span.desc {
     margin-top: 20px;
     padding-bottom: 20px;
 }
-ul.name-tag {
-    overflow: hidden;
-}
-ul.name-tag>li {
-    float: left;
-    line-height: 20px;
-}
-ul.name-tag .creat {
+
+ul.name-tag .create {
     height: 22px!important;
 }
-ul.name-tag li.creat {
+ul.name-tag li.create {
     border: 0 !important;
     background: transparent;
     padding: 0 !important;

@@ -88,6 +88,12 @@ public class PollServiceImpl implements PollService{
 	}
 
 
+	@Override
+	public List<HashMap<String, String>> userInfo(String empNo) {
+		return pollDao.userInfo(empNo);
+	}
+
+
 
 
 	

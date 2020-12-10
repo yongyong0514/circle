@@ -1,606 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollQuestionInsert.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollInsert.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/fullcalendar/fullcalendar.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/bootstrap/bootstrap.css">
 <%-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/schedule/jQuery/jquery-ui.css"> --%>
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'></script>
-<script src="https://code.jquery.com/jquery-2.1.3.min.js" integrity="sha256-ivk71nXhz9nsyFDoYoGf2sbjrR9ddh+XDkCcfZxjvcM=" crossorigin="anonymous"></script>
-<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>       
-<script src='${pageContext.request.contextPath}/resources/js/schedule/fullcalendar.min.js'></script>
-<script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/resources/js/schedule/jquery-ui.js"></script> --%>
-        
-<!-- 주석커밋 -->
-      <script>
-      		var loginId = '200101090031'//${member.EMP_INFO_EMP_NO}	;//로그인 아이디
-      		var nowEvent = "";									//클릭한 이벤트 정보 저장
-      		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
-      		
-      		//좌측 메뉴바 일정종류 체크 변수
-      		var myCalendarCheck = $('#myCalendar').prop('checked');
-      		var pollCheck = $('#poll').prop('checked');
-      		var projectCheck = $('#project').prop('checked');
-      		var communityCheck = $('#community').prop('checked');
-			      		
-      		
-      		//fullcalendar onload function
-            $(document).ready(function() {
-            	
-            	//풀캘린더 로드
-                $("#calendar").fullCalendar({
-                	defaultView			: 'month',	//기본 뷰 설정
-               	    header				: {
-               	    						left	: 'today', // month/week뷰 변환 버튼
-               	    						center	: 'prev, title, next',
-               	    						right  	: 'month,agendaWeek,agendaDay'
-               							    
-               		},
-               		fixedWeekCount            : 'variable',
-                	defaultDate			: moment(),//현재를 기준으로 생성
-                	nextDayThreshold	: "00:00:00",
-                	defaultAllDay		: false,
-                	fixedWeekCount		: false,//6주 보기 고정 해제
-                	editable			: true,
-                	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
-                	
-                	//이벤트 목록 불러오기
-                 	events				: function(start, end, timezone, callback) {
-                 								
-						                    	$.ajax({
-						                    		url			:base+"/schAjax/id",
-						                    		type		:"get",
-						                    		async		: false,
-						                    		traditional : true,
-						                    		data: {id 		: loginId
-						                    			  ,start	: start.format()
-						                    			  ,end		: end.format() 
-						                    			  ,myCalendarCheck : $('#myCalendar').prop('checked')
-						                      		      ,pollCheck : $('#poll').prop('checked')
-						                      		 	  ,projectCheck : $('#project').prop('checked')
-						                      			  ,communityCheck : $('#community').prop('checked')
-						                      			  ,vacationCheck : $('#vacation').prop('checked')
-						                    		},
-						                    		dataType:"json",
-						                    		success:function(json){
-						                    			
-						        						events = [];
-						        						$(json).each(function() {
-						        							
-						        							//이벤트 값 변수화
-						        							var groupCode = $(this).prop('id').substr(0,4);
-						        							var allDay = $(this).attr('allDay');
-						        							var title = $(this).attr('title');
-						        							var groupName = $(this).attr('groupName');
-						        							var jobName = $(this).attr('jobName');
-						        							var backgroundColor = $(this).attr('backgroundColor')
-						        							
-						        							//일정 종류에 따라 값 변형
-						        							var randomNumber = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
-						        							var randomNumber2 = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
-						        							switch (groupCode) {
-						        								case 'SCHN' :  break;
-						        								default : allDay = 'on';
-						        										   title = title + " " + jobName + " 휴가"; 
-						        										   groupName = "휴가";
-						        										   backgroundColor = "rgb(245,"+ randomNumber + "," + randomNumber2 + ")";
-						        										   
-						        										   break;
-						        							}
-						        							
-						        							//allDay 데이터 가공
-						        							var yn = false;
-						        							var end = $(this).prop('end');
-						        							var	start = $(this).prop('start');
-						        							
-						        							if(allDay == "on"){
-						        								yn = true;
-						        								if (start !== end) {
-								                    	              end = moment(end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
-								                    	        }
-						        							}
-						        							
-						        							//events 객체에 주입
-						        							events.push({
-						        								id	  			: $(this).attr('id'),
-						        								title 			: title,
-						        								start 			: start,
-						        								end	  			: end,
-						        								allDay			: yn,
-						        								repeat 			: $(this).attr('repeat'),
-						        								endRepeat 		: $(this).attr('endRepeat'),
-						        								content			: $(this).attr('content'),
-						        								security		: $(this).attr('security'),
-						        								stat			: $(this).attr('stat'),
-						        								writer 			: $(this).attr('writer'),
-						        								writeDate		: $(this).attr('writeDate'),
-						        								modifyDate		: $(this).attr('modifyDate'),
-						        								backgroundColor	: backgroundColor,
-						        								writerName		: $(this).attr('writerName'),
-						        								//캘린더에서 데이터를 받을때는 groupName으로 받고 서버로 보낼때는 groupCode로 보냄
-						        								groupName		: groupName
-						        							});
-						        						});
-						        						
-						        						//월, 년 변경되었거나 자료 변경에 따라 다시 불러오기
-														callback(events);
-														console.log(events)
-						                    		}
-                 							});
-                 	},
-            	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
-            	 							//input 값 비우기
-            	 							$('#edit-title').val("");
-            	 							$('#edit-groupCode option:eq(0)').prop('selected', 'selected');
-            	 							$('#edit-allDay').prop('checked', true);
-            	 							$('#edit-color option:eq(0)').prop('selected', true);
-            	 							$('#edit-desc').val("");
-            	 							
-            	 							$('.time').hide();	
-            	 							$('.input-check').hide();
-            	 	
-            	 							//현재 시간 넣기
-            	 							$('#edit-start').val(date.format());
-            	 							$('#edit-end').val(date.format());
-            	 							$('#start-time').val(moment());
-            	 							$('#end-time').val(moment());
-            	 							
-            	 							//color selector 글자색 변경
-            	 						    $('#edit-color').css('color', $('#edit-color option:eq(0)').val());
-            	 							
-            	 							//modify-save button hide
-            	 							$('.modalBtnContainer-modifyEvent').hide();
-            	 							//add button show
-            	 							$('.modalBtnContainer-addEvent').show();
-            	 							
-            	 							//모달 띄우기
-            	 							$('#add-eventModal').modal('show');
-            	 							
-            	 							//title check hide
-            	 							$('#title-check').hide();
-            	 							
-            	 							//일정명에 오토포커스
-            	 							$(".modal").on("shown.bs.modal", function () {
-            	 								$('#edit-title').focus();
-            	 							});
-
-       				},
-       				//event 클릭시 실행코드
-                	eventClick			: function(event, jsEvent, view) {
-                												
-                							nowEvent = event;
-                							console.log(nowEvent);
-                							var entry=[];
-                							
-                							//참여자 데이터 불러오기
-                							$.ajax({
-                								url			: base + "/schAjax/entry",
-                								type		: 'post',
-                								data		: nowEvent.id,
-                								dataType	: 'json',
-                								contentType : "application/json; charset=utf-8;",
-                   			                	error		: function(request,status,error){
-                			                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                			                	},
-                			                	success		: function(json){
-                			                		
-                			                		console.log(json);
-                        							$(json).each(function(){
-                        								$('#view-entry').append("<span style=display:inline-block>" + $(this).prop('EMP_INFO_NAME') + "<span>&nbsp");
-                        							});
-                			                	} 
-                							});
-                							
-                							console.log(entry);
-                		
-                							//empty input value
-                							$('#view-sch-id').val("");
-                							$('#view-title').empty();
-                							$('#view-start').empty();
-                							$('#view-end').empty();
-                							$('#view-groupCode').empty();
-                							$('#view-writer').empty();
-                							$('#view-desc').empty();
-                							$('#view-entry').empty();
-                							$('.input-check').hide();
-                							
-                							//fill input value
-                							$('#view-sch-id').val(event.id);
-                							$('#view-title').text(event.title);
-                							if(event.allDay) {
-                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
-                    							}	
-                							} else {
-                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
-                    							}               								
-                							}
-                							$('#view-groupCode').text(event.groupName);
-                							
-
-                							$('#view-writer').text(event.writerName);
-                							$('#view-desc').text(event.content);
-                							
-                							//autority check
-                							if(event.writer != loginId) {
-												console.log("wrong id");
-												
-												$(".modalBtnContainer-viewEvent").hide();
-                							} else {
-                								$(".modalBtnContainer-viewEvent").show();
-                							}
-                							
-                							//modal on
-                							$('#eventModal').modal();
-           			},
-                		
-                });
-            });
-      		
-        //event insert script
-        $(function () {
-        	
-        	//insert form-data serialize transform
-        	jQuery.fn.serializeObject = function() {
-        	    var obj = null;
-        	    try {
-        	        if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
-        	            var arr = this.serializeArray();
-        	            if (arr) {
-        	                obj = {};
-        	                jQuery.each(arr, function() {
-        	                    obj[this.name] = this.value;
-        	                });
-        	            }//if ( arr ) {
-        	        }
-        	    } catch (e) {
-        	        alert(e.message);
-        	    } finally {
-        	    }
-        	 
-        	    return obj;
-        	};
-        	
-        	//save button ckick function
-            $('#save-event').on('click', function (e) {
-				
-            	//input title check
-            	if($('#edit-title').val() == '' ) {
-					$('#edit-title').focus();
-					return;
-				}
-            	
-				if(!dateTimeCheck()){
-					return;          	
-				}
-            	
-                var startDateTime = $('#edit-start').val();
-                var endDateTime = $('#edit-end').val();
-                
-                //input date check
-                if(startDateTime > endDateTime){
-                	$('#date-check').show();
-                	return;
-                }
-                
-                
-            	console.log("button click success");
-            	
-                // input emp.no 
-                $("#insertId").val(loginId);
-                
-                //concat date time
-                if($('edit-allDay').is('checked')) {
-                	var date = $('#edit-start').substr(0,10);
-        			$('#edit-start').prop(date);
-                	
-                } else {
-                	startDateTime = startDateTime.concat(" ", $('#start-time').val());
-                	endDateTime = endDateTime.concat(" ", $('#end-time').val());
-                	
-                	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
-                	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
-                	
-                	if($('#end-time') == null) {
-                		console.log('end is null');
-                	}
-                	
-                }
-                
-                var insertEvent = $("form[name=insert-event]").serializeObject();
-                
-                console.log("insertEvent : " + JSON.stringify(insertEvent));
-                
-                $.ajax({
-                	type 		: 'post',
-                	traditional : true,
-                	url 		: base+"/schAjax/schInsert", 
-                	data		: JSON.stringify(insertEvent),
-                	dataType	: 'text',
-                	contentType	:"application/json; charset=utf-8;",
-                	error		: function(request,status,error){
-                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                	},
-                	success		: function(){
-                        //modal close
-                        $("#add-eventModal").modal("hide");
-                        
-                        //refresh calendar
-                        $('#calendar').fullCalendar('refetchEvents');
-                	}
-                })
-
-            });
-        	
-        	//allDay checked click function
-        	$('#edit-allDay').on('change', function(){
-        		if($(this).is(':checked')) {
-        			$('.time').hide();		
-        		} else {
-        			$('.time').show();
-        		}
-        	});
-        	
-        	//title-insert-check blur function
-        	$(document).ready(function() {
-        		$('#edit-title').blur(function(){
-        			if($('#edit-title').val() == '') {
-        				$('#title-check').show();
-        			} else {
-        				$('#title-check').hide();
-        			}
-        		});
-        	});
-        	
-        	//dateTime check function
-        	$('.input-date-time').change( function(){
-        		dateTimeCheck();
-        	});
-        	
-        	function dateTimeCheck() {
-        		var startDate = $('#edit-start').val();
-        		var startTime = $('#start-time').val();
-        		var endDate = $('#edit-end').val();
-        		var endTime = $('#end-time').val();
-        		
-        		if(startDate > endDate) {
-        			$('#date-check').show();	
-        			return false;
-        		} else	if(startDate < endDate){
-        			$('#date-check').hide();
-            		$('#time-check').hide();  
-            		return true;
-        		} else {
-            		$('#date-check').hide();
-            		$('#time-check').hide(); 
-					if(startTime != '' && endTime != ''){
-					
-	        			if(startTime > endTime) {
-	        				$('#time-check').show();
-	        				return false;
-	        			}       		
-					}
-        		}
-        		
-
-        		
-        	};
-        	
-        	//delete button click function
-        	$('#deleteEvent').on('click', function(){
-				
-        		var id = $('#view-sch-id').val();
-        		
-        		console.log(id);
-				
-				var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
-				if(deleteConfirm) {
-					console.log('delete ajax on');
-					
-					$.ajax({
-						url			: base+'/schAjax/schDelete',
-						type		: 'post',
-						async		: false,
-						data		: id,
-						dataType	: 'text',
-						contentType	: "application/json; charset=utf-8;",
-	                	error		: function(request,status,error){
-	                					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	                				  },
-	                	success		: function(){
-	                        //refresh calendar
-	                        $('#calendar').fullCalendar('refetchEvents');	 
-	                        
-	                        //close modal
-	                		$('#eventModal').modal("hide");
-	                	},
-					});
-				} else {
-					console.log('delete cancle');
-				}
-        	})
-        	
-        	//modify button click function
-        	$('#updateEvent').on('click', function() {
-        		
-        		//view-modal close
-        		$('#eventModal').modal('hide');
-        		
-        		//input modal view controll
-        		$('.modalBtnContainer-addEvent').hide();
-        		$('.modalBtnContainer-modifyEvent').show();
-        		$('.input-check').hide();
-        		
-        		//data input
-        		$('#insertCode').val(nowEvent.id);
-				$('#edit-title').val(nowEvent.title);
-				$('#edit-desc').val(nowEvent.content);
-					//groupName => groupCode transfer				
-				var groupCode = $('#edit-groupCode option:contains('+ nowEvent.groupName +')').val();
-				$('#edit-groupCode').val(groupCode).prop('selected', true);
-				
-					//color input
-				$('#edit-color').val(nowEvent.backgroundColor);
-				$('#edit-color').css('color',nowEvent.backgroundColor);
-				
-					//allDay process	
-				if(nowEvent.allDay == true){
-					$('#edit-allDay').prop('checked', true);
-					$('.time').hide();
-				} else {
-					$('#edit-allDay').prop('checked', false);
-					$('#start-time').val(nowEvent.start.format('HH:mm'));
-					if($('#end-time').val() != ''){
-						$('#end-time').val(nowEvent.end.format('HH:mm'));		
-					}
-					$('.time').show();
-				};
-				
-				$('#edit-start').val(nowEvent.start.format('YYYY-MM-DD'));
-				
-				if(nowEvent.end != null) {
-					$('#edit-end').val(nowEvent.end.format('YYYY-MM-DD'));
-				} else {
-					$('#edit-end').val(nowEvent.start.format('YYYY-MM-DD'));
-				}
-				
-				//modify-save button show
-				$('.modalBtnContainer-modifyEvent').show();
-				//add button hide
-				$('modalBtnContainer-addEvent').hide();
-				
-				//title check hide
-				$('#title-check').hide();
-				
-				//일정명에 오토포커스
-				$(".modal").on("shown.bs.modal", function () {
-					$('#edit-title').focus();
-				});
-        		        		
-        		//input modal on
-        		$('#add-eventModal').modal();
-        		
-        	})
-        	
-        	//modify-save button click function
-        	$('#modify-save-event').on('click', function(){
-                	
-                	console.log("button click success");
-
-                	//input title check
-                	if($('#edit-title').val() == '' ) {
-    					$('#edit-title').focus();
-    					return;
-    				}
-                	
-					if(!dateTimeCheck()){
-						return;          	
-					}
-                	
-                	
-                    // input emp.no 
-                    $("#insertId").val(loginId);
-
-    				//date time combine process                
-                    var startDateTime = $('#edit-start').val();
-                    var endDateTime = $('#edit-end').val();
-	                    //concat date time
-                    if($('edit-allDay').is('checked')) {
-                    	var date = $('#edit-start').substr(0,10);
-            			$('#edit-start').prop(date);
-                    } else {
-                    	startDateTime = startDateTime.concat(" ", $('#start-time').val());
-                    	endDateTime = endDateTime.concat(" ", $('#end-time').val());
-                    	
-                    	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
-                    	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
-                    	
-                    	if($('#end-time') == null) {
-                    		console.log('end is null');
-                    	}
-                    	
-                    }
-	                    
-                    var updateEvent = $("form[name=insert-event]").serializeObject();
-                    
-                    console.log("updateEvent : " + JSON.stringify(updateEvent));
-                    
-                     $.ajax({
-                    	type 		: 'post',
-                    	traditional : true,
-                    	url 		: base+"/schAjax/schUpdate", 
-                    	data		: JSON.stringify(updateEvent),
-                    	dataType	: 'text',
-                    	contentType	:"application/json; charset=utf-8;",
-                    	error		: function(request,status,error){
-                    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-                    	},
-                    	success		: function(){
-                            //modal close
-                            $("#add-eventModal").modal("hide");
-                            
-                            //refresh calendar
-                            $('#calendar').fullCalendar('refetchEvents');
-                    	}
-                    }) 
-        	});
-        	
-        	//color selector onchange function
-        	$('#edit-color').on('change', function(){
-        		var selectedColor = $('#edit-color option:selected').val();
-        		$('#edit-color').css('color', selectedColor);
-        	});
-        	
-        	//grouping checkbox onchange function
-        	$('#myCalendar').change(function(){
-        		console.log($('#myCalendar').prop('checked'));
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');        		
-        	});
-        	$('#poll').change(function(){
-        		console.log($('#poll').prop('checked'));
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');        		
-        	});
-        	$('#project').change(function(){
-        		console.log($('#project').prop('checked'));
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');        		
-        	});
-        	$('#community').change(function(){
-        		console.log($('#community').prop('checked'));
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');        		
-        	});
-        	$('#vacation').change(function(){
-        		console.log($('#vacation').prop('checked'));
-                //refresh calendar
-                $('#calendar').fullCalendar('refetchEvents');        		
-        	});
-        	
-        	
-        });
-        
-/*         $(document).ready(function(){
-        	$('#mydate').datepicker();
-        }); */
-        
-        </script>
-
-
-        
 </head>
 <body>
 	<!-- <div id='mydate' style="height:200px;"></div> --> <!-- 사이드바용 datepicker (jquery-ui 사용) --> 
@@ -734,19 +147,19 @@
 		                            <input class="inputModal input-date-time time" type="time" name="end-time" id="end-time"/>
 		                        </div>
 		                    </div>
-		                    <div class="row">
+		                    <div class="hidden-row">
 		                        <div class="col-xs-12">
 		                        	<label class="input-check hide-label"></label>
 			                        <div id="date-check" class="input-check" style="color:red;">시작일은 종료일보다 작거나 같아야합니다</div>
 			                        <div id="time-check" class="input-check" style="color:red;">시작시간은 종료시간보다 작거나 같아야합니다</div>
 		                        </div>
 		                    </div>
-	                        <div class="row">
+	                        <div class="hidden-row">
 							    <div class='col-xs-12'>
 							        <input type='hidden' class="inputModal select time" name='start' id='start-dateTime' />
 						        </div>
 						    </div>
-	                        <div class="row">
+	                        <div class="hidden-row">
 							    <div class='col-xs-12'>
 							        <input type='hidden' class="inputModal select time" name='end' id='end-dateTime' />
 						        </div>
@@ -775,6 +188,31 @@
 		                    </div>
 		                    <div class="row">
 		                        <div class="col-xs-12">
+		                            <label class="col-xs-4" for="addend-member">참여자</label>
+		                            <div id="organ-view" class="option-name-tag-wrap addOrRefer" style="display:">
+										<ul class="name-tag">
+											<li class="create add-btn">
+												<span class="btn-wrap">
+													<span class="icon-form icon-addlist"></span>
+													<span class="txt">추가</span>
+												</span>
+												<a class="remove-all-tag rest-btn">
+													<span class="icon16 remove-all"></span>
+													<span class="txt">전체삭제</span>
+												</a>
+											</li>
+										</ul>
+					                    <div class="hidden-row">
+					                        <div class="col-xs-12">
+					                        	<label class="attend-check hide-label"></label>
+						                        <div id="attend-check" class="attend-check" style="color:red;">참가자는 1명 이상이어야 합니다</div>
+					                        </div>
+					                    </div>
+									</div>
+		                        </div>
+		                    </div>
+		                    <div class="row">
+		                        <div class="col-xs-12">
 		                            <label class="col-xs-4" for="edit-desc">설명</label>
 		                            <textarea rows="4" cols="50" class="inputModal" name="content"
 		                                id="edit-desc"></textarea>
@@ -796,6 +234,742 @@
     </div><!-- /.modal -->
     
 </div>
+<div class="insertMemberOrganChart">
+	<c:import url="/organChart/getInsertInfo"/>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js'></script>
+<script src="https://code.jquery.com/jquery-2.1.3.min.js" integrity="sha256-ivk71nXhz9nsyFDoYoGf2sbjrR9ddh+XDkCcfZxjvcM=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>       
+<script src='${pageContext.request.contextPath}/resources/js/schedule/fullcalendar.min.js'></script>
+<script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
+<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/resources/js/schedule/jquery-ui.js"></script> --%>
+        
+<!-- 주석커밋 -->
+      <script>
+      		var loginId = '200101090031'//${member.EMP_INFO_EMP_NO}	;//로그인 아이디
+      		var nowEvent = "";									//클릭한 이벤트 정보 저장
+      		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
+      		
+      		//좌측 메뉴바 일정종류 체크 변수
+      		var myCalendarCheck = $('#myCalendar').prop('checked');
+      		var pollCheck = $('#poll').prop('checked');
+      		var projectCheck = $('#project').prop('checked');
+      		var communityCheck = $('#community').prop('checked');
+			      		
+      		
+      		//fullcalendar onload function
+            $(document).ready(function() {
+            	
+            	//풀캘린더 로드
+                $("#calendar").fullCalendar({
+                	defaultView			: 'month',	//기본 뷰 설정
+               	    header				: {
+               	    						left	: 'today', // month/week뷰 변환 버튼
+               	    						center	: 'prev, title, next',
+               	    						right  	: 'month,agendaWeek,agendaDay'
+               							    
+               		},
+               		fixedWeekCount            : 'variable',
+                	defaultDate			: moment(),//현재를 기준으로 생성
+                	nextDayThreshold	: "00:00:00",
+                	defaultAllDay		: false,
+                	fixedWeekCount		: false,//6주 보기 고정 해제
+                	editable			: true,
+                	eventLimit			: true,//이벤트 개수가 표시칸을 벗어나면 더보기 버튼 생성
+                	
+                	//이벤트 목록 불러오기
+                 	events				: function(start, end, timezone, callback) {
+                 								
+						                    	$.ajax({
+						                    		url			:base+"/schAjax/id",
+						                    		type		:"get",
+						                    		async		: false,
+						                    		traditional : true,
+						                    		data: {id 		: loginId
+						                    			  ,start	: start.format()
+						                    			  ,end		: end.format() 
+						                    			  ,myCalendarCheck : $('#myCalendar').prop('checked')
+						                      		      ,pollCheck : $('#poll').prop('checked')
+						                      		 	  ,projectCheck : $('#project').prop('checked')
+						                      			  ,communityCheck : $('#community').prop('checked')
+						                      			  ,vacationCheck : $('#vacation').prop('checked')
+						                    		},
+						                    		dataType:"json",
+						                    		success:function(json){
+						                    			
+						        						events = [];
+						        						$(json).each(function() {
+						        							
+						        							//이벤트 값 변수화
+						        							var groupCode = $(this).prop('id').substr(0,4);
+						        							var allDay = $(this).attr('allDay');
+						        							var title = $(this).attr('title');
+						        							var groupName = $(this).attr('groupName');
+						        							var jobName = $(this).attr('jobName');
+						        							var backgroundColor = $(this).attr('backgroundColor')
+						        							
+						        							//일정 종류에 따라 값 변형
+						        							var randomNumber = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
+						        							var randomNumber2 = Math.floor(Math.random() * 100); //컬러코드용 랜덤값 - 레드
+						        							switch (groupCode) {
+						        								case 'SCHN' :  break;
+						        								default : allDay = 'on';
+						        										   title = title + " " + jobName + " 휴가"; 
+						        										   groupName = "휴가";
+						        										   backgroundColor = "rgb(245,"+ randomNumber + "," + randomNumber2 + ")";
+						        										   
+						        										   break;
+						        							}
+						        							
+						        							//allDay 데이터 가공
+						        							var yn = false;
+						        							var end = $(this).prop('end');
+						        							var	start = $(this).prop('start');
+						        							
+						        							if(allDay == "on"){
+						        								yn = true;
+						        								if (start !== end) {
+								                    	              end = moment(end).add(1, 'days'); // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
+								                    	        }
+						        							}
+						        							
+						        							//events 객체에 주입
+						        							events.push({
+						        								id	  			: $(this).attr('id'),
+						        								title 			: title,
+						        								start 			: start,
+						        								end	  			: end,
+						        								allDay			: yn,
+						        								repeat 			: $(this).attr('repeat'),
+						        								endRepeat 		: $(this).attr('endRepeat'),
+						        								content			: $(this).attr('content'),
+						        								security		: $(this).attr('security'),
+						        								stat			: $(this).attr('stat'),
+						        								writer 			: $(this).attr('writer'),
+						        								writeDate		: $(this).attr('writeDate'),
+						        								modifyDate		: $(this).attr('modifyDate'),
+						        								backgroundColor	: backgroundColor,
+						        								writerName		: $(this).attr('writerName'),
+						        								//캘린더에서 데이터를 받을때는 groupName으로 받고 서버로 보낼때는 groupCode로 보냄
+						        								groupName		: groupName
+						        							});
+						        						});
+						        						
+						        						//월, 년 변경되었거나 자료 변경에 따라 다시 불러오기
+														callback(events);
+														console.log(events)
+						                    		}
+                 							});
+                 	},
+            	 	dayClick			: function(date, jsEvent, view) {//날짜 클릭 기능 설정
+            	 							//input 값 비우기
+            	 							$('#edit-title').val("");
+            	 							$('#edit-groupCode option:eq(0)').prop('selected', 'selected');
+            	 							$('#edit-allDay').prop('checked', true);
+            	 							$('#edit-color option:eq(0)').prop('selected', true);
+            	 							$('#edit-desc').val("");
+            	 							
+            	 							$('.time').hide();	
+            	 							$('.input-check').hide();
+           	 			                	$('#attend-check').hide();
+            	 							
+            	 							//현재 시간 넣기
+            	 							$('#edit-start').val(date.format());
+            	 							$('#edit-end').val(date.format());
+            	 							$('#start-time').val(moment());
+            	 							$('#end-time').val(moment());
+            	 							
+            	 							//color selector 글자색 변경
+            	 						    $('#edit-color').css('color', $('#edit-color option:eq(0)').val());
+            	 							
+            	 							//modify-save button hide
+            	 							$('.modalBtnContainer-modifyEvent').hide();
+            	 							//add button show
+            	 							$('.modalBtnContainer-addEvent').show();
+            	 							
+            	 							//모달 띄우기
+            	 							$('#add-eventModal').modal('show');
+            	 							
+            	 							//title check hide
+            	 							$('#title-check').hide();
+            	 							
+            	 							//일정명에 오토포커스
+            	 							$(".modal").on("shown.bs.modal", function () {
+            	 								$('#edit-title').focus();
+            	 							});
+
+       				},
+       				//event 클릭시 실행코드
+                	eventClick			: function(event, jsEvent, view) {
+                												
+                							nowEvent = event;
+                							console.log(nowEvent);
+                							entry=[];
+                							
+                							//참여자 데이터 불러오기
+                							$.ajax({
+                								url			: base + "/schAjax/entry",
+                								type		: 'post',
+                								data		: nowEvent.id,
+                								dataType	: 'json',
+                								contentType : "application/json; charset=utf-8;",
+                   			                	error		: function(request,status,error){
+                			                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                			                	},
+                			                	success		: function(json){
+                			                		
+                			                		entry = json;
+                			                		console.log(json);
+                        							$(json).each(function(){
+                        								$('#view-entry').append("<span style=display:inline-block>" + $(this).prop('EMP_INFO_NAME') + "<span>&nbsp");
+                        							});
+                			                	} 
+                							});
+                							
+                							console.log(entry);
+                		
+                							//empty input value
+                							$('#view-sch-id').val("");
+                							$('#view-title').empty();
+                							$('#view-start').empty();
+                							$('#view-end').empty();
+                							$('#view-groupCode').empty();
+                							$('#view-writer').empty();
+                							$('#view-desc').empty();
+                							$('#view-entry').empty();
+                							$('.input-check').hide();
+                							$('#attend-check').hide();
+                							
+                							//fill input value
+                							$('#view-sch-id').val(event.id);
+                							$('#view-title').text(event.title);
+                							if(event.allDay) {
+                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
+                    							}	
+                							} else {
+                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
+                    							if(event.end != null) {
+                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
+                    							}               								
+                							}
+                							$('#view-groupCode').text(event.groupName);
+                							
+
+                							$('#view-writer').text(event.writerName);
+                							$('#view-desc').text(event.content);
+                							
+                							//autority check
+                							if(event.writer != loginId) {
+												console.log("wrong id");
+												
+												$(".modalBtnContainer-viewEvent").hide();
+                							} else {
+                								$(".modalBtnContainer-viewEvent").show();
+                							}
+                							
+                							//modal on
+                							$('#eventModal').modal();
+           			},
+                		
+                });
+            });
+      	
+      	/************************************************** 풀캘린더 내부 끝 ***********************************************  */	
+      		
+        //event insert script
+        $(function () {
+        	//save button ckick function
+            $('#save-event').on('click', function (e) {
+            	//input title check
+            	if($('#edit-title').val() == '' ) {
+					$('#edit-title').focus();
+					return;
+				}
+				if(!dateTimeCheck()){
+					return;          	
+				}
+                var startDateTime = $('#edit-start').val();
+                var endDateTime = $('#edit-end').val();
+                //input date check
+                if(startDateTime > endDateTime){
+                	$('#date-check').show();
+                	return;
+                }
+                
+                console.log(attendCheck());
+                
+                if(attendCheck()){
+                	$('#attend-check').hide();
+                } else {
+                	$('#attend-check').show();
+                	return;
+                }
+                
+            	console.log("button click success");
+            	
+                // input emp.no 
+                $("#insertId").val(loginId);
+                
+                //concat date time
+                if($('edit-allDay').is('checked')) {
+                	var date = $('#edit-start').substr(0,10);
+        			$('#edit-start').prop(date);
+                	
+                } else {
+                	startDateTime = startDateTime.concat(" ", $('#start-time').val());
+                	endDateTime = endDateTime.concat(" ", $('#end-time').val());
+                	
+                	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
+                	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
+                	
+                	if($('#end-time') == null) {
+                		console.log('end is null');
+                	}
+                	
+                }
+                
+                var insertEvent = $("form[name=insert-event]").serializeObject();
+                
+                console.log("insertEvent : " + JSON.stringify(insertEvent));
+                
+                $.ajax({
+                	type 		: 'post',
+                	traditional : true,
+                	url 		: base+"/schAjax/schInsert", 
+                	data		: JSON.stringify(insertEvent),
+                	dataType 	: "text",
+                	contentType	:"application/json; charset=utf-8;",
+                	error		: function(request,status,error){
+                		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                	},
+                	success		: function(){
+                        //modal close
+                        $("#add-eventModal").modal("hide");
+                        
+                        //refresh calendar
+                        $('#calendar').fullCalendar('refetchEvents');
+                	}
+                })
+
+            });
+        	
+        	//allDay checked click function
+        	$('#edit-allDay').on('change', function(){
+        		if($(this).is(':checked')) {
+        			$('.time').hide();		
+        		} else {
+        			$('.time').show();
+        		}
+        	});
+        	
+        	//title-insert-check blur function
+        	$(document).ready(function() {
+        		$('#edit-title').blur(function(){
+        			if($('#edit-title').val() == '') {
+        				$('#title-check').show();
+        			} else {
+        				$('#title-check').hide();
+        			}
+        		});
+        	});
+        	
+        	//dateTime check function
+        	$('.input-date-time').change( function(){
+        		dateTimeCheck();
+        	});
+        	
+        	function dateTimeCheck() {
+        		var startDate = $('#edit-start').val();
+        		var startTime = $('#start-time').val();
+        		var endDate = $('#edit-end').val();
+        		var endTime = $('#end-time').val();
+        		
+        		if(startDate > endDate) {
+        			$('#date-check').show();	
+        			return false;
+        		} else	if(startDate < endDate){
+        			$('#date-check').hide();
+            		$('#time-check').hide();  
+            		return true;
+        		} else {
+            		$('#date-check').hide();
+            		$('#time-check').hide(); 
+					if(startTime != '' && endTime != ''){
+					
+	        			if(startTime > endTime) {
+	        				$('#time-check').show();
+	        				return false;
+	        			}       		
+					}
+        		}
+        		
+
+        		
+        	};
+        	
+        	//delete button click function
+        	$('#deleteEvent').on('click', function(){
+				
+        		var id = $('#view-sch-id').val();
+        		
+        		console.log(id);
+				
+				var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
+				if(deleteConfirm) {
+					console.log('delete ajax on');
+					
+					$.ajax({
+						url			: base+'/schAjax/schDelete',
+						type		: 'post',
+						async		: false,
+						data		: id,
+						dataType	: 'text',
+						contentType	: "application/json; charset=utf-8;",
+	                	error		: function(request,status,error){
+	                					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	                				  },
+	                	success		: function(){
+	                        //refresh calendar
+	                        $('#calendar').fullCalendar('refetchEvents');	 
+	                        
+	                        //close modal
+	                		$('#eventModal').modal("hide");
+	                	},
+					});
+				} else {
+					console.log('delete cancle');
+				}
+        	})
+        	
+        	//modify button click function
+        	$('#updateEvent').on('click', function() {
+        		
+        		console.log(entry);
+        		
+        		//view-modal close
+        		$('#eventModal').modal('hide');
+        		
+        		//input modal view controll
+        		$('.modalBtnContainer-addEvent').hide();
+        		$('.modalBtnContainer-modifyEvent').show();
+        		$('.input-check').hide();
+        		
+        		//data input
+        		$('#insertCode').val(nowEvent.id);
+				$('#edit-title').val(nowEvent.title);
+				$('#edit-desc').val(nowEvent.content);
+					//groupName => groupCode transfer				
+				var groupCode = $('#edit-groupCode option:contains('+ nowEvent.groupName +')').val();
+				$('#edit-groupCode').val(groupCode).prop('selected', true);
+				
+					//color input
+				$('#edit-color').val(nowEvent.backgroundColor);
+				$('#edit-color').css('color',nowEvent.backgroundColor);
+				
+					//allDay process	
+				if(nowEvent.allDay == true){
+					$('#edit-allDay').prop('checked', true);
+					$('.time').hide();
+				} else {
+					$('#edit-allDay').prop('checked', false);
+					$('#start-time').val(nowEvent.start.format('HH:mm'));
+					if($('#end-time').val() != ''){
+						$('#end-time').val(nowEvent.end.format('HH:mm'));		
+					}
+					$('.time').show();
+				};
+				
+				$('#edit-start').val(nowEvent.start.format('YYYY-MM-DD'));
+				
+				if(nowEvent.end != null) {
+					$('#edit-end').val(nowEvent.end.format('YYYY-MM-DD'));
+				} else {
+					$('#edit-end').val(nowEvent.start.format('YYYY-MM-DD'));
+				}
+				
+				//참가자 이름 넣기
+				attendView();
+				
+				//modify-save button show
+				$('.modalBtnContainer-modifyEvent').show();
+				//add button hide
+				$('modalBtnContainer-addEvent').hide();
+				
+				//title check hide
+				$('#title-check').hide();
+				
+				//일정명에 오토포커스
+				$(".modal").on("shown.bs.modal", function () {
+					$('#edit-title').focus();
+				});
+        		        		
+        		//input modal on
+        		$('#add-eventModal').modal();
+        		
+        	})
+        	
+        	//modify-save button click function
+        	$('#modify-save-event').on('click', function(){
+                	
+                	console.log("button click success");
+
+                	//input title check
+                	if($('#edit-title').val() == '' ) {
+    					$('#edit-title').focus();
+    					return;
+    				}
+                	//시간 체크
+					if(!dateTimeCheck()){
+						return;          	
+					}
+					//참가자 체크
+					if(attendCheck()){
+	                	$('#attend-check').show();
+	                	return;
+	                } else {
+	                	$('#attend-check').hide();
+	                }
+                	
+                	
+                    // input emp.no 
+                    $("#insertId").val(loginId);
+
+    				//date time combine process                
+                    var startDateTime = $('#edit-start').val();
+                    var endDateTime = $('#edit-end').val();
+	                    //concat date time
+                    if($('edit-allDay').is('checked')) {
+                    	var date = $('#edit-start').substr(0,10);
+            			$('#edit-start').prop(date);
+                    } else {
+                    	startDateTime = startDateTime.concat(" ", $('#start-time').val());
+                    	endDateTime = endDateTime.concat(" ", $('#end-time').val());
+                    	
+                    	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
+                    	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
+                    	
+                    	if($('#end-time') == null) {
+                    		console.log('end is null');
+                    	}
+                    	
+                    }
+	                    
+                    var updateEvent = $("form[name=insert-event]").serializeObject();
+                    
+                    console.log("updateEvent : " + JSON.stringify(updateEvent));
+                    
+                     $.ajax({
+                    	type 		: 'post',
+                    	traditional : true,
+                    	url 		: base+"/schAjax/schUpdate", 
+                    	data		: JSON.stringify(updateEvent),
+                    	dataType	: 'text',
+                    	contentType	:"application/json; charset=utf-8;",
+                    	error		: function(request,status,error){
+                    		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                    	},
+                    	success		: function(){
+                            //modal close
+                            $("#add-eventModal").modal("hide");
+                            
+                            //refresh calendar
+                            $('#calendar').fullCalendar('refetchEvents');
+                    	}
+                    }) 
+        	});
+        	
+        	//color selector onchange function
+        	$('#edit-color').on('change', function(){
+        		var selectedColor = $('#edit-color option:selected').val();
+        		$('#edit-color').css('color', selectedColor);
+        	});
+        	
+        	//grouping checkbox onchange function
+        	$('#myCalendar').change(function(){
+        		console.log($('#myCalendar').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#poll').change(function(){
+        		console.log($('#poll').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#project').change(function(){
+        		console.log($('#project').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#community').change(function(){
+        		console.log($('#community').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	$('#vacation').change(function(){
+        		console.log($('#vacation').prop('checked'));
+                //refresh calendar
+                $('#calendar').fullCalendar('refetchEvents');        		
+        	});
+        	
+        	/******************************************** 조직도 부분 ************************************/
+        	 /* 조직도 드래그 기능 */
+    		$('#insert-organ-panel').draggable();
+    		
+    		/************************
+    		** 설문 대상 추가 기능 ** 
+    		************************/		
+    			
+    			//인원추가 버튼 클릭 인식/ 조직도 위치조정 후 오픈
+    			$(".icon-addlist").closest(".btn-wrap").on("click", organOpen);
+    			
+    			//전체삭제 버튼 기능
+    			$('.remove-all-tag').on('click', function(){
+    				var location = $(this).closest('.addOrRefer').prop('id');
+    				switch(location){
+    				case 'referer-list' : referFormFlush();break;
+    				default : attendFormFlush();break;
+    				}
+    			});
+    			//참가/참여자 개별 삭제 아이콘 클릭시
+    			$(document).on('click','.icon-del', function(){
+    				var iconLocation = $(this).closest('li.name-icon');
+    				iconLocation.remove();
+    			});
+    		
+    		/************************
+    		** 다음/취소 버튼 기능 ** 
+    		************************/		
+    			$(document).on("click","#next-btn", function(){
+    				//제목 입력 경고 기능
+    				if($("input[name=title]").val() == ''){
+    					$(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"});
+    				}else {
+    					$('#poll-form').prop('action',"${pageContext.request.contextPath}/poll/questionInsert").submit();
+    				}
+    			})
+    		/* ******************* */
+    		
+    			
+    		/* 조직도 확인버튼 클릭시 */				
+    		$('#insert-organ-confirm').on('click', function(){
+    			attendInput();
+    			$(".insert-organPanel").hide();
+    		});
+        });
+      	
+      	/************************************************************ 함수 부분 ********************************************************/
+      	
+      	//insert form-data serialize transform
+        	$.fn.serializeObject = function() {
+			  "use strict"
+			  var result = {}
+			  var extend = function(i, element) {
+			    var node = result[element.name]
+			    if ("undefined" !== typeof node && node !== null) {
+			      if ($.isArray(node)) {
+			        node.push(element.value)
+			      } else {
+			        result[element.name] = [node, element.value]
+			      }
+			    } else {
+			      result[element.name] = element.value
+			    }
+			  }
+			
+			  $.each(this.serializeArray(), extend)
+			  return result
+			}
+      	
+        /* 인원추가용 조직도 오픈 기능 */
+		function organOpen(){
+			var p = $(this).offset();
+			$(".insert-organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
+		}
+      	
+		/* 참가자 변수에 이름넣기 */
+		function attendInput(){
+			/* 변수 비우기 */
+			checkedAttendInfo = [];
+			checkedAttendId = [];
+			checkedAttendName = [];
+			$('ul.tree .empBtn input[type=checkbox]:checked').each(function(){
+				checkedAttendId.push($(this).data('name'));
+				checkedAttendName.push($(this).parent().text().trim());
+			});
+			checkedAttendInfo.push(checkedAttendId);
+			checkedAttendInfo.push(checkedAttendName);
+			console.log(checkedAttendInfo);
+			inputNameToAttendForm();		
+		}
+		
+		function inputNameToAttendForm(){
+			/* 참가자 폼에 있는 이름 제거 */
+			attendFormFlush();
+			/* 폼에 이름 넣기 */
+			$.each(checkedAttendInfo[1], function (index, item){
+				console.log(item);
+				var tempIdName = {"name" : checkedAttendName[index], "id" : checkedAttendId[index], "type" : "attend"};
+					$('#add-name-template').tmpl(tempIdName).insertBefore('#organ-view ul.name-tag .create');
+			})
+			/* 체크박스 비우기 */
+			$('ul.tree input[type=checkbox]').prop("checked",false);
+		};
+      	
+		/* 참가자 폼 비우기 */
+		function attendFormFlush(){
+			$('#organ-view ul.name-tag li.name-icon').remove();
+		}
+      	/* 참가자 null 확인 */
+		function attendCheck(){
+      		if($('#organ-view ul.name-tag li.name-icon').length > 0){
+      			return true
+      		} else{
+      			return false;
+      		}
+      	}
+      	
+		/* 수정시 참가자 보기 */
+		function attendView(){
+			attendFormFlush();
+			/* 폼에 이름 넣기 */
+			$.each(entry, function (index, item){
+				$('#view-name-template').tmpl(item).insertBefore('#organ-view ul.name-tag .create');
+			})
+		};
+      	
+      	
+        </script>
+        
+        <!-- 참가자 수정 뷰 -->
+		<script type="text/html" id="view-name-template">
+		<li class="name-icon">
+			<span class="name">\${EMP_INFO_NAME}</span>
+			<span class="btn-wrap">
+				<span class="icon-classic icon-del" title="삭제"></span>
+			</span>
+			<input name="attender" type="hidden" value="\${EMP_INFO_EMP_NO}">
+		</li>
+		</script>
+		
+		<!-- 참가자 이름 추가 템플릿 -->
+		<script type="text/html" id="add-name-template">
+		<li class="name-icon">
+			<span class="name">\${name}</span>
+			<span class="btn-wrap">
+				<span class="icon-classic icon-del" title="삭제"></span>
+			</span>
+			<input name="attender" type="hidden" value="\${id}">
+		</li>
+		</script>
+        
+
 
 </body>
 </html>

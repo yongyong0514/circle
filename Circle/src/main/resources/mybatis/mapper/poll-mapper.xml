@@ -351,4 +351,11 @@
 	</select>
 	<resultMap type="hashMap" id="qustAttendMap"></resultMap>
 	
+	<select id="userInfo" parameterType="String" resultMap="userInfoMap">
+		select dept_info_name
+		  from emp_info
+		  join dept_info on (EMP_INFO_DEPT_CODE = dept_info_code)
+		 where emp_info_emp_no = #{empNo}
+	</select>
+	<resultMap type="hashMap" id="userInfoMap"></resultMap>
 </mapper>

@@ -85,6 +85,12 @@ public class PollDaoImpl implements PollDao{
 	}
 
 
+	@Override
+	public List<HashMap<String, String>> userInfo(String empNo) {
+		return sqlSession.selectList("poll.userInfo", empNo);
+	}
+
+
 
 
 

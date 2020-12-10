@@ -13,14 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.service.PollService;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Pre;
 
 @Slf4j
 @Controller
@@ -194,11 +199,37 @@ public class PollController {
 		return "/poll/result";
 	}
 	@GetMapping("/insert")
-	public String insert() {
+	public String insert(HttpSession session, ModelMap madelMap) {
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		List<HashMap<String, String>> list = pollService.userInfo(empNo);
+		
+		log.info(list.toString());
+		
 		return "/poll/insert";
 	}
-	@GetMapping("/questionInsert")
-	public String questionInsert() {
+	@PostMapping("/questionInsert")
+	public String questionInsert(HttpSession session, PreInputData data, ModelMap modelMap) {
+		
+		log.info(data.toString());
+		
+		session.setAttribute("prePollData", data);
+		modelMap.put("preData", data);
+		
+//		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
+		
+//		log.info(temp.toString());
+		
 		return "/poll/questionInsert";
 	}
+	
+	@PostMapping("/pollInsertComplete")
+	public String insertComplete(HttpSession session) {
+		
+		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
+		log.info(temp.toString());
+		
+		return "/poll/pollMain";
+	}
+
 }

@@ -55,21 +55,21 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return list;
 	}
 	
-
 	@Override
-	public void insert(Map<String, String> insertEvent) {
+	public void insert(HashMap<String, Object> insertEvent) {
 		schDao.insert(insertEvent);
 	}
-
+		
 	@Override
 	public void delete(String id) {
 		schDao.delete(id);
 	}
 
 	@Override
-	public void update(Map<String, String> updateEvent) {
+	public void update(HashMap<String, Object> updateEvent) {
 		schDao.update(updateEvent);
 	}
+
 
 
 }

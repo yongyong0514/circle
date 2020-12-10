@@ -16,7 +16,7 @@
 	</select>
 	
 	<select id="selectMap" parameterType="map" resultMap="selectMapList">
-		select sch_unit_code,
+		select distinct sch_unit_code,
 			   sch_unit_name,
 			   sch_unit_aday,
 			   sch_unit_sdat,
@@ -30,7 +30,6 @@
 			   SCH_UNIT_WDAT,
 			   SCH_UNIT_MDAT,
 			   SCH_UNIT_HUE,
-			   sch_join_emp,
 			   emp_info_name,
 			   sch_unit_group_code,
 			   sch_group_name
@@ -38,10 +37,11 @@
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
 		  join emp_info on (sch_unit_wrtr = emp_info_emp_no)
 		  join sch_group on (sch_unit_group_code = sch_group_code)
- 		 where sch_join_emp = #{id}
+ 		 where (sch_join_emp = #{id} or SCH_UNIT_WRTR = #{id})
  		   and sch_unit_stat = 'Y'
  		   and (sch_unit_sdat between #{start} and #{end}
- 		   or sch_unit_edat between #{start} and #{end}) 		   
+ 		   or sch_unit_edat between #{start} and #{end}) 	
+ 		order by sch_unit_code	   
 	</select>
 	
 	<resultMap type="schAjax" id="selectMapList">
@@ -148,10 +148,15 @@
 							 					   ,#{groupCode})
 	</insert>
 	
-	
-	<insert id="insertJoinTable" parameterType="map">
-		insert into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{id})
-	
+	<!-- 일정 참가자 한명일때 입력 -->
+	<insert id="insertOneMember" parameterType="java.util.Map">
+			insert into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{attender})
+	</insert>
+	<!-- 일정 참가자 여러명일때 입력 -->
+	<insert id="insertMember" parameterType="java.util.Map">
+		<foreach collection="attender" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into sch_unit_join values('SCHN'||TRIM(TO_CHAR(#{seq},'000000')), #{item})
+		</foreach>
 	</insert>
 	
 	<!-- 삭제를 담당하는 update -->
@@ -159,6 +164,7 @@
 		update sch_unit set sch_unit_stat = 'N' where sch_unit_code = #{value}
 	</update>	
 	
+	<!-- 일정 데이터 수정 -->
 	<update id="update" parameterType="map">
 		update sch_unit set sch_unit_name = #{title}
 						  , sch_unit_sdat = to_date(#{start},'RRMMDDHH24MISS')
@@ -171,4 +177,16 @@
 					  where sch_unit_code = #{code}
 	</update>
 	
+	<!-- 일정 참가자 수정 -->
+		<!-- 일정 참가자 수정용 참가자 전체삭제 -->
+		<delete id="allDeleteMember" parameterType="map">
+			delete from sch_unit_join
+			 where sch_unit_code = #{code}
+		</delete>
+		<insert id="updateMember" parameterType="java.util.Map">
+			<foreach collection="attender" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+				into sch_unit_join values(#{code}, #{item})
+			</foreach>
+		</insert>
+		
 </mapper>
