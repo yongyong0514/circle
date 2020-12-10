@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
+
+@Repository
 public class ProjSaveDaoImp implements ProjSaveDao{
 
-	@Autowired
 	private final String path = "D:/resources/iss";
 	
 	@Override

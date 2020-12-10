@@ -15,7 +15,8 @@
 		parameterType="project">
 		select *
 		from project p
-		join emp_info e on (p.pro_manager = e.emp_info_emp_no)
+		join emp_info e on (p.pro_manager
+		= e.emp_info_emp_no)
 		where pro_code in (select distinct iss_pro_code
 		from iss i
 		where iss_emp_no = #{emp_no}
@@ -27,12 +28,16 @@
 		parameterType="project">
 		select *
 		from iss i
-		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+		join emp_info e on (i.iss_emp_no =
+		e.emp_info_emp_no)
 		join project p on (i.iss_pro_code = p.pro_code)
-		join prog g on (i.iss_prog_code = g.prog_code)
-		join situ s on (i.iss_situ_code = s.situ_code)
+		join
+		prog g on (i.iss_prog_code = g.prog_code)
+		join situ s on
+		(i.iss_situ_code = s.situ_code)
 		where p.pro_code = #{pro_code}
-		order by i.iss_code desc
+		order by
+		i.iss_code desc
 	</select>
 
 
@@ -66,68 +71,118 @@
 	</select>
 
 
-	<!-- iss 내 정보 얻기 --> 
+	<!-- iss 내 정보 얻기 -->
 
 	<select id="empNo" resultType="string" parameterType="string">
-		select emp_info_emp_no
+		select
+		emp_info_emp_no
 		from emp_info
 		where emp_info_emp_no = #{emp_no}
 	</select>
 
 	<!-- member list -->
 	<select id="projMember" resultType="project">
-		select e.emp_info_emp_no, e.emp_info_name, d.dept_info_name
+		select e.emp_info_emp_no,
+		e.emp_info_name, d.dept_info_name
 		from emp_info e
-		join dept_info d on(e.emp_info_dept_code = d.dept_info_code)
+		join dept_info d
+		on(e.emp_info_dept_code = d.dept_info_code)
 	</select>
 
 	<!-- insert -->
 	<!-- project -->
 	<insert id="projInsert" parameterType="project">
-		INSERT INTO PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE, PRO_INTRO, PRO_SDATE, PRO_EDATE, PRO_STAT)
-		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6, 0)), #{pro_manager}, #{pro_title}, #{pro_intro}, #{pro_sdate}, #{pro_edate}, DEFAULT)
+		INSERT INTO
+		PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE, PRO_INTRO, PRO_SDATE,
+		PRO_EDATE, PRO_STAT, PRO_WDATE)
+		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6,
+		0)), #{pro_manager}, #{pro_title}, #{pro_intro}, #{pro_sdate},
+		#{pro_edate}, DEFAULT, SYSDATE)
 
 	</insert>
-	
+
 	<select id="issProg" resultType="project">
-	select *
-	from prog
+		select *
+		from prog
 	</select>
-	
+
 	<select id="issSitu" resultType="project">
-	select *
-	from situ
+		select *
+		from situ
 	</select>
-	
-		<select id="issMember" resultType="project">
-		select e.emp_info_emp_no, e.emp_info_name, d.dept_info_name
+
+	<select id="issMember" resultType="project">
+		select e.emp_info_emp_no,
+		e.emp_info_name, d.dept_info_name
 		from emp_info e
-		join dept_info d on(e.emp_info_dept_code = d.dept_info_code)
-	</select>
-<insert id="projInsertIss" parameterType="project">
-INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE, ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT, ISS_SDATE, ISS_EDATE,  ISS_STAT)
-    VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.CURRVAL, 6, 0)), #{iss_emp_no}, #{iss_title}, #{iss_pro_code}, #{iss_prog_code}, #{iss_situ_code}, #{iss_cont}, SYSDATE, #{iss_sdate}, #{iss_edate}, DEAFAULT)
-
-</insert>
-<!-- file upload -->
-
-<select id="seq" resultType="String">
-		select CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+		join dept_info d
+		on(e.emp_info_dept_code = d.dept_info_code)
 	</select>
 	
 	
 	
+	<select id="sysproj" resultType="string">
+	select pro_code
+
+from(
+
+   select pro_code
+
+   from project
+
+   order by pro_wdate DESC
+
+)
+
+where ROWNUM = 1
+
+
+
+	</select>
+	
+	<select id="issSeq" resultType="String">
+		select CONCAT('ISS',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+	</select>
+	
+	<select id="projSeq" resultType="string">
+	select CONCAT('PROJ',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+	</select>
+
+ <insert id="proIssInsert" parameterType="project">
+ INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
+		ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
+		VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title}, #{iss_pro_code}, #{iss_prog_code},
+		#{iss_situ_code}, #{iss_cont}, SYSDATE)
+ </insert>
+ 
+ 
+ 
+ 
+	<insert id="projInsertIss" parameterType="project">
+INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
+		ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
+		VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title} , #{iss_pro_code}, #{iss_prog_code},
+		#{iss_situ_code}, #{iss_cont}, SYSDATE)
+
+	</insert>
+	<!-- file upload -->
+
+
+
 
 	<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">
 		select *
 		from project pr
-		join iss i on (i.iss_pro_code = pr.pro_code)
 		join
-		emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		iss i on (i.iss_pro_code = pr.pro_code)
+		join
+		emp_info e on(i.iss_emp_no
+		= e.emp_info_emp_no)
 		join prog p on
 		(i.iss_prog_code = p.prog_code)
-		join situ s on (i.iss_situ_code =
+		join
+		situ s on (i.iss_situ_code =
 		s.situ_code)
 		order by pr.pro_code desc
 
@@ -137,12 +192,15 @@ INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE, ISS_PROG_CODE, IS
 	<select id="projTodo" resultType="project">
 		select *
 		from project pr
-		join iss i on (i.iss_pro_code = pr.pro_code)
+		join iss
+		i on (i.iss_pro_code = pr.pro_code)
 		join
-		emp_info e on(i.iss_emp_no = e.emp_info_emp_no)
+		emp_info e on(i.iss_emp_no =
+		e.emp_info_emp_no)
 		join prog p on
 		(i.iss_prog_code = p.prog_code)
-		join situ s on (i.iss_situ_code =
+		join
+		situ s on (i.iss_situ_code =
 		s.situ_code)
 		order by pr.pro_code desc
 
