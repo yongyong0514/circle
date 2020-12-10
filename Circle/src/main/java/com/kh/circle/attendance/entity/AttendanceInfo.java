@@ -21,7 +21,7 @@ public class AttendanceInfo {
 	//calc Values
 	private int workTimeHour;			// 근무시간(시)
 	private int workTimeMinute;			// 근무시간(분)
-	private String weekStartDate;			// 카운트 시작일(일)
+	private String weekStartDate;		// 카운트 시작일(일)
 	private String weekEndDate;			// 카운트 종료일(토)
 		
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
 import com.kh.circle.attendance.entity.WeekStackInfo;
+import com.kh.circle.attendance.entity.WorkAndOff;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,5 +59,12 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 	public void insertEtime(Map<String, Object> inputMap) {
 		sqlSession.update("attendance.insertEtime", inputMap);		
 	}
+
+	@Override
+	public List<String> empNoList() {
+		
+		return sqlSession.selectList("attendance.empNoList");
+	}
+
 
 }

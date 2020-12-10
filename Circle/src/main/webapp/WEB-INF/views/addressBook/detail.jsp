@@ -22,14 +22,10 @@
 			<jsp:include page="common/addressBookLeftBar.jsp" />
 		</div>
 		<div class="organChart">
-			<c:import url="/menuOrganChart/getInfo"/>
-		</div>
+			<c:import url="/organChart/getInfo"/>
+ 		</div>
 		<div class="container">
 			<div class="content">
-				${empInfo }
-				<br><br>
-				${detailEmpInfo }
-				<br><br>
 				<table class="detailTable">
 					<tr>
 						<td>사진</td>
@@ -76,7 +72,8 @@
 					<input class="actionBtn" id="reset" type="reset" value="원래대로"/>
 					<input class="actionBtn" id="remove" type="button" value="삭제"/>
 				</c:if>
-				<input class="actionBtn" id="goList" type="button" value="목록으로 이동"/>
+				<input class="actionBtn" id="goList" type="button" value="목록으로 이동"
+					onclick="history.back();"/>
 			</div>
 		</div>
 	</div>

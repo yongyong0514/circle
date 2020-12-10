@@ -59,6 +59,30 @@ td {
 	vertical-align: middle;
 }
 
+
+.title{
+	width:100%;
+	text-align: center;
+}
+
+.fas,
+.dateSelect div{
+	font-size: 1.5rem;
+	font-weight: lighter;
+}
+
+.dateSelect div{
+	display: inline-block;
+}
+
+
+.dateSelect i:hover,
+.dateSelect button:hover{
+	cursor:pointer;
+}
+
+
+
 .monthAttendanceList,
 .weekAttendanceList{
 	width: 100%;

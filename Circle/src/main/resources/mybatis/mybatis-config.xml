@@ -66,6 +66,9 @@
 		
 		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfo" alias="attendanceInfo"/>
 		<typeAlias type="com.kh.circle.attendance.entity.WeekStackInfo" alias="weekStackInfo"/>
+		<typeAlias type="com.kh.circle.attendance.entity.AttendanceInfoSummary" alias="attendanceInfoSummary"/>
+		<typeAlias type="com.kh.circle.attendance.entity.WorkAndOff" alias="workAndOff"/>
+		
 
 		<typeAlias type="com.kh.circle.empInfo.entity.EmpInfoAll" alias="empInfoAll"/>
 		<typeAlias type="com.kh.circle.empInfo.entity.CertificateInfo" alias="crtfInfo"/>

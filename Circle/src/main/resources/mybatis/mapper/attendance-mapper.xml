@@ -83,5 +83,10 @@
 		   and atdc_hstr_stim = to_date(#{sTime}, 'yyyy/MM/dd HH24:mi:ss')
 	</update>
 	
+	<select id="empNoList" resultType="String">
+		select emp_info_emp_no
+		  from emp_info
+		 where emp_info_edat is null
+	</select>
 	
 </mapper>

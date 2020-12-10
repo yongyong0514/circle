@@ -69,6 +69,12 @@ td {
 	display: inline-block;
 }
 
+
+.dateSelect i:hover,
+.dateSelect button:hover{
+	cursor:pointer;
+}
+
 .summaryTable{
 	font-size: small;
 	width: 100%;
@@ -107,9 +113,4 @@ td {
 	padding: 1rem;
 	border-top: 1px solid lightgrey;
 	text-align: center;
-}
-
-.dateSelect i:hover,
-.dateSelect button:hover{
-	cursor:pointer;
 }

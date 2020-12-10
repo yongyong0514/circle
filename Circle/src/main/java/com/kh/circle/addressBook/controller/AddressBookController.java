@@ -54,7 +54,6 @@ public class AddressBookController {
 		return "addressBook/allEmp";
 	}
 
-//	@RequestMapping(value = "/detail", method = { RequestMethod.GET, RequestMethod.POST })
 	@PostMapping("/detailPage")
 	public String detail(@ModelAttribute("emp_no") String emp_no
 			, Model model) {
@@ -63,8 +62,6 @@ public class AddressBookController {
 
 		model.addAttribute("detailEmpInfo", detailEmpInfo);
 
-		System.out.println("detailEmpInfo: " + detailEmpInfo);
-		
 		return "addressBook/detail";
 	}
 

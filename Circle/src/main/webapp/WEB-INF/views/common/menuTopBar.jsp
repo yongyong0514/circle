@@ -106,8 +106,6 @@
 
 <script>
 	$(function(){
-		console.log("${sessionScope.sTime}");
-		
 		if(isNull("${sessionScope.sTime}")){
 			$(".eTimeBtn").prop("disabled", true);
 		} else{
@@ -128,8 +126,6 @@
 			success: function(data){
 				$(".sTimeBtn").prop("disabled", true);
 				$(".eTimeBtn").prop("disabled", false);
-				console.log("출근 session:");
-				console.log("${sessionScope.sTime}");
 			}, error: function(err){
 				console.table(err);
 			}
@@ -147,8 +143,6 @@
 			success: function(data){
 				$(".eTimeBtn").prop("disabled", true);
 				$(".sTimeBtn").prop("disabled", false);
-				console.log("퇴근 session: ");
-				console.log("${sessionScope.sTime}");
 			}, error: function(err){
 				console.table(err);
 			}

@@ -1,5 +1,6 @@
 package com.kh.circle.attendance.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
+import com.kh.circle.attendance.entity.AttendanceInfoSummary;
 import com.kh.circle.attendance.entity.WeekStackInfo;
 import com.kh.circle.attendance.repository.AttendanceInfoRepository;
 
@@ -120,6 +122,26 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 	@Override
 	public void insertEtime(Map<String, Object> inputMap) {
 		attendanceInfoRepository.insertEtime(inputMap);
+	}
+
+	@Override
+	public List<Map<String, Object>> allAttendanceList(Map<String, Object> inputMap) {
+
+		//1.재직중인 전 사원의 사원번호 추출
+		List<String> empNoList = attendanceInfoRepository.empNoList();
+		
+		//2.추출한 사원번호에 맞춰 주간 근무정보(AttendanceInfo) 추출하여 리스트로 저장
+		List<AttendanceInfoSummary> summaryList = new ArrayList<AttendanceInfoSummary>();
+		
+		for(String emp_no : empNoList) {
+			//반복
+		}
+		
+		
+		//3. map에 저장하여 attendanceList()함수에 인자로 전달
+		
+		
+		return null;
 	}
 
 }
