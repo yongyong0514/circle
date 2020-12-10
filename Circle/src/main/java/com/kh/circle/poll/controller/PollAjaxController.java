@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,12 +22,12 @@ import lombok.extern.slf4j.Slf4j;
 public class PollAjaxController {
 
 	@PostMapping("/writeComplete")
-	public void post(HttpSession session, @RequestBody List<HashMap<String, String>> questionData) {
+	public void post(HttpSession session, @RequestBody List<HashMap<String,Object>> questions) {
 
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
 		log.info(temp.toString());
 		
-		log.info(questionData.toString());
+		log.info(questions.toString());
 		
 		
 	}

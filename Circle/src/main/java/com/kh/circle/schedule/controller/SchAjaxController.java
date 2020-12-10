@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.schedule.entity.SchAjax;
-import com.kh.circle.schedule.entity.SchAjaxEntry;
+import com.kh.circle.schedule.entity.Entry;
 import com.kh.circle.schedule.entity.Sch_unit;
 import com.kh.circle.schedule.service.ScheduleService;
 

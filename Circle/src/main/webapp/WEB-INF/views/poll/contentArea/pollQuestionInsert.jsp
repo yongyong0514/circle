@@ -95,6 +95,7 @@
 
 <script src="/circle/resources/js/poll/jquery.min.js"></script>
 <script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.serializeObject.js"></script>
 
 <!-- 문항추가 입력 폼 -->
 <script type="text/html" id="question-form-template">
@@ -332,7 +333,8 @@
 <script type="text/html" id="optionable-preview-etc-content">
 			<li class="etc">
 				<span class="txt-wrap">
-					<input type="\${checkType}" name="question-\${seq}">
+					<input type="\${checkType}" name="question-\${seq}"
+
 					<span class="label-wrap txt">\${content}</span>
 					<input class="wfix-max txt" type="text" name="answer">
 				</span>
@@ -373,16 +375,16 @@
 /*********************************  함수 정의 영역  ****************************/
 
 /* 문항 전역변수 초기화 */
-questions = [];			 			//전체 문항 
+questions = new Array();			 			//전체 문항 
 seq = 0;							//순번
 title = "";								//제목
 necessary = "";							//필수 체크
 selectType = "";							//선택형
 selectNumberType = "";					//선택 개수
 checkType = "";							//radio - checkbox 종류 선택
-selectContent = new Array();//문항 내용
+selectContent = new Object();//문항 내용
 subSeq = 0;							//문항순번
-etcSelectContent = "";					//기타 문항 내용
+etcSelectContent = new Object();					//기타 문항 내용
 etcContent = "";
 score = 0;
 pluralMaximum = 0;
@@ -504,7 +506,7 @@ function extractNecessary(){
 		}
 		
 		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"text","selectContent":0,"etcContent":0,"pluralMaximum":0
+		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"text","selectContent":[],"etcContent":[],"pluralMaximum":0
 						,"selectNumberType":0,"score":0,"checkLowerType":textLowerType()});
 		console.log(questions);
 		
@@ -532,7 +534,7 @@ function extractNecessary(){
 		$('#score-preview').tmpl(scoreContent).appendTo(".question-item:last .answer-wrap");
 		
 		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"score","selectContent":0,"etcContent":0,"pluralMaximum":0
+		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"score","selectContent":[],"etcContent":[],"pluralMaximum":0
 						,"selectNumberType":0,"score":score,"checkLowerType":0});
 		console.log(questions);
 	}
