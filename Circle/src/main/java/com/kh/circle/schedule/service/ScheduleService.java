@@ -20,11 +20,11 @@ public interface ScheduleService {
 	List<SchAjax> projectList(Map<String, Object> map);
 	List<HashMap<String, String>> entryList(String id);
 	
-	void insert(Map<String, String> mapinsertEvent);
+	void insert(HashMap<String, Object> insertEvent);
 
 	void delete(String id);
 
-	void update(Map<String, String> updateEvent);
+	void update(HashMap<String, Object> updateEvent);
 
 	
 	//일정 전체 리스트 출력기능

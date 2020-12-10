@@ -5,6 +5,8 @@ body {
 	overflow-x: hidden;
 }
 
+
+
 .sch-wrapping {
 	position:absolute;
 	width:100%;
@@ -54,6 +56,12 @@ body {
 /* 모달 뷰 부분 (선택자가 안먹어서 태그에 직접지정한 부분 있음)*/
 .modal-dialog 		{ position:relative; width:450px; margin:100px auto; }
 
+.modal-dialog a{
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 div.modal-content 	{ box-shadow:none; border-radius: 5px; border:1px solid black;}
 
 .modal-header 		{ background-color:#91b9ed; border-radius:4px 4px 0 0; }
@@ -63,3 +71,7 @@ label.col-xs-4		{ width:100px; }
 
 .view-modal-header {height:auto; float:left;}
 .view-modal-content {height:auto; display: inline-block;word-wrap: break-word;max-width: 460px}
+
+.option-name-tag-wrap {
+	display:block;	
+}

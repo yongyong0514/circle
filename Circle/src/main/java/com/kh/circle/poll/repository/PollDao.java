@@ -25,6 +25,8 @@ public interface PollDao {
 	int getRealAttend(HashMap<String, String> params);
 	List<HashMap<String, String>> getQuesRealAttend(HashMap<String, String> params);
 
+	List<HashMap<String, String>> userInfo(String empNo);
+
 
 
 

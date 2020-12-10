@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.schedule.entity.SchAjax;
 import com.kh.circle.schedule.entity.SchAjaxEntry;
 import com.kh.circle.schedule.entity.Sch_unit;
@@ -93,9 +96,12 @@ public class SchAjaxController  {
 	}
 	
 	@PostMapping("/schInsert")
-	public void schInsert(@RequestBody Map<String, String> insertEvent) {
+	public void schInsert(HttpSession session, @RequestBody HashMap<String, Object> insertEvent) {
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+//		insertEvent.put("attender", empNo);
 		
 		log.info("insert data received into server: {} " ,insertEvent);
+		
 		
 		schService.insert(insertEvent);
 		
@@ -109,7 +115,7 @@ public class SchAjaxController  {
 	}
 	
 	@PostMapping("/schUpdate")
-	public void schUpdate(@RequestBody Map<String, String> updateEvent) {
+	public void schUpdate(@RequestBody HashMap<String, Object> updateEvent) {
 		log.info("update date received into server: {}", updateEvent);
 		
 		schService.update(updateEvent);

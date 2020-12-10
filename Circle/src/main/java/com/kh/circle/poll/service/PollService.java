@@ -25,6 +25,8 @@ public interface PollService {
 	int getRealAttend(HashMap<String, String> params);
 	List<HashMap<String, String>> getQustRealAttend(HashMap<String, String> params);
 
+	List<HashMap<String, String>> userInfo(String empNo);
+
 
 
 

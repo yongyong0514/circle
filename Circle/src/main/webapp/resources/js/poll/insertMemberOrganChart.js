@@ -1,8 +1,9 @@
 $(function(){
 		<!-- 조직도 스크립트 시작 -->
-		$(".insert-organPanel .insert-closeBtnArea").click(function(){
+		$(".insert-organPanel .insert-closeBtnArea,#insert-organ-cancle").click(function(){
 		  $(".insert-organPanel").hide();
 		});
+		
 		<!-- 조직도 스크립트 끝 -->
 		
 		

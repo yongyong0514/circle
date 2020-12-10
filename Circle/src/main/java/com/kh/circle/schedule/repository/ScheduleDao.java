@@ -17,11 +17,11 @@ public interface ScheduleDao {
 	List<SchAjax> projectList(Map<String, Object> map);
 	List<HashMap<String, String>> entryList(String id);
 
-	void insert(Map<String, String> insertEvent);
+	void insert(HashMap<String, Object> insertEvent);
 
 	void delete(String id);
 
-	void update(Map<String, String> updateEvent);
+	void update(HashMap<String, Object> updateEvent);
 
 	
 }
