@@ -79,6 +79,7 @@
 				<tbody>
 					
 				<c:forEach var="comuList" items="${map.list}">
+						<%-- <th><input type="hidden" name="comu_info_emp_no" value="${comuListName.comu_info_emp_no}"><th> --%>
 					<tr id="List">
 						<td><br>${comuList.comu_post_ordr}</td>
 						<td><br>${comuList.comu_list_name}</td>

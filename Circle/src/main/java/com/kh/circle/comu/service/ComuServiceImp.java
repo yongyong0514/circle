@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.kh.circle.comu.entity.Comu;
 import com.kh.circle.comu.entity.ComuList;
 import com.kh.circle.comu.repository.ComuDao;
+import com.kh.circle.login.entity.EmpInfo;
 
 @Service
 public class ComuServiceImp implements ComuService {
@@ -19,16 +20,21 @@ public class ComuServiceImp implements ComuService {
 	@Autowired
 	public ComuDao dao;
 	
+	//게시글 목록
 	@Override
 	public List<Comu> comuList(int start,int end) throws Exception{
 		
 		return dao.comuList(start,end);
 	}
-	/*
-	 * @Override public ResponseEntity<ByteArrayResource> download(String no) throws
-	 * UnsupportedEncodingException, IOException { // TODO Auto-generated method
-	 * stub return null;
-	 */
+	
+	//동호회 별 게시글 목록
+	@Override
+	public List<Comu> comuListPost(String comu_list_code) {
+		
+		
+		return dao.comuListPost(comu_list_code);
+	}
+
 
 	@Override
 	public int comuListarticle() throws Exception {
@@ -98,17 +104,20 @@ public class ComuServiceImp implements ComuService {
 	}
 
 	@Override
-	public String comuApp(String comu_list_code) {
-		String list_name = dao.comuApp(comu_list_code);
+	public List<ComuList> comuApp(String comu_list_code) {
+	
 		
-		return list_name;
+		return dao.comuApp(comu_list_code);
 	}
 	//leftBar 리스트 가져오기
 	@Override
-	public List<ComuList> leftList(String comu_info_emp_no) {
+	public List<EmpInfo> leftList(String emp_info_emp_no) {
 		
-		return dao.leftList(comu_info_emp_no);
+		System.out.println("서비스인데 레프트 바 가져왔냐" +emp_info_emp_no);
+		return dao.leftList(emp_info_emp_no);
 	}
+
+	
 
 	
 	}

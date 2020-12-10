@@ -29,7 +29,8 @@
 			<div class="menuLeftListTitle"># 가입 동호회</div>
 				<form>
 				<c:forEach var="leftList" items="${leftList}"> 
-			<div class="menuLeftList"><a>${leftList.comu_list_name}</a></div>
+				<input type="hidden" name="emp_info_emp_no" value="${leftList.comu_info_emp_no}">
+			<div class="menuLeftList"><span>${leftList.comu_list_name}</span></div>
 			<!-- <div class="menuLeftList"></div>					
 			<div class="menuLeftList"></div>
 			<div class="menuLeftList"></div>

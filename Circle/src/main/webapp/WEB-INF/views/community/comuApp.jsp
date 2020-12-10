@@ -65,18 +65,16 @@
 				<br>
 				<form name="comuApp" id="comuApp" action="${pageContext.request.contextPath}/community/comuApp"
 						method="POST" >
-              <%-- <c:forEach var="empInfo" items="${empInfo}">   --%>
+               <c:forEach var="comuApp" items="${comuApp}">  
             <table id="all">
                <tr>
                   <th class="n">동호회</th>
-                  <tr id="empInfo">
-                     <th>
-                     
-                    <input type="text" class="formInput1" id="comu_list_code" value="${empInfo.comu_list_code}" readonly>
-                    </th>
                     <th>
-                     <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${empInfo.comu_list_name}" readonly> 
+                     <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${comuApp.comu_list_name}" readonly> 
                      </th>
+                  <th>     
+                    <input type="hidden" class="formInput1" id="comu_list_code" value="${comuApp.comu_list_code}" readonly>    
+                    </th>
                   </tr>
              
                <tr>
@@ -91,12 +89,16 @@
                   </td>
                </tr>
             </table>
-              <%--  </c:forEach>  - --%>
+               </c:forEach>  
             <br>
-            <div id="submit" >
-               <button type="reset" class="btn">취소하기</button>
-               <button type="submit" class="btn">지원하기</button>
-            </div>
+            	<div colspan="2"><input type="submit"
+										style="background-color: #F0FBD1; color: black;"
+										class="btn btn-default pull-right" value="가입신청" /> <input
+										type="button" style="background-color: #F0FBD1; color: black;"
+										class="btn btn-default pull-right"
+										onclick="javascript:location.href='comuListName'" value="글목록" />
+										<!-- 주주 -->
+									</div>
             
          </form>
 	

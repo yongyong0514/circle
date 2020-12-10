@@ -61,6 +61,18 @@ public class ComuController {
 			
 		return mav;
 	}
+	//동호회 별 게시글 목록
+	@GetMapping("/comuListPost")
+	public String comuListPost(Model model,@RequestParam("comu_list_code") String comu_list_code) {
+		
+		//번호가져와서 해당하는 번호를 볼수있게
+		model.addAttribute("comuListPost",service.comuListPost(comu_list_code));
+		
+		System.out.println("controller 개별로 나오는지 확인"+model);
+		return "community/comuListPost";
+	}
+	
+	
 	//게시글 작성
 	@RequestMapping(value="/comuAdd")	
 									//하나씩 가져올때는 add에 name이 job인 객체(@ModelAttribute("job") String str,
@@ -111,6 +123,7 @@ public class ComuController {
 
 	/* 수정하기로 들어가기 comu_post_wrtr_emp_no 가 맞아야 들어간다 */
 	@GetMapping("/comuUpdate")
+									//화면을 보여주려면 게시글 번호가 필요
 	public String comuUpdate(Model model,@RequestParam("comu_post_ordr")String comu_post_ordr) {
 		
 		Comu comuCheck = service.comuCheck(comu_post_ordr);
@@ -119,7 +132,7 @@ public class ComuController {
 		System.out.println("comuCheck controller"+model);
 		return "community/comuUpdate";
 	}
-	@PostMapping("/comuUpdate")
+	@PostMapping("/comuUpdate")//필요한 정보 한번에 가져오기Model
 	public String comuUpdate(@ModelAttribute Comu comu,HttpSession session,
 			@RequestParam("comu_post_ordr")String comu_post_ordr) {
 		
@@ -155,46 +168,33 @@ public class ComuController {
 		List<ComuList> comuListName = sqlSession.selectList("comu.comuListName");
 		model.addAttribute("comuListName",comuListName);
 		
-		System.out.println("controller ListName"+comuListName);
-		
 		return "community/comuListName";
 	}
 	//동호회 가입 신청서로 넘어가기
 	@GetMapping("/comuApp")
-	public String comuApp(HttpSession session ,
-			@ModelAttribute ComuList comuList)throws Exception{
+	public String comuApp(Model model ,
+			@RequestParam("comu_list_code") String comu_list_code){
 		
 		
-		System.out.println("대충 : " + comuList);
-		String comu_list_code = ((EmpInfo) session.getAttribute("empInfo")).getComu_list_code();
-		System.out.println("DDD : " + comu_list_code);		
-		String list_name = service.comuApp(comu_list_code);
+		model.addAttribute("comuApp",service.comuApp(comu_list_code));
 		
-		System.out.println("list name : " + list_name);
-		//2번째 단계 끝
-		
-		comuList.setComu_list_name(comu_list_code);
-		//comuList.setEmp_info_name(list_name);
-		
-		service.comuApp(comu_list_code);
-		
-		System.out.println("App last : " + comuList);
+		System.out.println("App last : " + model);
 		
 		System.out.println("comuApp으로 가는길임??");
 		return "community/comuApp";
 	}
 	
 	//comuLeftBar에 가입한 동호회 리스트
-	@GetMapping("/leftList")
-	public String leftList(Model model, @RequestParam("comu_info_emp_no") String comu_info_emp_no) {
+	@GetMapping("/comuLeftBar")
+	public String leftList(Model model, @RequestParam("emp_info_emp_no") String emp_info_emp_no) {
 		//comuList.getComu_list_code();
 		
 		//List<ComuList> leftList = sqlSession.selectList("comu.leftList");
 		
 		
-		model.addAttribute("leftList",service.leftList(comu_info_emp_no));
+		model.addAttribute("leftList",service.leftList(emp_info_emp_no));
 		
-		System.out.println("controller ListName"+model);
+		System.out.println("controller 레프트 바 가져왓냐"+model);
 		
 		return "community/comuLeftBar";
 		

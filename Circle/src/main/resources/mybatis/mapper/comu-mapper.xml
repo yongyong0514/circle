@@ -55,6 +55,7 @@
 	select count(*) from comu_post
 </select>
 
+<!-- 게시글 조회 -->
 <select id="comuList" resultType="Comu">
 	<include refid="paging_header"></include>
 		select * 
@@ -65,16 +66,30 @@ order by comu_post_ordr desc
 	<include refid="paging_footer"></include>
 </select>
 
+<!-- 동호회 별 게시글 조회 -->
+<select id="comuListPost" resultType="comu" parameterType="String">
+	
+			select * 
+from comu_post c, emp_info e, comu_list l
+where c.comu_post_wrtr_emp_no = e.emp_info_emp_no 
+and c.comu_post_list_code = l.comu_list_code
+and l.comu_list_code = #{comu_list_code}
+order by comu_post_ordr desc
+</select>
+
 <sql id="paging_header">
 select * 
 from(select rownum as rn,A.*
 from(
 </sql>
+
 <sql id="paging_footer">
 		)A
 	)
 where rn between #{start} and #{end}
 </sql>
+
+
 
 <!-- comuNameList -->
 <select id="comuNameList" resultType="ComuList" >
@@ -174,7 +189,7 @@ where rn between #{start} and #{end}
     where i.comu_info_comu_job_code like '대표%'
 	</select>
 	
-	<select id="comuApp" parameterType="String" resultType="String">
+	<select id="comuApp" parameterType="String" resultType="comuList">
 		select comu_list_name
 		from 
 		comu_list
@@ -182,12 +197,13 @@ where rn between #{start} and #{end}
 	</select>
 	
 	<!-- 동호회 LeftBar 리스트 가져오기 -->
-	<select id="leftList" parameterType="String" resultType="comuList">
+	<select id="leftList" parameterType="String" resultType="empInfo">
 		select 
         *
-from comu_list l
-join comu_info i on(l.comu_list_code=i.comu_info_comu_code)
-where i.comu_info_emp_no = #{comu_info_emp_no}
+from emp_info e
+join comu_info i on(i.comu_info_emp_no = e.emp_info_emp_no)
+join comu_list l on(i.comu_info_comu_code = l.comu_list_code)
+where e.emp_info_emp_no = #{emp_info_emp_no}
 	</select>
 </mapper>
 

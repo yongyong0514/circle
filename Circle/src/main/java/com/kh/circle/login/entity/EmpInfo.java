@@ -54,4 +54,6 @@ public class EmpInfo {
 	//동호회 정보 가져오기
 	private String comu_list_code;
 	private String comu_list_name;
+	
+	private String comu_info_emp_no;
 }

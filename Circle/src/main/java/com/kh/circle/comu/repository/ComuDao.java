@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.circle.comu.entity.Comu;
 import com.kh.circle.comu.entity.ComuList;
+import com.kh.circle.login.entity.EmpInfo;
 
 public interface ComuDao {
 	
@@ -18,6 +19,8 @@ public interface ComuDao {
 	//글쓰기
 	public void comuInsert(Comu comu);
 	
+	//동호회 별 글 목록
+	public List<Comu> comuListPost(String comu_list_code);
 	
 	
 	
@@ -39,9 +42,9 @@ public interface ComuDao {
 	//동호회 리스트 가져오기
 	public List<ComuList> comuListName(String comu_list_code);
 	//가입신청서에 동호회 이름 가져오기
-	public String comuApp(String comu_list_code);
+	public List<ComuList> comuApp(String comu_list_code);
 	
 	//leftbar 가입 동호회 리스트 가져오기
-	public List<ComuList> leftList(String comu_info_emp_no);
-	
+	public List<EmpInfo> leftList(String emp_info_emp_no);
+
 }
