@@ -70,7 +70,7 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 	public AttendanceInfoSummary empSummary(Map<String, Object> inputMap, String emp_no) {
 
 		AttendanceInfoSummary empSummary = sqlSession.selectOne("attendance.empSummary", emp_no);
-	
+		//커밋용 주석
 		empSummary.setEmp_no(emp_no);
 		
 		return empSummary;
