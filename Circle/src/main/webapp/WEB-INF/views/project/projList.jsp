@@ -33,7 +33,6 @@
 
 				<div>
 					<jsp:include page="../project/projHomebar.jsp" />
-					<jsp:include page="../project/projConsole.jsp" />
 				</div>
 				<!-- 내용 -->
    <div class="table-wrapper">

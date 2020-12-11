@@ -18,12 +18,11 @@
 			<jsp:include page="../common/menuAlertBar.jsp" />
 		</div>
 		<div class="leftBar">
-			<jsp:include page="../iss/issSidebar.jsp" />
+			<jsp:include page="../project/projSidebar.jsp" />
 		</div>
 		<div class="container">
 			<div class="contentBar">
-				<jsp:include page="../iss/issHomebar.jsp" />
-				<jsp:include page="../project/projConsole.jsp" />
+				<jsp:include page="../project/projHomebar.jsp" />
 
 			</div>
 			<div class="content">

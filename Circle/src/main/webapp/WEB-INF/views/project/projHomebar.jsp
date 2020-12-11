@@ -28,6 +28,42 @@
 			</c:otherwise>
 			</c:choose>
 		</div>
+		<div>
+		<div>
+
+		<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projInsertProject'">신규
+				프로젝트 생성</button>
+		</div>
+		<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projInsertIss'">신규
+				업무 생성</button>
+		</div>
+		<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projMain'">프로젝트
+				리스트</button>
+		</div>
+		<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projIssAll'">업무
+				리스트</button>
+		</div>
+	<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projKanban'">Kanban Board</button>
+		</div>
+			<div>
+			<button class="buttonSize"
+				onclick="location='${pageContext.request.contextPath}/project/projTodo'">To-Do List</button>
+		</div>
+		
+
+
+</div>
+		</div>
 
 	</div>
 

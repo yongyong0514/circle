@@ -32,5 +32,8 @@ public interface ProjectDao {
 	String projGetPro(Project project);
 
 
+	List<Project> projIssAll(String emp_no);
+
+
 
 }

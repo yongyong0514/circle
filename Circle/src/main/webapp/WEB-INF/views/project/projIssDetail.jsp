@@ -29,7 +29,7 @@
 
 				<!-- 본문 -->
 				<!-- 전체 게시판 불러오기 -->
-				<jsp:include page="../project/projInsertProjectPart.jsp" />
+				<jsp:include page="../project/projIssDetailPart.jsp" />
 
 
 				<!--  본문 종료 -->

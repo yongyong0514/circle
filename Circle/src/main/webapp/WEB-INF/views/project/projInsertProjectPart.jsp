@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+
+
 <div class="form" id="project">
+
+
 
 	<div class="title">프로젝트 생성</div>
 	<form name="projInsertProject" id="projectInsertAdd"
@@ -59,4 +65,43 @@
 	</form>
 </div>
 
+<script type="text/javascript">
+document.getElementById('pro_sdate').value = new Date().toISOString().substring(0, 10);
+
+
+$(function(){
+
+	$("#projectInsertAdd").submit(function(){
+
+        var startDate = $('#pro_sdate').val();
+
+        var endDate = $('#pro_edate').val();
+
+        //-을 구분자로 연,월,일로 잘라내어 배열로 반환
+
+        var startArray = startDate.split('-');
+
+        var endArray = endDate.split('-');   
+
+        //배열에 담겨있는 연,월,일을 사용해서 Date 객체 생성
+
+        var start_date = new Date(startArray[0], startArray[1], startArray[2]);
+
+        var end_date = new Date(endArray[0], endArray[1], endArray[2]);
+
+          //날짜를 숫자형태의 날짜 정보로 변환하여 비교한다.
+
+        if(start_date.getTime() > end_date.getTime()) {
+
+            alert("종료날짜보다 시작날짜가 작아야합니다.");
+
+            return false;
+
+        }
+
+     });
+
+});
+
+</script>
 <!--  본문 종료 -->

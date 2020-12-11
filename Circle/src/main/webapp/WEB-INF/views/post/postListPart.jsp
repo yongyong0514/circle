@@ -76,7 +76,7 @@
 	<option value="emp_info_name">작성자</option>
 	
 	</select>
-	<input type="text" name="keyword">
+	<input type="search" name="keyword">
 	<input type="submit" id="searchBtn" value="검색">
 	</form>
 	
