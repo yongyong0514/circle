@@ -105,7 +105,7 @@ border: 1px solid black;
 								<th class="formBox2"><input type="text" name="job" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
 							</tr>
 								<!-- 주석 -->
-								
+								<!-- 주석 -->
 								<tr>
 									<td><br></td>
 								</tr>
