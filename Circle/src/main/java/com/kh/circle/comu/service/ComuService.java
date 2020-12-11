@@ -17,6 +17,9 @@ public interface ComuService {
 	
 	//게시글 당 글 목록
 	public List<Comu> comuListPost(String comu_list_code);
+	//가입신청서 리스트
+	public List<Comu> comuAppList();
+	
 	
 	//글 페이징
 	public int comuListarticle()throws Exception;
@@ -26,6 +29,7 @@ public interface ComuService {
 	
 	//글 쓰기 사원번호 가져오기
 	public String comuAdd2(String emp_no);
+	public String comuAdd3(String emp_info_emp_no);
 	// 글쓰기
 	public void comuInsert(Comu comu);
 	
@@ -45,6 +49,11 @@ public interface ComuService {
 	
 	//가입신청서에 동호회 이름 가져오기
 	List <ComuList> comuApp(String comu_list_code);
+	//가입신청서 쓰기 사원번호 가져오기
+	public String comuApp2(String emp_no);
+	//가입 신청서 작성
+	public void comuAppAction(Comu comu);
+		
 	
 	//leftBar 리스트 가져오기
 	public List<EmpInfo> leftList(String emp_info_emp_no);

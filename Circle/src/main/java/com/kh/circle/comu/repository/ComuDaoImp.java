@@ -30,12 +30,19 @@ public class ComuDaoImp implements ComuDao {
 		 return sqlSession.selectList("comu.comuList",map); 
 		 }
 	 
-	//게시글 별 동호회 리스트
+	//동호회 별 리스트
 		@Override
 		public List<Comu> comuListPost(String comu_list_code) {
 			
 			System.out.println("controller 개별 리스트"+comu_list_code);
 			return sqlSession.selectList("comu.comuListPost",comu_list_code);
+			 }
+		//가입신청서 별 리스트
+		@Override
+		public List<Comu> comuAppList() {
+			
+			System.out.println("controller 가입 신청서 리스트");
+			return sqlSession.selectList("comu.comuAppList");
 			 }
 
 	@Override
@@ -55,6 +62,13 @@ public class ComuDaoImp implements ComuDao {
 	public String comuAdd2(String emp_no) {
 											/* 매퍼 네임스페이스.id */
 		String emp_name = sqlSession.selectOne("comu.add2",emp_no);
+		
+		return emp_name;
+	}
+	@Override
+	public String comuAdd3(String emp_info_emp_no) {
+											/* 매퍼 네임스페이스.id */
+		String emp_name = sqlSession.selectOne("comu.comuNameList",emp_info_emp_no);
 		
 		return emp_name;
 	}
@@ -116,6 +130,22 @@ public class ComuDaoImp implements ComuDao {
 		List<ComuList> list_name = sqlSession.selectList("comu.comuApp",comu_list_code);
 		
 		return list_name;
+	}
+	//사원번호 가져오기
+		@Override
+		public String comuApp2(String emp_no) {
+												/* 매퍼 네임스페이스.id */
+			String emp_name = sqlSession.selectOne("comu.app2",emp_no);
+			
+			return emp_name;
+		}
+	//신청서 넣기
+	@Override
+	public void comuAppAction(Comu comu) {
+
+		//sqlSession.insert("comu.insert",comu);
+		
+		sqlSession.insert("comu.comuAppAction",comu);
 	}
 	
 	

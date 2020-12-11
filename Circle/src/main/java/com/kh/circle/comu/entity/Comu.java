@@ -26,4 +26,5 @@ public class Comu {
 	private String comu_list_code;
 	private String comu_info_emp_no;
 	
+	private String job_info_name;
 }
