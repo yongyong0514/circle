@@ -84,6 +84,8 @@ public class ProjectServiceImp implements ProjectService{
 		
 		String iss_code = projDao.projInsertIss(project);
 		
+		String pro_code = projDao.projGetPro(project);
+		
 		
 		if(!iss_file.isEmpty()) {
 			
@@ -95,7 +97,7 @@ public class ProjectServiceImp implements ProjectService{
 									.build();
 			
 		
-			String file_code = projFileDao.insert(projFile);
+			String file_code = projFileDao.insert(projFile, iss_code);
 			
 			//저장
 			projSaveDao.save(iss_file, file_code);

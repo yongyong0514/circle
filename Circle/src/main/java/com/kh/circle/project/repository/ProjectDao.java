@@ -29,6 +29,8 @@ public interface ProjectDao {
  
 	List<Project> issProg();
 
+	String projGetPro(Project project);
+
 
 
 }
