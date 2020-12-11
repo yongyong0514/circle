@@ -222,7 +222,8 @@ public class ProjectController {
 	
 
 	@PostMapping("/projInsertIssAdd")
-	public String insertIss(@ModelAttribute Project project, HttpSession session, PostPaging postPaging, // 뷰페이징
+	public String insertIss(@ModelAttribute Project project, 
+			HttpSession session, PostPaging postPaging, // 뷰페이징
 			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model,
 			@RequestParam MultipartFile iss_file
@@ -234,10 +235,16 @@ public class ProjectController {
 		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		project.setIss_emp_no(emp_no);
 		
+		String pro_code = project.getIss_pro_code();
 		
+		System.out.println("pro_ : " +pro_code);
+		
+		System.out.println("porjj" + project);
+		
+		System.out.println("sssss : " + session);
 		projService.projInsertIss(project, iss_file);
 		
-		
+		model.addAttribute("projIssMain", projService.projIssMain(pro_code));
 		/* 뷰페이징 시작 */
 		int total = projService.countPost();
 		if (nowPage == null && cntPerPage == null) {
@@ -260,8 +267,56 @@ public class ProjectController {
 		model.addAttribute("postPaging", postService.selecePost(postPaging));
 		
 		
-		
-		return "redirect:projIssMain";
+		return "redirect:projIssMain?pro_code=" + pro_code;
 	}
+	
+	@GetMapping("/projIssAll")
+	public String projIssMain(Model model, HttpSession session, Project iss,PostPaging postPaging,// 뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+
+		
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+
+
+		String myEmp = projService.projEmpNo(emp_no);
+
+		model.addAttribute("empNo", myEmp);
+
+		// 리스트 업
+
+		iss.setEmp_info_emp_no(myEmp);
+
+
+		List<Project> IssMain = projService.projIssAll(emp_no);
+
+
+		model.addAttribute("projissAll", IssMain);
+		
+		
+		/* 뷰페이징 시작 */
+		int total = projService.countPost();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		/* 뷰페이징 종료 */
+		
+
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
+
+		return "project/projIssAll";
+	}
+
 	
 }

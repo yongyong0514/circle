@@ -133,5 +133,12 @@ public class ProjectDaoImp implements ProjectDao {
 		return null;
 	}
 
+	@Override
+	public List<Project> projIssAll(String emp_no) {
+		List<Project> IssAll = sqlSession.selectList("project.projissAll", emp_no);
+
+		return IssAll;
+	}
+
 
 }

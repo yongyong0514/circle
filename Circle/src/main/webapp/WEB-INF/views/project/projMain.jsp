@@ -21,7 +21,6 @@
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../project/projHomebar.jsp" />
-				<jsp:include page="../project/projConsole.jsp" />
 			</div>
 			<div class="content">
 			
@@ -103,7 +102,7 @@
 	<option value="pro_manager">관리자</option>
 	
 	</select>
-	<input type="text" name="keyword">
+	<input type="search" name="keyword">
 	<input type="submit" id="searchBtn" value="검색">
 	</form>
 	

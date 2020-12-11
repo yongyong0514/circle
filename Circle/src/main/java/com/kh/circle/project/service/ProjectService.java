@@ -39,4 +39,7 @@ public interface ProjectService {
 	List<Post> selecePost(PostPaging postPaging);
 
 
+	List<Project> projIssAll(String emp_no);
+
+
 }

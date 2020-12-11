@@ -21,8 +21,8 @@
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../project/projHomebar.jsp" />
-				<jsp:include page="../project/projConsole.jsp" />
 			</div>
+			<br>
 			<div class="content">
 			
 			<!-- 본문 -->
@@ -43,11 +43,11 @@
 	<!-- 전체 게시판 불러오기 -->
 		<table class="projParts">
 		<tr>
-			<th class="pro_code">업무 코드</th>
-			<th class="pro_title">업무명</th>
-			<th class="pro_manager">담당자</th>
-			<th class="pro_sdate">업무 진행단계</th>
-			<th class="pro_edate">업무 상황</th>
+			<th class="iss_code">업무 코드</th>
+			<th class="iss_title">업무명</th>
+			<th class="emp_info_name">담당자</th>
+			<th class="prog_title">업무 진행단계</th>
+			<th class="situ_title">업무 상황</th>
 		</tr>
 	<c:forEach var="projIssMain" items="${projIssMain}">
 		<tr>
@@ -98,7 +98,7 @@
 	<option value="pro_manager">관리자</option>
 	
 	</select>
-	<input type="text" name="keyword">
+	<input type="search" name="keyword">
 	<input type="submit" id="searchBtn" value="검색">
 	</form>
 	

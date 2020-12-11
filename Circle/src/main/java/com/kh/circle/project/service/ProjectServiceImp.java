@@ -135,6 +135,15 @@ public class ProjectServiceImp implements ProjectService{
 
 
 
+	@Override
+	public List<Project> projIssAll(String emp_no) {
+		// TODO Auto-generated method stub
+		return projDao.projIssAll(emp_no);
+	}
+
+
+
+
 
 
 
