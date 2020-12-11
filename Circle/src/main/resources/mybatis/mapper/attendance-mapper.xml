@@ -89,4 +89,13 @@
 		 where emp_info_edat is null
 	</select>
 	
+	<select id="empSummary" parameterType="string" resultType="attendanceInfoSummary">
+		select *
+		  from emp_info		
+	</select>	
+	
+	
+	
+	
+	
 </mapper>
