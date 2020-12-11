@@ -1,6 +1,7 @@
 package com.kh.circle.schedule.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,8 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SchAjaxEntry {
+public class Entry {
 	private String empNo;
+	private List<Entry> entryList;
 	
 }
 

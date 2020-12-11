@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.schedule.entity.SchAjax;
-import com.kh.circle.schedule.entity.SchAjaxEntry;
+import com.kh.circle.schedule.entity.Entry;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,8 +92,18 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		sqlSession.update("sch.update", updateEvent);
 		//일정 참가자 전체 삭제
 		sqlSession.delete("sch.allDeleteMember", updateEvent);
-		//일정 참가자 재입력
-		sqlSession.insert("sch.updateMember", updateEvent);
+		
+		String check = updateEvent.get("attender").toString();
+		
+		//일정 참가자 입력
+		if(check.length() < 13) {
+			log.info("한명 : {}",check);
+			sqlSession.insert("sch.updateOneMember",updateEvent);
+		} else {
+			log.info("여러명 : {}",check);
+			sqlSession.insert("sch.updateMember", updateEvent);
+		}
+		
 	}
 	
 

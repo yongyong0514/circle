@@ -45,7 +45,7 @@
 		
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
-		<typeAlias type="com.kh.circle.schedule.entity.SchAjaxEntry" alias="schAjaxEntry"/>
+		<typeAlias type="com.kh.circle.schedule.entity.Entry" alias="entry"/>
 
 		<typeAlias type="com.kh.circle.poll.entity.Pagination" alias="pagination"/>
 
