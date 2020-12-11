@@ -91,6 +91,9 @@
 			</a>
 		</div>
 		<!-- 문항 입력 완료 버튼 끝 -->
+		<form id="hidden-data-form">
+			
+		</form>
 	</div>
 
 <script src="/circle/resources/js/poll/jquery.min.js"></script>
@@ -370,24 +373,45 @@
 			</li>
 </script>
 
+<!-- 결과값 전송용 폼 생성 텍스트형-->
+<script type="text/html" id="add-hidden-form">
+	<input name="seq\${seq}" value="\${type}">
+	<input name="seq\${seq}" value="\${title}">
+	<input name="seq\${seq}" value="\${necessary}">
+	<input name="seq\${seq}" value="\${pluralMaximum}">
+	<input name="seq\${seq}" value="\${score}">
+	<input name="seq\${seq}" value="\${checkLowerType}">
+</script>
+
+<!-- 결과값 전송용 폼 생성 - 선택형 선택지-->
+<script type="text/html" id="add-selection-hidden-form">
+	<input name="seq\${seq}_\${subSeq}" value="\${checkType}">
+	<input name="seq\${seq}_\${subSeq}" value="\${content}">
+</script>
+<!-- 결과값 전송용 폼 생성 - 선택형 기타 선택지-->
+<script type="text/html" id="add-etcSelection-hidden-form">
+	<input name="seq\${seq}_etc" value="\${checkType}">
+	<input name="seq\${seq}_etc" value="\${content}">
+</script>
+
 <!-- <script src="/circle/resources/js/poll/questionInsert.js"></script> -->
 <script type="text/javascript">
 /*********************************  함수 정의 영역  ****************************/
 
 /* 문항 전역변수 초기화 */
-questions = new Array();			 			//전체 문항 
+questions = new Array();					//전체 문항 
+oneQuestion = {};				//문항 하나
 seq = 0;							//순번
 title = "";								//제목
 necessary = "";							//필수 체크
 selectType = "";							//선택형
-selectNumberType = "";					//선택 개수
 checkType = "";							//radio - checkbox 종류 선택
-selectContent = new Object();//문항 내용
+selectContent = {};//문항 내용
 subSeq = 0;							//문항순번
-etcSelectContent = new Object();					//기타 문항 내용
-etcContent = "";
+etcContent = {};
 score = 0;
 pluralMaximum = 0;
+checkLowerType = "";
 
 /* 문항추가 입력폼 추가 */
 function addQuestionEditFrom(){
@@ -506,8 +530,13 @@ function extractNecessary(){
 		}
 		
 		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"text","selectContent":[],"etcContent":[],"pluralMaximum":0
-						,"selectNumberType":0,"score":0,"checkLowerType":textLowerType()});
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"text","pluralMaximum":0,"score":0,"checkLowerType":textLowerType()};
+		
+		/* 결과전송용 폼에 추가 */
+		$('#add-hidden-form').tmpl(oneQuestion).appendTo('#hidden-data-form');
+		
+		console.log(oneQuestion);
+		questions.push(oneQuestion);
 		console.log(questions);
 		
 	}
@@ -534,8 +563,13 @@ function extractNecessary(){
 		$('#score-preview').tmpl(scoreContent).appendTo(".question-item:last .answer-wrap");
 		
 		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"score","selectContent":[],"etcContent":[],"pluralMaximum":0
-						,"selectNumberType":0,"score":score,"checkLowerType":0});
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"score","pluralMaximum":0,"score":score,"checkLowerType":""};
+		
+		/* 결과전송용 폼에 추가 */
+		$('#add-hidden-form').tmpl(oneQuestion).appendTo('#hidden-data-form');
+		
+		console.log(oneQuestion);
+		questions.push(oneQuestion);
 		console.log(questions);
 	}
 
@@ -580,9 +614,17 @@ function extractNecessary(){
 		}
 		
 		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"select","selectContent":selectContent,"etcContent":etcContent,"pluralMaximum":pluralMaximum,"selectNumberType":0,"score":0,"checkLowerType":textLowerType()});
-		console.log(questions);
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"select","pluralMaximum":pluralMaximum,"score":0,"checkLowerType":textLowerType()};
 		
+		/* 결과값 전송용 폼에 입력 */
+		$('#add-hidden-form').tmpl(oneQuestion).appendTo('#hidden-data-form');
+		
+		console.log(oneQuestion);
+		console.log(etcContent);
+		questions.push(oneQuestion);
+		questions.push(etcContent);
+		
+		console.log(questions);
 	}
 	
 	/* 선택형에서 하나만, 복수형 선택시 radio <---> checkbox button 변경 */
@@ -636,8 +678,18 @@ function extractNecessary(){
 		var contents = new Array();
 		subSeq = 1;
 		$(".question-form").find(".question-option-item input[name=option-2]").each(function(index,item) {
-			contents.push({"seq":seq, "checkType":checkType, "subSeq": subSeq, "content":$(item).val()});
+			selectContent ={"seq":seq, "checkType":checkType, "subSeq": subSeq, "content":$(item).val()};
 			subSeq+=1;
+			
+			/* 전체 결과에 입력*/
+			questions.push(selectContent);
+			
+			/* 미리보기 입력용 입력 */
+			contents.push(selectContent);
+			
+			/* 전송용 폼에 입력 */
+			$('#add-selection-hidden-form').tmpl(selectContent).appendTo('#hidden-data-form');
+			
 		});
 		return contents;
 	}
@@ -646,6 +698,10 @@ function extractNecessary(){
 		var contents;
 		var content = $(".question-form").find(".question-option-item-etc input[name=option-2]").val();
 		var contents = {"seq":seq, "checkType":checkType, "content":content};
+		
+		/* 전송용 폼에 입력 */
+		$('#add-etcSelection-hidden-form').tmpl(contents).appendTo('#hidden-data-form');
+		
 		return contents;
 	}
 
@@ -790,11 +846,14 @@ $(document).ready(function(){
 	
 	/* 작성완료 클릭시 기능 */
 	$('#finish-btn').on('click', function(){
-		console.log(questions);
+		
+		var inputData = $("#hidden-data-form").serializeObject();
+		
+		console.log(inputData);
 		
 		var base = "${pageContext.request.contextPath}";
 		
-    	var data = JSON.stringify(questions);
+    	var data = JSON.stringify(inputData);
     	
     	console.log(data);
 		
@@ -802,7 +861,7 @@ $(document).ready(function(){
 			type		:	'post'
 		   ,traditional	:	true
 		   ,url			: 	base+"/pollAjax/writeComplete"
-		   ,data		:	{"data" : data}
+		   ,data		:	data
 		   ,dataType	: 'text'
        	   ,contentType	:"application/json; charset=utf-8;"
 		   ,error		: 	function(request,status,error){

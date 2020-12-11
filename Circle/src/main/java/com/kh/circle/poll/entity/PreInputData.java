@@ -2,6 +2,7 @@ package com.kh.circle.poll.entity;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PreInputData {
 
 	private Date startDate, endDate;
-	private String title, joinMember, subDept, open, reply, editable;
-	private String[] refer, attend;
+	private String title, joinMember, subDept, open, reply, editable, sequence, writer;
+	private List<String> refer, attend, deptMember;
 	
 }

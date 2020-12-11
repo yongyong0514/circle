@@ -358,4 +358,81 @@
 		 where emp_info_emp_no = #{empNo}
 	</select>
 	<resultMap type="hashMap" id="userInfoMap"></resultMap>
+	
+	<!-- 설문 입력용 시퀀스 반환 -->
+	<select id="sequence" resultType="String">
+		select popn_seq.nextval from dual
+	</select>
+	
+	<insert id="preInsert" parameterType="preInputData">
+		insert into poll_post (POLL_POST_CODE, POLL_POST_NAME, POLL_POST_SEC,POLL_POST_STAT
+								,POLL_POST_WDAT,POLL_POST_EMP,POLL_POST_SDAT,POLL_POST_EDAT
+								,POLL_POST_REPL_USE,POLL_POST_MOD_ADMT)
+		values('POPN'||TRIM(TO_CHAR(#{sequence},'000000'))
+			 , #{title}
+			 , #{open}
+			 , default
+			 , sysdate
+			 , #{writer}
+			 , #{startDate}
+			 , #{endDate}
+			 , #{reply}
+			 , #{editable})
+
+	</insert>
+	
+	<!-- 로그인 유저 부서 확인 -->
+	<select id="findDept" parameterType="preInputData" resultType="String">
+		select emp_info_dept_code 
+		  from emp_info
+		 where emp_info_emp_no = ${writer} 
+	</select>
+	
+	<!-- 유저의 소속부서 구성원 확인 -->
+			<!-- 하위부서를 선택했을 경우 -->
+	<select id="findWholeDeptMember" parameterType="String" resultType="String">
+				select emp_info_emp_no
+				  from emp_info
+                  join dept_info on(emp_info_dept_code = DEPT_INFO_CODE)
+				 where emp_info_dept_code = #{userDept}
+                    or DEPT_INFO_UPER = #{userDept}
+	</select>
+			<!-- 하위부서를 선택하지 않았을 경우 -->
+	<select id="findDeptMember" parameterType="String" resultType="String">
+				select emp_info_emp_no
+				  from emp_info
+				 where emp_info_dept_code = #{userDept}
+	</select>
+	
+	<!-- 소속부서 인원 입력 -->
+	<insert id="insertDeptMember" parameterType="preInputData">
+		<foreach collection="deptMember" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into poll_post_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참여')
+		</foreach>
+	</insert>
+	
+	<!-- 참가자 입력 -->
+	<insert id="insertAttend" parameterType="preInputData">
+		<foreach collection="attend" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into poll_post_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참여')
+		</foreach>
+	</insert>
+	
+	<!-- 참조자 입력 -->
+	<insert id="insertRefer" parameterType="preInputData">
+		<foreach collection="refer" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into sch_unit_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참여')
+		</foreach>
+	</insert>	
+	
+	<!-- 문항 입력 -->
+	<insert id="insertQuestion" parameterType="list">
+		<foreach collection="list" item="item" index="index">
+			<choose>
+				<when test="item[0].equals"></when>
+				<when test=""></when>
+				<when test=""></when>
+			</choose>
+		</foreach>
+	</insert>
 </mapper>
