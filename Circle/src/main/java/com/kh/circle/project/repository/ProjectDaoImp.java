@@ -127,5 +127,11 @@ public class ProjectDaoImp implements ProjectDao {
 		return issProg;
 	}
 
+	@Override
+	public String projGetPro(Project project) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

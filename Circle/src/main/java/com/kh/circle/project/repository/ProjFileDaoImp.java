@@ -16,13 +16,14 @@ public class ProjFileDaoImp implements ProjFileDao{
 	
 	
 	@Override
-	public String insert(ProjFile projFile) {
+	public String insert(ProjFile projFile, String iss_code) {
 		
 
 
 		String files_code = sqlSession.selectOne("projFile.seq");
 		
 		projFile.setFiles_code(files_code);
+		projFile.setFiles_status(iss_code);
 		
 		sqlSession.insert("projFile.issFileInsert", projFile);
 		

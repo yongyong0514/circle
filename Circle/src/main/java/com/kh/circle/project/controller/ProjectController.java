@@ -90,11 +90,33 @@ public class ProjectController {
 	}
 
 	@GetMapping("/projIssMain")
-	public String projIssMain(Model model, Project iss, @RequestParam("pro_code") String pro_code) {
+	public String projIssMain(Model model, Project iss, @RequestParam("pro_code") String pro_code
+			,PostPaging postPaging,// 뷰페이징
+			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+			@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
 
 		model.addAttribute("projIssMain", projService.projIssMain(pro_code));
+		/* 뷰페이징 시작 */
+		int total = projService.countPost();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
 
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		/* 뷰페이징 종료 */
+		
+
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
 
 		return "project/projIssMain";
 	}
@@ -188,7 +210,6 @@ public class ProjectController {
 		//prog 불러오기
 		List<Project> issProg = projService.issProg();
 
-
 		model.addAttribute("empNo", myEmp);
 		model.addAttribute("projMain", projMain);
 		model.addAttribute("issProg", issProg);
@@ -205,6 +226,7 @@ public class ProjectController {
 			@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, Model model,
 			@RequestParam MultipartFile iss_file
+		
 			) throws IllegalStateException, IOException {
 
 		
@@ -214,6 +236,7 @@ public class ProjectController {
 		
 		
 		projService.projInsertIss(project, iss_file);
+		
 		
 		/* 뷰페이징 시작 */
 		int total = projService.countPost();
