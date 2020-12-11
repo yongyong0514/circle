@@ -47,7 +47,67 @@ public class SignController {
 	@Autowired
 	private SignService signService;	
 
-//	결재 전체 리스트
+	
+//	Create sign
+	@PostMapping("/signWrite")
+	public String signWrite(@ModelAttribute SignWriteInsert signWriteInsert
+					   /* , @RequestParam MultipartFile file */) throws IllegalStateException, IOException {
+		signService.insert(signWriteInsert);
+			
+		return "redirect:signList";
+	}	
+
+	
+//	Create signFiles
+	@PostMapping("/signFiles")
+	public String upload(MultipartHttpServletRequest multipartRequest) { 
+        
+       Iterator<String> itr =  multipartRequest.getFileNames();
+           
+       String filePath = "d:/resources/files/sign";
+       
+       while (itr.hasNext()) { 
+           MultipartFile multipartFile = multipartRequest.getFile(itr.next());   
+    
+           String files_oname = multipartFile.getOriginalFilename();
+           
+           String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
+           
+           long files_size = multipartFile.getSize();
+           
+           String files_type = multipartFile.getContentType();
+           
+           String files_cname = UUID.randomUUID().toString() + extension;
+           
+           String files_route = filePath + "/" + files_cname;
+    
+           try {
+        	   multipartFile.transferTo(new File(files_route));
+
+        	   signService.insertFile(files_oname, files_size, files_type, files_cname, files_route);
+        	   
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+      }
+       return "success";
+	}
+	
+	
+//	Result signWrite
+	@GetMapping("/signWrite")
+	public String signWrite(Model model) {
+		List<SignType> list = sqlSession.selectList("sign.signTypeList");
+		model.addAttribute("list", list);
+		
+		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
+		model.addAttribute("list2", list2);
+		
+		return "sign/signWrite";
+	}
+	
+	
+//	Result signListAll
 	@GetMapping("/signListAll")
 	public String signListAll(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
 		
@@ -99,7 +159,7 @@ public class SignController {
 	}
 
 	
-//	결재 메인 최신 선별 리스트
+//	Result signList
 	@GetMapping("/signList")
 	public String signList(Model model, HttpSession session) {
 		
@@ -119,65 +179,7 @@ public class SignController {
 	}
 	
 	
-//	결재 작성 화면
-	@GetMapping("/signWrite")
-	public String signWrite(Model model) {
-		List<SignType> list = sqlSession.selectList("sign.signTypeList");
-		model.addAttribute("list", list);
-		
-		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
-		model.addAttribute("list2", list2);
-		
-		return "sign/signWrite";
-	}
-
-// 결재 작성 등록
-	@PostMapping("/signWrite")
-	public String signWrite(@ModelAttribute SignWriteInsert signWriteInsert
-					   /* , @RequestParam MultipartFile file */) throws IllegalStateException, IOException {
-		signService.insert(signWriteInsert);
-		
-		return "redirect:signList";
-	}
-	
-	
-// 결재 첨부 파일 등록
-	@PostMapping("/signFiles")
-	public String upload(MultipartHttpServletRequest multipartRequest) { 
-        
-       Iterator<String> itr =  multipartRequest.getFileNames();
-           
-       String filePath = "d:/resources/files/sign";
-       
-       while (itr.hasNext()) { 
-           MultipartFile multipartFile = multipartRequest.getFile(itr.next());   
-    
-           String files_oname = multipartFile.getOriginalFilename();
-           
-           String extension = files_oname.substring(files_oname.lastIndexOf("."), files_oname.length());
-           
-           long files_size = multipartFile.getSize();
-           
-           String files_type = multipartFile.getContentType();
-           
-           String files_cname = UUID.randomUUID().toString() + extension;
-           
-           String files_route = filePath + "/" + files_cname;
-    
-           try {
-        	   multipartFile.transferTo(new File(files_route));
-
-        	   signService.insertFile(files_oname, files_size, files_type, files_cname, files_route);
-        	   
-           } catch (Exception e) {
-               e.printStackTrace();
-           }
-      }
-       return "success";
-	}
-	
-	
-// 결재 한건 선택
+//	Result signSelectOne
 	@GetMapping("/signSelectOne")
 	public String signSelectOne(@RequestParam String signCode, Model model, HttpSession session) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
@@ -200,7 +202,7 @@ public class SignController {
 	}
 	
 	
-// 결재 한건 수정 화면
+//  Result signModify
 	@GetMapping("/signModify")
 	public String signModify(@RequestParam String signCode, Model model) {
 		SignModify signModify = sqlSession.selectOne("sign.signModify", signCode);
@@ -217,17 +219,9 @@ public class SignController {
 
 		return "sign/signModify";
 	}
-	
-	
-// 결재 한건 수정
-	@PostMapping("/signModify")
-	public String signModify() {
-		
-		return "sign/signList";
-	}
 
 	
-// 결재 설정 화면
+//  Result signConfig
 	@GetMapping("/signConfig")//여기서 다운로드 처리해야 함
 	public String signConfig(HttpSession session, Model model) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
@@ -240,8 +234,8 @@ public class SignController {
 		return "sign/signConfig";
 	}
 	
-	
-// 	결재 서명 첨부 파일 다운로드
+
+// 	Result signFilesSignatureDownload
 	@GetMapping("/sfsDownload")
 	public ResponseEntity<ByteArrayResource> sfsDownload(@RequestParam String fileCode) throws IOException {
 		ResponseEntity<ByteArrayResource> entity = signService.sfsdownload(fileCode);
@@ -249,7 +243,15 @@ public class SignController {
 		return entity;
 	}
 	
-
+	
+// 	Update signModify
+	@PostMapping("/signModify")
+	public String signModify() {
+		
+		return "sign/signList";
+	}
+	
+	
 // 문서 첫화면
 	@GetMapping("/docuList")
 	public String docuList() {
