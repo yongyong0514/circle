@@ -1,5 +1,6 @@
 package com.kh.circle.poll.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PreInputData;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,6 +90,45 @@ public class PollDaoImpl implements PollDao{
 	@Override
 	public List<HashMap<String, String>> userInfo(String empNo) {
 		return sqlSession.selectList("poll.userInfo", empNo);
+	}
+	
+	@Override
+	public void insertPoll(PreInputData temp, HashMap<String, Object> questions) {
+		//입력할 시퀀스 추출
+		String sequence = sqlSession.selectOne("poll.sequence");
+		//시퀀스 정보 입력
+		temp.setSequence(sequence);
+		//사전정보 입력
+		sqlSession.insert("poll.preInsert", temp);
+		//참가자 확인
+		if(temp.getJoinMember().toString().equals("userDept")) {
+			//로그인 유저의 부서 확인
+			String userDept = sqlSession.selectOne("poll.findDept", temp);
+			List<String> deptMember = new ArrayList<>();
+			//부서 구성원 추출
+			if(temp.getSubDept().toString().equals("Y")) {
+				deptMember = sqlSession.selectList("poll.findWholeDeptMember", userDept);
+			} else {
+				deptMember = sqlSession.selectList("poll.findDeptMember", userDept);
+			}
+			temp.setDeptMember(deptMember);
+			//부서 인원 입력
+			sqlSession.insert("poll.insertDeptMember", temp);
+		} 
+		//직접 추가한 참가자 있는경우
+		if(temp.getAttend() != null) {
+			sqlSession.insert("poll.insertAttend", temp);
+		}
+		//참조자가 있는경우
+		if(temp.getRefer() != null) {
+			sqlSession.insert("poll.insertRefer", temp);
+		}
+		
+		//log.info(questions.get("seq1").);
+		
+		//문항정보 입력
+		sqlSession.insert("poll.insertQuestion", questions);
+		
 	}
 
 

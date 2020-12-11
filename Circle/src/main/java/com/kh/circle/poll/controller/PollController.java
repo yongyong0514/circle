@@ -224,12 +224,13 @@ public class PollController {
 	}
 	
 	@PostMapping("/pollInsertComplete")
-	public String insertComplete(HttpSession session) {
+	public void insertComplete(HttpSession session, List<HashMap<String, Object>> questions) {
 		
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
 		log.info(temp.toString());
 		
-		return "/poll/pollMain";
+		log.info(questions.toString());
+		
 	}
 
 }
