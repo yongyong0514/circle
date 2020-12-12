@@ -43,4 +43,10 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 		
 		return empList;
 	}
+
+
+	@Override
+	public String checkPwd(Map<String, Object> map) {
+		return sqlSession.selectOne("empInfo.checkPwd", map);
+	}
 }

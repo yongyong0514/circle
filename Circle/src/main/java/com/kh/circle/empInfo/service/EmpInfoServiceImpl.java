@@ -98,4 +98,16 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 		return map;
 	}
 
+	@Override
+	public String checkPwd(Map<String, Object> map) {
+		String userPwd = empInfoRepository.checkPwd(map);
+		
+		if(map.get("curPwd").equals(userPwd)) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+
 }

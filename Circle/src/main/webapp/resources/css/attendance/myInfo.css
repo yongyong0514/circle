@@ -114,6 +114,11 @@ td {
 	margin-bottom:1rem;
 }
 
+.xSmallInfo{
+	font-size: x-small;
+	padding-left: 0.5rem;
+}
+
 .detailInfo table th,
 .detailInfo table td,
 .changeListTable th,
@@ -166,4 +171,16 @@ td {
 
 .showInfo{
 	display: block;
+}
+
+.newInput{
+	font-size: xx-small;
+	text-align: center;
+	border: none;
+	border-bottom: 1px solid rgba(100, 100, 100, 0.5);
+}
+
+.wrongPwd{
+	font-weight: bold;
+	color: red;
 }

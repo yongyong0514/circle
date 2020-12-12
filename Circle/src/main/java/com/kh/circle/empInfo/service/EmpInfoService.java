@@ -10,4 +10,5 @@ public interface EmpInfoService {
 
 	public Map<String, Object> empInfoList(PagingInfo pInfo);
 
+	public String checkPwd(Map<String, Object> map);
 }

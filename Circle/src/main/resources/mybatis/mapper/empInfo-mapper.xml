@@ -124,4 +124,10 @@
 		 where rNum >= (#{nowPage} * #{perPage} - #{perPage} + 1)
 	</select>
 	
+	<select id="checkPwd" parameterType="map" resultType="string">
+		select emp_info_pwd
+		  from emp_info
+		 where emp_info_emp_no = #{emp_no}
+	</select>
+	
 </mapper>

@@ -70,12 +70,16 @@
 								<span>2차 확인</span>
 							</td>
 							<td>
-								<input class="marginbox" name="changePwd" type="password"><br>
-								<input class="marginbox" name="changePwd2" type="password">
+								<input class="marginbox pwd1" name="changePwd" type="password"><br>
+								<input class="marginbox pwd2" name="changePwd2" type="password"><br>
+								<span class="pwdCheckMsg xSmallInfo"><br></span>
+								<input type="hidden" class="changePwd">
 							</td>
 							<td class="titleCell">현재 비밀번호</td>
-							<td><input class="marginbox" name="curPwd" type="password"> <br>
-								<input class="marginbox" type="submit" value="수정하기"></td>
+							<td><input class="marginbox curPwd" name="curPwd" type="password"> <br>
+								<input class="marginbox editBtn" type="submit" value="수정하기"><br>
+								<span class="userPwdCheckMsg xSmallInfo"></span>
+							</td>
 						</tr>
 					</table>
 					<!-- 대표정보 끝 -->
@@ -154,6 +158,7 @@
 							<div class="more hideInfo">
 								<ul>
 									<li><span>자격정보</span>
+										<span class="xSmallInfo">(새로운 값을 입력한 뒤 상단의 "수정하기" 버튼을 클릭하세요.)</span>
 										<table class="detailCertificationTable">
 											<tr>
 												<th class="titleCell">분류</th>
@@ -165,6 +170,18 @@
 												<th class="titleCell">만료일</th>
 												<th class="titleCell">비고</th>
 											</tr>
+											<!-- 입력부분 시작 -->
+											<tr>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_type"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_name"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_no"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_sdat"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_levl"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_inst"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_edat"></td>
+												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_rm"></td>
+											</tr>
+											<!-- 입력부분 끝 -->
 											<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
 												<tr>
 													<td><c:out value="${CertificateInfo.crtf_info_type }" /></td>
@@ -310,13 +327,13 @@
 
 	<script>
 		$(function() {
+			$(".editBtn").prop("disabled", true);
+			$(".chengePwd").val("false");
 			
 			<!-- 왼쪽바 고정 추가 옵션 시작-->
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
@@ -324,6 +341,42 @@
 				}
 			});
 			<!-- 왼쪽바 고정 추가 옵션 끝 -->
+			
+			$(".pwd1").change(compare());
+			$(".pwd2").change(compare());
+			
+			$(".curPwd").on("change", function(){
+				<!-- 현재 비밀번호 확인 시작 -->
+				if( !isNull($(".curPwd").val()) ){
+					$.ajax({
+						url: "${pageContext.request.contextPath}/empInfo/checkPwd",
+						type: "POST",
+						data: {
+							"curPwd":$(".curPwd").val(),
+							"emp_no": ${sessionScope.empInfo.emp_info_emp_no}
+						}, success: function(data){
+							if(data == "true"){
+								$(".userPwdCheckMsg").text("비밀번호가 확인되었습니다.");
+								$(".userPwdCheckMsg").removeClass("wrongPwd");
+								
+								if( !isNull($(".pwd1").val()) ){
+									if( comparePwd() ){
+										$(".editBtn").prop("disabled", false);
+										$(".changePwd").val("true");
+									}
+								} else{
+									$(".editBtn").prop("disabled", false);
+								}		
+								
+							} else{
+								$(".userPwdCheckMsg").text("비밀번호가 다릅니다.");
+								$(".userPwdCheckMsg").addClass("wrongPwd");
+							}
+						}, error: function(err){}
+					});			
+				}
+				<!-- 현재 비밀번호 확인 끝 -->
+			});
 		});
 
 		<!-- 더보기 열기/닫기 시작 -->
@@ -332,18 +385,59 @@
 				$(".more").removeClass("hideInfo").addClass("showInfo");
 				$(".openClose").html('상세정보 닫기 <i onclick="moreView();" class="far fa-caret-square-up"></i>');
 			
-				console.log("hide가 있다")
 			} else if($(".more").hasClass("showInfo")){
 				$(".more").removeClass("showInfo").addClass("hideInfo");
 				$(".openClose").html('상세정보 열기 <i onclick="moreView();" class="far fa-caret-square-down"></i>');
-
-				console.log("show가 있다")
 			}
-			console.log("worked!");
 		};
-		
-		
 		<!-- 더보기 열기/닫기 끝 -->
+		
+		<!-- 비밀번호 일치여부 확인 시작 -->
+		function comparePwd(){
+			$(".pwd1").on("change", function(){
+				var pwd1 = $(".pwd1").val();
+				var pwd2 = $(".pwd2").val();
+
+				if(pwd1 != '' || pwd2 != ''){
+					if( pwd1 == pwd2 ){
+						$(".pwdCheckMsg").text("입력된 비밀번호가 일치합니다.");
+						$(".pwdCheckMsg").removeClass("wrongPwd");
+					} else{
+						$(".pwdCheckMsg").text("입력된 비밀번호가 일치하지 않습니다.");
+						$(".pwdCheckMsg").addClass("wrongPwd");
+						$(".editBtn").prop("disabled", true);
+					};
+				} else{
+					return false;
+				}
+			});
+			
+			$(".pwd2").on("change", function(){
+				var pwd1 = $(".pwd1").val();
+				var pwd2 = $(".pwd2").val();
+
+				if(pwd1 != '' || pwd2 != ''){
+					if( pwd1 == pwd2 ){
+						$(".pwdCheckMsg").text("입력된 비밀번호가 일치합니다.");
+						$(".pwdCheckMsg").removeClass("wrongPwd");
+						return true;
+					} else{
+						$(".pwdCheckMsg").text("입력된 비밀번호가 일치하지 않습니다.");
+						$(".pwdCheckMsg").addClass("wrongPwd");
+						$(".editBtn").prop("disabled", true);
+						return false;
+					};
+				} else{
+					return false;
+				}
+			});
+		}
+		<!-- 비밀번호 일치여부 확인 끝 -->
+		
+		
+		function isNull(value){
+			return ( value === undefined || value === null || value === "" ) ? true : false;
+		};
 		
 	</script>
 </body>
