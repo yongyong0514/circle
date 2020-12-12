@@ -106,6 +106,9 @@ public class AttendanceController {
 	
 	@GetMapping("/allVacationList")
 	public String allVacationList() {
+		
+		
+		
 		return "attendance/allVacationList";
 	}
 	
@@ -141,7 +144,6 @@ public class AttendanceController {
 							HttpSession session) {
 					
 		String sTime = (String) session.getAttribute("sTime");
-		System.out.println("sTime 확인: " + sTime);
 	
 		Map<String, Object> inputMap = new HashMap<String, Object>();
 		inputMap.put("sTime", sTime);

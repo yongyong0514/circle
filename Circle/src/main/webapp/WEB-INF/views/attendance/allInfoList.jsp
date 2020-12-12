@@ -27,12 +27,17 @@
 			<div class="content">
 				<h1>인사정보</h1>
 				<br><br>
-				<form action="#" method="POST">
+				<c:out value="${empList }"/>
+				
+				<form action="empInfo/allInfoList" method="POST">
+					<input type="text" name="empNo">
+					<input type="text" name="name">
+					<input type="text" name="deptName">
 					<span class="totalNumber">전체 n명</span>
-					<input type="button" class="insertInfo" value="인사정보 추가"/>
+					<input type="button" name="pegPage" class="insertInfo" value="인사정보 추가"/>
 					<select>
+						<option value="10">10</option>
 						<option value="20">20</option>
-						<option value="30">30</option>
 						<option value="50">50</option>
 					</select>
 					<br><br>
@@ -47,48 +52,16 @@
 								<th>이메일</th>
 								<th>내선번호</th>
 							</tr>
-							<!-- 예시데이터 시작 -->
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<!-- 예시데이터 끝 -->
+							<c:forEach var="EmpInfoAll" items="${empList }">
+								<tr>
+									<td><c:out value="${EmpInfoAll.emp_info_emp_no }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.dept_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.job_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_email }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_etel }"/></td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<!-- 전체 인사정보(리스트) 끝 -->
