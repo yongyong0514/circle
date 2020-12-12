@@ -74,17 +74,17 @@
 								 inner join job_info JI on(EI.emp_info_job_code = JI.job_info_code)
 							   <where>
 								 	   EI.emp_info_edat is null
- 							 	 	<if test="empNo != '' || empNo != null">
-								 		AND
-								 		EI.emp_info_emp_no = #{empNo}
-								 	</if>
- 						
-								 	<if test="name != '' || empNo != null">
+									<if test="empNo != null">
+										AND
+										EI.emp_info_emp_no = #{empNo}
+									</if>
+ 							 	 	
+								 	<if test="name != null">
 								 		AND
 								 		EI.emp_info_name like '%' || #{name} || '%'
 								 	</if>
 								 	
-								 	<if test="deptName != '' || empNo != null">
+								 	<if test="deptName != null">
 								 		AND
 										DI.dept_info_name like '%' || #{deptName} || '%'
 								 	</if>

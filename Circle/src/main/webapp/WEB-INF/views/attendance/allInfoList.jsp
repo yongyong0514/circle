@@ -27,8 +27,6 @@
 			<div class="content">
 				<h1>인사정보</h1>
 				<br><br>
-				<c:out value="${empList }"/>
-				
 				<form action="empInfo/allInfoList" method="POST">
 					<input type="text" name="empNo">
 					<input type="text" name="name">
