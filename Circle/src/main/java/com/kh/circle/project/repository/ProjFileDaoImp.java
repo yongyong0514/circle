@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.circle.project.entity.ProjFile;
 
@@ -14,7 +15,7 @@ public class ProjFileDaoImp implements ProjFileDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
+	@Transactional
 	@Override
 	public String insert(ProjFile projFile, String iss_code, String pro_code) {
 		
@@ -31,6 +32,15 @@ public class ProjFileDaoImp implements ProjFileDao{
 		sqlSession.insert("projFile.issFileInsert", projFile);
 		
 		return files_code;
+	}
+
+
+	@Override
+	public ProjFile find(String files_code) {
+
+		
+		
+		return sqlSession.selectOne("projFile.proFileFind", files_code);
 	} 
 	
 	

@@ -52,7 +52,7 @@
 	<c:forEach var="projIssMain" items="${projIssMain}">
 		<tr>
 			<td>${projIssMain.iss_code}</td>
-			<td><a href='<c:url value='/project/projIssMain?iss_code=${projIssMain.iss_code}'/>'>${projIssMain.iss_title}</a></td>
+			<td><a href='<c:url value='/project/projIssDetail?iss_code=${projIssMain.iss_code}'/>'>${projIssMain.iss_title}</a></td>
 			<td>${projIssMain.emp_info_name}</td>
 			<td>${projIssMain.prog_title}</td>
 			<td>${projIssMain.situ_title}</td>

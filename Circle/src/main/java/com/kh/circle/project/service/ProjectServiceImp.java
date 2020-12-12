@@ -1,6 +1,8 @@
 package com.kh.circle.project.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,17 +173,53 @@ public class ProjectServiceImp implements ProjectService{
 
 
 	@Override
-	public ResponseEntity<ByteArrayResource> download(int iss_code) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<ByteArrayResource> download(String files_code) throws IOException {
+		
+		
+		
+		ProjFile file = projFileDao.find(files_code);
+		
+		
+		
+		if(file == null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		byte[] data = projSaveDao.load(file.getFiles_code());
+		
+		
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		
+		ResponseEntity<ByteArrayResource> entity =
+				ResponseEntity.ok()
+				.header("Content-Length", String.valueOf(file.getFiles_size()))
+				.header("Content-Type", "application/octet-stream; charset=UTF-8")
+				.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(file.getFiles_oname(), "UTF-8")+"\"")
+				.body(resource);
+		
+		return entity;
 	}
 
 
 	@Override
-	public List<Project> projDetail3(String iss_code) {
-		// TODO Auto-generated method stub
-		return projDao.projDetail3(iss_code);
+	public List<ProjFile> projDetail3(String pro_code) {
+		return projDao.projDetail3(pro_code);
 	}
+
+
+	@Override
+	public List<Project>  projGetIss(String pro_code) {
+		
+		return projDao.projGetIss(pro_code);
+	}
+
+
+	@Override
+	public List<ProjFile> projIssDetail(String iss_code) {
+		return projDao.projIssDetail(iss_code);
+	}
+
 
 
 

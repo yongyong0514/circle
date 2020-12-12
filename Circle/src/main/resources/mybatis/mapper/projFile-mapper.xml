@@ -22,5 +22,14 @@ values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDA
 
 </insert>
 
+
+<select id="proFileFind" resultType="projFile" parameterType="String">
+
+select *
+ from files
+where files_code = #{files_code}
+
+</select>
+
  
 </mapper>

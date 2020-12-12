@@ -8,5 +8,7 @@ public interface ProjSaveDao {
 
 	void save(MultipartFile iss_file, String file_code) throws IllegalStateException, IOException;
 
+	byte[] load(String files_code) throws IOException;
+
 }
  

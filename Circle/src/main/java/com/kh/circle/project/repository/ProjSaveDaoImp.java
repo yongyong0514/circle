@@ -3,6 +3,7 @@ package com.kh.circle.project.repository;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,15 @@ public class ProjSaveDaoImp implements ProjSaveDao{
 		
 		iss_file.transferTo(target);
 		
+	}
+
+	@Override
+	public byte[] load(String files_code) throws IOException {
+
+		File target = new File(path, files_code);
+		byte[] data = FileUtils.readFileToByteArray(target);
+		
+		return data;
 	}
 
 }

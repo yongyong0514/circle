@@ -6,20 +6,49 @@
 
 <!--  본문 -->
 <div class="main">
-	<c:forEach var="projDetail" items="${projDetail}">
+	<c:forEach var="projIssDetail" items="${projIssDetail}">
 		<div>
-			<h2>${projDetail.post_title}</h2>
-			<h5>${projDetail.dept_info_name}</h5>
-			<h5>${projDetail.emp_info_name},
-				<fmt:formatDate value="${projDetail.post_wdat}" pattern="yyyy.MM.dd" />
+			<h2>${projIssDetail.iss_title}</h2>
+			<h5>${projIssDetail.dept_info_name}</h5>
+			<h5>${projIssDetail.emp_info_name},
 			</h5>
 			<div>
-				<h5>[${projDetail.post_cvp}]</h5>
+			
 			</div>
 		</div>
-		<div>${projDetail.post_comt}</div>
+		<div>${projIssDetail.iss_cont}</div>
+		<div>${projIssDetail.files_code }</div>
 	</c:forEach>
 </div>
+
+
+<div>
+	
+		<label>프로젝트 파일</label>
+			<table class="projParts">
+					<tr>
+						<th class="iss_title">관련 업무명</th>
+						<th class="pro_title">작성자</th>
+						<th class="prog_title">파일명</th>
+						<th class="situ_title">다운로드</th>
+					</tr>
+	<c:forEach var="projDetail3" items="${projDetail3}">
+						<tr>
+							<td><a
+								href='<c:url value='/project/projIssDetail?iss_code=${projDetail3.iss_code}'/>'>${projDetail3.iss_title}</a></td>
+							<td>
+							<td>
+							${projDetail3.emp_info_name }
+							</td>
+							<td>${projDetail3.files_oname}</td>
+							<td><a 
+							href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>다운로드</a></td>
+						</tr>
+	</c:forEach>
+				</table>
+		
+	</div>
+	
 
 <!-- 버튼 부분 -->
 

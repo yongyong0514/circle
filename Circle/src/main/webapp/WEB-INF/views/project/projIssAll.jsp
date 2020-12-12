@@ -59,9 +59,9 @@
 							<td>${projissAll.iss_code}</td>
 
 							<td><a
-								href='<c:url value='/project/projIssMain?iss_code=${projissAll.iss_code}'/>'>${projissAll.iss_title}</a></td>
+								href='<c:url value='/project/projIssDetail?iss_code=${projissAll.iss_code}'/>'>${projissAll.iss_title}</a></td>
 							<td><a
-								href='<c:url value='/project/projIssMain?pro_code=${projissAll.pro_code}'/>'>${projissAll.pro_title}</a></td>
+								href='<c:url value='/project/projDetail?pro_code=${projissAll.pro_code}'/>'>${projissAll.pro_title}</a></td>
 							<td>${projissAll.prog_title}</td>
 							<td>${projissAll.situ_title}</td>
 						</tr>
