@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.login.entity.EmpInfo;
+import com.kh.circle.poll.entity.AttendedServey;
+import com.kh.circle.poll.entity.AttendedServeyMember;
 import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.entity.Question;
 import com.kh.circle.poll.service.PollService;
@@ -29,7 +31,7 @@ public class PollAjaxController {
 	private PollService pollService;
 	
 	@RequestMapping(value="/writeComplete", method = RequestMethod.POST)
-	public void post(HttpSession session, @RequestBody HashMap<String,Object> questions) {
+	public void post(HttpSession session, @RequestBody List<Question> questions) {
 
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
@@ -38,12 +40,23 @@ public class PollAjaxController {
 		log.info(temp.getTitle());
 
 		log.info(questions.toString());
-		log.info(questions.get("seq1").toString());
 		
 		temp.setWriter(empNo);
 		
 		pollService.insertPoll(temp, questions);
 		
 		
+	}
+	
+	@PostMapping("/attendComplete")
+	public String attendComplete(HttpSession session, @RequestBody List<HashMap<String, String>> list) {
+		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		
+		
+		log.info(list.toString());
+		
+//		String url = pollService.insertAttendedServey(list);
+		return null;
 	}
 }

@@ -232,5 +232,11 @@ public class PollController {
 		log.info(questions.toString());
 		
 	}
+	
+	@PostMapping("/postAttendComplete")
+	public void attendComplete(HttpSession session, List<HashMap<String, Object>> formData) {
+		
+		log.info(formData.toString());
+	}
 
 }

@@ -425,14 +425,116 @@
 		</foreach>
 	</insert>	
 	
-	<!-- 문항 입력 -->
-	<insert id="insertQuestion" parameterType="list">
-		<foreach collection="list" item="item" index="index">
-			<choose>
-				<when test="item[0].equals"></when>
-				<when test=""></when>
-				<when test=""></when>
-			</choose>
+	<!-- 문항 입력용 시퀀스 반환 -->
+	<select id="questionSeq" resultType="String">
+		select popq_seq.nextval from dual
+	</select>
+	
+	<!-- 점수형 문항 입력 -->
+	<insert id="insertScoreQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , #{score}
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  )
+	</insert>
+	<!-- 점수형 선택지 입력 -->
+	<insert id="insertScoreSelection" parameterType="question">
+		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+										   , #{item.content}     
+										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+										   , 'radio')
+		</foreach>
+	</insert>
+	<!-- 텍스트형 문항 입력 -->
+	<insert id="insertTextQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , <choose>
+				 					  		<when test="checkLowerType.equals('text')">
+				 					  			'short'
+				 					  		</when>
+				 					  		<otherwise>
+				 					  			'long'
+				 					  		</otherwise>
+				 					  	</choose>
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  )
+	</insert>
+	<!-- 텍스트형 가선택지 입력 -->
+	<insert id="insertTextSelection" parameterType="question">
+		insert into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+											 , null
+											 , 'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+											 , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+											 , #{checkLowerType}
+												)
+	</insert>
+	
+	<!-- 선택형 문항 입력 -->
+	<insert id="insertSelectQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS
+									  , POLL_POST_QUST_LIMIT) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , #{checkLowerType}
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  , #{pluralMaximum})
+	</insert>
+	<!-- 선택형 선택지 입력 -->
+	<insert id="insertSelectSelection" parameterType="question">
+		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+										   , #{item.content}     
+										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+										   , #{item.checkType})
 		</foreach>
 	</insert>
 </mapper>

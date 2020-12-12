@@ -254,9 +254,10 @@
 				var attend = $(this).parent().parent().find('.poll-state-td span').prop("class");
 				
 				/* 참여 -> 결과창, 불참 -> 참여창 */
-				switch(attend) {
-				case 'poll-state-span-no-attendance' : location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
-				default : location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+				if(attend == 'poll-state-span-no-attendance'){
+					location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+				} else {	
+					location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
 				}
 			});
 			

@@ -9,8 +9,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollPost.css">
 <link rel="shortcut icon" href="#"><!-- favicon 에러 제거용 -->
 
-<script src="/circle/resources/js/poll/jquery.min.js"></script>
-<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
 <title>설문 참여하기</title>
 </head>
 <body>
@@ -198,7 +196,8 @@
 						<div class="question-guide">
 							<c:out value="${post[0].POLL_POST_CONT }"></c:out>
 						</div>
-						<div id=poll-response-form>
+						<form id="poll-form-complete">
+						<div id="poll-response-form">
 							<div class="question-list-container">
 								<ul class="question-list">
 									<c:forEach var="item" items="${post}" varStatus="status">
@@ -218,7 +217,7 @@
 													</li>
 												</c:when>
 											</c:choose>
-											<li class=question-response>
+											<li class="question-response">
 												<span class="question">
 													<span class="seq">
 														<c:out value="${seq}"></c:out>
@@ -282,7 +281,7 @@
 																<li class="etc">
 																	<span class="txt-wrap">
 																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
-																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="checkbox" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
 															</c:when>
 														</c:choose>
 															<label for="${item.POLL_POST_QUST_ANSW_CODE } txt">
@@ -301,8 +300,7 @@
 													<!-- 장문 선택 -->
 														<li>
 															<div class="text-area-wrap">
-																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5">
-																</textarea>
+																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5"></textarea>
 															</div>
 														</li>
 													</c:when>
@@ -345,7 +343,8 @@
 									<span class="txt">임시 저장</span>
 								</a>
 							</div>
-						</div>				
+						</div>	
+						</form>			
 					</article>
 				</div>
 				<div class="poll-reply-container">
@@ -498,40 +497,135 @@
 
 	</div>
 	
+	<script src="/circle/resources/js/poll/jquery.min.js"></script>
+	<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>	
+	
 	<script>
-		/* 클릭한 체크박스에서 최대개수 제한 추출/방지 */
-		function checkLimit(e){
+	/******************************************************* 실행 부분 *****************************************************/
+	$(document).ready(function(){
+		/* 설문 제출버튼 클릭시  */
+		$('.poll-submit-btn').on('click', function(){
+			var convertedData = formDataConvert();
+			dataSubmit(convertedData);
 			
-			/* 추출된 아이디로 선택자 조립 */			
-			var selector = '#' + $(e).prop('id');
+			/* 
+			location.href = "${pageContext.request.contextPath}/poll/my";
+			 */
+		})
+	});
+	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* ajax로 송신 */
+	function dataSubmit(data){
+		
+		var lastData = JSON.stringify(data);
+		
+		console.log(lastData);
+		
+		$.ajax({
+			type		:	'post'
+		   ,traditional	:	true
+		   ,url			:	"${pageContext.request.contextPath}/pollAjax/attendComplete"
+		   ,data		:	lastData
+		   ,dataType	:	'text'
+		   ,contentType	:	"application/json; charset=utf-8;"
+		   ,error		: 	function(request,status,error){
+			   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		   ,success		: 	function(data){
+			   var returnedUrl = data;
+			   console.log(returnedUrl);
+		   }
+		})
+	};
+	
+	/* form 데이터 변수화 */	
+	function formDataConvert(){
+		
+		var formData = new Array();
+		
+		/* 데이터 입력값 검색 */
+		$('ul.question-list .question-response').each(function(index, item){
 			
-			/* 개수제한 추출 */
-			var limit = $(selector).siblings('p').text();
+			var oneData = {};
 			
-			
-			/* 체크박스 변수화 */
-			var name = "input[name=" + $(e).prop('name') + "]";
-			var checkbox = $(name)
-			
-			/* 카운트 변수 초기화 */
-			var count = 0;
-			
-			/* 반복문으로 체크상태 확인 */
-			for(var i = 0; i < checkbox.length; i++	){
-				if(checkbox[i].checked){
-					count ++;
+			/* 점수형일 경우 */
+			if($(item).find('.rank').length > 0 && $(item).find('input[type=radio]:checked').length > 0){
+				var x = $(item).find('input[type=radio]:checked').prop('id');
+				oneData = {"id": x, "content": 'null'}
+				formData.push(oneData);
+			/* 선택형일 경우 */	
+			} else if($(item).find('.answer-option-wrap').length > 0 && $(item).find('input:checked').length > 0){
+				/* 라디오 타입일 경우 */				
+				if($(item).find('input[type=radio]').length > 0){
+					var x =	$(item).find('input[type=radio]:checked').prop('id');	
+					oneData = {"id": x, "content": 'null'}
+					formData.push(oneData);
+				/* 체크 타입일 경우 */
+				} else { 
+					$(item).find('input[type=checkbox]:checked').each(function(innerIndex, innerItem){
+						var x =	$(innerItem).prop('id');	
+						/* 기타일 경우 */
+						if($(innerItem).closest('.etc').length > 0){
+							var z = $(innerItem).siblings('input[type=text]').val();
+							oneData = {"id": x, "content": z}
+							formData.push(oneData);
+						/* 일반 선택지일 경우 */
+						} else {
+							oneData = {"id": x, "content": 'null'}
+							formData.push(oneData);
+						}
+					})
+				}
+			/* 텍스트형일 경우 */
+			} else {
+				/* 장문일 경우 */
+				if($(item).find('textarea').length > 0 && $(item).find('textarea').val().length > 0){
+					var x = $(item).find('textarea').prop('id');
+					var z = $(item).find('textarea').val();
+					oneData = {"id": x, "content": z}
+					formData.push(oneData);
+				/* 단문일 경우 */	
+				} else if($(item).find('input[type=text]').length > 0 && $(item).find('input[type=text]').val().length > 0){
+					var x = $(item).find('input[type=text]').prop('id');
+					var z = $(item).find('input[type=text]').val();
+					oneData = {"id": x, "content": z}
+					formData.push(oneData);
 				}
 			}
-			
-			/* 무제한(0) 일때 카운트 설정 */
-			limit == 0 ? limit = count : limit = limit;
-					
-			/* 최대개수 초과시 경고/체크해제 */
-			if(count > limit){
-				alert("해당질문은 " + limit + "개 까지 선택이 가능합니다");
-				$(selector).prop('checked', false);
+		})
+		return formData;		
+	};
+	/* form submit 기능 */
+	function formSubmit(){
+		$('#poll-form-complete').prop("method", "post").prop('action',"${pageContext.request.contextPath}/poll/postAttendComplete").submit();
+	};
+	
+	
+	/* 클릭한 체크박스에서 최대개수 제한 추출/방지 */
+	function checkLimit(e){
+		/* 추출된 아이디로 선택자 조립 */			
+		var selector = '#' + $(e).prop('id');
+		/* 개수제한 추출 */
+		var limit = $(selector).siblings('p').text();
+		/* 체크박스 변수화 */
+		var name = "input[name=" + $(e).prop('name') + "]";
+		var checkbox = $(name)
+		/* 카운트 변수 초기화 */
+		var count = 0;
+		/* 반복문으로 체크상태 확인 */
+		for(var i = 0; i < checkbox.length; i++	){
+			if(checkbox[i].checked){
+				count ++;
 			}
 		}
+		/* 무제한(0) 일때 카운트 설정 */
+		limit == 0 ? limit = count : limit = limit;
+		/* 최대개수 초과시 경고/체크해제 */
+		if(count > limit){
+			alert("해당질문은 " + limit + "개 까지 선택이 가능합니다");
+			$(selector).prop('checked', false);
+		}
+	};
 	</script>
 
 </body>
