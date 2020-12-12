@@ -17,4 +17,12 @@ public interface EmpInfoRepository {
 	public String checkPwd(Map<String, Object> map);
 	
 	public List<String> compare(EmpInfoAll empInfoAll);
+	
+	public String searchWithCol(Map<String, Object> beforeMap);
+	
+	public String searchWithColDual(Map<String, Object> afterMap);
+
+	public void addChange(Map<String, Object> compareMap);
+	
+	
 }

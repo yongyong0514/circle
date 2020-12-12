@@ -35,7 +35,6 @@
 						<tr>
 							<td rowspan="4" class="photoCell"><img src=""></td>
 							<td class="titleCell">이름
-							${sessionScope.empInfo.emp_info_emp_no }
 								<input type="hidden" name="emp_info_emp_no" value="${sessionScope.empInfo.emp_info_emp_no }">
 							</td>
 							<td class="titleCell">소속</td>
@@ -120,7 +119,7 @@
 									</tr>
 									<tr>
 										<td class="titleCell">주소</td>
-										<td colspan=3"><input name="emp_info_adr" type="text"
+										<td colspan="3"><input name="emp_info_adr" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_adr }'/>"></td>
 										<td class="titleCell">주민등록번호</td>
 										<td><input type="text"

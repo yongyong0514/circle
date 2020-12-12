@@ -38,4 +38,25 @@
 		 where info_mod_hstr_emp_no = #{emp_no}
 	</select>
 	
+	<select id="addChange" parameterType="map">
+		insert into info_mod_hstr
+			 ( info_mod_hstr_ordr
+			 , info_mod_hstr_emp_no
+			 , info_mod_hstr_dat
+			 , info_mod_hstr_col
+			 , info_mod_hstr_befr
+			 , info_mod_hstr_aftr
+			 , info_mod_hstr_mdfr
+		  	 )
+		values
+			 ( inmh_seq.nextval
+			 , #{emp_info_emp_no}
+			 , sysdate
+			 , #{col}
+			 , #{befr}
+			 , #{??????????????}
+			 , #{mdr_emp_no}
+			 )	
+	</select>
+	
 </mapper>

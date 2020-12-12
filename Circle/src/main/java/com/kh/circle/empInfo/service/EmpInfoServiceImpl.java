@@ -1,6 +1,5 @@
 package com.kh.circle.empInfo.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,8 +110,51 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	}
 
 	@Override
-	public List<String> compare(EmpInfoAll empInfoAll) {
-		empInfoRepository.compare(empInfoAll);
+	public List<String> compare(Map<String, Object> inputMap) {
+		//인자 전달용 map
+		Map<String, Object> compareMap = new HashMap<String, Object>();
+
+		//1. 기존 정보에서 변경된 컬럼명 추출
+		// - updatedColumnNameList
+		List<String> ucnList = empInfoRepository.compare((EmpInfoAll) inputMap.get("changeEmpInfoAll"));
+		
+		//2. 리스트 값에 따라 해당하는 컬럼 업데이트
+		//	1) 정보변경이력 테이블에 변경내역 insert
+			EmpInfoAll originEmpInfo = empInfoRepository.empInfoOne(((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+			
+			//컬럼별(반복) insert
+			for(String col : ucnList) {
+				compareMap.put("col", col);
+
+				//변경 전 정보 추출
+				Map<String, Object> beforeMap = new HashMap<String, Object>();
+				beforeMap.put("emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+				beforeMap.put("col", col);
+				
+				String befr = empInfoRepository.searchWithCol(beforeMap);
+				
+				//변경 후 정보 추출
+				Map<String, Object> afterMap = new HashMap<String, Object>();
+				afterMap.put("changeEmpInfoAll", (EmpInfoAll) inputMap.get("changeEmpInfoAll"));
+				afterMap.put("col", col);
+				
+				String aftr = empInfoRepository.searchWithColDual(afterMap);
+
+				compareMap.put("befr", befr);
+				compareMap.put("col", col);
+				compareMap.put("changeEmpInfoAll", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")));
+				compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no"));
+				
+				empInfoRepository.addChange(compareMap);
+			}
+			
+		
+		////2) 해당 값 update
+		
+		
+		
+		
+		
 		
 		return null;
 	}

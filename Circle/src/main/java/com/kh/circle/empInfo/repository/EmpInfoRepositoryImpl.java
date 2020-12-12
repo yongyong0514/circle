@@ -58,14 +58,27 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 		System.out.println("map: " + map);
 		System.out.println();
 		
-		List<String> list = new ArrayList<String>();
+		List<String> ucnlist = new ArrayList<String>();
 
 		for(Map.Entry<String, Object> entry : map.entrySet()) {
-			list.add(entry.getValue().toString());
+			ucnlist.add(entry.getValue().toString());
 		}
 		
-		System.out.println("list: " + list);
-		
-		return null;
+		return ucnlist;
+	}
+	
+	@Override
+	public String searchWithCol(Map<String, Object> beforeMap) {
+		return sqlSession.selectOne("empInfo.searchWithCol", beforeMap);
+	}
+	
+	@Override
+	public String searchWithColDual(Map<String, Object> afterMap) {
+		return sqlSession.selectOne("empInfo.searchWithColDual", afterMap);
+	}
+
+	@Override
+	public void addChange(Map<String, Object> compareMap) {
+		sqlSession.insert("infoModify.addChange", compareMap);
 	}
 }

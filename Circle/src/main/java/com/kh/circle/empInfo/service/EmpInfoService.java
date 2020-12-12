@@ -16,5 +16,5 @@ public interface EmpInfoService {
 	
 	public List<String> updatedColName(EmpInfoAll empInfoAll);
 	
-	public List<String> compare(EmpInfoAll empInfoAll);
+	public List<String> compare(Map<String, Object> inputMap);
 }

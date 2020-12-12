@@ -90,24 +90,27 @@ public class EmpInfoController {
 	}
 	
 	@PostMapping("/editEmpInfo")
-	public String editEmpInfo(@ModelAttribute EmpInfoAll empInfoAll,
+	public String editEmpInfo(@ModelAttribute EmpInfoAll changeEmpInfoAll,
 								@RequestParam("curPwd") String curPwd,
+								HttpSession session,
 								RedirectAttributes att) {
 
-		if(empInfoAll.getChangePwd() != null && !"".equals(empInfoAll.getChangePwd()) ) {
-			empInfoAll.setEmp_info_pwd(empInfoAll.getChangePwd());
+		Map<String, Object> inputMap = new HashMap<String, Object>();
+		
+		//수정자
+		String mdr_emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		inputMap.put("mdr_emp_no", mdr_emp_no);
+		
+		// 비밀번호 변경하는 경우
+		if(changeEmpInfoAll.getChangePwd() != null && !"".equals(changeEmpInfoAll.getChangePwd()) ) {
+			changeEmpInfoAll.setEmp_info_pwd(changeEmpInfoAll.getChangePwd());
 		} else {
-			empInfoAll.setEmp_info_pwd(curPwd);
+			changeEmpInfoAll.setEmp_info_pwd(curPwd);
 		}
-
-		System.out.println("empInfoAll: " + empInfoAll);
+		inputMap.put("changeEmpInfoAll", changeEmpInfoAll);
 		
 		//1. 기존 정보와 변경하려는 정보 비교
-		List<String> updatedColNameList = empInfoService.compare(empInfoAll);
-		
-		
-		//변경요청한 컬럼명 추출
-		List<String> uColNameList = empInfoService.updatedColName(empInfoAll);
+		List<String> updatedColNameList = empInfoService.compare(inputMap);
 		
 		
 		
