@@ -250,12 +250,5 @@ public class SignController {
 		
 		return "sign/signList";
 	}
-	
-	
-// 문서 첫화면
-	@GetMapping("/docuList")
-	public String docuList() {
-		return "document/docuList";
-	}
 
 }

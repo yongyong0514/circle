@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +22,49 @@
 			<div class="contentBar">
 				<jsp:include page="docuHomeBar.jsp" />
 			</div>
-			<div class="homeListBar">
-				<button class="homeListBtn">작성하기</button>
-			</div>			
 			<div class="content">
-				<div class="test">
-				</div>
+			<div class="signHomeListBar">
+				<ul>
+					<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">최근 등록 나의 문서</li>
+					<li><button class="signListBtn3">작성일</button></li>
+					<li><button class="signListBtn1">작성자</button></li>
+					<li><button class="signListBtn0">제목</button></li>
+				</ul>
+			</div>		
+			<div class="docuList">
+				<table id="listArea">
+				<c:forEach var="list" items="${list}">
+					<tr class="result">
+						<td class="textBox0"><%-- <c:out value="${sign.sign_code}"/> --%></td>
+						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
+						<td class="textBox4"><br>날짜<br><br>시간</td>
+						<td class="textBox1">작성자</td>
+						<td class="textBox2">12345제목12345</td>						
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
+			<div class="signHomeListBar">
+				<ul>
+					<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">최근 등록 공용 문서</li>
+					<li><button class="signListBtn3">작성일</button></li>
+					<li><button class="signListBtn1">작성자</button></li>
+					<li><button class="signListBtn0">제목</button></li>
+				</ul>
+			</div>
+			<div class="docuList">
+				<table id="listArea">
+					<tr class="result">
+						<td class="textBox0"><%-- <c:out value="${sign.sign_code}"/> --%></td>
+						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
+						<td class="textBox4"><br>날짜<br><br>시간</td>
+						<td class="textBox1">작성자</td>
+						<td class="textBox2">12345제목12345</td>						
+					</tr>
+				</table>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -46,12 +84,5 @@
     		})
     	});
     </script>
-  	<script>
-  		$( function() {
-   	 		$( "#sortable1, #sortable2" ).sortable({
-      			connectWith: ".connectedSortable"
-    				}).disableSelection();
-  		});
-  </script>
 </body>
 </html>
