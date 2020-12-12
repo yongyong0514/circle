@@ -29,14 +29,15 @@
 				<br><br>
 				<form action="${pageContext.request.contextPath }/empInfo/allInfoList" method="GET">
 					<span class="totalNumber">전체 <c:out value="${map.pInfo.total }"/>명</span>
+					&nbsp;
+					<input type="button" class="insertInfo" value="인사정보 추가"/>
 					<br><br>
 					<input type="text" name="empNo" placeholder="사원번호" value="${empNo}">
 					<input type="text" name="name" placeholder="이름" value="${name}">
 					<input type="text" name="deptName" placeholder="부서명" value="${deptName}">
 					&nbsp;
 					<input type="submit" value="검색하기">&nbsp;
-					<input type="button" class="insertInfo" value="인사정보 추가"/>
-					<select name="perPage" class="perPage">
+					<select name="perPage" class="perPage" onchange="movePerPage()">
 						<option value="10">10</option>
 						<option value="20">20</option>
 						<option value="50">50</option>

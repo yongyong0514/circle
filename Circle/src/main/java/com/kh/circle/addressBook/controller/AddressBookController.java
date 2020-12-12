@@ -46,8 +46,6 @@ public class AddressBookController {
 									.index(index)
 									.build();
 
-		System.out.println("addr pInfo: " + pInfo);
-		
 		// 전체 리스트 반환
 		// 페이징 처리
 		Map<String, Object> map = addressBookService.pagingEmp(pInfo);

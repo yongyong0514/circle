@@ -13,7 +13,6 @@ import com.kh.circle.empInfo.entity.EmpInfoAll;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Repository
 public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	@Autowired
@@ -32,11 +31,7 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	@Override
 	public int total(PagingInfo pInfo) {
 		
-		log.info("pInfo : " + pInfo);
-		
 		int total = sqlSession.selectOne("empInfo.total", pInfo);
-
-		log.info("total: " + total);
 		
 		return total;
 	}
@@ -45,8 +40,6 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	public List<EmpInfoAll> empInfoList(PagingInfo pInfo) {
 		
 		List<EmpInfoAll> empList = sqlSession.selectList("empInfo.empList", pInfo);
-		
-		log.info("empList: " + empList);
 		
 		return empList;
 	}

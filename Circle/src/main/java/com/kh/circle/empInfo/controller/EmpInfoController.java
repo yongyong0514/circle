@@ -57,9 +57,6 @@ public class EmpInfoController {
 									.deptName(deptName)
 									.build();
 		
-		
-		System.out.println("controller pInfo: " + pInfo);
-		
 		Map<String, Object> map = empInfoService.empInfoList(pInfo);
 		
 		model.addAttribute("map", map);
