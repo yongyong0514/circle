@@ -15,4 +15,6 @@ public interface EmpInfoRepository {
 	public List<EmpInfoAll> empInfoList(PagingInfo pInfo);
 	
 	public String checkPwd(Map<String, Object> map);
+	
+	public List<String> compare(EmpInfoAll empInfoAll);
 }

@@ -103,8 +103,8 @@ td {
 }
 
 .detailInfo li{
-	padding-left: 2rem;
-	padding-right: 2rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 }
 
 .detailInfo table{
@@ -130,7 +130,7 @@ td {
 }
 
 .detailCertificationTable tr td,
-.detailPersonalInfoTable tr td
+.detailPersonalInfoTable tr td,
 .detailCareerTable tr td,
 .detailRewordDisciplineTable tr td,
 .changeList tr td{
@@ -159,6 +159,13 @@ td {
 .content input[type=text],
 .content input[type=password]{
 	width: calc(100% - 1rem);
+}
+
+.infoTableDiv {
+	box-sizing: content-box;
+	max-height: 300px;
+	overflow: auto;
+	padding: 0.5rem;	
 }
 
 .more{

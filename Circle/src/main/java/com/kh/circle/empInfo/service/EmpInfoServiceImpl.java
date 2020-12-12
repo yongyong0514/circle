@@ -1,5 +1,6 @@
 package com.kh.circle.empInfo.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.empInfo.entity.CareerInfo;
 import com.kh.circle.empInfo.entity.CertificateInfo;
@@ -108,6 +108,19 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 			return "false";
 		}
 		
+	}
+
+	@Override
+	public List<String> compare(EmpInfoAll empInfoAll) {
+		empInfoRepository.compare(empInfoAll);
+		
+		return null;
+	}
+
+	@Override
+	public List<String> updatedColName(EmpInfoAll empInfoAll) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

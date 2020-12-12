@@ -130,4 +130,24 @@
 		 where emp_info_emp_no = #{emp_no}
 	</select>
 	
+	<select id="compare" parameterType="empInfoAll" resultType="map">
+		select decode(emp_info_etel, #{emp_info_etel}, null, 'emp_info_etel') as "emp_info_etel"
+			 , decode(emp_info_mtel, #{emp_info_mtel}, null, 'emp_info_mtel') as "emp_info_mtel"
+			 , decode(emp_info_pwd, #{emp_info_pwd}, null, 'emp_info_pwd') as "emp_info_pwd"
+			 , decode(emp_info_mrrg, #{emp_info_mrrg}, null, 'emp_info_mrrg') as "emp_info_mrrg"
+			 , decode(emp_info_vetr_no, #{emp_info_vetr_no}, null, 'emp_info_vetr_no') as "emp_info_vetr_no"
+			 , decode(emp_info_vetr_rel, #{emp_info_vetr_rel}, null, 'emp_info_vetr_rel') as "emp_info_vetr_rel"
+			 , decode(emp_info_impd_type, #{emp_info_impd_type}, null, 'emp_info_impd_type') as "emp_info_impd_type"
+			 , decode(emp_info_impd_levl, #{emp_info_impd_levl}, null, 'emp_info_impd_levl') as "emp_info_impd_levl"
+			 , decode(emp_info_mils, #{emp_info_mils}, null, 'emp_info_mils') as "emp_info_mils"
+			 , decode(emp_info_adr, #{emp_info_adr}, null, 'emp_info_adr') as "emp_info_adr"
+			 , decode(to_char(emp_info_edat, 'yyyy-MM-dd'), to_char(#{emp_info_edat}, 'yyyy-MM-dd'), null, 'emp_info_edat') as "emp_info_edat"
+			 , decode(emp_info_emrg_tel, #{emp_info_emrg_tel}, null, 'emp_info_emrg_tel') as "emp_info_emrg_tel"
+			 , decode(emp_info_bank_name, #{emp_info_bank_name}, null, 'emp_info_bank_name') as "emp_info_bank_name"
+			 , decode(emp_info_acnt_name, #{emp_info_acnt_name}, null, 'emp_info_acnt_name') as "emp_info_acnt_name"
+			 , decode(emp_info_acnt_no, #{emp_info_acnt_no}, null, 'emp_info_acnt_no') as "emp_info_acnt_no"
+		  from emp_info
+		 where emp_info_emp_no = #{emp_info_emp_no}
+	</select>
+	
 </mapper>

@@ -23,7 +23,6 @@
                                                 , 'EMP_INFO_IMPD_LEVL', '장애급수'
                                                 , 'EMP_INFO_MILS', '병역여부'
                                                 , 'EMP_INFO_ADR', '주소'
-                                                , 'EMP_INFO_SDAT', '입사일'
                                                 , 'EMP_INFO_EDAT', '퇴사일'
                                                 , 'EMP_INFO_EMRG_TEL', '비상연락처'
                                                 , 'EMP_INFO_BANK_NAME', '은행이름'
@@ -38,4 +37,5 @@
 		 inner join emp_info EI on (IMH.info_mod_hstr_mdfr = EI.emp_info_emp_no)
 		 where info_mod_hstr_emp_no = #{emp_no}
 	</select>
+	
 </mapper>

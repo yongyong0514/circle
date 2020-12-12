@@ -29,12 +29,15 @@
 				<h1>근태현황(메뉴명)</h1>
 				<br> <br>
 				<!-- 정보 수정용 form 시작 -->
-				<form action="#" method="post">
+				<form action="${pageContext.request.contextPath}/empInfo/editEmpInfo" method="post">
 					<!-- 대표정보 시작 -->
 					<table class="infoMainTable">
 						<tr>
 							<td rowspan="4" class="photoCell"><img src=""></td>
-							<td class="titleCell">이름</td>
+							<td class="titleCell">이름
+							${sessionScope.empInfo.emp_info_emp_no }
+								<input type="hidden" name="emp_info_emp_no" value="${sessionScope.empInfo.emp_info_emp_no }">
+							</td>
 							<td class="titleCell">소속</td>
 							<td><input type="text"
 								value="<c:out value='${map.empInfoOne.dept_info_name }'/>"
@@ -53,15 +56,15 @@
 								value="<c:out value='${map.empInfoOne.emp_info_emp_no }'/>"
 								readonly></td>
 							<td class="titleCell">내선번호</td>
-							<td><input type="text"
+							<td><input name="emp_info_etel" type="text"
 								value="<c:out value='${map.empInfoOne.emp_info_etel }'/>"></td>
 						</tr>
 						<tr>
 							<td class="titleCell">이메일</td>
-							<td><input type="text"
+							<td><input name="emp_info_email" type="text"
 								value="<c:out value='${map.empInfoOne.emp_info_email }'/>"></td>
 							<td class="titleCell">휴대번호</td>
-							<td><input type="text"
+							<td><input name="emp_info_mtel" type="text"
 								value="<c:out value='${map.empInfoOne.emp_info_mtel }'/>"></td>
 						</tr>
 						<tr>
@@ -93,31 +96,31 @@
 								<table class="detailEmpInfoTable">
 									<tr>
 										<td class="titleCell">결혼여부</td>
-										<td><input type="text"
+										<td><input name="emp_info_mrrg" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_mrrg }'/>"></td>
 										<td class="titleCell">보훈번호</td>
-										<td><input type="text"
+										<td><input name="emp_info_vetr_no" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_vetr_no }'/>"
 											readonly></td>
 										<td class="titleCell">관계</td>
-										<td><input type="text"
+										<td><input name="emp_info_vetr_rel" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_vetr_rel }'/>"
 											readonly></td>
 									</tr>
 									<tr>
 										<td class="titleCell">장애종류</td>
-										<td><input type="text"
+										<td><input name="emp_info_impd_type" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_impd_type }'/>"></td>
 										<td class="titleCell">장애급수</td>
-										<td><input type="text"
+										<td><input name="emp_info_impd_levl" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_impd_levl }'/>"></td>
 										<td class="titleCell">병역여부</td>
-										<td><input type="text"
+										<td><input name="emp_info_mils" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_mils }'/>"></td>
 									</tr>
 									<tr>
 										<td class="titleCell">주소</td>
-										<td colspan=3"><input type="text"
+										<td colspan=3"><input name="emp_info_adr" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_adr }'/>"></td>
 										<td class="titleCell">주민등록번호</td>
 										<td><input type="text"
@@ -138,18 +141,18 @@
 											value="<c:out value='${map.empInfoOne.emp_info_edat }'/>"
 											readonly></td>
 										<td class="titleCell">비상연락처</td>
-										<td><input type="text"
+										<td><input name="emp_info_emrg_tel" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_emrg_tel }'/>"></td>
 									</tr>
 									<tr>
 										<td class="titleCell">은행이름</td>
-										<td><input type="text"
+										<td><input name="emp_info_bank_name" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_bank_name }'/>"></td>
 										<td class="titleCell">예금주명</td>
-										<td><input type="text"
+										<td><input name="emp_info_acnt_name" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_acnt_name }'/>"></td>
 										<td class="titleCell">계좌번호</td>
-										<td><input type="text"
+										<td><input name="emp_info_acnt_no" type="text"
 											value="<c:out value='${map.empInfoOne.emp_info_acnt_no }'/>"></td>
 									</tr>
 								</table>
@@ -159,108 +162,122 @@
 							<br> <br>
 							<div class="more hideInfo">
 								<ul>
-									<li><span>자격정보</span>
-										<span class="xSmallInfo">(새로운 값을 입력한 뒤 상단의 "수정하기" 버튼을 클릭하세요.)</span>
-										<table class="detailCertificationTable">
-											<tr>
-												<th class="titleCell">분류</th>
-												<th class="titleCell">자격명</th>
-												<th class="titleCell">자격번호</th>
-												<th class="titleCell">발급일</th>
-												<th class="titleCell">등급/점수</th>
-												<th class="titleCell">발급기관</th>
-												<th class="titleCell">만료일</th>
-												<th class="titleCell">비고</th>
-											</tr>
-											<!-- 입력부분 시작 -->
-											<tr>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_type"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_name"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_no"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_sdat"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_levl"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_inst"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_edat"></td>
-												<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_rm"></td>
-											</tr>
-											<!-- 입력부분 끝 -->
-											<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
+									<li>
+										<div class="infoTableDiv">
+											<span>자격정보</span>
+											<span class="xSmallInfo">(새로운 값을 입력한 뒤 상단의 "수정하기" 버튼을 클릭하세요.)</span>
+											<table class="detailCertificationTable">
 												<tr>
-													<td><c:out value="${CertificateInfo.crtf_info_type }" /></td>
-													<td><c:out
-															value="${CertificateInfo.crtf_info_crtf_name }" /></td>
-													<td><c:out value="${CertificateInfo.crtf_info_crtf_no }" /></td>
-													<td><c:out value="${CertificateInfo.crtf_info_sdat }" /></td>
-													<td><c:out
-															value="${CertificateInfo.crtf_info_crtf_levl }" /></td>
-													<td><c:out value="${CertificateInfo.crtf_info_inst }" /></td>
-													<td><c:out value="${CertificateInfo.crtf_info_edat }" /></td>
-													<td><c:out value="${CertificateInfo.crtf_info_rm }" /></td>
+													<th class="titleCell">분류</th>
+													<th class="titleCell">자격명</th>
+													<th class="titleCell">자격번호</th>
+													<th class="titleCell">발급일</th>
+													<th class="titleCell">등급/점수</th>
+													<th class="titleCell">발급기관</th>
+													<th class="titleCell">만료일</th>
+													<th class="titleCell">비고</th>
 												</tr>
-											</c:forEach>
-										</table></li>
-									<br>
-									<li><span>경력이력</span>
-										<table class="detailCareerTable">
-											<col width="10%">
-											<col width="10%">
-											<col width="10%">
-											<col width="10%">
-											<col width="15%">
-											<col width="30%">
-											<col width="15%">
-											<tr>
-												<th class="titleCell">시작일</th>
-												<th class="titleCell">종료일</th>
-												<th class="titleCell">부서명</th>
-												<th class="titleCell">직위/직책명</th>
-												<th class="titleCell">근속기간</th>
-												<th class="titleCell">담당업무</th>
-												<th class="titleCell rm">비고</th>
-											</tr>
-											<c:forEach var="careerInfo" items="${map.careerInfoList}">
+												<!-- 입력부분 시작 -->
 												<tr>
-													<td><c:out value="${careerInfo.carr_hstr_sdat}" /></td>
-													<td><c:out value="${careerInfo.carr_hstr_edat}" /></td>
-													<td><c:out value="${careerInfo.dept_info_name}" /></td>
-													<td><c:out value="${careerInfo.job_info_name}" /></td>
-													<td><c:if test="${!empty careerInfo.year_term }">
-															<c:out value="${careerInfo.year_term}" />
-															<span>년 </span>
-														</c:if> <c:out value="${careerInfo.month_term}" /> <span>
-															개월</span></td>
-													<td><c:out value="${careerInfo.carr_hstr_job_type}" /></td>
-													<td><c:out value="${careerInfo.carr_hstr_rm}" /></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_type"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_name"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_no"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_sdat"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_levl"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_inst"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_edat"></td>
+													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_rm"></td>
 												</tr>
-											</c:forEach>
-										</table></li>
+												<!-- 입력부분 끝 -->
+												<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
+													<tr>
+														<td><c:out value="${CertificateInfo.crtf_info_type }" /></td>
+														<td><c:out
+																value="${CertificateInfo.crtf_info_crtf_name }" /></td>
+														<td><c:out value="${CertificateInfo.crtf_info_crtf_no }" /></td>
+														<td><c:out value="${CertificateInfo.crtf_info_sdat }" /></td>
+														<td><c:out
+																value="${CertificateInfo.crtf_info_crtf_levl }" /></td>
+														<td><c:out value="${CertificateInfo.crtf_info_inst }" /></td>
+														<td><c:out value="${CertificateInfo.crtf_info_edat }" /></td>
+														<td><c:out value="${CertificateInfo.crtf_info_rm }" /></td>
+													</tr>
+												</c:forEach>
+											</table>
+										</div>
+									</li>
 									<br>
-									<li><span>포상/징계이력</span>
-										<table class="detailRewordDisciplineTable">
-											<col width="15%">
-											<col width="15%">
-											<col width="40%">
-											<col width="15%">
-											<col width="15%">
-											<tr>
-												<th class="titleCell">일자</th>
-												<th class="titleCell">구분</th>
-												<th class="titleCell">내용</th>
-												<th class="titleCell">사유</th>
-												<th class="titleCell">비고</th>
-											</tr>
-											<c:forEach var="RewardDiscipline" items="${map.rdInfoList }">
+									<li>
+										<div class="infoTableDiv">
+											<span>경력이력</span>
+											<table class="detailCareerTable">
+												<col width="10%">
+												<col width="10%">
+												<col width="10%">
+												<col width="10%">
+												<col width="15%">
+												<col width="30%">
+												<col width="15%">
 												<tr>
-													<td><c:out value="${RewardDiscipline.rwdp_hstr_dat }" /></td>
-													<td><c:out value="${RewardDiscipline.rwdp_hstr_type }" /></td>
-													<td><c:out value="${RewardDiscipline.rwdp_hstr_cont }" /></td>
-													<td><c:out value="${RewardDiscipline.rwdp_hstr_resn }" /></td>
-													<td><c:out value="${RewardDiscipline.rwdp_hstr_rm }" /></td>
+													<th class="titleCell">시작일</th>
+													<th class="titleCell">종료일</th>
+													<th class="titleCell">부서명</th>
+													<th class="titleCell">직위/직책명</th>
+													<th class="titleCell">근속기간</th>
+													<th class="titleCell">담당업무</th>
+													<th class="titleCell rm">비고</th>
 												</tr>
-											</c:forEach>
-										</table></li>
+												<c:forEach var="careerInfo" items="${map.careerInfoList}">
+													<tr>
+														<td><c:out value="${careerInfo.carr_hstr_sdat}" /></td>
+														<td><c:out value="${careerInfo.carr_hstr_edat}" /></td>
+														<td><c:out value="${careerInfo.dept_info_name}" /></td>
+														<td><c:out value="${careerInfo.job_info_name}" /></td>
+														<td><c:if test="${!empty careerInfo.year_term }">
+																<c:out value="${careerInfo.year_term}" />
+																<span>년 </span>
+															</c:if> <c:out value="${careerInfo.month_term}" /> <span>
+																개월</span></td>
+														<td><c:out value="${careerInfo.carr_hstr_job_type}" /></td>
+														<td><c:out value="${careerInfo.carr_hstr_rm}" /></td>
+													</tr>
+												</c:forEach>
+											</table>
+										</div>
+									</li>
 									<br>
-									<li><span>인사평가이력</span>
+									<li>
+										<div class="infoTableDiv">
+											<span>포상/징계이력</span>
+											<table class="detailRewordDisciplineTable">
+												<col width="15%">
+												<col width="15%">
+												<col width="40%">
+												<col width="15%">
+												<col width="15%">
+												<tr>
+													<th class="titleCell">일자</th>
+													<th class="titleCell">구분</th>
+													<th class="titleCell">내용</th>
+													<th class="titleCell">사유</th>
+													<th class="titleCell">비고</th>
+												</tr>
+												<c:forEach var="RewardDiscipline" items="${map.rdInfoList }">
+													<tr>
+														<td><c:out value="${RewardDiscipline.rwdp_hstr_dat }" /></td>
+														<td><c:out value="${RewardDiscipline.rwdp_hstr_type }" /></td>
+														<td><c:out value="${RewardDiscipline.rwdp_hstr_cont }" /></td>
+														<td><c:out value="${RewardDiscipline.rwdp_hstr_resn }" /></td>
+														<td><c:out value="${RewardDiscipline.rwdp_hstr_rm }" /></td>
+													</tr>
+												</c:forEach>
+											</table>
+										</div>
+									</li>
+									<br>
+									<li>
+									<div class="infoTableDiv">
+										<span>인사평가이력</span>
 										<table class="detailRewordDisciplineTable">
 											<col width="15%">
 											<col width="15%">
@@ -286,35 +303,50 @@
 													<td><c:out value="${HREvaluation.hrev_info_rm }" /></td>
 												</tr>
 											</c:forEach>
-										</table></li>
-									<br>
-									<li><span>정보변경이력</span>
-										<table class="changeListTable">
-											<col width="15%">
-											<col width="15%">
-											<col width="20%">
-											<col width="20%">
-											<col width="15%">
-											<col width="15%">
-											<tr>
-												<th class="titleCell">일자</th>
-												<th class="titleCell">항목</th>
-												<th class="titleCell">변경 전</th>
-												<th class="titleCell">변경 후</th>
-												<th class="titleCell">수정자</th>
-												<th class="titleCell">변경사유</th>
-											</tr>
-											<c:forEach var="InfoModify" items="${map.infoModList }">
-												<tr>
-													<td><c:out value="${InfoModify.info_mod_hstr_dat }" /></td>
-													<td><c:out value="${InfoModify.info_mod_hstr_col_name }" /></td>
-													<td><c:out value="${InfoModify.info_mod_hstr_befr }" /></td>
-													<td><c:out value="${InfoModify.info_mod_hstr_aftr }" /></td>
-													<td><c:out value="${InfoModify.emp_info_mdfr_name }" /></td>
-													<td><c:out value="${InfoModify.info_mod_hstr_resn }" /></td>
-												</tr>
-											</c:forEach>
 										</table>
+									</div>
+									</li>
+									<br>
+									<li>
+									<div class="infoTableDiv">
+										<span>정보변경이력</span>
+											<table class="changeListTable">
+												<col width="15%">
+												<col width="20%">
+												<col width="25%">
+												<col width="25%">
+												<!-- 
+													제외
+													<col width="15%">
+												 -->
+												<col width="15%">
+												<tr>
+													<th class="titleCell">일자</th>
+													<th class="titleCell">항목</th>
+													<th class="titleCell">변경 전</th>
+													<th class="titleCell">변경 후</th>
+													<th class="titleCell">수정자</th>
+													
+													<!-- 
+														제외
+														<th class="titleCell">변경사유</th>
+													 -->
+												</tr>
+												<c:forEach var="InfoModify" items="${map.infoModList }">
+													<tr>
+														<td><c:out value="${InfoModify.info_mod_hstr_dat }" /></td>
+														<td><c:out value="${InfoModify.info_mod_hstr_col_name }" /></td>
+														<td><c:out value="${InfoModify.info_mod_hstr_befr }" /></td>
+														<td><c:out value="${InfoModify.info_mod_hstr_aftr }" /></td>
+														<td><c:out value="${InfoModify.emp_info_mdfr_name }" /></td>
+														<!-- 
+															제외
+															<td><c:out value="${InfoModify.info_mod_hstr_resn }" /></td>
+														 -->
+													</tr>
+												</c:forEach>
+											</table>
+										</div>
 									</li>
 								</ul>
 							</div>
