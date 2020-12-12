@@ -77,4 +77,12 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 		return map;
 	}
 
+	@Override
+	public List<EmpInfoAll> empInfoList(Map<String, Object> inputMap) {
+
+		List<EmpInfoAll> empList = empInfoRepository.empInfoList(inputMap);
+		
+		return empList;
+	}
+
 }

@@ -128,17 +128,17 @@
 							   EI.indexNum = #{index}
 							</if>
 						 
-						 	<if test="name != ''">
+						 	<if test="name != '' || empNo != null">
 						 		AND
 						 		EI.emp_info_name like '%' || #{name} || '%'
 						 	</if>
 						 	
-						 	<if test="email != ''">
+						 	<if test="email != '' || empNo != null">
 						 		AND
 						 		upper(EI.emp_info_email) like '%' || upper(#{email}) || '%'
 						 	</if>
 						 	
-						 	<if test="tel != ''">
+						 	<if test="tel != '' || empNo != null">
 						 		AND
 						 		EI.emp_info_mtel like '%' || #{tel} || '%'
 						 	</if>

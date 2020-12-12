@@ -83,7 +83,7 @@
 	<!-- Root Logger -->
 	<!-- 최상위 출력 설정 : logger에서 설정된 내용을 제외하고 나머지가 모두 적용 -->
 	<root>
-		<priority value="info"/> <!-- 개발할 때는 debug, 배포할 때는 info -->
+		<priority value="debug"/> <!-- 개발할 때는 debug, 배포할 때는 info -->
 		<appender-ref ref="console" />
 <!-- 	<appender-ref ref="daily" /> -->
 <!-- 	<appender-ref ref="txt" /> -->

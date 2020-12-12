@@ -41,6 +41,60 @@
 		  and EI.emp_info_emp_no = #{emp_no}
 	</select>
 	
-	
+	<select id="empList" parameterType="map" resultType="empInfoAll">
+		select emp_info_emp_no
+			 , emp_info_name
+			 , dept_info_name
+			 , job_info_name
+			 , emp_info_email
+			 , emp_info_etel
+		  from (select rNum
+					 , emp_info_emp_no
+					 , emp_info_name
+					 , dept_info_name
+					 , job_info_name
+					 , emp_info_email
+					 , emp_info_etel
+				  from (select rownum as rNum
+							 , emp_info_emp_no
+							 , emp_info_name
+							 , dept_info_name
+							 , job_info_name
+							 , emp_info_email
+							 , emp_info_etel
+						  from (select EI.emp_info_emp_no
+									 , EI.emp_info_name
+									 , DI.dept_info_name
+									 , JI.job_info_name
+									 , EI.emp_info_email
+									 , EI.emp_info_etel
+									 , EI.emp_info_edat
+								  from emp_info EI
+								 inner join dept_info DI on(EI.emp_info_dept_code = DI.dept_info_code)
+								 inner join job_info JI on(EI.emp_info_job_code = JI.job_info_code)
+							   <where>
+								 	   EI.emp_info_edat is null
+ 							 	 	<if test="empNo != '' || empNo != null">
+								 		AND
+								 		EI.emp_info_emp_no = #{empNo}
+								 	</if>
+ 						
+								 	<if test="name != '' || empNo != null">
+								 		AND
+								 		EI.emp_info_name like '%' || #{name} || '%'
+								 	</if>
+								 	
+								 	<if test="deptName != '' || empNo != null">
+								 		AND
+										DI.dept_info_name like '%' || #{deptName} || '%'
+								 	</if>
+							  </where>
+							  	 order by EI.emp_info_emp_no
+						  	   )
+				  	   )
+				 where rNum <![CDATA[<=]]> (#{nowPage} * #{perPage})
+		  	   )
+		 where rNum >= (#{nowPage} * #{perPage} - #{perPage} + 1)
+	</select>
 	
 </mapper>
