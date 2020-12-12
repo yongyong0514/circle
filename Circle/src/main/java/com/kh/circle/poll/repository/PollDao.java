@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.kh.circle.poll.entity.Pagination;
 import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 
 public interface PollDao {
 
@@ -28,7 +29,7 @@ public interface PollDao {
 
 	List<HashMap<String, String>> userInfo(String empNo);
 
-	void insertPoll(PreInputData temp, HashMap<String, Object> questions);
+	void insertPoll(PreInputData temp, List<Question> questions);
 
 
 

@@ -2,7 +2,10 @@ package com.kh.circle.poll.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.poll.entity.Pagination;
 import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -93,7 +97,7 @@ public class PollDaoImpl implements PollDao{
 	}
 	
 	@Override
-	public void insertPoll(PreInputData temp, HashMap<String, Object> questions) {
+	public void insertPoll(PreInputData temp, List<Question> questions) {
 		//입력할 시퀀스 추출
 		String sequence = sqlSession.selectOne("poll.sequence");
 		//시퀀스 정보 입력
@@ -106,7 +110,7 @@ public class PollDaoImpl implements PollDao{
 			String userDept = sqlSession.selectOne("poll.findDept", temp);
 			List<String> deptMember = new ArrayList<>();
 			//부서 구성원 추출
-			if(temp.getSubDept().toString().equals("Y")) {
+			if(temp.getSubDept() != null && temp.getSubDept().toString().equals("Y")) {
 				deptMember = sqlSession.selectList("poll.findWholeDeptMember", userDept);
 			} else {
 				deptMember = sqlSession.selectList("poll.findDeptMember", userDept);
@@ -124,11 +128,53 @@ public class PollDaoImpl implements PollDao{
 			sqlSession.insert("poll.insertRefer", temp);
 		}
 		
-		//log.info(questions.get("seq1").);
+		
+		
 		
 		//문항정보 입력
-		sqlSession.insert("poll.insertQuestion", questions);
-		
+		for (Question question : questions) {
+			//셀렉트형일때
+			if(question.getType().equals("select")) {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertSelectQuestion", question);
+				//문항 선택지 입력
+				sqlSession.insert("poll.insertSelectSelection", question);
+				
+			//점수형일때
+			} else if(question.getType().equals("score")) {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertScoreQuestion", question);
+				//문항 선택지 입력
+				sqlSession.insert("poll.insertScoreSelection",question);
+			//텍스트형일때
+			} else {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertTextQuestion", question);
+				//문항 질문 입력
+				sqlSession.insert("poll.insertTextSelection", question);
+			}
+		}
 	}
 
 

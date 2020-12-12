@@ -1,5 +1,6 @@
 package com.kh.circle.poll.entity;
 
+import java.util.HashMap;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -14,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class Question {
 	private int seq ,score, pluralMaximum;
 	private String title, necessary, type, content, etcContent,
-				   selectType, checkLowerType;
-	private List<SelectContent> selectContent;
+				   selectType, checkLowerType, popn, popq;
+	private List<SelectContents> selectContents;
 }

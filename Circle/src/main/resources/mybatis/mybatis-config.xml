@@ -49,6 +49,8 @@
 
 		<typeAlias type="com.kh.circle.poll.entity.Pagination" alias="pagination"/>
 		<typeAlias type="com.kh.circle.poll.entity.PreInputData" alias="preInputData"/>
+		<typeAlias type="com.kh.circle.poll.entity.Question" alias="question"/>
+		<typeAlias type="com.kh.circle.poll.entity.SelectContents" alias="selectContents"/>
 
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>

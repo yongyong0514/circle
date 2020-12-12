@@ -1,7 +1,5 @@
 package com.kh.circle.poll.entity;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SelectContent {
-	private int subSeq, content, checkType;
+public class AttendedServeyMember {
+	private String id, content;
 }

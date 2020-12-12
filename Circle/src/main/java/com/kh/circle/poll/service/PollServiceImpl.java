@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.circle.poll.entity.Pagination;
 import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 import com.kh.circle.poll.repository.PollDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -94,7 +95,7 @@ public class PollServiceImpl implements PollService{
 		return pollDao.userInfo(empNo);
 	}
 	@Override
-	public void insertPoll(PreInputData temp, HashMap<String, Object> questions) {
+	public void insertPoll(PreInputData temp, List<Question> questions) {
 		pollDao.insertPoll(temp, questions);
 	}
 
