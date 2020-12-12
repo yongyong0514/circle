@@ -1,7 +1,5 @@
 package com.kh.circle.empInfo.controller;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.circle.empInfo.entity.EmpInfoAll;
+import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.empInfo.service.EmpInfoService;
 import com.kh.circle.login.entity.EmpInfo;
 
@@ -50,18 +48,24 @@ public class EmpInfoController {
 								@RequestParam(value="deptName", required=false) String deptName,
 								Model model) {
 		
-		//입력값 전달용 맵
-		Map<String, Object> inputMap = new HashMap<String, Object>();
+		//입력값 전달 객체
+		PagingInfo pInfo = PagingInfo.builder()
+									.nowPage(nowPage)
+									.perPage(perPage)
+									.empNo(empNo)
+									.name(name)
+									.deptName(deptName)
+									.build();
 		
-		inputMap.put("nowPage", nowPage);
-		inputMap.put("perPage", perPage);
-		inputMap.put("empNo", empNo);
-		inputMap.put("name", name);
-		inputMap.put("deptName", deptName);
 		
-		List<EmpInfoAll> empList = empInfoService.empInfoList(inputMap);
+		System.out.println("controller pInfo: " + pInfo);
 		
-		model.addAttribute("empList", empList);
+		Map<String, Object> map = empInfoService.empInfoList(pInfo);
+		
+		model.addAttribute("map", map);
+		model.addAttribute("empNo", empNo);
+		model.addAttribute("name", name);
+		model.addAttribute("deptName", deptName);
 		
 		return "attendance/allInfoList";
 	}

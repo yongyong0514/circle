@@ -41,7 +41,34 @@
 		  and EI.emp_info_emp_no = #{emp_no}
 	</select>
 	
-	<select id="empList" parameterType="map" resultType="empInfoAll">
+	<select id="total" parameterType="pagingInfo" resultType="int">
+		select count(*)
+		  from emp_info EI
+		 inner join dept_info DI on(EI.emp_info_dept_code = DI.dept_info_code)
+		 inner join job_info JI on(EI.emp_info_job_code = JI.job_info_code)
+	   <where>
+		 	   EI.emp_info_edat is null
+			<if test="empNo !=null and !empNo.equals('')">
+				AND
+				EI.emp_info_emp_no like '%' || #{empNo} || '%'
+			</if>
+		 	 	
+			<if test="name !=null and !name.equals('')">
+		 		AND
+		 		EI.emp_info_name like '%' || #{name} || '%'
+		 	</if>
+		 	
+			<if test="deptName !=null and !deptName.equals('')">
+		 		AND
+				DI.dept_info_name like '%' || #{deptName} || '%'
+		 	</if>
+	  </where>
+	  	 order by EI.emp_info_emp_no
+	</select>
+	
+	
+	
+	<select id="empList" parameterType="pagingInfo" resultType="empInfoAll">
 		select emp_info_emp_no
 			 , emp_info_name
 			 , dept_info_name
@@ -74,17 +101,17 @@
 								 inner join job_info JI on(EI.emp_info_job_code = JI.job_info_code)
 							   <where>
 								 	   EI.emp_info_edat is null
-									<if test="empNo != null">
+									<if test="empNo !=null and !empNo.equals('')">
 										AND
-										EI.emp_info_emp_no = #{empNo}
+										EI.emp_info_emp_no like '%' || #{empNo} || '%'
 									</if>
  							 	 	
-								 	<if test="name != null">
+								 	<if test="name !=null and !name.equals('')">
 								 		AND
 								 		EI.emp_info_name like '%' || #{name} || '%'
 								 	</if>
 								 	
-								 	<if test="deptName != null">
+								 	<if test="deptName !=null and !deptName.equals('')">
 								 		AND
 										DI.dept_info_name like '%' || #{deptName} || '%'
 								 	</if>

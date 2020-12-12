@@ -37,9 +37,17 @@ public class AddressBookController {
 			@RequestParam(value = "tel", required = false) String tel,
 			@RequestParam(value = "index", defaultValue = "0") int index, Model model) {
 
-		PagingInfo pInfo = PagingInfo.builder().nowPage(nowPage).perPage(perPage).name(name).email(email).tel(tel)
-				.index(index).build();
+		PagingInfo pInfo = PagingInfo.builder()
+									.nowPage(nowPage)
+									.perPage(perPage)
+									.name(name)
+									.email(email)
+									.tel(tel)
+									.index(index)
+									.build();
 
+		System.out.println("addr pInfo: " + pInfo);
+		
 		// 전체 리스트 반환
 		// 페이징 처리
 		Map<String, Object> map = addressBookService.pagingEmp(pInfo);
@@ -64,11 +72,4 @@ public class AddressBookController {
 
 		return "addressBook/detail";
 	}
-
-
-//	 @GetMapping("/detail") public String detail(@ModelAttribute EmpInfoAll empInfo, Model model) {
-//	 
-//	 model.addAttribute("empInfo", empInfo);
-//	 
-//	 return "addressBook/detail"; }
 }

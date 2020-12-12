@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.circle.addressBook.entity.PagingInfo;
+import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.empInfo.entity.CareerInfo;
 import com.kh.circle.empInfo.entity.CertificateInfo;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
@@ -78,11 +80,22 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	}
 
 	@Override
-	public List<EmpInfoAll> empInfoList(Map<String, Object> inputMap) {
-
-		List<EmpInfoAll> empList = empInfoRepository.empInfoList(inputMap);
+	public Map<String, Object> empInfoList(PagingInfo pInfo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		return empList;
+		// 1. pagingInfo 객체 완성
+		pInfo.setPerGroup(5);
+		pInfo.setTotal(empInfoRepository.total(pInfo));
+		pInfo.calcValues();
+		
+		map.put("pInfo", pInfo);
+		
+		// 2. paingInfo 객체 전달하여 출력
+		List<EmpInfoAll> empList = empInfoRepository.empInfoList(pInfo);
+		
+		map.put("empList", empList);
+		
+		return map;
 	}
 
 }

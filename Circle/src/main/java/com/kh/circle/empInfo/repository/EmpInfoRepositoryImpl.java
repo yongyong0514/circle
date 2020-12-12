@@ -1,5 +1,6 @@
 package com.kh.circle.empInfo.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,16 +28,26 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 		return empInfoOne;
 	}
 
+	
 	@Override
-	public List<EmpInfoAll> empInfoList(Map<String, Object> inputMap) {
+	public int total(PagingInfo pInfo) {
 		
-		log.info(">>> inputMap" + inputMap);
+		log.info("pInfo : " + pInfo);
+		
+		int total = sqlSession.selectOne("empInfo.total", pInfo);
 
-		List<EmpInfoAll> empList = sqlSession.selectList("empInfo.empList", inputMap);
+		log.info("total: " + total);
 		
-		log.info(">>> empList" + empList);
+		return total;
+	}
+
+	@Override
+	public List<EmpInfoAll> empInfoList(PagingInfo pInfo) {
+		
+		List<EmpInfoAll> empList = sqlSession.selectList("empInfo.empList", pInfo);
+		
+		log.info("empList: " + empList);
 		
 		return empList;
 	}
-
 }
