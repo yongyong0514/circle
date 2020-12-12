@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.circle.alert.controller.alertController;
 import com.kh.circle.comu.entity.Comu;
 import com.kh.circle.comu.entity.ComuList;
 import com.kh.circle.comu.entity.ComuPager;
@@ -71,7 +72,16 @@ public class ComuController {
 		System.out.println("controller 개별로 나오는지 확인"+model);
 		return "community/comuListPost";
 	}
-	
+	//가입신청서 별 리스트
+	@GetMapping("/comuAppList")
+	public String comuAppList( @ModelAttribute Comu comu ,Model model ) {
+		
+		//타입 가져오기
+		model.addAttribute("comuAppList",service.comuAppList());
+		
+		System.out.println("controller 가입신청서 나오냐 "+model);
+		return "community/comuAppList";
+	}
 	
 	//게시글 작성
 	@RequestMapping(value="/comuAdd")	
@@ -81,6 +91,7 @@ public class ComuController {
 		comu.getComu_post_title();
 		
 		List<ComuList> list = sqlSession.selectList("comu.comuNameList");
+		
 		model.addAttribute("list",list);
 		
 		
@@ -182,6 +193,29 @@ public class ComuController {
 		
 		System.out.println("comuApp으로 가는길임??");
 		return "community/comuApp";
+	}
+	//가입신청서 작성하기
+	@PostMapping("/comuAppAction")
+	public String comuAppAction(HttpSession session ,
+					@ModelAttribute Comu comu)throws Exception{
+		//여기까지가 1번째 단계
+		
+		//System.out.println("대충 : " + comu);
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		//System.out.println("DDD : " + emp_no);		
+		String emp_name = service.comuApp2(emp_no);
+		
+		//System.out.println("DDFD : " + emp_name);
+		//2번째 단계 끝
+		
+		comu.setComu_post_wrtr_emp_no(emp_no);
+		comu.setEmp_info_name(emp_name);
+		
+		service.comuAppAction(comu);
+		
+		System.out.println("last : " + comu);
+		
+		return"redirect:/community/comuListName";
 	}
 	
 	//comuLeftBar에 가입한 동호회 리스트

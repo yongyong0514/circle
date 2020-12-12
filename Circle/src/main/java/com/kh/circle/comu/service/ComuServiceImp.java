@@ -34,6 +34,12 @@ public class ComuServiceImp implements ComuService {
 		
 		return dao.comuListPost(comu_list_code);
 	}
+	@Override
+	public List<Comu> comuAppList() {
+		
+		
+		return dao.comuAppList();
+	}
 
 
 	@Override
@@ -52,6 +58,12 @@ public class ComuServiceImp implements ComuService {
 	@Override
 	public String comuAdd2(String emp_no) {
 		String emp_name = dao.comuAdd2(emp_no);
+
+		return emp_name;
+	}
+	@Override
+	public String comuAdd3(String emp_info_emp_no) {
+		String emp_name = dao.comuAdd3(emp_info_emp_no);
 
 		return emp_name;
 	}
@@ -109,15 +121,28 @@ public class ComuServiceImp implements ComuService {
 		
 		return dao.comuApp(comu_list_code);
 	}
+	//사원번호 가져오기
+		@Override
+		public String comuApp2(String emp_no) {
+			String emp_name = dao.comuApp2(emp_no);
+
+			return emp_name;
+		}
+	//가입신청서 작성하기
+		@Override
+		public void comuAppAction(Comu comu) {
+			
+			dao.comuAppAction(comu);
+			
+		}
+		
 	//leftBar 리스트 가져오기
 	@Override
 	public List<EmpInfo> leftList(String emp_info_emp_no) {
 		
 		System.out.println("서비스인데 레프트 바 가져왔냐" +emp_info_emp_no);
 		return dao.leftList(emp_info_emp_no);
-	}
-
-	
+	}	
 
 	
 	}

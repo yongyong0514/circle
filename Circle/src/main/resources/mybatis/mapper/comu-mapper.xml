@@ -12,42 +12,7 @@
 
 <mapper namespace="comu">
 
-<!-- <resultMap type="com.kh.circle.comu.entity.Comu" id="comuList">
-	<id property="comu_post_ordr" column="comu_post_ordr"/>
-	<id property="comu_post_wrtr_emp_no" column="comu_post_wrtr_emp_no"/>
-	<id property="comu_post_title" column="comu_post_title"/>
-	<id property="comu_post_cont" column="comu_post_cont"/>
-	<id property="comu_post_dat" column="comu_post_dat"/>
-	<id property="comu_post_view" column="comu_post_view"/>
-	<id property="comu_post_list_code" column="comu_post_list_code"/>
-	<id property="comu_post_type" column="comu_post_type"/>
-</resultMap>
 
-<resultMap type="com.kh.circle.comu.entity.ComuInfo" id="comuInfoMap">
-	<id property="comu_info_emp_no" column="comu_info_emp_no"/>
-	<id property="comu_info_comu_code" column="comu_info_comu_code"/>
-	<id property="comu_info_sdat" column="comu_info_sdat"/>
-	<id property="comu_info_edat" column="comu_info_edat"/>
-	<id property="comu_info_comu_job_code" column="comu_info_comu_job_code"/>
-	<id property="comu_info_rm" column="comu_info_rm"/>
-	<id property="comu_info_join" column="comu_info_join"/>
-	<id property="comu_info_join_rqst_dat" column="comu_info_join_rqst_dat"/>
-	
-</resultMap>
-
-<resultMap type="com.kh.circle.comu.entity.ComuList" id="comuListMap">
-	<id property="comu_list_code" column="comu_list_code"/>
-	<id property="comu_list_name" column="comu_list_name"/>
-	
-</resultMap>
-
-<resultMap type="com.kh.circle.comu.entity.ComuRepl" id="comuReplMap">
-<collection property="comu_repl_ordr" resultMap="comu_repl_ordr"/>
-<collection property="comu_repl_post_ordr" resultMap="comu_repl_post_ordr"/>
-<collection property="comu_repl_content" resultMap="comu_repl_content"/>
-<collection property="comu_repl_date" resultMap="comu_repl_date"/>
-<collection property="comu_repl_emp_no" resultMap="comu_repl_emp_no"/>
-</resultMap> -->
 
 <!-- 게시글 목록 -->
 
@@ -62,6 +27,7 @@
 from comu_post c, emp_info e, comu_list l
 where c.COMU_POST_WRTR_EMP_NO = e.emp_info_emp_no 
 and c.COMU_POST_LIST_CODE = l.COMU_LIST_CODE
+	and c.comu_post_type ='1'
 order by comu_post_ordr desc
 	<include refid="paging_footer"></include>
 </select>
@@ -74,6 +40,17 @@ from comu_post c, emp_info e, comu_list l
 where c.comu_post_wrtr_emp_no = e.emp_info_emp_no 
 and c.comu_post_list_code = l.comu_list_code
 and l.comu_list_code = #{comu_list_code}
+order by comu_post_ordr desc
+</select>
+
+<select id="comuAppList" resultType="comu" parameterType="String">
+	
+		select * 
+from comu_post c, emp_info e, comu_list l ,job_info j
+where c.COMU_POST_WRTR_EMP_NO = e.emp_info_emp_no 
+and c.COMU_POST_LIST_CODE = l.COMU_LIST_CODE
+and e.emp_info_job_code = j.job_info_code
+	and c.comu_post_type ='2'
 order by comu_post_ordr desc
 </select>
 
@@ -93,8 +70,14 @@ where rn between #{start} and #{end}
 
 <!-- comuNameList -->
 <select id="comuNameList" resultType="ComuList" >
-	 
-	   SELECT * FROM comu_list
+	SELECT distinct l.comu_list_name ,l.comu_list_code
+FROM comu_list l
+join comu_post p on(l.comu_list_code =p.comu_post_list_code)
+join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no)
+<!--  where emp_info_emp_no =#{emp_info_emp_no}  -->
+
+	   <!-- SELECT * FROM comu_list -->
+	   
 <!-- 	  select *
 	from comu_post c, comu_list l
 	 where c.COMU_POST_COMU_CODE = l.comu_list_code -->
@@ -146,6 +129,7 @@ where rn between #{start} and #{end}
 	join comu_list l on(c.comu_post_list_code = l.comu_list_code)
 	join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 	where c.comu_post_ordr = #{comu_post_ordr}
+
 	</select>
 	
 	<!-- 조회수 카운트 -->
@@ -188,13 +172,45 @@ where rn between #{start} and #{end}
     join job_info j on(e.emp_info_job_code=j.job_info_code)
     where i.comu_info_comu_job_code like '대표%'
 	</select>
-	
+	<!-- 가입신청서에 동호회 이름 가져오기 -->
 	<select id="comuApp" parameterType="String" resultType="comuList">
-		select comu_list_name
+		select *
 		from 
 		comu_list
 	 where comu_list_code=#{comu_list_code} 
 	</select>
+	<!-- 사원 번호 가져오기 -->
+	<select id="app2" parameterType="String" resultType="String">
+		select emp_info_name
+			from emp_info
+			where emp_info_emp_no = #{emp_no}
+	</select>
+	<!-- 가입신청서 작성하기 -->
+	<insert id="comuAppAction" parameterType="comu">
+	insert into comu_post(
+		comu_post_ordr,
+		comu_post_title,
+		comu_post_cont,
+		comu_post_dat,
+		comu_post_view,
+		comu_post_type,
+		comu_post_list_code,
+		comu_post_wrtr_emp_no
+		)
+		values
+		(
+				copo_seq.nextval
+			, #{comu_post_title}
+			, #{comu_post_cont}
+			, sysdate
+			, 0
+			, '2'
+			, #{comu_post_list_code}
+			, #{comu_post_wrtr_emp_no}
+		)
+		
+	</insert>
+	
 	
 	<!-- 동호회 LeftBar 리스트 가져오기 -->
 	<select id="leftList" parameterType="String" resultType="empInfo">

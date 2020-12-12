@@ -16,13 +16,14 @@ public interface ComuDao {
 	public void comuAdd(Comu vo)throws Exception;
 	//글쓰기 사원번호 가져오기
 	public String comuAdd2(String emp_no);
+	public String comuAdd3(String emp_info_emp_no);
 	//글쓰기
 	public void comuInsert(Comu comu);
 	
 	//동호회 별 글 목록
 	public List<Comu> comuListPost(String comu_list_code);
-	
-	
+	//가입신청서 리스트
+	public List<Comu> comuAppList();
 	
 	//글읽기
 	public List<Comu> comuDetail(String comu_post_ordr) ;
@@ -43,6 +44,10 @@ public interface ComuDao {
 	public List<ComuList> comuListName(String comu_list_code);
 	//가입신청서에 동호회 이름 가져오기
 	public List<ComuList> comuApp(String comu_list_code);
+	//가입신청서 사원번호 가져오기
+	public String comuApp2(String emp_no);
+	//신청서 넣기
+	public void comuAppAction(Comu comu);
 	
 	//leftbar 가입 동호회 리스트 가져오기
 	public List<EmpInfo> leftList(String emp_info_emp_no);

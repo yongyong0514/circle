@@ -39,6 +39,11 @@
 	align-content: center;
 }
 </style>
+<script type="text/javascript">
+	function submit(){
+		alert("가입신청 완료");
+	}
+</script>
 
 </head>
 <body>
@@ -63,37 +68,40 @@
 				<br>
 				<h5 class="n" id="nti">가입 신청서 작성</h5>
 				<br>
-				<form name="comuApp" id="comuApp" action="${pageContext.request.contextPath}/community/comuApp"
+				<form name="comuApp" id="comuApp" action="${pageContext.request.contextPath}/community/comuAppAction"
 						method="POST" >
                <c:forEach var="comuApp" items="${comuApp}">  
             <table id="all">
                <tr>
                   <th class="n">동호회</th>
+                <%--   <th><input type="hidden" name="comu_post_type" value="${comuApp.comu_post_type}"><th> --%>
                     <th>
                      <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${comuApp.comu_list_name}" readonly> 
                      </th>
                   <th>     
-                    <input type="hidden" class="formInput1" id="comu_list_code" value="${comuApp.comu_list_code}" readonly>    
+                    <input type="text" class="formInput1" id="comu_post_list_code" name="comu_post_list_code" value="${comuApp.comu_list_code}" readonly>    
                     </th>
                   </tr>
              
                <tr>
-                  <td class="n">가입 동기 </td>
-                  <td colspan="3"><input type="text" size="60" name="title" id="title"></td>
+                 <!--  <td class="n">가입 동기 </td> -->
+                  	<td colspan="3"><input type="text" size="115" name="comu_post_title"
+										id="title" placeholder="가입 동기"></td>
                </tr>
              
                <tr>
-                  <td align="center" class="n">각오 </td>
-                  <td colspan="3">
-                     <textarea name="content" cols="100" rows="20" style="resize:none;" class="text"></textarea>
-                  </td>
+                 <!--  <td align="center" class="n">각오 </td> -->
+                  	<td colspan="3"><textarea name="comu_post_cont" cols="100"
+											rows="20" style="resize: none;" class="text" placeholder="각오"></textarea>
+									</td>
                </tr>
             </table>
                </c:forEach>  
             <br>
+           
             	<div colspan="2"><input type="submit"
 										style="background-color: #F0FBD1; color: black;"
-										class="btn btn-default pull-right" value="가입신청" /> <input
+										class="btn btn-default pull-right" value="가입신청" onclick="submit();" /> <input
 										type="button" style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right"
 										onclick="javascript:location.href='comuListName'" value="글목록" />
