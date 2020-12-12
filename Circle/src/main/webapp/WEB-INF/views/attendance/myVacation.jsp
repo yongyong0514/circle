@@ -309,6 +309,11 @@
 						if($(".vacationType option[value='half']").prop("selected", true)){
 							$(".vacationType option[value='half']").prop("selected", false);
 							$(".vacationType option[value='annual']").prop("selected", true);
+						
+							$(".isHalf option").prop("selected", false);
+							$(".isHalf option").prop("disabled", true);
+							$(".isHalf option[value='full']").prop("disabled", false);
+							$(".isHalf option[value='full']").prop("selected", true);
 						}
 					}
 				}
