@@ -63,7 +63,7 @@
 					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">신청자</th>
 						<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">동호회</th>
 					<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">직급</th>
-						<th width="100px" style="background-color:#eeeeee; text-align: center; color:#black; ">각오</th>
+						<th width="150px" style="background-color:#eeeeee; text-align: center; color:#black; ">각오</th>
 					<th width="150px" style="background-color:#eeeeee; text-align: center; color:#black; ">신청일</th>
 				<!-- width="150px" -->
 				</tr>
@@ -78,7 +78,7 @@
 						<td><br>${comuAppList.comu_list_name}</td>
 						<td><br>${comuAppList.job_info_name}</td>
 						<td><br><a href='<c:url value='/community/comuDetail?comu_post_ordr=${comuAppList.comu_post_ordr}'/>'>${comuAppList.comu_post_cont}</a></td>
-						<td><c:out value="${ comuAppList.comu_post_dat }"/></td>
+						<td><br><c:out value="${ comuAppList.comu_post_dat }"/></td>
 <%-- 						   <th><input type="hidden" name="comu_post_type" value="${comuAppList.comu_post_type}"><th> --%>
 					</tr>
 				</c:forEach> 

@@ -74,7 +74,7 @@
             <table id="all">
                <tr>
                   <th class="n">동호회</th>
-                  <th><input type="hidden" name="comu_post_type" value="${comuApp.comu_post_type}"><th>
+                <%--   <th><input type="hidden" name="comu_post_type" value="${comuApp.comu_post_type}"><th> --%>
                     <th>
                      <input type="text" class="formInput1" id="comu_list_name" name="comu_list_name" value="${comuApp.comu_list_name}" readonly> 
                      </th>
