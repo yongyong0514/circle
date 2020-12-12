@@ -66,14 +66,16 @@
 						</tr>
 						<tr>
 							<td class="titleCell">
-								<span>비밀번호 수정</span><br><br>
+								<label>
+									<input type="checkbox" class="changePwd">
+									<span>비밀번호 수정</span><br><br>
+								</label>
 								<span>2차 확인</span>
 							</td>
 							<td>
-								<input class="marginbox pwd1" name="changePwd" type="password"><br>
-								<input class="marginbox pwd2" name="changePwd2" type="password"><br>
+								<input class="marginbox pwd1" name="changePwd" type="password" disabled><br>
+								<input class="marginbox pwd2" name="changePwd2" type="password" disabled><br>
 								<span class="pwdCheckMsg xSmallInfo"><br></span>
-								<input type="hidden" class="changePwd">
 							</td>
 							<td class="titleCell">현재 비밀번호</td>
 							<td><input class="marginbox curPwd" name="curPwd" type="password"> <br>
@@ -342,8 +344,53 @@
 			});
 			<!-- 왼쪽바 고정 추가 옵션 끝 -->
 			
-			$(".pwd1").change(compare());
-			$(".pwd2").change(compare());
+			<!-- 수정/현재 비밀번호 확인 시작 -->
+			$(".changePwd").on("change",function(){
+				if( $(".changePwd").prop("checked") ){
+					$(".pwd1").prop("disabled", false);
+					$(".pwd2").prop("disabled", false);
+					$(".curPwd").val("");
+				} else{
+					$(".pwd1").prop("disabled", true);
+					$(".pwd1").val("");
+					$(".pwd2").prop("disabled", true);
+					$(".pwd2").val("");
+					$(".curPwd").val("");
+				}
+			});
+
+			$(".pwd1").on("change", function(){
+				var p1 = $(".pwd1").val();
+				var p2 = $(".pwd2").val();
+				
+				if( !isNull(p1) && !isNull(p2) && (p1 == p2) ){
+					$(".pwdCheckMsg").text("확인 완료");
+					$(".pwdCheckMsg").removeClass("wrongPwd");
+				} else if(!isNull(p1) && !isNull(p2) && (p1 != p2)){
+					$(".pwdCheckMsg").text("비밀번호가 일치하지 않습니다.");
+					$(".pwdCheckMsg").addClass("wrongPwd");
+				} else{
+					$(".pwdCheckMsg").text("수정할 비밀번호를 입력하세요.");
+					$(".pwdCheckMsg").addClass("wrongPwd");
+				}
+			});
+			
+			$(".pwd2").on("change", function(){
+				var p1 = $(".pwd1").val();
+				var p2 = $(".pwd2").val();
+				
+				if( !isNull(p1) && !isNull(p2) && (p1 == p2) ){
+					$(".pwdCheckMsg").text("확인 완료");
+					$(".pwdCheckMsg").removeClass("wrongPwd");
+				} else if(!isNull(p1) && !isNull(p2) && (p1 != p2)){
+					$(".pwdCheckMsg").text("비밀번호가 일치하지 않습니다.");
+					$(".pwdCheckMsg").addClass("wrongPwd");
+				} else{
+					$(".pwdCheckMsg").text("수정할 비밀번호를 입력하세요.");
+					$(".pwdCheckMsg").addClass("wrongPwd");
+				}
+			});
+			
 			
 			$(".curPwd").on("change", function(){
 				<!-- 현재 비밀번호 확인 시작 -->
@@ -355,27 +402,37 @@
 							"curPwd":$(".curPwd").val(),
 							"emp_no": ${sessionScope.empInfo.emp_info_emp_no}
 						}, success: function(data){
-							if(data == "true"){
-								$(".userPwdCheckMsg").text("비밀번호가 확인되었습니다.");
-								$(".userPwdCheckMsg").removeClass("wrongPwd");
+							
+							if($(".changePwd").prop("checked")){
+								var p1 = $(".pwd1").val();
+								var p2 = $(".pwd2").val();
 								
-								if( !isNull($(".pwd1").val()) ){
-									if( comparePwd() ){
+								if( (!isNull(p1) && !isNull(p2)) && (p1 == p2) ){
+									if(data == "true"){
+										$(".userPwdCheckMsg").text("비밀번호가 확인되었습니다.");
+										$(".userPwdCheckMsg").removeClass("wrongPwd");
 										$(".editBtn").prop("disabled", false);
-										$(".changePwd").val("true");
+									} else{
+										$(".userPwdCheckMsg").text("수정할 비밀번호가 다릅니다.");
+										$(".userPwdCheckMsg").addClass("wrongPwd");
+										$(".editBtn").prop("disabled", true);
 									}
-								} else{
-									$(".editBtn").prop("disabled", false);
-								}		
-								
+								}
 							} else{
-								$(".userPwdCheckMsg").text("비밀번호가 다릅니다.");
-								$(".userPwdCheckMsg").addClass("wrongPwd");
+								if(data == "true"){
+									$(".userPwdCheckMsg").text("비밀번호가 확인되었습니다.");
+									$(".userPwdCheckMsg").removeClass("wrongPwd");
+									$(".editBtn").prop("disabled", false);
+								} else{
+									$(".userPwdCheckMsg").text("비밀번호가 다릅니다.");
+									$(".userPwdCheckMsg").addClass("wrongPwd");
+									$(".editBtn").prop("disabled", true);
+								}
 							}
 						}, error: function(err){}
 					});			
 				}
-				<!-- 현재 비밀번호 확인 끝 -->
+				<!-- 수정/현재 비밀번호 확인 끝 -->
 			});
 		});
 
@@ -391,49 +448,6 @@
 			}
 		};
 		<!-- 더보기 열기/닫기 끝 -->
-		
-		<!-- 비밀번호 일치여부 확인 시작 -->
-		function comparePwd(){
-			$(".pwd1").on("change", function(){
-				var pwd1 = $(".pwd1").val();
-				var pwd2 = $(".pwd2").val();
-
-				if(pwd1 != '' || pwd2 != ''){
-					if( pwd1 == pwd2 ){
-						$(".pwdCheckMsg").text("입력된 비밀번호가 일치합니다.");
-						$(".pwdCheckMsg").removeClass("wrongPwd");
-					} else{
-						$(".pwdCheckMsg").text("입력된 비밀번호가 일치하지 않습니다.");
-						$(".pwdCheckMsg").addClass("wrongPwd");
-						$(".editBtn").prop("disabled", true);
-					};
-				} else{
-					return false;
-				}
-			});
-			
-			$(".pwd2").on("change", function(){
-				var pwd1 = $(".pwd1").val();
-				var pwd2 = $(".pwd2").val();
-
-				if(pwd1 != '' || pwd2 != ''){
-					if( pwd1 == pwd2 ){
-						$(".pwdCheckMsg").text("입력된 비밀번호가 일치합니다.");
-						$(".pwdCheckMsg").removeClass("wrongPwd");
-						return true;
-					} else{
-						$(".pwdCheckMsg").text("입력된 비밀번호가 일치하지 않습니다.");
-						$(".pwdCheckMsg").addClass("wrongPwd");
-						$(".editBtn").prop("disabled", true);
-						return false;
-					};
-				} else{
-					return false;
-				}
-			});
-		}
-		<!-- 비밀번호 일치여부 확인 끝 -->
-		
 		
 		function isNull(value){
 			return ( value === undefined || value === null || value === "" ) ? true : false;

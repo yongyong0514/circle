@@ -80,8 +80,6 @@ public class EmpInfoController {
 		map.put("curPwd", curPwd);
 		map.put("emp_no", emp_no);
 		
-		System.out.println(">>> map: " + map);
-		
 		String result = empInfoService.checkPwd(map);
 		
 		return result;
