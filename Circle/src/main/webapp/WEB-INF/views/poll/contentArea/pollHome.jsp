@@ -13,15 +13,21 @@
 <script>
 	$(document).ready(function(){
 		
-		//미참여 설문 클릭
-		$('.poll-state-span-no-attendance').parent().parent().on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/post")			
-		});	
-		
-		//참여한 설문 클릭
-		$('.poll-state-span-attendance').parent().parent().on('click', function(){
-			location.replace("${pageContext.request.contextPath}/poll/pollMain/result")			
-		});	
+		//설문 post 클릭시
+		$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+			/* 설문코드 추출 */
+			var code = $(this).parent().parent().find('.post-code').text();
+			
+			/* 참여 여부 확인 */
+			var attend = $(this).parent().parent().find('.poll-state-td span').prop("class");
+			
+			/* 참여 -> 결과창, 불참 -> 참여창 */
+			if(attend == 'poll-state-span-no-attendance'){
+				location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+			} else {	
+				location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+			}
+		});
 		
 		
 		/* 상세보기 기능 */

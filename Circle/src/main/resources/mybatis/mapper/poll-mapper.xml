@@ -35,6 +35,7 @@
                    , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
                    , EMP_INFO_NAME
                    , JOB_INFO_NAME
+                   , poll_post_wdat
                 from poll_post
                 join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
            left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
@@ -50,7 +51,9 @@
                    , POLL_POST_EDAT
                    , POLL_POST_CLOSING
                    , EMP_INFO_NAME
-                   , JOB_INFO_NAME)
+                   , JOB_INFO_NAME
+                   , poll_post_wdat
+            order by poll_post_wdat desc)
       where <![CDATA[ ROWNUM <= 10 ]]>
 	</select>
 	<resultMap type="hashMap" id="homeMap">
@@ -108,6 +111,7 @@
 		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
 		                   , EMP_INFO_NAME
 		                   , JOB_INFO_NAME
+		                   , poll_post_wdat
 		                from poll_post
 		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
 		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
@@ -128,7 +132,9 @@
 		                   , POLL_POST_EDAT
 		                   , POLL_POST_CLOSING
 		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME) A
+		                   , JOB_INFO_NAME
+		                   , poll_post_wdat
+                    order by poll_post_wdat desc) A
 		        where <![CDATA[ rownum <=]]>#{end}) X 
 	<![CDATA[ where X.rnum >= ]]>#{start}
 	</select>
@@ -185,6 +191,7 @@
 		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
 		                   , EMP_INFO_NAME
 		                   , JOB_INFO_NAME
+		                   , poll_post_wdat
 		                from poll_post
 		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
 		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
@@ -206,7 +213,9 @@
 		                   , POLL_POST_EDAT
 		                   , POLL_POST_CLOSING
 		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME) A
+		                   , JOB_INFO_NAME
+		                   , poll_post_wdat
+                    order by poll_post_wdat desc) A
 		        where <![CDATA[ rownum <=]]>#{end}) X 
 	<![CDATA[ where X.rnum >= ]]>#{start}
 	</select>
@@ -248,6 +257,7 @@
 		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
 		                   , POLL_POST_CLOSING  
 		                   , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP) as join_count
+		                   , poll_post_wdat
                         from poll_post
 		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
 		                join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
@@ -259,7 +269,9 @@
 		                   , POLL_POST_SDAT
 		                   , POLL_POST_EDAT
 		                   , POLL_POST_CLOSING
-                           , POLL_POST_QUST_ANSW_JOIN_EMP) A
+                           , POLL_POST_QUST_ANSW_JOIN_EMP
+                           , poll_post_wdat
+                    order by poll_post_wdat desc) A
                 where <![CDATA[ rownum <=]]>#{end}) X 
 	<![CDATA[ where X.rnum >= ]]>#{start}
 	</select>
@@ -537,4 +549,25 @@
 										   , #{item.checkType})
 		</foreach>
 	</insert>
+	
+	<!-- 설문 참가 완료 정보 입력 -->
+	<insert id="insertAttendedServey" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			<if test="index != 0">
+				into POLL_POST_QUST_ANSW_JOIN values( #{item.id}
+												    , #{list[0].empNo}
+												    , sysdate
+												    , #{item.content}
+													)
+			</if>	
+		</foreach>
+	</insert>
+	
+	<!-- 참가 완료한 설문 식별코드 추출 -->
+	<select id="selectPostCode" parameterType="java.util.List" resultType="String">
+		select poll_post_code
+		  from poll_post
+		  join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		 where POLL_POST_QUST_ANSW_CODE = #{list[1].id}
+	</select>
 </mapper>

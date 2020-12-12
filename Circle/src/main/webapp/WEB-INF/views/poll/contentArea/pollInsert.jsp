@@ -241,25 +241,67 @@
 		** 다음/취소 버튼 기능 ** 
 		************************/		
 			$(document).on("click","#next-btn", function(){
-				//제목 입력 경고 기능
-				if($("input[name=title]").val() == ''){
-					$(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"});
-				}else {
+				if(titleInputCheck() && dateCheck() && memberCheck()){
 					$('#poll-form').prop('action',"${pageContext.request.contextPath}/poll/questionInsert").submit();
-				}
+				}				
 				
 			})
 		/* ******************* */
 		
-			
 		/* 조직도 확인버튼 클릭시 */				
 		$('#insert-organ-confirm').on('click', organConfirm);
-			
 		
 	});
 	
 	/*********************************************************** 함수 정의 부분 *******************************************************/
 	
+	/* 참가자 입력창 확인(직접선택인 경우) */
+	function memberCheck(){
+		if($('#radio-my').prop('checked')){
+			console.log('radio checked');
+			
+			if($('#organ-view').find("li.name-icon").length > 0){
+				return true;
+			} else {
+				alert('참가인원을 추가 해주세요');
+				return false;
+			}
+			
+		} else {
+			return true;
+		}
+	}
+	
+	/* 날짜 입력창 확인 */
+	function dateCheck(){
+		var startDate = $('#start-date').val();
+        var startDateArr = startDate.split('-');
+         
+        var endDate = $('#end-date').val();
+        var endDateArr = endDate.split('-');
+                 
+        var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
+        var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
+         
+        if(startDateCompare.getTime() > endDateCompare.getTime()) {
+             
+            alert("시작날짜와 종료날짜를 확인해 주세요.");
+             
+            return false;
+        } else {
+        	return true;
+        }
+	}
+	
+	/* 제목 입력창 확인 */
+	function titleInputCheck(){
+		if($("input[name=title]").val() == ''){
+			$(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"});
+			return false;
+		}else {
+			return true;
+		}
+	}
 	
 	/************************
 	** 설문 대상 추가 기능 ** 

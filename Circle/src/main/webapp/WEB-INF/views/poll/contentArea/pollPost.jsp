@@ -225,9 +225,7 @@
 													.
 													<c:if test="${item.POLL_POST_QUST_NECESS eq 'Y'}">
 													<!-- 필수 체크된 경우 -->
-														<span class="necessary">
-														<c:out value="[필수]"/>
-														</span>
+														<span class="necessary"><c:out value="[필수]"/></span>
 													</c:if>
 													<c:out value="${item.POLL_POST_QUST_CONT }"></c:out>
 												</span>
@@ -505,8 +503,14 @@
 	$(document).ready(function(){
 		/* 설문 제출버튼 클릭시  */
 		$('.poll-submit-btn').on('click', function(){
-			var convertedData = formDataConvert();
-			dataSubmit(convertedData);
+			
+			if(requiredCheck()){
+				var convertedData = formDataConvert();
+				dataSubmit(convertedData);
+			} else {
+				alert('필수 항목을 입력해주세요');
+			}
+			
 			
 			/* 
 			location.href = "${pageContext.request.contextPath}/poll/my";
@@ -514,6 +518,19 @@
 		})
 	});
 	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 필수 문항 입력 확인 */
+	function requiredCheck(){
+		$('li.question-response').each(function(index, item){
+			var x = $(item).find('.necessary').text();
+			
+			if(x == '[필수]'){
+				if($(item).find('input:checked').length > 0){
+					return true;
+				}
+			}
+		})
+	}
 	
 	/* ajax로 송신 */
 	function dataSubmit(data){
@@ -532,8 +549,10 @@
 		   ,error		: 	function(request,status,error){
 			   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 		   ,success		: 	function(data){
-			   var returnedUrl = data;
-			   console.log(returnedUrl);
+							   var returnedUrl = data;
+							   console.log(returnedUrl);
+							   location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + returnedUrl;
+							   
 		   }
 		})
 	};

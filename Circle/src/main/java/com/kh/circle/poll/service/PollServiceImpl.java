@@ -100,6 +100,12 @@ public class PollServiceImpl implements PollService{
 	}
 
 
+	@Override
+	public String insertAttendedServey(List<HashMap<String, String>> list) {
+		return pollDao.insertAttendedServey(list);
+	}
+
+
 
 
 	

@@ -44,19 +44,25 @@ public class PollAjaxController {
 		temp.setWriter(empNo);
 		
 		pollService.insertPoll(temp, questions);
-		
-		
 	}
 	
 	@PostMapping("/attendComplete")
 	public String attendComplete(HttpSession session, @RequestBody List<HashMap<String, String>> list) {
+		
+		//로그인 사번 데이터 List에 넣기
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		HashMap<String,String> addEmpNo = new HashMap<>();
+		addEmpNo.put("empNo",empNo); 
+		list.add(0,addEmpNo);
 		
 		
 		
 		log.info(list.toString());
 		
-//		String url = pollService.insertAttendedServey(list);
-		return null;
+		String url = pollService.insertAttendedServey(list);
+		
+		log.info("ajax로 리턴할 url : {}", url);
+		
+		return url;
 	}
 }

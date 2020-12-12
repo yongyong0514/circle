@@ -565,8 +565,15 @@ function addPreview(){
 		
 		return contents;
 	}
-
-
+	
+	/* 문항 입력 체크 */
+	function dataCheck(){
+		if(questions.length > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 /*********************************  실행 영역  **************************************************************************/
 $(document).ready(function(){
@@ -576,25 +583,31 @@ $(document).ready(function(){
 	
 	/* 작성완료 클릭시 기능 */
 	$('#finish-btn').on('click', function(){
-		var base = "${pageContext.request.contextPath}";
 		
-    	var data = JSON.stringify(questions);
-    	
-    	console.log(data);
+		if(dataCheck()){
+	    	var data = JSON.stringify(questions);
+	    	
+	    	console.log(data);
+			
+			var base = "${pageContext.request.contextPath}";
+			$.ajax({
+				type		:	'post'
+			   ,traditional	:	true
+			   ,url			: 	base+"/pollAjax/writeComplete"
+			   ,data		:	data
+			   ,dataType	: 	'text'
+	       	   ,contentType	:	"application/json; charset=utf-8;"
+			   ,error		: 	function(request,status,error){
+	       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			   ,success		: 	console.log("data send success")
+			})
+			
+			location.href = "${pageContext.request.contextPath}/poll/my";
+			
+		} else {
+			alert('문항을 입력해주세요');
+		}
 		
-		$.ajax({
-			type		:	'post'
-		   ,traditional	:	true
-		   ,url			: 	base+"/pollAjax/writeComplete"
-		   ,data		:	data
-		   ,dataType	: 	'text'
-       	   ,contentType	:	"application/json; charset=utf-8;"
-		   ,error		: 	function(request,status,error){
-       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-		   ,success		: 	console.log("data send success")
-		})
-		
-		location.href = "${pageContext.request.contextPath}/poll/my";
 		
 	})
 });
