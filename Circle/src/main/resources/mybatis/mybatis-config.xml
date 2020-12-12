@@ -52,6 +52,10 @@
 		<typeAlias type="com.kh.circle.poll.entity.Question" alias="question"/>
 		<typeAlias type="com.kh.circle.poll.entity.SelectContents" alias="selectContents"/>
 
+
+		<typeAlias type="com.kh.circle.document.vo.DocuWriteInsert" alias="docuWriteInsert"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuList" alias="docuList"/>
+
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>

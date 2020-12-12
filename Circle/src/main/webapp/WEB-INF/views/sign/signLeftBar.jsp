@@ -16,7 +16,7 @@
 			<div class="menuLeftList" onclick="location='${pageContext.request.contextPath}/sign/signListAll'">전체</div>
 			<div class="menuLeftList">대기</div>					
 			<div class="menuLeftList">진행</div>
-			<div class="menuLeftList0"></div>
+			<div class="menuLeftList">반려</div>
 			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">결재 문서함</div>						
 			<div class="menuLeftList">전체</div>
