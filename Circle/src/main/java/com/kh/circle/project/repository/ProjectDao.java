@@ -34,6 +34,14 @@ public interface ProjectDao {
 
 	List<Project> projIssAll(String emp_no);
 
+	List<Project> projDetail(String pro_code);
+
+	List<Project> projDetail2(String pro_code);
+
+	List<Project> projMemberlist(String pro_code);
+
+	List<Project> projDetail3(String iss_code);
+
 
 
 }

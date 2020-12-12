@@ -5,57 +5,56 @@
 
 
 <!--  본문 -->
-<div class="main">
-	<c:forEach var="postView" items="${postView}">
+
+<!-- 헤드 -->
 		<div>
-			<h2>${postView.pro_title}</h2>
-			<h5>${postView.pro_manager}</h5>
-			<h5>${postView.emp_info_name},
-				<fmt:formatDate value="${postView.post_wdat}" pattern="yyyy.MM.dd" />
-			</h5>
+	<c:forEach var="projDetail" items="${projDetail}">
 			<div>
-				<h5>[${postView.post_cvp}]</h5>
+			<label>제목</label><h2>${projDetail.pro_title}</h2>
+			<label>담당자</label><h5>${projDetail.emp_info_name}</h5>
+			<label>제작기간 </label>
+<label>	시작일 : 			<fmt:formatDate value="${projDetail.pro_sdate}" pattern="yyyy.MM.dd" /></label>
+				<label> 종료일 : <fmt:formatDate value="${projDetail.pro_edate}" pattern="yyyy.MM.dd" /></label><div>변경하기</div>
 			</div>
+		<div><label>프로젝트 설명 :</label>${projDetail.pro_intro}</div><div>수정하기</div>
+	</c:forEach>
 		</div>
-		<div>${postView.post_comt}</div>
 		<div>
-		<label>프로젝트 멤버 리스트</label>
+		<label>프로젝트 맴버 리스트 : </label><div>추가 하기</div>
+		<c:forEach var="projMemberlist" items="${projMemberlist}">
+		${projMemberlist.emp_info_name } ,
+		</c:forEach>
+		</div>
+		
+		<div>
+		<label>프로젝트 업무</label>
 			<table class="projParts">
 					<tr>
-						<th class="iss_title"> 참여 업무업무명</th>
-						<th class="pro_title">프로젝트명</th>
+						<th class="iss_title"> 참여 업무명</th>
+						<th class="emp_info_name">담당자</th>
 						<th class="prog_title">업무 진행단계</th>
 						<th class="situ_title">업무 상황</th>
+						
 					</tr>
-					<c:forEach var="projissAll" items="${projissAll}">
-						<tr>
-							<td>${projissAll.iss_code}</td>
 
-							<td><a
-								href='<c:url value='/project/projIssMain?iss_code=${projissAll.iss_code}'/>'>${projissAll.iss_title}</a></td>
-							<td><a
-								href='<c:url value='/project/projIssMain?pro_code=${projissAll.pro_code}'/>'>${projissAll.pro_title}</a></td>
-							<td>${projissAll.prog_title}</td>
-							<td>${projissAll.situ_title}</td>
-						</tr>
-					</c:forEach>
-				</table>
-		
+		<c:forEach var="projDetail2" items="${projDetail2}">
+			<tr>
+
+				<td><a
+					href='<c:url value='/project/projIssMain?iss_code=${projDetail2.iss_code}'/>'>${projDetail2.iss_title}</a></td>
+				<td>${projDetail2.emp_info_name}</td>
+				<td>${projDetail2.prog_title}</td>
+				<td>${projDetail2.situ_title}</td>
+			</tr>
+		</c:forEach>
+
+
+	</table>
 		</div>
-	</c:forEach>
-	<c:forEach var="postView" items="${postView}">
-		<div>
-			<h2>${postView.pro_title}</h2>
-			<h5>${postView.pro_manager}</h5>
-			<h5>${postView.emp_info_name},
-				<fmt:formatDate value="${postView.post_wdat}" pattern="yyyy.MM.dd" />
-			</h5>
-			<div>
-				<h5>[${postView.post_cvp}]</h5>
-			</div>
-		</div>
-		<div>${postView.post_comt}</div>
-		<div>
+	
+	<!-- 바디 -->
+	<div>
+	
 		<label>프로젝트 파일</label>
 			<table class="projParts">
 					<tr>
@@ -64,37 +63,34 @@
 						<th class="prog_title">파일명</th>
 						<th class="situ_title">다운로드</th>
 					</tr>
-					<c:forEach var="projissAll" items="${projissAll}">
+	<c:forEach var="projDetail3" items="${projDetail3}">
 						<tr>
-							<td>${projissAll.iss_code}</td>
-
 							<td><a
-								href='<c:url value='/project/projIssMain?iss_code=${projissAll.iss_code}'/>'>${projissAll.iss_title}</a></td>
-							<td><a
-								href='<c:url value='/project/projIssMain?pro_code=${projissAll.pro_code}'/>'>${projissAll.pro_title}</a></td>
-							<td>${projissAll.prog_title}</td>
-							<td>${projissAll.situ_title}</td>
+								href='<c:url value='/project/projIssMain?iss_code=${projDetail3.iss_code}'/>'>${projDetail3.iss_title}</a></td>
+							<td>
+							<td>
+							${projDetail3.emp_info_name }
+							</td>
+							<td>${projDetail3.files_oname}</td>
+							<td><a href="/project/projdownload?no=${projDetail3.files_code}">다운로드</a></td>
 						</tr>
-					</c:forEach>
+	</c:forEach>
 				</table>
 		
-		</div>
-	</c:forEach>
-	
-</div>
+	</div>
 
 <!-- 버튼 부분 -->
 
 <div>
 	<c:if test="${empNo eq viewEmpNo }">
-		<c:forEach var="postView" items="${postView}">
+		<c:forEach var="projDetail2" items="${projDetail2}">
 			<div>
 				<a
-					href='<c:url value='/project/projUpdate?pro_code=${postView.pro_code}'/>'>수정하기</a>
+					href='<c:url value='/project/projUpdate?pro_code=${projDetail2.pro_code}'/>'>수정하기</a>
 			</div>
 			<div>
 				<a
-					href='<c:url value='/project/projDelete?pro_code=${postView.pro_code}'/>'>삭제하기</a>
+					href='<c:url value='/project/projDelete?pro_code=${projDetail2.pro_code}'/>'>삭제하기</a>
 			</div>
 		</c:forEach>
 	</c:if>
@@ -104,70 +100,7 @@
 	</div>
 </div>
 
-<!--  덧글 -->
-<div>
-	<c:if test="${sessionScope.emp_info_emp_no != null }">
-
-		<input type="hidden" name="post_code" value="${postCheck.post_code}">
-
-		<textarea id="post_repl_cont" name="post_repl_cont">
-	
-	
-	</textarea>
-		<span>
-			<button type="button" id="btnReply" name="btnReply">댓글 작성</button>
-		</span>
-	</c:if>
-
-</div>
-<!-- 덧글 리스트 -->
-<div>
-	<div id="reply">
-		<ol class="listReply">
-			<c:forEach var="listReply" items="${listReply}">
-				${listReply.post_repl_emp }
-				<li>
-					<p>
-						작성자 : ${listReply.emp_info_name} 작성날짜 :
-						<fmt:formatDate value="${listReply.post_repl_wdat}"
-							pattern="yyyy-MM-dd" />
-					</p>
-					<div id="post_repl_code">${listReply.post_repl_code}</div>
-					<p>${listReply.post_repl_cont}</p> <c:if
-						test="${empNo eq listReply.post_repl_emp }">
-						<div>
-							<div>
-								<a
-									href='<c:url value='/post/postReplyUpdate?post_code=${listReply.post_repl_post}'/>'>수정하기</a>
-							</div>
-							<div>
-								<a
-									href='<c:url value='/post/postReplyDelete?post_code=${listReply.post_repl_post}'/>'>삭제하기</a>
-							</div>
-						</div>
-					</c:if>
-				</li>
-			</c:forEach>
-		</ol>
-	</div>
-</div>
 
 
-<!--  덧글 작성 -->
-<form name="replyForm"
-	action="${pageContext.request.contextPath}/post/replyInsertAdd"
-	method="post">
-	<input type="hidden" id="post_repl_post" name="post_repl_post"
-		value="${post.post_code}" /> <input type="hidden" id="post_repl_emp"
-		name="post_repl_emp" value="${post.post_emp}" />
-	<div>
-		<label for="post_repl_cont">댓글</label><input type="text"
-			id="post_repl_cont" name="post_repl_cont" />
-	</div>
-	<div>
-		<input type="submit" class="replyInsertBtn" value="작성하기" />
-	</div>
-
-</form>
 
 

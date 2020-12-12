@@ -91,6 +91,17 @@
 
 	<!-- insert -->
 	<!-- project -->
+	
+	
+	
+	<select id="proGetPro" parameterType="project" resultType="string">
+	select distinct p.pro_code
+	from project p
+	join iss i on (p.pro_code = i.iss_pro_code)
+	where i.iss_pro_code =  #{iss_pro_code}
+	</select>
+	
+	
 	<insert id="projInsert" parameterType="project">
 		INSERT INTO
 		PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE, PRO_INTRO, PRO_SDATE,
@@ -192,15 +203,63 @@
 		=
 		e.emp_info_emp_no)
 		join project p on (i.iss_pro_code = p.pro_code)
-		join prog g on (i.iss_prog_code = g.prog_code)
-		join situ s on (i.iss_situ_code = s.situ_code)
+		join
+		prog g on (i.iss_prog_code = g.prog_code)
+		join situ s on
+		(i.iss_situ_code = s.situ_code)
 		where iss_emp_no =
 		#{emp_no}
 
-		order by iss_code desc
+		order by
+		iss_code desc
 	</select>
 
 
+	<!-- proj Detail -->
+	<select id="projDetail" resultType="project"
+		parameterType="string">
+		select *
+		from project p
+		join emp_info e on (p.pro_manager
+		= e.emp_info_emp_no)
+
+		where pro_code = #{pro_code}
+
+	</select>
+	<select id="projDetail2" resultType="project"
+		parameterType="string">
+		select *
+		from project p
+		join iss i on (i.iss_pro_code =
+		p.pro_code)
+		join prog g on (i.iss_prog_code = g.prog_code)
+		join situ s
+		on (i.iss_situ_code = s.situ_code)
+		join emp_info e on (i.iss_emp_no =
+		e.emp_info_emp_no)
+		where pro_code = #{pro_code}
+
+	</select>
+	<select id="projDetail3" resultType="project"
+		parameterType="string">
+		select *
+		from files f, iss i, project p, emp_info e
+		where i.iss_code = #{iss_code}
+
+	</select>
+
+
+
+	<select id="projMemberlist" resultType="project"
+		parameterType="string">
+		select distinct i.iss_emp_no, e.emp_info_name
+		from iss i
+		join project p on (i.iss_pro_code = p.pro_code)
+		join emp_info e on (i.iss_emp_no
+		= e.emp_info_emp_no)
+		where p.pro_code = #{pro_code}
+
+	</select>
 
 	<!-- 정치적 중립선 -->
 	<select id="projKanban" resultType="project">

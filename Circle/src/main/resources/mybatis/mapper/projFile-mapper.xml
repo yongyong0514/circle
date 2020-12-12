@@ -16,7 +16,7 @@
 <insert id="issFileInsert" parameterType="projFile">
 
 insert into files(files_code, files_oname, files_cname, files_route, files_date, files_type, files_status, files_size)
-values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDATE, 'FILE', #{files_status}, #{files_size})
+values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDATE, #{files_type}, #{files_status}, #{files_size})
 
 
 

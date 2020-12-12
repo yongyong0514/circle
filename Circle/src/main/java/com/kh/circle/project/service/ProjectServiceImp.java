@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,9 +84,15 @@ public class ProjectServiceImp implements ProjectService{
 	@Override
 	public void projInsertIss(Project project,  MultipartFile iss_file) throws IllegalStateException, IOException {
 		
-		String iss_code = projDao.projInsertIss(project);
+		System.out.println(project);
 		
+		System.out.println("이 인근 어딘가");
 		String pro_code = projDao.projGetPro(project);
+		System.out.println("이 인근 어딘가2");
+		
+		System.out.println("test pro----" + pro_code);
+		project.setPro_code(pro_code);
+		String iss_code = projDao.projInsertIss(project);
 		
 		
 		if(!iss_file.isEmpty()) {
@@ -97,7 +105,7 @@ public class ProjectServiceImp implements ProjectService{
 									.build();
 			
 		
-			String file_code = projFileDao.insert(projFile, iss_code);
+			String file_code = projFileDao.insert(projFile, iss_code, pro_code);
 			
 			//저장
 			projSaveDao.save(iss_file, file_code);
@@ -140,6 +148,42 @@ public class ProjectServiceImp implements ProjectService{
 		// TODO Auto-generated method stub
 		return projDao.projIssAll(emp_no);
 	}
+
+
+	@Override
+	public List<Project> projDetail(String pro_code) {
+		return projDao.projDetail(pro_code);
+	}
+
+
+	@Override
+	public List<Project> projDetail2(String pro_code) {
+		// TODO Auto-generated method stub
+		return projDao.projDetail2(pro_code);
+	}
+
+
+	@Override
+	public List<Project> projMemberlist(String pro_code) {
+		// TODO Auto-generated method stub
+		return projDao.projMemberlist(pro_code);
+	}
+
+
+	@Override
+	public ResponseEntity<ByteArrayResource> download(int iss_code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Project> projDetail3(String iss_code) {
+		// TODO Auto-generated method stub
+		return projDao.projDetail3(iss_code);
+	}
+
+
 
 
 
