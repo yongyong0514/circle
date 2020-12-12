@@ -129,8 +129,9 @@ public class ProjectDaoImp implements ProjectDao {
 
 	@Override
 	public String projGetPro(Project project) {
-		// TODO Auto-generated method stub
-		return null;
+
+		String pro_code = sqlSession.selectOne("project.proGetPro", project);
+		return pro_code;
 	}
 
 	@Override
@@ -138,6 +139,35 @@ public class ProjectDaoImp implements ProjectDao {
 		List<Project> IssAll = sqlSession.selectList("project.projissAll", emp_no);
 
 		return IssAll;
+	}
+
+	@Override
+	public List<Project> projDetail(String pro_code) {
+		
+
+		List<Project> projDetial = sqlSession.selectList("project.projDetail", pro_code);
+		
+		return projDetial;
+	}
+
+	@Override
+	public List<Project> projDetail2(String pro_code) {
+List<Project> projDetial2 = sqlSession.selectList("project.projDetail2", pro_code);
+		
+		return projDetial2;
+	}
+
+	@Override
+	public List<Project> projMemberlist(String pro_code) {
+List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", pro_code);
+		
+		return projMemberlist;
+	}
+
+	@Override
+	public List<Project> projDetail3(String iss_code) {
+		List<Project> projDetail3 = sqlSession.selectList("project.projDetail3", iss_code);
+		return projDetail3;
 	}
 
 

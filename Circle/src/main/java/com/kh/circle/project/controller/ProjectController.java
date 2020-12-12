@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -318,5 +320,77 @@ public class ProjectController {
 		return "project/projIssAll";
 	}
 
+	
+	
+	// post View page
+	@GetMapping("/projDetail")
+	public String postView(Post post, Model model, @RequestParam("pro_code") String pro_code, 
+			HttpSession session, @ModelAttribute Post test, //제약 조건용
+			 PostPaging postPaging, // 뷰페이징
+				@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
+				@RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+
+		
+		// 내정보 제약 조건용
+		
+		System.out.println("pro cod e : " + pro_code);
+
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+System.out.println("emp : " + emp_no);
+		String myEmp = projService.projEmpNo(emp_no);
+		System.out.println("test : " + myEmp);
+
+		model.addAttribute("empNo", myEmp);
+		
+		String iss_code =((Project) session.getAttribute("empInfo")).getIss_code();
+		System.out.println("check iss : " + iss_code);
+		
+		
+		//게시글 정보
+	List<Project> projDetail = projService.projDetail(pro_code);
+	List<Project> projDetail2 = projService.projDetail2(pro_code);
+	List<Project> projDetail3 = projService.projDetail3(iss_code);
+	List<Project> projMemberlist = projService.projMemberlist(pro_code);
+	
+	
+	model.addAttribute("projDetail", projDetail);
+	model.addAttribute("projDetail2", projDetail2);
+	model.addAttribute("projDetail3", projDetail3);
+	model.addAttribute("projMemberlist", projMemberlist);
+		
+	System.out.println("test proj : " + projDetail);
+		
+		
+		// end
+
+		/* 뷰페이징 시작 */
+		int total = postService.countPost();
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) {
+			cntPerPage = "5";
+		}
+
+		String post_type = "";
+		postPaging = new PostPaging(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage), post_type);
+
+		model.addAttribute("paging", postPaging);
+		model.addAttribute("postPaging", postService.selecePost(postPaging));
+		/* 뷰페이징 종료 */
+
+		
+
+		return "project/projDetail";
+	}
+	
+	@GetMapping("/projDownload")
+	public ResponseEntity<ByteArrayResource> download2(@RequestParam int iss_code) throws IOException {
+		ResponseEntity<ByteArrayResource> entity = projService.download(iss_code);
+		return entity;
+	}
 	
 }
