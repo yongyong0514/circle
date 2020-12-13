@@ -97,7 +97,7 @@
 							</tr>
 						</table>
 						<div class="formBox5" id="editor"></div>
-						<textarea id="sign_note" name="sign_note" readonly>${signModify.sign_note}</textarea>
+						<textarea id="sign_note" name="sign_note">${signModify.sign_note}</textarea>
 					</div>
 					<div class="formRight">
 						<div>

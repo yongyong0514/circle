@@ -9,14 +9,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DocuList {
+public class DocuSelectOne {
 	private String docu_code;
+	private String docu_type;
 	private String docu_title;
-	private String docu_wdat;
-	private String docu_whour;
-	private String docu_emp_code;
+	private String docu_year;
 	private String emp_info_name;
 	private String job_info_name;
-	private String docu_type;
-	private String docu_check;
+	private String docu_wdat;
+	private String docu_whour;
+	private String docu_note;
+	private String docu_emp_code;
+	private String docu_repl_code;
 }

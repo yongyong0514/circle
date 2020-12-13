@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
 					</ul>
 				</div>
 				<div class="homeListBar">
-					<button class="listBtn" type="submit">작성하기</button>
+					<button class="listBtn" type="submit">수정완료</button>
 				</div>	
 			</div>
 			<div class="content">
@@ -47,25 +48,25 @@
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_keep" name="docu_keep">
 											<option value="0">보존 연한을 선택하세요</option>
-											<option value="365">1 년</option>
-											<option value="1095">3 년</option>
-											<option value="1825">5 년</option>
-											<option value="3650">10 년</option>
-											<option value="NULL">영구</option>
+											<option value="365" <c:if test="${docuSelectOne.docu_year eq '365'}">selected</c:if>>1 년</option>
+											<option value="1095" <c:if test="${docuSelectOne.docu_year eq '1095'}">selected</c:if>>3 년</option>
+											<option value="1825" <c:if test="${docuSelectOne.docu_year eq '1825'}">selected</c:if>>5 년</option>
+											<option value="3650" <c:if test="${docuSelectOne.docu_year eq '3650'}">selected</c:if>>10 년</option>
+											<option value="9999" <c:if test="${docuSelectOne.docu_year eq '9999'}">selected</c:if>>영구</option>
 									</select>
 								</th>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_acc" name="docu_acc">
 											<option value="0">문서 유형을 선택하세요</option>
-											<option value="1">개인</option>
-											<option value="2">공용</option>
+											<option value="1" <c:if test="${docuSelectOne.docu_type eq '1'}">selected</c:if>>개인</option>
+											<option value="2" <c:if test="${docuSelectOne.docu_type eq '2'}">selected</c:if>>공용</option>
 									</select>
 								</th>
 							</tr>
 							<tr>
 								<th class="formBox1">제목</th>
-								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="docu_title" name="docu_title"></th>
+								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="docu_title" name="docu_title" value="${docuSelectOne.docu_title}"></th>
 							</tr>
 							<tr>
 								<th class="formBox0"></th>
@@ -75,6 +76,13 @@
 								<th class="formBox7" colspan="3">
 									<div id="fileUpload" class="dragAndDropDiv">파일을 여기에 드래그해서 추가하세요</div>
 									<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+									<c:forEach var="file" items="${list1}">
+										<div class='statusbar'>
+											<div class='filename' onclick="location.href='${pageContext.request.contextPath}/docuRest/docuFileDownload?fileCode=${file.files_code}'">${file.files_oname}</div>
+											<div class='filesize'>${file.files_size}</div>
+											<div class='filecode' style='display: none;'></div>
+										</div>
+									</c:forEach>
 								</th>
 							</tr>
 							<tr>
@@ -82,7 +90,7 @@
 							</tr>
 						</table>
 						<div class="formBox5" id="editor"></div>
-						<textarea id="docu_note" name="docu_note" readonly></textarea>
+						<textarea id="docu_note" name="docu_note">${docuSelectOne.docu_note}</textarea>
 					</div>
 				</div>
 			</form>
@@ -114,6 +122,14 @@
 			el : document.querySelector("#editor"),
 			height : "630px",
 			initialEditType : "wysiwyg",
+		});
+	</script>
+
+<!-- 수정 폼 로드 시 가져올 일부 본문 값 -->
+	<script>
+		$(document).ready(function(){
+			var note = $('#docu_note').val();
+			editor.setHtml(note);
 		});
 	</script>
 
@@ -229,7 +245,7 @@
                 function sendFileToServer(formData,status)
                 {
         			var base = "${pageContext.request.contextPath}";
-                    var uploadURL = base + "/document/docuFiles";
+                    var uploadURL = base + "/docu/docuFiles";
                     var extraData ={};
                     var jqXHR=$.ajax({
                             xhr: function() {

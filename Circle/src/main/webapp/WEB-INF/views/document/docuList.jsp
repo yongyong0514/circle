@@ -33,14 +33,14 @@
 			</div>		
 			<div class="docuList">
 				<table id="listArea">
-				<c:forEach var="list" items="${list}">
-					<tr class="result">
-						<td class="textBox0"><%-- <c:out value="${sign.sign_code}"/> --%></td>
+				<c:forEach var="list1" items="${list1}">
+					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list1.docu_code}"/>'">
+						<td class="textBox0"></td>
 						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
 						<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
-						<td class="textBox4"><br>날짜<br><br>시간</td>
-						<td class="textBox1">작성자</td>
-						<td class="textBox2">12345제목12345</td>						
+						<td class="textBox4"><br><c:out value="${list1.docu_wdat}"/><br><br><c:out value="${list1.docu_whour}"/></td>
+						<td class="textBox1"><br><c:out value="${list1.emp_info_name}"/><br><c:out value="${list1.job_info_name}"/></td>
+						<td class="textBox2"><c:out value="${list1.docu_title}"/></td>						
 					</tr>
 				</c:forEach>
 				</table>
@@ -55,14 +55,16 @@
 			</div>
 			<div class="docuList">
 				<table id="listArea">
-					<tr class="result">
-						<td class="textBox0"><%-- <c:out value="${sign.sign_code}"/> --%></td>
+				<c:forEach var="list2" items="${list2}">
+					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list2.docu_code}"/>'">
+						<td class="textBox0"><c:out value="${list2.docu_code}"/></td>
 						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
 						<td><img src="${pageContext.request.contextPath}/resources/img/sign/process_ready.png" class="img1"></td>
-						<td class="textBox4"><br>날짜<br><br>시간</td>
-						<td class="textBox1">작성자</td>
-						<td class="textBox2">12345제목12345</td>						
+						<td class="textBox4"><br><c:out value="${list2.docu_wdat}"/><br><br><c:out value="${list2.docu_whour}"/></td>
+						<td class="textBox1"><br><c:out value="${list2.emp_info_name}"/><br><c:out value="${list2.job_info_name}"/></td>
+						<td class="textBox2"><c:out value="${list2.docu_title}"/></td>						
 					</tr>
+				</c:forEach>
 				</table>
 			</div>
 			</div>

@@ -330,7 +330,7 @@
  		 ORDER BY JI.JOB_INFO_CODE ASC
 	</select>
 	
-	<select id="signFileList" resultType="signFiles">
+	<select id="signFileList" resultType="signFiles" parameterType="String">
 		SELECT FILES_CODE
      	     , FILES_ONAME
   		     , FILES_CNAME

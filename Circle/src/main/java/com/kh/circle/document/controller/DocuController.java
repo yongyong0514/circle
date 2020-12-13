@@ -16,16 +16,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.circle.document.service.DocuService;
+import com.kh.circle.document.vo.DocuFiles;
 import com.kh.circle.document.vo.DocuList;
+import com.kh.circle.document.vo.DocuReply;
+import com.kh.circle.document.vo.DocuSelectOne;
 import com.kh.circle.document.vo.DocuWriteInsert;
 import com.kh.circle.login.entity.EmpInfo;
+import com.kh.circle.sign.vo.SignFiles;
 
 @Controller
-@RequestMapping("/document")
+@RequestMapping("/docu")
 public class DocuController {
 	
 	@Autowired
@@ -38,13 +43,39 @@ public class DocuController {
 //	Create Document
 	@PostMapping("/docuWrite")
 	public String docuWriteInsert(@ModelAttribute DocuWriteInsert docuWriteInsert) throws IllegalStateException, IOException{
+		
 		docuService.insert(docuWriteInsert);
 		
 		return "redirect:docuList";
 		
 	}
 	
+//	Create Document
+	@GetMapping("/docuWrite")
+	public String docuWriteInsert(@RequestParam(required = false) String docuCode, Model model){
+		
+		String signCode = docuCode;
+		
+		if(docuCode != null) {
+			
+			DocuSelectOne docuSelectOne = sqlSession.selectOne("docu.docuSelectOne", docuCode);
+			model.addAttribute("docuSelectOne", docuSelectOne);
 
+			List<DocuFiles> list1 = sqlSession.selectList("docu.docuFileList", docuCode);
+			model.addAttribute("list1", list1);			
+			
+			List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
+			model.addAttribute("list3", list3);			
+			
+			return "document/docuWrite";
+		}
+		
+		else {
+			
+			return "document/docuWrite";
+		}
+	}
+	
 //	Create docuFiles
 	@PostMapping("/docuFiles")
 	public String upload(MultipartHttpServletRequest multipartRequest) {
@@ -81,25 +112,50 @@ public class DocuController {
 	}
 	
 	
-//	Result docuWrite
-	@GetMapping("/docuWrite")
-	public String docuWriteSelect() {
-		
-		return "document/docuWrite";
-	}
-
-	
 //	Result docuList
 	@GetMapping("/docuList")
 	public String docuList(Model model, HttpSession session) {
 		
 		if(null != session.getAttribute("empInfo")) {
-			String emp_info_emp_no = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 			
-			List<DocuList> list = sqlSession.selectList("document.docuList", emp_info_emp_no);
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			
+			List<DocuList> list1 = sqlSession.selectList("docu.docuListPrivate", empCode);
+			
+			model.addAttribute("list1", list1);
+			
+			List<DocuList> list2 = sqlSession.selectList("docu.docuListPublic", empCode);
+
+			model.addAttribute("list2", list2);
 			
 		}
 		
 		return "document/docuList";
 	}
+	
+	
+//	Result docuSelectOne
+	@GetMapping("/docuSelectOne")
+	public String docuSelectOne(@RequestParam String docuCode, Model model) {
+
+		DocuSelectOne docuSelectOne = sqlSession.selectOne("docu.docuSelectOne", docuCode);
+		
+		model.addAttribute("docuSelectOne", docuSelectOne);
+		
+		List<DocuFiles> list1 = sqlSession.selectList("docu.docuFileList", docuCode);
+		model.addAttribute("list1", list1);
+		
+		List<DocuReply> list2 = sqlSession.selectList("docu.docuReply", docuCode);
+		model.addAttribute("list2", list2);
+		
+		return "document/docuSelectOne";
+	}
+	
+//	Update docuUpdate
+	@PostMapping("/docuUpdate")
+	public String docuUpdate(@ModelAttribute DocuWriteInsert docuWriteInsert) {
+		
+		return "document/docuList";
+	}
+	
 }
