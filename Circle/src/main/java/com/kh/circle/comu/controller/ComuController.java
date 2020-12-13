@@ -111,7 +111,6 @@ public class ComuController {
 		
 		//System.out.println("DDFD : " + emp_name);
 		//2번째 단계 끝
-		
 		comu.setComu_post_wrtr_emp_no(emp_no);
 		comu.setEmp_info_name(emp_name);
 		
@@ -124,14 +123,38 @@ public class ComuController {
 
 	//게시글 상세조회
 	@GetMapping ("comuDetail")
-		public String comuDetail(Model model,@RequestParam("comu_post_ordr") String comu_post_ordr) {
+		public String comuDetail(Model model,Comu comu,
+				@RequestParam("comu_post_ordr") String comu_post_ordr , HttpSession session) {
+		
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		String emp_name = service.comuEmpNo(emp_no);
+		
+		model.addAttribute("empNo", emp_name);
 		
 		//번호가져와서 해당하는 번호를 볼수있게
-		model.addAttribute("comuDetail",service.comuDetail(comu_post_ordr));
+		List<Comu> detail = service.comuDetail(comu_post_ordr);
+		String comu_emp = service.viewEmpNo(comu_post_ordr);
+		model.addAttribute("viewEmpNo",comu_emp);
+		
+		model.addAttribute("comuDetail",detail);
+		model.addAttribute("msg", "수정하기로"); 
+		model.addAttribute("url", "comuUpdate.jsp"); 
 		
 		return "community/comuDetail";
 	}
-
+	//가입신청서 디테일
+	@GetMapping("/appDetail")
+	public String appDetail(Model model,
+			@RequestParam("comu_post_ordr") String comu_post_ordr ) {
+	
+	List<Comu> detail = service.appDetail(comu_post_ordr);
+	  
+	model.addAttribute("appDetail",detail);
+	
+	
+	return "community/appDetail";
+	}
 	/* 수정하기로 들어가기 comu_post_wrtr_emp_no 가 맞아야 들어간다 */
 	@GetMapping("/comuUpdate")
 									//화면을 보여주려면 게시글 번호가 필요
@@ -152,15 +175,19 @@ public class ComuController {
 		//return "redirect:/community/comuList";
 		return "redirect: comuDetail?comu_post_ordr="+comu.getComu_post_ordr(); 
 	}
-	
+	//가입 신청서 
 	//게시글 삭제
 	@GetMapping("/comuDelete")
 	public String comuDelete(@RequestParam("comu_post_ordr")String comu_post_ordr) {
 	service.comuDelete(comu_post_ordr);
-	
 	return "redirect:/community/comuList";
 }	
+	@GetMapping("/appDelete")
+	public String appDelete(@RequestParam("comu_post_ordr")String comu_post_ordr) {
+	service.appDelete(comu_post_ordr);
 	
+	return "redirect:/community/comuAppList";
+}		
 	@GetMapping("/comuInfoList")
 	public String comuInfoList() {
 		return "community/comuInfoList";
@@ -231,14 +258,30 @@ public class ComuController {
 		System.out.println("controller 레프트 바 가져왓냐"+model);
 		
 		return "community/comuLeftBar";
-		
-//		public String comuDetail(Model model,@RequestParam("comu_post_ordr") String comu_post_ordr) {
-//			
-//			//번호가져와서 해당하는 번호를 볼수있게
-//			model.addAttribute("comuDetail",service.comuDetail(comu_post_ordr));
-//			
-//			return "community/comuDetail";
 	}
+	@PostMapping("/comuAppList")
+	public String comuAppList(HttpSession session ,
+					@ModelAttribute Comu comu)throws Exception{
+		//여기까지가 1번째 단계
+		
+		//System.out.println("대충 : " + comu);
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+		System.out.println("가입신청사번 출력  : " + emp_no);		
+		String emp_name = service.comuApp4(emp_no);
+		
+		//System.out.println("DDFD : " + emp_name);
+		//2번째 단계 끝
+		comu.setComu_info_emp_no(emp_no);
+		comu.setComu_info_comu_code(emp_name);
+		
+		service.comuInfoInsert(comu);
+		
+		System.out.println("last 가입승인임니다 : " + comu);
+		
+		return"redirect:/community/comuAppList";
+	}
+
+	
 }
 
 
@@ -252,23 +295,3 @@ public class ComuController {
 //		
 //	}
 
-//게시글 동호회 선택
-/*
- * @GetMapping("/comuName") public ModelAndView comuName() throws Exception{ //
- * 게시글 리스트 ModelAndView mv = new ModelAndView(); List<Comu> comuName =
- * service.comuName(); mv.setViewName("community/comuAdd"); Map<String, Object>
- * mapName = new HashMap<String, Object>(); mapName.put("comuName", comuName);
- * mv.addObject("mapName", mapName); // model.addAttribute("comuList",comuList);
- * for (Comu a : comuName) { System.out.println("comuName 값 넘어오낭??" +
- * a.getComu_list_name()); } return mv; }
- */
-
-// 동호회 게시글 등록
-/*
- * @GetMapping("/comuAdd") public String comuAdd(Model
- * model, @ModelAttribute("comu.comuList") Comu comu) {
- * 
- * model.addAttribute("comu", comu);
- * 
- * return "community/comuAdd"; }
- */

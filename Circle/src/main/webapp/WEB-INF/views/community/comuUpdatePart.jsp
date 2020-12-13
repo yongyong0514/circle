@@ -65,7 +65,7 @@ li{
 				<div class="table-area">
 			<table align="center" width="800px" height="50px">
 				<tr>
-					<th>번호 : <input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></th>
+					<th><input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></th>
 					<th align="center" >동호회</th>
 					<td><span name="comu_list_name">${ comuCheck.comu_list_name}</span></td> 
 					<th align="center" >제목</th>

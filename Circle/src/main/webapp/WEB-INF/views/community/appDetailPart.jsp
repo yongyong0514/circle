@@ -60,29 +60,29 @@ li{
 </style>
 <div class="container">
 				<div class="main">
-				<c:forEach var="comuDetail" items="${comuDetail }">
+				<c:forEach var="appDetail" items="${appDetail }">
 				<div class="table-area">
 			<table align="center" width="800px" height="50px">
 				<tr>
 					<th align="center" >동호회</th>
-					<td><span>${ comuDetail.comu_list_name}</span></td> 
-					<th align="center" >제목</th>
-					<td colspan="3"><span>${comuDetail.comu_post_title }</span></td>
+					<td><span>${ appDetail.comu_list_name}</span></td> 
+					<th align="center" >가입신청사유</th>
+					<td colspan="3"><span>${appDetail.comu_post_title }</span></td>
 				</tr>
 				<tr>
-					<th align="center" >작성자</th>
-					<td><span>${ comuDetail.emp_info_name}</span></td>
-					<th align="center">조회수</th>
-					<td><span>${ comuDetail.comu_post_view }</span></td>
-					<th align="center" >작성일</th>
+					<th align="center" >신청자</th>
+					<td><span>${ appDetail.emp_info_name}</span></td>
+				<th align="center">직급</th>
+					<td><span>${ appDetail.job_info_name }</span></td>
+					<th align="center" >신청일</th>
 					
-					<td><span><fmt:formatDate value="${comuDetail.comu_post_dat}" pattern="yyyy.MM.dd" /></span></td>
+					<td><span><fmt:formatDate value="${appDetail.comu_post_dat}" pattern="yyyy.MM.dd" /></span></td>
 				</tr>
 				<tr>
-					<th colspan="6" align="center" style="font-weight: bold;">내용</th>
+					<th colspan="6" align="center" style="font-weight: bold;">동호회 활동 각오</th>
 				</tr>
 				<tr>
-					<td colspan="6"><p id="cont"><br>${ comuDetail.comu_post_cont}"</p></td>
+					<td colspan="6"><p id="cont"><br>${ appDetail.comu_post_cont}"</p></td>
 				</tr>
 			</table>
 		</div>
@@ -94,18 +94,18 @@ li{
 			<c:when test="${sessionScope.userid == comuDetail.emp_info_name}"> --%>
 					<div class="reply-area">
 		<ul>
-		<li align="right">
-			<a href='<c:url value='/community/comuList'/>'>[목록으로 돌아가기]</a>
-			</li>
 		
 		 	<br>
-		 	<c:if test="${empNo eq viewEmpNo }">
-		 	<c:forEach var="comuDetail" items="${comuDetail}">
-			<li align="right"><a class="up" href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
+		 	<%-- <c:if test="${empNo eq viewEmpNo }"> --%>
+		 	<c:forEach var="appDetail" items="${appDetail}">
+			<li align="right"><a href='<c:url value='/community/comuUpdate?comu_post_ordr=${appDetail.comu_post_ordr}'/>'>[가입승인하기]</a>
 			
-			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li>
+			<a href='<c:url value='/community/appDelete?comu_post_ordr=${appDetail.comu_post_ordr}'/>'>[거절하기]</a></li><br>
 			</c:forEach>
-			</c:if>
+			<%-- </c:if> --%>
+		<li align="right">
+			<a href='<c:url value='/community/comuAppList'/>'>[목록으로 돌아가기]</a>
+			</li><br>
 		</ul>
 		</div>
 		<%-- </c:when>
@@ -113,7 +113,7 @@ li{
 		
 		<div class="reply-area">
 			<div class="reply-write-area">
-				<table align="center">
+			<!-- 	<table align="center">
 					<tr>
 						<td style="color: black" align="center">댓글 작성</td>
 						<td><textarea rows="3" cols="80" id="replyContent"></textarea></td>
@@ -125,16 +125,8 @@ li{
 			<div id="replySelectArea">
 				<table id="replySelectTable" border="1">
 					<tbody></tbody>
-				</table>
+				</table> -->
 			</div>
 		</div>		
 			</div>
 		</div>
-		<script type="text/javascript"> 
-	 $(".up").on('click',function(){
-		 var message = '${msg}'; 
-		 var returnUrl = '${url}'; 
-		 alert(mag); 
-		 document.location.href = url; 
-	 })
-</script>

@@ -34,7 +34,7 @@
 					<jsp:include page="../community/comuHomeListBar.jsp"/>
 				</div>
 			<div class="content">
-				<jsp:include page="../community/comuDetailPart.jsp"/>
+				<jsp:include page="../community/appDetailPart.jsp"/>
 				
 				<!--  본문  -->
 				
