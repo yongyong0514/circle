@@ -55,9 +55,6 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	public List<String> compare(EmpInfoAll empInfoAll) {
 		HashMap<String, Object> map = sqlSession.selectOne("empInfo.compare", empInfoAll);
 
-		System.out.println("map: " + map);
-		System.out.println();
-		
 		List<String> ucnlist = new ArrayList<String>();
 
 		for(Map.Entry<String, Object> entry : map.entrySet()) {
@@ -69,14 +66,25 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	
 	@Override
 	public String searchWithCol(Map<String, Object> beforeMap) {
-		return sqlSession.selectOne("empInfo.searchWithCol", beforeMap);
-	}
-	
-	@Override
-	public String searchWithColDual(Map<String, Object> afterMap) {
-		return sqlSession.selectOne("empInfo.searchWithColDual", afterMap);
+		
+		System.out.println("beforeMap : " + beforeMap);
+		
+		String temp = sqlSession.selectOne("empInfo.searchWithCol", beforeMap);
+		
+		System.out.println("temp: " + temp);
+		
+		return temp;
+				
 	}
 
+	@Override
+	public Map<String, Object> setAfterCol(EmpInfoAll changeInfo) {
+		
+		Map<String, Object> map = sqlSession.selectOne("infoModify.colName", changeInfo);
+		
+		return map;
+	}
+	
 	@Override
 	public void addChange(Map<String, Object> compareMap) {
 		sqlSession.insert("infoModify.addChange", compareMap);

@@ -35,7 +35,7 @@
 						<tr>
 							<td rowspan="4" class="photoCell"><img src=""></td>
 							<td class="titleCell">이름
-								<input type="hidden" name="emp_info_emp_no" value="${sessionScope.empInfo.emp_info_emp_no }">
+								<input type="hidden" name="emp_info_emp_no" value="${map.empInfoOne.emp_info_emp_no }">
 							</td>
 							<td class="titleCell">소속</td>
 							<td><input type="text"

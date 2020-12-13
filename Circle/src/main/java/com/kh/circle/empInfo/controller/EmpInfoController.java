@@ -101,6 +101,8 @@ public class EmpInfoController {
 		String mdr_emp_no = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		inputMap.put("mdr_emp_no", mdr_emp_no);
 		
+		System.out.println("mdr no : " + mdr_emp_no);
+		
 		// 비밀번호 변경하는 경우
 		if(changeEmpInfoAll.getChangePwd() != null && !"".equals(changeEmpInfoAll.getChangePwd()) ) {
 			changeEmpInfoAll.setEmp_info_pwd(changeEmpInfoAll.getChangePwd());

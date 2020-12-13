@@ -133,6 +133,7 @@
 	<select id="compare" parameterType="empInfoAll" resultType="map">
 		select decode(emp_info_etel, #{emp_info_etel}, null, 'emp_info_etel') as "emp_info_etel"
 			 , decode(emp_info_mtel, #{emp_info_mtel}, null, 'emp_info_mtel') as "emp_info_mtel"
+			 , decode(emp_info_email, #{emp_info_email}, null, 'emp_info_email') as "emp_info_email"
 			 , decode(emp_info_pwd, #{emp_info_pwd}, null, 'emp_info_pwd') as "emp_info_pwd"
 			 , decode(emp_info_mrrg, #{emp_info_mrrg}, null, 'emp_info_mrrg') as "emp_info_mrrg"
 			 , decode(emp_info_vetr_no, #{emp_info_vetr_no}, null, 'emp_info_vetr_no') as "emp_info_vetr_no"
@@ -153,37 +154,7 @@
 	<select id="searchWithCol" parameterType="map" resultType="string">
 		select ${col}
 		  from emp_info
-		 where emp_info_emp_no = #{emp_no}
+		 where emp_info_emp_no = #{emp_info_emp_no}
 	</select>
-	
-	
-	
-	<!-- 
-		변경을 적용한 객체에서 after 값을 불러오는 sql ?????!!!!!!!!!
-	
-	 -->
-	
-<!-- 	<select id="searchWithColDual" parameterType="map" resultType="string">
-		select ${col}
-		  from
-		  	 ( #{emp_info_etel} as "emp_info_etel"
-		  	 , #{emp_info_mtel}
-		  	 , #{emp_info_pwd}
-		  	 , #{emp_info_mrrg}
-		  	 , #{emp_info_vetr_no}
-		  	 , #{emp_info_vetr_rel}
-		  	 , #{emp_info_impd_type}
-		  	 , #{emp_info_impd_levl}
-		  	 , #{emp_info_mils}
-		  	 , #{emp_info_adr}
-		  	 , #{emp_info_edat}
-		  	 , #{emp_info_emrg_tel}
-		  	 , #{emp_info_bank_name}
-		  	 , #{emp_info_acnt_name}
-		  	 , #{emp_info_acnt_no}
-		  	 )
-		  
-	
-	</select> -->
 	
 </mapper>

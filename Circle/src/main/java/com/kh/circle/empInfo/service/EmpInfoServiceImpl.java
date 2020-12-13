@@ -1,5 +1,6 @@
 package com.kh.circle.empInfo.service;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,30 +123,38 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 		//	1) 정보변경이력 테이블에 변경내역 insert
 			EmpInfoAll originEmpInfo = empInfoRepository.empInfoOne(((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
 			
+			EmpInfoAll changeInfo = (EmpInfoAll) inputMap.get("changeEmpInfoAll");
+			compareMap.put("emp_info_emp_no", changeInfo.getEmp_info_emp_no()); // 변경 대상의 사원번호
+			
 			//컬럼별(반복) insert
 			for(String col : ucnList) {
-				compareMap.put("col", col);
+				compareMap.put("col", col);		// 항목(컬럼)명
 
 				//변경 전 정보 추출
 				Map<String, Object> beforeMap = new HashMap<String, Object>();
-				beforeMap.put("emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+
+				beforeMap.put("emp_info_emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+				
 				beforeMap.put("col", col);
 				
 				String befr = empInfoRepository.searchWithCol(beforeMap);
+				compareMap.put("befr", befr);	// 변경 전 정보
 				
 				//변경 후 정보 추출
-				Map<String, Object> afterMap = new HashMap<String, Object>();
-				afterMap.put("changeEmpInfoAll", (EmpInfoAll) inputMap.get("changeEmpInfoAll"));
-				afterMap.put("col", col);
+				// 컬럼명 - 값으로 맵에 저장하여 해당 값만 추출
 				
-				String aftr = empInfoRepository.searchWithColDual(afterMap);
-
-				compareMap.put("befr", befr);
-				compareMap.put("col", col);
-				compareMap.put("changeEmpInfoAll", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")));
-				compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no"));
+				Map<String, Object> afterColMap = empInfoRepository.setAfterCol(changeInfo);
+				compareMap.put("aftr", afterColMap.get(col));	// 변경 후 정보
+				
+				compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no"));	// 수정자 사원번호
+				
+				
+				log.info("compare map:  " + compareMap);
+				
 				
 				empInfoRepository.addChange(compareMap);
+				
+				
 			}
 			
 		
