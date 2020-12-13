@@ -31,6 +31,8 @@ public interface PollService {
 
 	void insertPoll(PreInputData temp, List<Question> questions);
 
+	String insertAttendedServey(List<HashMap<String, String>> list);
+
 
 
 

@@ -18,6 +18,9 @@
 <body>
 	<!-- <div id='mydate' style="height:200px;"></div> --> <!-- 사이드바용 datepicker (jquery-ui 사용) --> 
 	<div id="calendar"></div>
+	
+	<!-- 사번 불러오는곳 -->
+	<input id="empNo" type="hidden" value="${empInfo.emp_info_emp_no}">	
 		
 	<!-- 간단 일정보기 MoDal -->
 		
@@ -254,7 +257,8 @@
         
 <!-- 주석커밋 -->
       <script>
-      		var loginId = '200101090031'//${member.EMP_INFO_EMP_NO}	;//로그인 아이디
+      		
+      		var loginId = $('#empNo').val(); //${member.EMP_INFO_EMP_NO}	;//로그인 아이디'200101090031'
       		var nowEvent = "";									//클릭한 이벤트 정보 저장
       		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
       		
@@ -267,6 +271,8 @@
       		
       		//fullcalendar onload function
             $(document).ready(function() {
+            	
+            	console.log($('#empNo').val());
             	
             	//풀캘린더 로드
                 $("#calendar").fullCalendar({

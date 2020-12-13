@@ -51,6 +51,8 @@
 		<typeAlias type="com.kh.circle.poll.entity.PreInputData" alias="preInputData"/>
 		<typeAlias type="com.kh.circle.poll.entity.Question" alias="question"/>
 		<typeAlias type="com.kh.circle.poll.entity.SelectContents" alias="selectContents"/>
+		<typeAlias type="com.kh.circle.poll.entity.AttendedServey" alias="attendedServey"/>
+		<typeAlias type="com.kh.circle.poll.entity.AttendedServeyMember" alias="attendedServeyMember"/>
 
 
 		<typeAlias type="com.kh.circle.document.vo.DocuWriteInsert" alias="docuWriteInsert"/>

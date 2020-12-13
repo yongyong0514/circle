@@ -118,15 +118,23 @@
 										 	<span class="txt"><c:out value="${item.POLL_POST_NAME}"/></span>
 										</a>									
 									</td>
-									<td class="poll-term-td"><c:out value="${item.POLL_POST_SDAT} ~ ${item.POLL_POST_EDAT}"></c:out></td>
+									<td class="poll-term-td">
+										<fmt:formatDate value="${item.POLL_POST_SDAT}" pattern="yyyy-MM-dd" />
+										<c:out value=" ~ "/>
+										<fmt:formatDate value="${item.POLL_POST_EDAT}" pattern="yyyy-MM-dd" />
+									</td>
 									<td class="poll-rate-td">
 										<span class="txt">
-											0/5
-											<strong> (20.00%)</strong>
+											<c:out value="${item.ACTUALATTENDMEMBER}"/>/<c:out value="${item.TOTALATTENDABLEMEMBER}"/>
+											
+											<fmt:parseNumber value="${item.ACTUALATTENDMEMBER}" var="ACTUALATTENDMEMBER"/>
+											<fmt:parseNumber value="${item.TOTALATTENDABLEMEMBER}" var="TOTALATTENDABLEMEMBER"/>
+											<strong> (<fmt:formatNumber value="${ACTUALATTENDMEMBER/TOTALATTENDABLEMEMBER}" pattern="#,###.00%"/>)</strong>
 										</span>
 									</td>
 									<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
-									<td class="post-join" hidden="true"><c:out value="${item.JOIN_COUNT}"></c:out></td>
+									<td class="post-joinable" hidden="true"><c:out value="${item.MYVOTERIGHT}"></c:out></td>
+									<td class="post-realjoin" hidden="true"><c:out value="${item.MYVOTECONDITION}"></c:out></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -261,6 +269,8 @@
 		</div>
 	</div>
 	
+	<script src="/circle/resources/js/poll/jquery.min.js"></script>
+	
 	<script>
 		$(document).ready(function(){
 			//메뉴바 내설문 부분 색상 변경
@@ -291,12 +301,13 @@
 				var code = $(this).parent().parent().find('.post-code').text();
 				
 				/* 참여여부 추출 */
-				var attend = $(this).parent().parent().find('.post-join').text();
+				var joinable = $(this).parent().parent().find('.post-joinable').text();
+				var realjoin = $(this).parent().parent().find('.post-realjoin').text();
 				
 				/* 마감여부 추출 */
 				var complete = $(this).parent().parent().find('.poll-state-td span').prop("class");
 				
-				if(complete == 'poll-state complete' || attend == 1) {
+				if(complete == 'poll-state complete' || joinable == 0 || (joinable > 0 && realjoin > 0)) {
 					location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
 				} else {
 					location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;

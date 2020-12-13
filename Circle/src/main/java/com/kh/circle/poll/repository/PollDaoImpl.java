@@ -178,6 +178,19 @@ public class PollDaoImpl implements PollDao{
 	}
 
 
+	@Override
+	public String insertAttendedServey(List<HashMap<String, String>> list) {
+
+		//DB에 설문 참가 완료 정보 입력
+		sqlSession.insert("poll.insertAttendedServey", list);
+		
+		//POST 식별코드 추출
+		String url = sqlSession.selectOne("poll.selectPostCode", list);
+		
+		return url;
+	}
+
+
 
 
 
