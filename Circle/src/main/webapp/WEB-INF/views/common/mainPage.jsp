@@ -25,27 +25,81 @@
 				<div class="boardList0">
 					<div class="boardList0_1"></div>
 				</div>
-				
-				<div class="boardList1">
-					<div class="boardList1_1"></div>
-				</div>
-				
-				<div class="boardList2">
-					<div class="boardList2_1"></div>
-				</div>
-				<div class="boardList3">
-					<div class="boardList3_1"></div>
-				</div>
-				
+
 				<div class="boardList4">
-					<div class="boardList4_1"></div>
+					<div class="boardList4_1">
+						<div class="textTop1">알림</div>
+						<div class="textTop2">등록일</div>
+						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>
+					</div>
 				</div>
 				<div class="boardList5">
-					<div class="boardList5_1"></div>
+					<div class="boardList5_1">
+					<div class="textTop1">쪽지</div>
+						<div class="textTop2">등록일</div>
+						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>
+					</div>
 				</div>
 				<div class="boardList6">
 					<div class="boardList6_1"></div>
 				</div>
+			
+				
+				<div class="boardList2">
+					<div class="boardList2_1">
+						<div class="textTop1">전자결재</div>
+						<div class="textTop2">등록일</div>
+							<c:forEach var="list1" items="${list1}">
+								<div class="result" onclick="location='${pageContext.request.contextPath}/sign/signSelectOne?signCode=<c:out value="${list1.sign_code}"/>'">
+									<div class="textTitle1">${list1.sign_title}</div><div class="textTitle2">${list1.sign_wdat}</div>
+								</div>
+							</c:forEach>				
+					</div>
+				</div>
+				<div class="boardList3">
+					<div class="boardList3_1">
+						<div class="textTop1">타이틀</div>
+						<div class="textTop2">등록일</div>
+						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>						
+					</div>
+				</div>
+			
+				
+				<div class="boardList2">
+					<div class="boardList2_1">
+						<div class="textTop1">타이틀</div>
+						<div class="textTop2">등록일</div>
+						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>	
+					</div>
+				</div>
+				<div class="boardList3">
+					<div class="boardList3_1">
+						<div class="textTop1">타이틀</div>
+						<div class="textTop2">등록일</div>
+						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>	
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>

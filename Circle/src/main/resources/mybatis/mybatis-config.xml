@@ -55,7 +55,11 @@
 
 		<typeAlias type="com.kh.circle.document.vo.DocuWriteInsert" alias="docuWriteInsert"/>
 		<typeAlias type="com.kh.circle.document.vo.DocuList" alias="docuList"/>
-
+		<typeAlias type="com.kh.circle.document.vo.DocuSelectOne" alias="docuSelectOne"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuReply" alias="docuReply"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuFiles" alias="docuFiles"/>
+	
+	
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>

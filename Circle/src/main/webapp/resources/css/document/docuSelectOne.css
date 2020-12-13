@@ -1,0 +1,832 @@
+br {
+	content: " ";
+	display: block;
+	margin: 0.4em 0;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+.container {
+	position: absolute;
+	width: calc(100% - 180px);
+	min-height: 1000px;
+	height: auto;
+}
+
+.content {
+}
+
+.formArea {
+	min-width: 1200px;
+}
+
+.formBox {
+	float: left;
+	width: 800px;
+	height: 100%;
+	margin-left: 100px;
+	margin-top: 20px;
+	border: 1px solid #D9D9D9;
+	background: white;
+}
+
+.formRight {
+	margin-top: 20px;
+	margin-left: 20px;
+	float: left;
+	width: 180px;
+}
+
+.formBox0 {
+	width: 100vh;
+	height: 20px;
+}
+
+.formBox1 {
+	margin-top: 20px;
+	margin-left: 20px;
+	float: left;
+	width: 180px;
+	height: 50px;
+}
+
+.formBox2 {
+	vertical-align: top;
+	width: 80px;
+	height: 60px;
+}
+
+.img2 {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 60px;
+	height: 60px;
+}
+
+.formBox3 {
+	width: 800px;
+	height: 30px;
+	border: none;
+}
+
+.formBox4 {
+	width: 100vh;
+	height: 60px;
+}
+
+.formBox5 {
+}
+
+.formBox6 {
+	width: 800px;
+	height: 100%;
+	background: #F1F9FF; 
+}
+
+.formBox7 {
+	width: 800px;
+	height: 40px;
+}
+
+.formBox8 {
+	width: 800px;	
+	height: 80px;
+}
+
+.formBox9 {
+	width: 800px;	
+	height: 80px;
+}
+
+.formBox10 {
+	width: 800px;
+	height: 30px;
+	background: #D9D9D9;
+}
+
+.formBtn1 {
+	width: 180px;
+	height: 50px;
+	outline: none;
+	font-size: 18px;
+	font-weight: bolder;
+	color: white;
+	cursor: pointer;
+	border: 1px solid #747EA9;
+	background: #0072C6;
+	background: -webkit-linear-gradient(to right, #0072C6, #5DA6DC);
+	background: linear-gradient(to right, #0072C6, #5DA6DC);
+}
+
+.formResult1 {
+	width: 178px;
+	height: 360px;
+	border: 1px solid #D9D9D9;
+	background: #f7f7f7;
+}
+
+.formResult2 {
+	margin-left: 10px;
+	width: 90px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;
+}
+
+.formResult3 {
+	margin-left: 10px;
+	width: 780px;
+	height: 60px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+}
+
+.formResult4 {
+	margin-left: 10px;
+	width: 190px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	color: #7D7D7D;
+	background: none;
+}
+
+.formResult5 {
+	width: 100%;
+	height: 100%;
+	background: #F1F9FF;
+	border: 1px solid #D8D8D8;
+}
+
+.formResult6 {
+	width: 100%;
+	height: 100%;
+	background: none;
+	border: none;
+	outline: none;
+}
+
+.formResult7 {
+	width: 100%;
+	height: 100%;
+	background: white;
+	border: none;
+	outline: none;	
+}
+
+.formBtn2 {
+	margin-top: 3px;
+	margin-left: 10px;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	color: black;	
+}
+
+#formBtn3 {
+	line-height: 40px;
+	text-align: center;
+	width: 800px;
+	height: 60px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	font-size: 18px;	
+	border: 1px solid black;
+	border-radius: 3px;
+	outline: none;
+	cursor: pointer;
+}
+
+#formBtn3:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+#formBtn3:disabled {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+#viewer {
+	margin-left: 10px;
+	height: 100%;
+	min-height: 500px;
+}
+
+.OneList {
+	min-width: 1000px;
+	width: 100%;
+	height: 60px;
+	border: 1px solid #D8D8D8;
+}
+
+.signOneList:hover {
+	background: #F1F9FF;
+}
+
+.imgBox1 {
+	float: left;	
+	width: 60px;
+	height: 60px;
+	background: #0072C6;
+}
+
+.imgBox2 {
+	float: right;
+	width: 80px;
+	height: 60px;
+}
+
+.resultBox1 {
+	float: left;
+	height: 60px;
+}
+
+.resultBox2 {
+	float: right;
+	width: 120px;
+	height: 30px;
+}
+
+.resultBox3 {
+	float: right;
+	width: 80px;
+	height: 60px;
+}
+
+.resultBox4 {
+	float: right;
+	width: 120px;
+	height: 30px;
+}
+
+.resultBox5 {
+	background: #F7F7F7;
+	background: -webkit-linear-gradient(to left, #f7f7f7, #ffffff);
+	background: linear-gradient(to left, #f7f7f7, #ffffff);
+}
+
+.tName {
+	width: 60px;
+	height: 50px;
+	font-size: 16px;
+	font-weight: bolder;
+	vertical-align:middle;
+}
+
+.tClass {
+	width: 90px;
+	height: 50px;
+	font-size: 12px;
+	vertical-align:middle;
+}
+
+.jImg {
+	vertical-align: top;
+	width: 50px;
+	height: 50px;
+}
+
+.resultImg1 {
+	margin-left: 5px;
+	margin-top: 10px;
+	width: 35px;
+	height: 35px;
+}
+
+.signDate {
+	text-align: center;
+	width: 120px;
+	height: 28px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	background: none;
+}
+
+.signSee {
+	width: 80px;
+	height: 60px;
+	outline: none;
+	border: none;
+	cursor: pointer;
+	background: none;
+}
+
+.signJoin {
+	width: 80px;
+	height: 60px;
+	outline: none;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+.signCount {
+	text-align: center;
+	width: 80px;
+	height: 58px;
+	outline: none;
+	border: none;
+	background: none;
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+.Writer {
+	text-align: center;
+	width: 120px;
+	height: 28px;
+	outline: none;
+	border: none;
+	font-size: 16px;
+	font-weight: bolder;
+	background: none;
+}
+
+.signType {
+	margin-left: 10px;
+	width: 425px;
+	height: 28px;
+	outline: none;
+	border: none;
+	font-size: 16px;
+	font-weight: bolder;
+	background: none;
+}
+
+.docuTitle {
+	text-align: center;
+	min-width: 690px;
+	width: 100%;
+	height: 58px;
+	outline: none;
+	border: none;
+	font-size: 16px;
+	font-weight: bolder;
+}
+	
+/*SelectOneListBar*/
+.oneListBar {
+	min-width: 1000px;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #F7F7F7, #FFFFFF);
+	background: linear-gradient(to top, #F7F7F7, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.ModifyBtn {
+	margin-left: 20px;
+	margin-top: 2px;
+	float: left;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.title1 {
+	float: left;
+	width: 150px;
+}
+
+.title2 {
+	float: right;
+	width: 120px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.title3 {
+	float: left;
+	width: 600px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.imgSize {
+	width: 25px;
+	height: 25px;
+}
+
+#signSelect1, #signSelect2 {
+	width: 470px;
+	height: 120px;
+    text-align: center;
+    background: #ffffff;
+   	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+    border-radius: 10px;
+	display: none;
+	position: absolute;
+	margin-left: 150px;
+	margin-top: -200px;
+}
+
+#signSelect1 > li > button, #signSelect2  > li > button {
+
+	margin-top: 10px;
+	width: 220px;
+	height: 100px;
+	font-size: 24px;
+	font-weight: bolder;
+	outline: none;
+	cursor: pointer;
+	background: white;
+	border: none;
+}
+
+#signSelect1> li > button:hover, #signSelect2 > li > button:hover {
+	background: #91b9ed;
+    border-radius: 10px;	
+}
+
+.arrowImg {
+	margin-top: 15px;
+}
+
+.fontSize1 {
+	font-size: 16px;
+	color: #7D7D7D;
+}
+
+
+/* .homeListBar {
+	width: auto;
+	min-width: 1400px;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #F7F7F7, #FFFFFF);
+	background: linear-gradient(to top, #F7F7F7, #FFFFFF);
+	border: 1px solid lightgrey;
+} */
+
+.signListBtn {
+	margin-left: 20px;
+	margin-top: 2px;
+	float: left;
+	width: 100px;
+	height: 25px;
+	cursor: pointer;
+	font-size: 15px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.signListBtn:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
+}
+
+/*파일 업로드 css*/
+.progressBar {
+	width: 150px;
+	height: 22px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+	display: inline-block;
+	margin: 0px 10px 5px 5px;
+	vertical-align: top;
+}
+
+.progressBar div {
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	line-height: 22px;
+	/* same as #progressBar height if we want text middle aligned */
+	width: 0;
+	background-color: #0059A1;
+	border-radius: 3px;
+}
+
+.statusbar {
+	border-top: 1px solid #A9CCD1;
+	min-height: 25px;
+	width: 97.5%;
+	padding: 10px 10px 0px 10px;
+	vertical-align: top;
+	cursor: pointer;
+}
+
+.statusbar:hover {
+	background: #91B9ED;
+}
+
+.statusbar:nth-child(odd) {
+	background: #EBEFF0;
+}
+
+.statusbar:nth-child(odd):hover {
+	background: #91B9ED;
+}
+
+.filename {
+	display: inline-block;
+	vertical-align: top;
+	min-width: 250px;
+	max-width: 100%;
+	float: left;
+}
+
+.filesize {
+	display: inline-block;
+	vertical-align: top;
+	color: #30693D;
+	min-width: 100px;
+	max-width: 100%;
+	margin-left: 10px;
+	margin-right: 5px;
+}
+
+.abort {
+	background-color: #7D7D7D;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	display: inline-block;
+	color: #fff;
+	font-family: arial;
+	font-size: 13px;
+	font-weight: normal;
+	padding: 4px 15px;
+	cursor: pointer;
+	vertical-align: top
+}
+
+
+/* 댓글과 서명 CSS */
+.reply, .reply1 {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #D8D8D8;
+}
+
+.replyBox {
+	background: #F1F9FF;
+}
+
+.replyBox:nth-child(even) {
+	background: white;
+}
+
+.replyBox1 {
+	background: #91b9ed;
+}
+
+.replyBox1:nth-child(odd) {
+	background: white;
+}
+
+
+.img3 {
+	margin-top: 5px;
+	margin-left: 10px;
+	width: 30px;
+	height: 30px;
+}
+
+.replyImage {
+	padding-top: 1rem;
+	vertical-align: top;
+	width: 40px;
+	height: 40px;
+}
+
+.replyName {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 90px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;	
+}
+
+.replyJob {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 90px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-weight: bolder;
+	font-size: 16px;
+	background: none;	
+}
+
+.replyTime {
+	padding-top: 0.5rem;
+	margin-left: 10px;
+	width: 190px;
+	height: 30px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	color: #7D7D7D;
+	background: none;	
+}
+
+.replyNote {
+	margin-left: 10px;
+	max-width: 740px;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	resize: none;
+	overflow: hidden;
+	background: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.replyArea {
+	margin-left: 10px;
+	margin-top: 8px;
+	width: 665px;
+	height: 60px;
+	resize: none;
+	overflow: hidden;
+	font-family: inherit;
+    font-size: inherit;
+	background: none;
+	border: 1px solid #D8D8D8;
+}
+
+.updateReply, .deleteReply {
+	margin-right: 10px;
+	margin-top: 5px;
+	float: right;
+	width: 60px;
+	height: 25px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.updateReply:hover, .deleteReply:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+}
+
+#submitReply {
+	line-height: 60px;
+	text-align: center;
+	margin-top: 10px;
+	margin-right: 10px;
+	float: right;
+	width: 100px;
+	height: 60px;
+	cursor: pointer;
+	font-size: 18px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	color: black;	
+}
+
+#submitReply:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+}
+
+/* 결재 이미지 선택 모달 */
+#signModalForm {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.signModalArea {
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  margin-top: -150px;
+  margin-left: -400px;
+  min-width:900px;
+  height: 200px;
+  background: white;
+  border: none;
+  border-radius: 20px;
+ 
+}
+
+.signModalLayer { 
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0, 0, 0, 0.5);
+  z-index:-1;
+}
+.signModalTitle{
+	margin-left: 20px;
+	float: left;
+}
+
+.signModalClose {
+	margin-right: -25px;
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+.signModalImgList {
+	width: 880px;
+	height: 150px;
+	margin-top: -10px;
+	margin-left: 10px;
+	border-radius: 20px;
+	background: #f1f9ff;
+	overflow: hidden;
+}
+
+.imgSize1{
+	margin-top: 25px;
+	width: 50px;
+	height: 50px;
+}
+
+.casePlus {
+	float: left;
+	margin-left: 15px;
+	width: 120px;
+	height: 120px;
+	background: white;
+   	box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25), 0 5px 5px
+		rgba(0, 0, 0, 0.22);
+	border-radius: 10px;
+	font-size: 14px;
+	color: grey;
+	cursor: pointer;
+}
+
+.imgSize2{
+	margin-top: 10px;
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+}
+.case1 {
+	float: left;
+	margin-left: 15px;
+	width: 120px;
+	height: 120px;
+	background: white;
+   	box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25), 0 5px 5px
+		rgba(0, 0, 0, 0.22);
+	border-radius: 10px;
+	font-size: 14px;
+	color: grey;
+	cursor: pointer;
+}
+
+.case1:hover {
+	background:rgba(0, 0, 0, 0.1);
+}
+
+
