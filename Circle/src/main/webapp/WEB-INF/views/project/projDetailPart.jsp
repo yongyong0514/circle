@@ -61,7 +61,6 @@
 						<th class="iss_title">관련 업무명</th>
 						<th class="pro_title">작성자</th>
 						<th class="prog_title">파일명</th>
-						<th class="situ_title">다운로드</th>
 					</tr>
 	<c:forEach var="projDetail3" items="${projDetail3}">
 						<tr>
@@ -71,9 +70,8 @@
 							<td>
 							${projDetail3.emp_info_name }
 							</td>
-							<td>${projDetail3.files_oname}</td>
 							<td><a 
-							href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>다운로드</a></td>
+							href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>${projDetail3.files_oname}</a></td>
 						</tr>
 	</c:forEach>
 				</table>

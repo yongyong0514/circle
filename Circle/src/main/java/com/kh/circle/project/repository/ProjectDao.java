@@ -13,7 +13,7 @@ public interface ProjectDao {
 
 	List<Project> projIssMain(String pro_code);
 
-	int countProj();
+	int countProject();
 
 	String projEmpNo(String emp_no);
 
@@ -46,6 +46,10 @@ public interface ProjectDao {
 	List<Project> projGetIss(String pro_code);
 
 	List<ProjFile> projIssDetail(String iss_code);
+
+	List<Project> projKanban(String pro_code);
+
+	String projKanbanHead(String pro_code);
 
 
 

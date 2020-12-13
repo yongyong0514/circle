@@ -68,33 +68,30 @@
 					</c:forEach>
 				</table>
 
-				<!-- 뷰 페이징 처리 -->
-				<div>
-					<c:set var="Post" />
-					<c:if test="${paging.startPage != 1}">
-						<a
-							href="${pageContext.request.contextPath}/project/projissAll?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
-					</c:if>
-					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"
-						var="p">
-						<c:choose>
-							<c:when test="${p == paging.nowPage }">
-								<b>${p}</b>
-							</c:when>
-							<c:when test="${ p != paging.nowPage }">
-								<a
-									href="${pageContext.request.contextPath}/project/projissAll?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
-							</c:when>
+				<!--  뷰페이징처리 -->
+<div>
+<c:set var="project"/>
+<c:if test="${paging.startPage != 1}">
+<a href="${pageContext.request.contextPath}/project/projissaLL/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+	<a href="project/projissaLL/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
 
-						</c:choose>
-					</c:forEach>
-					<c:if test="${paging.endPage != paging.lastPage }">
-						<a
-							href="${pageContext.request.contextPath}/project/projissAll?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
-					</c:if>
+</c:if>
+<c:forEach begin="${paging.startPage }" end="${paging.endPage}" var="p">
+<c:choose>
+<c:when test="${p == paging.nowPage }">
+<b>${p}</b>
+</c:when>
+<c:when test="${ p != paging.nowPage }">
+<a href="${pageContext.request.contextPath}/project/projissaLL/${url}?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+</c:when>
 
-				</div>
-				<br>
+</c:choose>
+</c:forEach>
+<c:if test="${paging.endPage != paging.lastPage }">
+	<a href="${pageContext.request.contextPath}/project/projissaLL/${url}?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+</c:if>
+
+</div>
 
 
 

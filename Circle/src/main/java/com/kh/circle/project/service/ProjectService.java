@@ -21,7 +21,7 @@ public interface ProjectService {
 
 	List<Project> projMain(String emp_no);
 
-	int countPost();
+	int countProject();
 
 	String projEmpNo(String emp_no);
 
@@ -61,6 +61,10 @@ public interface ProjectService {
 	ResponseEntity<ByteArrayResource> download(String files_code) throws UnsupportedEncodingException, IOException;
 
 	List<ProjFile> projIssDetail(String iss_code);
+
+	List<Project> projKanban(String pro_code);
+
+	String projKanbanHead(String pro_code);
 
 
 }

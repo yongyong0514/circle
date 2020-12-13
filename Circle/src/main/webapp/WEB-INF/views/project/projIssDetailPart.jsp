@@ -8,46 +8,47 @@
 <div class="main">
 	<c:forEach var="projIssDetail" items="${projIssDetail}">
 		<div>
-			<h2>${projIssDetail.iss_title}</h2>
-			<h5>${projIssDetail.dept_info_name}</h5>
-			<h5>${projIssDetail.emp_info_name},
-			</h5>
 			<div>
+			<h2>제목 : ${projIssDetail.iss_title}</h2>
+			<h5>작성자 : ${projIssDetail.dept_info_name} ${projIssDetail.emp_info_name}</h5>
+			</div>
+			<div>
+			<label> 업무 관련 정보</label>
+			<h5>작성일 : ${projIssDetail.iss_wdat}</h5>
+			<h5>시작일 :<c:if test="${projIssDetail.iss_sdate eq null}"><label>시작일을 설정하지 않으셨습니다.</label></c:if> ${projIssDetail.iss_sdate}</h5>		<div> 수정하기 </div>
+			
+			<h5>종료일 : <c:if test="${projIssDetail.iss_edate eq null}"><label>종료일을 설정하지 않으셨습니다.</label></c:if>${projIssDetail.iss_edate}</h5>		<div> 수정하기 </div>
+			
+			<h5>진행단계 : ${projIssDetail.prog_title}</h5>		<div> 수정하기 </div>
+			
+			<h5>업무상황 : ${projIssDetail.situ_title}</h5>		<div> 수정하기 </div>
+			
 			
 			</div>
+			
+		<div>
+		<h2>업무 설명</h2>
+		${projIssDetail.iss_cont}
 		</div>
-		<div>${projIssDetail.iss_cont}</div>
-		<div>${projIssDetail.files_code }</div>
+		<div> 수정하기 </div>
+			
+		</div>
+		<div>
+		업무관련 자료
+		<div>
+		<c:if  test="${projIssDetail.files_code  eq null}"> <label>관련 자료가 없습니다. </label></c:if>
+		<c:if test="${projIssDetail.files_code  != null}">
+			파일 명 : ${projIssDetail.files_oname}<a href='<c:url value='/project/projDownload?files_code=${projIssDetail.files_code}'/>'>다운로드</a>
+		</c:if>
+		</div>
+				<div> 수정하기 </div>
+		
+		</div>
 	</c:forEach>
+		
 </div>
 
 
-<div>
-	
-		<label>프로젝트 파일</label>
-			<table class="projParts">
-					<tr>
-						<th class="iss_title">관련 업무명</th>
-						<th class="pro_title">작성자</th>
-						<th class="prog_title">파일명</th>
-						<th class="situ_title">다운로드</th>
-					</tr>
-	<c:forEach var="projDetail3" items="${projDetail3}">
-						<tr>
-							<td><a
-								href='<c:url value='/project/projIssDetail?iss_code=${projDetail3.iss_code}'/>'>${projDetail3.iss_title}</a></td>
-							<td>
-							<td>
-							${projDetail3.emp_info_name }
-							</td>
-							<td>${projDetail3.files_oname}</td>
-							<td><a 
-							href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>다운로드</a></td>
-						</tr>
-	</c:forEach>
-				</table>
-		
-	</div>
 	
 
 <!-- 버튼 부분 -->

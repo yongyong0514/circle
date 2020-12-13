@@ -35,7 +35,7 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 
 	@Override
-	public int countProj() {
+	public int countProject() {
 
 		int num = sqlSession.selectOne("project.projCount");
 
@@ -166,7 +166,6 @@ List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", p
 	@Override
 	public List<ProjFile> projDetail3(String pro_code) {
 		
-		System.out.println("cocop : " + pro_code);
 		List<ProjFile> projDetail3 = sqlSession.selectList("project.projDetail3", pro_code);
 		
 		
@@ -190,6 +189,22 @@ List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", p
 		List<ProjFile> iss = sqlSession.selectList("project.projIssDetail", iss_code);
 		
 		return iss;
+	}
+
+	@Override
+	public List<Project> projKanban(String pro_code) {
+
+		List<Project> list = sqlSession.selectList("project.projKanban", pro_code);
+		
+		return list;
+	}
+
+	@Override
+	public String projKanbanHead(String pro_code) {
+
+		String projKanbanHead  = sqlSession.selectOne("project.projKanbanHead", pro_code);
+		
+		return projKanbanHead;
 	}
 
 

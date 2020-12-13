@@ -45,8 +45,8 @@ public class ProjectServiceImp implements ProjectService{
 
 
 	@Override
-	public int countPost() {
-		return projDao.countProj();
+	public int countProject() {
+		return projDao.countProject();
 	}
 
 
@@ -86,13 +86,9 @@ public class ProjectServiceImp implements ProjectService{
 	@Override
 	public void projInsertIss(Project project,  MultipartFile iss_file) throws IllegalStateException, IOException {
 		
-		System.out.println(project);
 		
-		System.out.println("이 인근 어딘가");
 		String pro_code = projDao.projGetPro(project);
-		System.out.println("이 인근 어딘가2");
 		
-		System.out.println("test pro----" + pro_code);
 		project.setPro_code(pro_code);
 		String iss_code = projDao.projInsertIss(project);
 		
@@ -131,7 +127,7 @@ public class ProjectServiceImp implements ProjectService{
 
 	@Override
 	public List<Project> selecetProject(ProjPaging projPaging) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -147,7 +143,7 @@ public class ProjectServiceImp implements ProjectService{
 
 	@Override
 	public List<Project> projIssAll(String emp_no) {
-		// TODO Auto-generated method stub
+		
 		return projDao.projIssAll(emp_no);
 	}
 
@@ -160,14 +156,14 @@ public class ProjectServiceImp implements ProjectService{
 
 	@Override
 	public List<Project> projDetail2(String pro_code) {
-		// TODO Auto-generated method stub
+		
 		return projDao.projDetail2(pro_code);
 	}
 
 
 	@Override
 	public List<Project> projMemberlist(String pro_code) {
-		// TODO Auto-generated method stub
+		
 		return projDao.projMemberlist(pro_code);
 	}
 
@@ -218,6 +214,20 @@ public class ProjectServiceImp implements ProjectService{
 	@Override
 	public List<ProjFile> projIssDetail(String iss_code) {
 		return projDao.projIssDetail(iss_code);
+	}
+
+
+	@Override
+	public List<Project> projKanban(String pro_code) {
+		
+		return projDao.projKanban(pro_code);
+	}
+
+
+	@Override
+	public String projKanbanHead(String pro_code) {
+		
+		return projDao.projKanbanHead(pro_code);
 	}
 
 
