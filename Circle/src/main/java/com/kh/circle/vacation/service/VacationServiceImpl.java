@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignWriteInsert;
 import com.kh.circle.vacation.entity.Vacation;
 import com.kh.circle.vacation.entity.VacationInfo;
@@ -52,16 +53,20 @@ public class VacationServiceImpl implements VacationService {
 	}
 
 	@Override
-	public SignWriteInsert formVacation(VacationInfo vacationInfo) {
-		// 받아온 정보를 html형식으로 변환
-		// 논의 필요한 부분
+	public SignSelectOne formVacation(VacationInfo vacationInfo) {
+		// 받아온 정보를 vo형식으로 변환
 		
-		SignWriteInsert swi = new SignWriteInsert();
+		SignSelectOne signForm = SignSelectOne.builder()
+										.sign_code("SIGN000001")
+										.sign_emp_code(vacationInfo.getEmpNo())
+										.sign_type_name("휴가계")
+										.sign_title("휴가 신청서입니다.")
+										.emp_info_name(vacationInfo.getEmpName())
+										.build();
 		
-		String htmlText = "";
+		//내용물 저장은 어디에?
 		
-		
-		return swi;
+		return signForm;
 	}
 
 }

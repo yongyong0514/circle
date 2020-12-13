@@ -145,16 +145,16 @@
 		function moveAll(nowPage, perPage){
 			var url = "nowPage=" + nowPage + "&perPage=" + perPage;
 			
-			if( !isNull(${name}) ){
-				url += "&name=".concat(${name});
+			if( !isNull('${name}') ){
+				url += "&name=".concat('${name}');
 			}
 			
-			if( !isNull(${empNo}) ){
-				url += "&empNo=".concat(${empNo});
+			if( !isNull('${empNo}') ){
+				url += "&empNo=".concat('${empNo}');
 			}
 			
-			if( !isNull(${deptName}) ){
-				url += "&deptName=".concat(${deptName});
+			if( !isNull('${deptName}') ){
+				url += "&deptName=".concat('${deptName}');
 			}
 			
 			location.href="${pageContext.request.contextPath}/empInfo/allInfoList?" + url;
