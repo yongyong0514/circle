@@ -73,7 +73,7 @@ public interface ComuService {
 	//리스트에 comu_info_emp_no 값 가져오기
 	String comuInfoNo(String comu_info_emp_no);
 	
-	public String comuApp3(String comu_info_comu_code);
+	public String comuApp3(String comu_post_list_code);
 	public String comuApp4(String emp_no);
 	// 글쓰기
 	public void comuInfoInsert(Comu comu);

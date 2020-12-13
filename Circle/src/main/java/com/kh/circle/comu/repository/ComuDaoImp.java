@@ -155,8 +155,6 @@ public class ComuDaoImp implements ComuDao {
 	@Override
 	public void comuAppAction(Comu comu) {
 
-		//sqlSession.insert("comu.insert",comu);
-		
 		sqlSession.insert("comu.comuAppAction",comu);
 	}
 	
@@ -195,8 +193,8 @@ public class ComuDaoImp implements ComuDao {
 	
 	//동호회 회원 insert
 	@Override
-	public String comuApp3(String comu_info_comu_code) {
-		String emp_name = sqlSession.selectOne("comu.comuApp3",comu_info_comu_code);
+	public String comuApp3(String comu_post_list_code) {
+		String emp_name = sqlSession.selectOne("comu.comuApp3",comu_post_list_code);
 		return emp_name;
 	}
 

@@ -103,7 +103,7 @@ li{
 		 	<c:forEach var="comuDetail" items="${comuDetail}">
 			<li align="right"><a class="up" href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
 			
-			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li>
+			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li><br>
 			</c:forEach>
 			</c:if>
 		</ul>

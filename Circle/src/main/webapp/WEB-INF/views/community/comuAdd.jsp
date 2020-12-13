@@ -83,7 +83,7 @@ border: 1px solid black;
 					<%-- <form action="${pageContext.request.contextPath}/comu/comuAddAction"></form> --%>
 									<!-- Controller에 처리를 맡긴다 -->
 					<form action="${pageContext.request.contextPath}/community/comuAddAction"
-						method="post" enctype="multipart/form-data">
+						method="post" >
 						<table id="all">
 							<thead>
 								<tr>
@@ -96,7 +96,7 @@ border: 1px solid black;
 								<th class="formBox1">작성자</th>
 								
 								<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" value="${empInfo.emp_info_name}" readonly>
-									<input type="text" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> </th>
+									<input type="hidden" class="formInput1" id="sign_emp_code" name="sign_emp_code" value="${empInfo.emp_info_emp_no}" readonly> </th>
 									<tr>
 									<td><br></td>
 								</tr>
@@ -169,13 +169,13 @@ border: 1px solid black;
 								</tr>
 								
 								<tr>
-									<td colspan="2"><input type="submit"
-										style="background-color: #F0FBD1; color: black;"
-										class="btn btn-default pull-right" value="등록" /> <input
-										type="button" style="background-color: #F0FBD1; color: black;"
+									<td colspan="2">
+										<input type="submit"style="background-color: #F0FBD1; color: black;"
+										class="btn btn-default pull-right" value="등록" /> 
+										
+										<input type="button" style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right"
 										onclick="javascript:location.href='comuList'" value="글목록" />
-										<!-- 주주 -->
 									</td>
 								</tr>
 							</thead>

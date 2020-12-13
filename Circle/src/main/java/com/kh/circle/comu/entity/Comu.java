@@ -1,6 +1,7 @@
 package com.kh.circle.comu.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.kh.circle.comu.entity.Comu;
 
