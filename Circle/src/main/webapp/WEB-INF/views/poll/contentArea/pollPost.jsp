@@ -47,8 +47,8 @@
 									<jsp:useBean id="now" class="java.util.Date" scope="request"/>
 									<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowNum" scope="request"/>
 									<!-- 날짜 계산용 변수 초기화 -->
-									<c:set var="sdat" value="${item.POLL_POST_SDAT }"></c:set>
-									<c:set var="edat" value="${item.POLL_POST_EDAT }"></c:set>
+									<c:set var="sdat" value="${post[0].POLL_POST_SDAT }"></c:set>
+									<c:set var="edat" value="${post[0].POLL_POST_EDAT }"></c:set>
 									<fmt:parseDate var="sdat" value="${sdat}" pattern="yyyy-MM-dd" />
 									<fmt:parseDate var="edat" value="${edat}" pattern="yyyy-MM-dd" />
 									<fmt:parseNumber value="${sdat.time / (1000*60*60*24)}" integerOnly="true" var="sdatNum" scope="request"/>
@@ -56,7 +56,7 @@
 								
 								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
 									<li>
-										<a class="toolbar-btn-wrap">
+										<a class="toolbar-btn-wrap" onclick="alert('ddddfdf')">
 											<span class="toolbar-icon end"></span>
 											<span class="poll-post-toolbar-end-btn-txt">마감</span>
 										</a>
@@ -506,30 +506,46 @@
 			
 			if(requiredCheck()){
 				var convertedData = formDataConvert();
-				dataSubmit(convertedData);
+				/* dataSubmit(convertedData); */
+				alert('win');
 			} else {
 				alert('필수 항목을 입력해주세요');
 			}
 			
-			
-			/* 
-			location.href = "${pageContext.request.contextPath}/poll/my";
-			 */
 		})
 	});
 	/******************************************************* 함수 부분 *****************************************************/
 	
 	/* 필수 문항 입력 확인 */
 	function requiredCheck(){
-		$('li.question-response').each(function(index, item){
-			var x = $(item).find('.necessary').text();
-			
-			if(x == '[필수]'){
-				if($(item).find('input:checked').length > 0){
-					return true;
+	
+		if($('li.question-response').find('.necessary').text().length > 0){
+			$('li.question-response').each(function(index, item){
+				var x = $(item).find('.necessary').text();
+				if(x == '[필수]'){
+					if(($(item).find('input[type=checkbox]').length > 0 || $(item).find('input[type=radio]').length > 0) && $(item).find('input:checked').length == 0){
+						isTrue = false;
+						return;
+					}
+					if($(item).find('input[type=text]').length > 0 && $(item).find('input[type=text]').val() == 0){
+						if($(item).find('input[type=text]').closest('.etc').length == 0){
+							isTrue = false;
+							return;
+						}
+					}
+					if($(item).find('textarea').length > 0 && $(item).find('textarea').val() == 0){
+						isTrue = false;
+						return;
+					}
+					isTrue = true;
+					return;
 				}
-			}
-		})
+			});
+			return isTrue;
+		} else {
+			return true;
+		}
+		
 	}
 	
 	/* ajax로 송신 */

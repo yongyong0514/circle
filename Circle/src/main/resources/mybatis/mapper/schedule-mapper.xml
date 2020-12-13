@@ -12,7 +12,7 @@
 		select *
  		  from sch_unit
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
- 		 where sch_join_emp = #{id}
+ 		 where sch_join_emp = #{id} or SCH_UNIT_WRTR =#{id}
 	</select>
 	
 	<select id="selectMap" parameterType="map" resultMap="selectMapList">
