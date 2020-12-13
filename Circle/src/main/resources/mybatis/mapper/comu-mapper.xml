@@ -74,6 +74,12 @@ where rn between #{start} and #{end}
 FROM comu_list l
 join comu_post p on(l.comu_list_code =p.comu_post_list_code)
 join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no)
+join comu_info c on(l.comu_list_code = c.comu_info_comu_code)
+where c.comu_info_emp_no = #{comu_info_emp_no}
+	<!-- SELECT distinct l.comu_list_name ,l.comu_list_code
+FROM comu_list l
+join comu_post p on(l.comu_list_code =p.comu_post_list_code)
+join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no) -->
 <!--  where emp_info_emp_no =#{emp_info_emp_no}  -->
 
 	   <!-- SELECT * FROM comu_list -->
@@ -131,7 +137,15 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 	where c.comu_post_ordr = #{comu_post_ordr}
 
 	</select>
-	
+	<!-- 가입 신청서 상세보기 -->
+	<select id="appDetail" resultType="comu" parameterType="String" >
+		select *
+	from comu_post c
+	join comu_list l on(c.comu_post_list_code = l.comu_list_code)
+	join emp_info e on (c.comu_post_wrtr_emp_no = e.emp_info_emp_no)
+    join job_info j on(e.emp_info_job_code = j.job_info_code)
+	where c.comu_post_ordr = #{comu_post_ordr}
+	</select>
 	<!-- 조회수 카운트 -->
 	<update id="CountView">
 		update comu_post
@@ -161,9 +175,26 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no)
 	<delete id="comuDelete" parameterType="String">
 		delete from comu_post where comu_post_ordr=#{comu_post_ordr}
 	</delete>
+	<!-- 가입신청서 삭제 -->
+	<delete id="appDelete" parameterType="String">
+		delete from comu_post where comu_post_ordr=#{comu_post_ordr}
+	</delete>
 	
 	<!-- 동호회 리스트 가져오기 -->
 	<select id="comuListName" parameterType="String" resultType="comuList">
+	 <!-- SELECT 
+    distinct l.comu_list_name ,
+    i.comu_info_comu_job_code,
+    l.comu_list_code,
+    e.emp_info_name,
+    j.job_info_name
+    FROM comu_list l
+    join comu_info i on(l.comu_list_code=i.comu_info_comu_code)
+    join emp_info e on(i.comu_info_emp_no=e.emp_info_emp_no)
+    join job_info j on(e.emp_info_job_code=j.job_info_code)
+    join comu_post c on(c.comu_post_list_code = l.comu_list_code)
+    where i.comu_info_comu_job_code like '대표%'
+    and c.comu_post_type = '1' -->
 	  SELECT 
     * 
     FROM comu_list l
@@ -171,6 +202,7 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no)
     join emp_info e on(i.comu_info_emp_no=e.emp_info_emp_no)
     join job_info j on(e.emp_info_job_code=j.job_info_code)
     where i.comu_info_comu_job_code like '대표%'
+    
 	</select>
 	<!-- 가입신청서에 동호회 이름 가져오기 -->
 	<select id="comuApp" parameterType="String" resultType="comuList">
@@ -221,6 +253,67 @@ join comu_info i on(i.comu_info_emp_no = e.emp_info_emp_no)
 join comu_list l on(i.comu_info_comu_code = l.comu_list_code)
 where e.emp_info_emp_no = #{emp_info_emp_no}
 	</select>
+	
+	<!-- 사원번호 가져오기 -->
+	
+	<select id="empNo" resultType="String" parameterType="string">
+		 select emp_info_emp_no
+		from  emp_info 
+		where emp_info_emp_no =  #{emp_no}
+
+	</select>
+	
+	<select id="viewEmpNo"  resultType="String" parameterType="string">
+	select comu_post_wrtr_emp_no
+	from comu_post
+	where comu_post_ordr = #{comu_post_ordr}
+	</select>
+	
+	<!-- comuInfoNo 가져오기 -->
+	<select id="comuInfoNo" resultType="String" parameterType="string">
+	 select i.comu_info_comu_code
+			from comu_info i
+            join comu_list l on(l.comu_list_code = i.comu_info_comu_code)
+			where comu_info_emp_no =#{comu_info_emp_no}
+	
+		<!-- select comu_info_emp_no
+		from comu_post
+		where comu_info_emp_no =#{comu_info_emp_no} -->
+	</select>
+	
+	<!-- 동호회 가입 시키기 -->
+	<select id="comuApp3"  resultType="String" parameterType="string">
+		select comu_info_comu_code
+			from comu_info
+			where comu_info_emp_no = #{comu_info_emp_no}
+	</select>
+	
+	<select id="comuApp4"  resultType="String" parameterType="string">
+		select distinct i.comu_info_emp_no
+			from emp_info e
+			join comu_info i on(e.emp_info_emp_no = i.comu_info_emp_no)
+			where emp_info_emp_no = #{emp_info_emp_no}
+	</select>
+	
+		<insert id="comuInfoInsert" parameterType="comu">
+insert into comu_info
+(comu_info_emp_no, 
+comu_info_comu_code, 
+comu_info_sdat,
+comu_info_edat, 
+comu_info_comu_job_code,
+comu_info_join, 
+comu_info_join_rqst_dat
+)
+    VALUES(
+    #{comu_info_emp_no}, 
+    #{comu_info_comu_code},
+    SYSDATE, 
+    null, 
+    '일반회원',
+    'Y' , 
+    TO_DATE('2020-10-13', 'YYYY-MM-DD'))
+	</insert>
 </mapper>
 
 

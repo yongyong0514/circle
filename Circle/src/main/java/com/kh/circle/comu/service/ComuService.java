@@ -33,8 +33,13 @@ public interface ComuService {
 	// 글쓰기
 	public void comuInsert(Comu comu);
 	
+	
+	
 	//글 보기
 	public List<Comu> comuDetail(String comu_post_ordr);
+	//가입신청서 보기
+	public List<Comu> appDetail(String comu_post_ordr);
+	
 	
 	//글 수정
 	Comu comuCheck(String comu_post_ordr);
@@ -43,6 +48,9 @@ public interface ComuService {
 	
 	//글 삭제하기
 	void comuDelete(String comu_post_ordr);
+	//가입신청서 삭제하기
+	void appDelete(String comu_post_ordr);
+	
 	
 	//동호회 리스트 가져오기
 	List<ComuList> comuListName(String comu_list_code);
@@ -58,6 +66,17 @@ public interface ComuService {
 	//leftBar 리스트 가져오기
 	public List<EmpInfo> leftList(String emp_info_emp_no);
 	
+	String comuEmpNo(String emp_no);
+
+	String viewEmpNo(String comu_post_ordr);
+	
+	//리스트에 comu_info_emp_no 값 가져오기
+	String comuInfoNo(String comu_info_emp_no);
+	
+	public String comuApp3(String comu_info_comu_code);
+	public String comuApp4(String emp_no);
+	// 글쓰기
+	public void comuInfoInsert(Comu comu);
 	
 	 //void add(Comu comu, MultipartFile insert) throws IllegalStateException,IOException;
 	  

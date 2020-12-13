@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -82,9 +83,15 @@ public class ComuServiceImp implements ComuService {
 	public List<Comu> comuDetail(String comu_post_ordr) {
 
 		dao.CountView(comu_post_ordr);
-		
+	
+		 
 		return dao.comuDetail(comu_post_ordr);
 	}
+	@Override
+	public List<Comu> appDetail(String comu_post_ordr){
+		return dao.appDetail(comu_post_ordr);
+	}
+	
 	
 	//수정화면
 	@Override 
@@ -102,11 +109,13 @@ public class ComuServiceImp implements ComuService {
 	//삭제하기
 	@Override
 	public void comuDelete(String comu_post_ordr) {
-
-
 		dao.comuDelete(comu_post_ordr);
 	}
-
+	//가입 신청서 삭제하기
+	@Override
+	public void appDelete(String comu_post_ordr) {
+		dao.appDelete(comu_post_ordr);
+	}
 	//동호회 리스트 가져오기
 	@Override
 	public List<ComuList> comuListName(String comu_list_code) {
@@ -142,6 +151,45 @@ public class ComuServiceImp implements ComuService {
 		
 		System.out.println("서비스인데 레프트 바 가져왔냐" +emp_info_emp_no);
 		return dao.leftList(emp_info_emp_no);
+	}
+
+		//사원번호 가져오기
+	@Override
+	public String comuEmpNo(String emp_no) {
+	
+		return dao.comuEmpNo(emp_no);
+	}
+
+	@Override
+	public String viewEmpNo(String comu_post_ordr) {
+		
+		return dao.viewEmpNo(comu_post_ordr);
+	}
+
+	@Override
+	public String comuInfoNo(String comu_info_emp_no) {
+		// TODO Auto-generated method stub
+		return dao.comuInfoNo(comu_info_emp_no);
+	}
+	
+	
+	//동호회 가입시키기
+	@Override
+	public String comuApp3(String comu_info_comu_code) {
+
+
+		return dao.comuApp3(comu_info_comu_code);
+	}
+
+	@Override
+	public void comuInfoInsert(Comu comu) {
+		dao.comuInfoInsert(comu);
+	}
+
+	@Override
+	public String comuApp4(String emp_no) {
+		
+		return dao.comuApp4(emp_no);
 	}	
 
 	

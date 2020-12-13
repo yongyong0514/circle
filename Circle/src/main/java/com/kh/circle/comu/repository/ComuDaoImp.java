@@ -85,7 +85,17 @@ public class ComuDaoImp implements ComuDao {
 	@Override
 	public List<Comu> comuDetail(String comu_post_ordr) {
 
-		return sqlSession.selectList("comu.comuDetail",comu_post_ordr);
+		List<Comu> comu = sqlSession.selectList("comu.comuDetail",comu_post_ordr);
+
+		return comu;
+	}
+	//가입신청서 상세조회
+	@Override
+	public List<Comu> appDetail(String comu_post_ordr){
+		
+		List<Comu> comu = sqlSession.selectList("comu.appDetail",comu_post_ordr);
+		return comu;
+	
 	}
 	//조회수
 	@Override
@@ -111,11 +121,13 @@ public class ComuDaoImp implements ComuDao {
 	//삭제하기
 	@Override
 	public void comuDelete(String comu_post_ordr) {
-		
-		
 		sqlSession.delete("comu.comuDelete",comu_post_ordr);
 	}
-	
+	//삭제하기
+	@Override
+	public void appDelete(String comu_post_ordr) {
+		sqlSession.delete("comu.appDelete",comu_post_ordr);
+	}
 	//동호회 리스트 가져오기
 	@Override
 	public List<ComuList> comuListName(String comu_list_code) {
@@ -157,6 +169,46 @@ public class ComuDaoImp implements ComuDao {
 		
 		System.out.println("dao 레프트 바 가져오냐 " + emp_info_emp_no);
 		return sqlSession.selectList("comu.leftList",emp_info_emp_no);
+		
+	}
+	
+	
+	//사원번호 가져오기
+	@Override
+	public String comuEmpNo(String emp_no) {
+		String emp_info_no = sqlSession.selectOne("comu.empNo",emp_no);
+		return emp_info_no;
+	}
+
+	@Override
+	public String viewEmpNo(String comu_post_ordr) {
+		String comu = sqlSession.selectOne("comu.viewEmpNo",comu_post_ordr);
+		return comu;
+	}
+
+	@Override
+	public String comuInfoNo(String comu_info_emp_no) {
+		String comu_info_no = sqlSession.selectOne("comu.comuInfoNo"+comu_info_emp_no);
+		return comu_info_no;
+	}
+	
+	
+	//동호회 회원 insert
+	@Override
+	public String comuApp3(String comu_info_comu_code) {
+		String emp_name = sqlSession.selectOne("comu.comuApp3",comu_info_comu_code);
+		return emp_name;
+	}
+
+	
+	@Override
+	public String comuApp4(String emp_no) {
+		String emp_info_no = sqlSession.selectOne("comu.comuApp4",emp_no);
+		return emp_info_no;
+	}
+	@Override
+	public void comuInfoInsert(Comu comu) {
+		sqlSession.insert("comu.comuInfoInsert",comu);
 		
 	}
 	

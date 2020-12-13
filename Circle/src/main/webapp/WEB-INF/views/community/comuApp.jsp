@@ -12,6 +12,10 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/community/comuAdd.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
 <style>
 
 .formBox1{
@@ -40,8 +44,15 @@
 }
 </style>
 <script type="text/javascript">
-	function submit(){
-		alert("가입신청 완료");
+	/* $(document).ready(function(){
+		$('input[=submit]').on('click', function(e){
+			alert('gg');
+		})
+	}) */
+	
+	function asubmit(){
+		var x = $(this);
+		alert(x);
 	}
 </script>
 
@@ -101,7 +112,8 @@
            
             	<div colspan="2"><input type="submit"
 										style="background-color: #F0FBD1; color: black;"
-										class="btn btn-default pull-right" value="가입신청" onclick="submit();" /> <input
+										class="btn btn-default pull-right" value="가입신청" onclick="asubmit();" /> 
+										<input
 										type="button" style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right"
 										onclick="javascript:location.href='comuListName'" value="글목록" />
