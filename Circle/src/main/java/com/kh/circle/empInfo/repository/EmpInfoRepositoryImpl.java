@@ -67,11 +67,7 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	@Override
 	public String searchWithCol(Map<String, Object> beforeMap) {
 		
-		System.out.println("beforeMap : " + beforeMap);
-		
 		String temp = sqlSession.selectOne("empInfo.searchWithCol", beforeMap);
-		
-		System.out.println("temp: " + temp);
 		
 		return temp;
 				
@@ -86,7 +82,13 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 	}
 	
 	@Override
-	public void addChange(Map<String, Object> compareMap) {
+	public void addChangeCol(Map<String, Object> compareMap) {
 		sqlSession.insert("infoModify.addChange", compareMap);
+	}
+
+	@Override
+	public void updateChangeInfo(EmpInfoAll changeInfo) {
+
+		sqlSession.update("empInfo.updateChange", changeInfo);
 	}
 }

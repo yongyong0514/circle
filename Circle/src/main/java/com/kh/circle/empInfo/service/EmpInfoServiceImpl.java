@@ -112,57 +112,45 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 
 	@Override
 	public List<String> compare(Map<String, Object> inputMap) {
-		//인자 전달용 map
+		// 인자 전달용 map
 		Map<String, Object> compareMap = new HashMap<String, Object>();
 
-		//1. 기존 정보에서 변경된 컬럼명 추출
+		// 1. 기존 정보에서 변경된 컬럼명 추출
 		// - updatedColumnNameList
 		List<String> ucnList = empInfoRepository.compare((EmpInfoAll) inputMap.get("changeEmpInfoAll"));
-		
-		//2. 리스트 값에 따라 해당하는 컬럼 업데이트
-		//	1) 정보변경이력 테이블에 변경내역 insert
-			EmpInfoAll originEmpInfo = empInfoRepository.empInfoOne(((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
-			
-			EmpInfoAll changeInfo = (EmpInfoAll) inputMap.get("changeEmpInfoAll");
-			compareMap.put("emp_info_emp_no", changeInfo.getEmp_info_emp_no()); // 변경 대상의 사원번호
-			
-			//컬럼별(반복) insert
-			for(String col : ucnList) {
-				compareMap.put("col", col);		// 항목(컬럼)명
 
-				//변경 전 정보 추출
-				Map<String, Object> beforeMap = new HashMap<String, Object>();
+		// 2. 리스트 값에 따라 해당하는 컬럼 업데이트
+		//// 1) 정보변경이력 테이블에 변경내역 insert
+		EmpInfoAll changeInfo = (EmpInfoAll) inputMap.get("changeEmpInfoAll");
+		compareMap.put("emp_info_emp_no", changeInfo.getEmp_info_emp_no()); // 변경 대상의 사원번호
 
-				beforeMap.put("emp_info_emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
-				
-				beforeMap.put("col", col);
-				
-				String befr = empInfoRepository.searchWithCol(beforeMap);
-				compareMap.put("befr", befr);	// 변경 전 정보
-				
-				//변경 후 정보 추출
-				// 컬럼명 - 값으로 맵에 저장하여 해당 값만 추출
-				
-				Map<String, Object> afterColMap = empInfoRepository.setAfterCol(changeInfo);
-				compareMap.put("aftr", afterColMap.get(col));	// 변경 후 정보
-				
-				compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no"));	// 수정자 사원번호
-				
-				
-				log.info("compare map:  " + compareMap);
-				
-				
-				empInfoRepository.addChange(compareMap);
-				
-				
-			}
-			
-		
-		////2) 해당 값 update
-		
-		
-		
-		
+		// 컬럼별(반복) insert
+		for (String col : ucnList) {
+			compareMap.put("col", col); // 항목(컬럼)명
+
+			// 변경 전 정보 추출
+			Map<String, Object> beforeMap = new HashMap<String, Object>();
+
+			beforeMap.put("emp_info_emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+
+			beforeMap.put("col", col);
+
+			String befr = empInfoRepository.searchWithCol(beforeMap);
+			compareMap.put("befr", befr); // 변경 전 정보
+
+			// 변경 후 정보 추출
+			// 컬럼명 - 값으로 맵에 저장하여 해당 값만 추출
+
+			Map<String, Object> afterColMap = empInfoRepository.setAfterCol(changeInfo);
+			compareMap.put("aftr", afterColMap.get(col)); // 변경 후 정보
+
+			compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no")); // 수정자 사원번호
+
+			empInfoRepository.addChangeCol(compareMap);
+		}
+
+		//// 2) 해당 값 update
+		empInfoRepository.updateChangeInfo(changeInfo);
 		
 		
 		return null;

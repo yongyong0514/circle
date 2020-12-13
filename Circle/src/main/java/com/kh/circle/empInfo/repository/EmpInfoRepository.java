@@ -22,6 +22,8 @@ public interface EmpInfoRepository {
 
 	public Map<String, Object> setAfterCol(EmpInfoAll changeInfo);
 	
-	public void addChange(Map<String, Object> compareMap);
+	public void addChangeCol(Map<String, Object> compareMap);
+	
+	public void updateChangeInfo(EmpInfoAll changeInfo);
 	
 }
