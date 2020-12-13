@@ -53,8 +53,6 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 			//// 2) 주간 누적 근무시간(분)
 			WeekStackInfo wsInfo  = attendanceInfoRepository.weekStackWorkTime(inputMap);
 			
-			System.out.println("sDate: " + sDate);
-			
 			wsInfo.setWeekStartDate(sDate);
 			wsInfo.setWeekEndDate(eDate);
 			wsInfo.setWorktimePerWeek(wtime);

@@ -60,7 +60,7 @@
 		var text = "";
 		
 	    if(isNull(sTime)){
-	    	text = "미등록";
+	    	text = "출근 전";
 		} else{
 			text = transformDateFormat(time, "time");
 		}

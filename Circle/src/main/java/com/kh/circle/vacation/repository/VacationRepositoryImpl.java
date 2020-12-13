@@ -44,9 +44,12 @@ public class VacationRepositoryImpl implements VacationRepository{
 	@Override
 	public double usedVacationDays(String emp_no) {
 
-		double usedVacationDays = sqlSession.selectOne("vacation.usedVacationDays", emp_no);
-		
-		return usedVacationDays;
+		Object obj = sqlSession.selectOne("vacation.usedVacationDays", emp_no);
+		if(obj != null) {
+			return (double) obj;
+		} else {
+			return 0.0;
+		}
 	}
 
 	@Override
