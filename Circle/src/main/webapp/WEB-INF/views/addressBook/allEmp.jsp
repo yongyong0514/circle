@@ -205,7 +205,6 @@
 		// 페이지 이동버튼(숫자 또는 화살표) 선택 시
 		function moveAll(nowPage, perPage, index){
 			var url = "nowPage=" + nowPage + "&perPage=" + perPage + "&index=" + index;
-			url.concat(nowPage, "&perPage=", perPage);
 			
 			if( !isNull(${name}) ){
 				url += "&name=".concat(${name});

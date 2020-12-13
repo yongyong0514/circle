@@ -102,3 +102,28 @@ form > select{
 .infoListTable th{
 	font-weight: bold;
 }
+
+
+
+.changeBtn{
+	font-size: medium;
+	widht:100%;
+	text-align: center;
+}
+
+.changeBtn span:hover{
+	cursor: pointer;
+}
+
+.selectedNum{
+	font-size: 2rem;
+	font-weight: bold;
+	color: #0072C6;
+}
+
+.selectedIndex{
+	box-sizing: border-box;
+	background: #0072C6;
+	border: 1px solid  #0072C6;
+	color: white;
+}

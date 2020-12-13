@@ -1,5 +1,6 @@
 package com.kh.circle.empInfo.service;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.circle.addressBook.entity.PagingInfo;
 import com.kh.circle.empInfo.entity.CareerInfo;
 import com.kh.circle.empInfo.entity.CertificateInfo;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
@@ -78,11 +80,86 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	}
 
 	@Override
-	public List<EmpInfoAll> empInfoList(Map<String, Object> inputMap) {
-
-		List<EmpInfoAll> empList = empInfoRepository.empInfoList(inputMap);
+	public Map<String, Object> empInfoList(PagingInfo pInfo) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		
-		return empList;
+		// 1. pagingInfo 객체 완성
+		pInfo.setPerGroup(5);
+		pInfo.setTotal(empInfoRepository.total(pInfo));
+		pInfo.calcValues();
+		
+		map.put("pInfo", pInfo);
+		
+		// 2. paingInfo 객체 전달하여 출력
+		List<EmpInfoAll> empList = empInfoRepository.empInfoList(pInfo);
+		
+		map.put("empList", empList);
+		
+		return map;
+	}
+
+	@Override
+	public String checkPwd(Map<String, Object> map) {
+		String userPwd = empInfoRepository.checkPwd(map);
+		
+		if(map.get("curPwd").equals(userPwd)) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+
+	@Override
+	public List<String> compare(Map<String, Object> inputMap) {
+		// 인자 전달용 map
+		Map<String, Object> compareMap = new HashMap<String, Object>();
+
+		// 1. 기존 정보에서 변경된 컬럼명 추출
+		// - updatedColumnNameList
+		List<String> ucnList = empInfoRepository.compare((EmpInfoAll) inputMap.get("changeEmpInfoAll"));
+
+		// 2. 리스트 값에 따라 해당하는 컬럼 업데이트
+		//// 1) 정보변경이력 테이블에 변경내역 insert
+		EmpInfoAll changeInfo = (EmpInfoAll) inputMap.get("changeEmpInfoAll");
+		compareMap.put("emp_info_emp_no", changeInfo.getEmp_info_emp_no()); // 변경 대상의 사원번호
+
+		// 컬럼별(반복) insert
+		for (String col : ucnList) {
+			compareMap.put("col", col); // 항목(컬럼)명
+
+			// 변경 전 정보 추출
+			Map<String, Object> beforeMap = new HashMap<String, Object>();
+
+			beforeMap.put("emp_info_emp_no", ((EmpInfoAll) inputMap.get("changeEmpInfoAll")).getEmp_info_emp_no());
+
+			beforeMap.put("col", col);
+
+			String befr = empInfoRepository.searchWithCol(beforeMap);
+			compareMap.put("befr", befr); // 변경 전 정보
+
+			// 변경 후 정보 추출
+			// 컬럼명 - 값으로 맵에 저장하여 해당 값만 추출
+
+			Map<String, Object> afterColMap = empInfoRepository.setAfterCol(changeInfo);
+			compareMap.put("aftr", afterColMap.get(col)); // 변경 후 정보
+
+			compareMap.put("mdr_emp_no", inputMap.get("mdr_emp_no")); // 수정자 사원번호
+
+			empInfoRepository.addChangeCol(compareMap);
+		}
+
+		//// 2) 해당 값 update
+		empInfoRepository.updateChangeInfo(changeInfo);
+		
+		
+		return null;
+	}
+
+	@Override
+	public List<String> updatedColName(EmpInfoAll empInfoAll) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

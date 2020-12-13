@@ -103,8 +103,8 @@ td {
 }
 
 .detailInfo li{
-	padding-left: 2rem;
-	padding-right: 2rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
 }
 
 .detailInfo table{
@@ -112,6 +112,11 @@ td {
 	width:100%;
 	margin-top:1rem;
 	margin-bottom:1rem;
+}
+
+.xSmallInfo{
+	font-size: x-small;
+	padding-left: 0.5rem;
 }
 
 .detailInfo table th,
@@ -125,7 +130,7 @@ td {
 }
 
 .detailCertificationTable tr td,
-.detailPersonalInfoTable tr td
+.detailPersonalInfoTable tr td,
 .detailCareerTable tr td,
 .detailRewordDisciplineTable tr td,
 .changeList tr td{
@@ -156,6 +161,13 @@ td {
 	width: calc(100% - 1rem);
 }
 
+.infoTableDiv {
+	box-sizing: content-box;
+	max-height: 300px;
+	overflow: auto;
+	padding: 0.5rem;	
+}
+
 .more{
 	display: none;
 }
@@ -166,4 +178,16 @@ td {
 
 .showInfo{
 	display: block;
+}
+
+.newInput{
+	font-size: xx-small;
+	text-align: center;
+	border: none;
+	border-bottom: 1px solid rgba(100, 100, 100, 0.5);
+}
+
+.wrongPwd{
+	font-weight: bold;
+	color: red;
 }

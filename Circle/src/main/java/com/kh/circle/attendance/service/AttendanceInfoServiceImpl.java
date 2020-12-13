@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.kh.circle.attendance.entity.AttendanceInfo;
 import com.kh.circle.attendance.entity.AttendanceInfoSummary;
 import com.kh.circle.attendance.entity.WeekStackInfo;
-import com.kh.circle.attendance.entity.WorkAndOff;
 import com.kh.circle.attendance.repository.AttendanceInfoRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,16 +42,19 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 		String sDate = "";
 		String eDate = "";
 		
-		if(!weekAttList.isEmpty()) {
+		if(!weekAttList.isEmpty() && !(weekAttList.size() == 0)) {
 	
-			sDate =(String) ( (List<AttendanceInfo>) map.get("weekAttList") ).get(0).getWeekStartDate();
-			eDate =(String) ( (List<AttendanceInfo>) map.get("weekAttList") ).get(0).getWeekEndDate();
+			sDate = (String) weekAttList.get(0).getWeekStartDate();
+			eDate = (String) weekAttList.get(0).getWeekEndDate();
 			
 			int wtime = ( (int) map.get("worktimePerWeek"));
 	
 			//// 1) 주간 누적 근무시간(시)
 			//// 2) 주간 누적 근무시간(분)
 			WeekStackInfo wsInfo  = attendanceInfoRepository.weekStackWorkTime(inputMap);
+			
+			System.out.println("sDate: " + sDate);
+			
 			wsInfo.setWeekStartDate(sDate);
 			wsInfo.setWeekEndDate(eDate);
 			wsInfo.setWorktimePerWeek(wtime);
@@ -140,9 +142,6 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 			
 			//근무시간 리스트 추출
 			AttendanceInfoSummary empSummary = attendanceInfoRepository.empSummary(inputMap, emp_no);
-			
-			
-		
 		}
 		
 		
