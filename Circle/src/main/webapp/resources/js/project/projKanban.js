@@ -1,45 +1,67 @@
-const list_items = document.querySelectorAll('.list-item');
-const lists = document.querySelectorAll('.list');
+function allowDrop(ev) {
+    ev.preventDefault();
+}
 
-let draggedItem = null;
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
 
-for (let i = 0; i < list_items.length; i++) {
-	const item = list_items[i];
+function drop(ev, el) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    el.appendChild(document.getElementById(data));
+}
 
-	item.addEventListener('dragstart', function () {
-		draggedItem = item;
-		setTimeout(function () {
-			item.style.display = 'none';
-		}, 0)
-	});
+function newtask(el) {
+	var taskArray = [];
+	var matches = document.getElementsByClassName("divtask");
+	for (var i = 0, l = matches.length; i < l; i++) 
+		taskArray.push(matches[i].getAttribute("id"));
+	
+	if( taskArray.length ) {
+		var nexttask = Math.max.apply(null, taskArray) + 1;
+	} else {
+		var nexttask = 1;
+	}
+	
+	var newDiv = document.createElement("div");	
+	newDiv.id = nexttask;
+	newDiv.className = 'divtask';
+	newDiv.draggable = 'true';
+	newDiv.addEventListener('dragstart', function() {drag(event)}, false);
+	
+	var tasktitle = document.createElement('P');
+	var t = document.createTextNode("Task title");
+	tasktitle.appendChild(t);     
+	tasktitle.className = 'taskheader';
+	tasktitle.contentEditable = "true";
+	newDiv.appendChild(tasktitle);
 
-	item.addEventListener('dragend', function () {
-		setTimeout(function () {
-			draggedItem.style.display = 'block';
-			draggedItem = null;
-		}, 0);
-	})
+	var taskcontent = document.createElement('P');
+	var t = document.createTextNode("Task description");
+	taskcontent.appendChild(t);     
+	taskcontent.className = 'taskcontent';
+	taskcontent.contentEditable = "true";
+	newDiv.appendChild(taskcontent);
+	
+	var tasklink = document.createElement('P');
+	var t = document.createTextNode("Task owner");
+	tasklink.appendChild(t);     
+	tasklink.className = 'tasklink';
+	tasklink.contentEditable = "true";
+	newDiv.appendChild(tasklink);
+	
+	document.getElementsByTagName('div')[3].appendChild(newDiv);
+}
 
-	for (let j = 0; j < lists.length; j ++) {
-		const list = lists[j];
-
-		list.addEventListener('dragover', function (e) {
-			e.preventDefault();
-		});
-		
-		list.addEventListener('dragenter', function (e) {
-			e.preventDefault();
-			this.style.backgroundColor = 'rgba(0, 0, 0, 0.2)';
-		});
-
-		list.addEventListener('dragleave', function (e) {
-			this.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-		});
-
-		list.addEventListener('drop', function (e) {
-			console.log('drop');
-			this.append(draggedItem);
-			this.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
-		});
+function deletediv(ev) {
+    ev.preventDefault();
+	var data=ev.dataTransfer.getData("text");
+	var ev = document.getElementById(data);
+	
+	var bintest = confirm("Archive this task?");
+		if (bintest == true) {
+			ev.parentNode.removeChild(ev);
+		} else {
 	}
 }

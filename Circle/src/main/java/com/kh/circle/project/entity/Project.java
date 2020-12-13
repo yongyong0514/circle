@@ -71,4 +71,10 @@ public class Project {
 	//deptinfo
 	private String dept_info_code;
 	private String dept_info_name;
+	
+	
+	
+	
+	
+	
 }

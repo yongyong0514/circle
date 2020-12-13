@@ -36,30 +36,12 @@
 			<div>
 				<jsp:include page="../project/projHomebar.jsp" />
 			</div>
+			<div>
+				<jsp:include page="../project/projKanbanPart.jsp" />
+				</div>
 
 			<!-- 내용 -->
-
-<div class="container">
-			<div class="app">
-				<header>
-					<h1>DRAG n DROP</h1>
-					<div>추가하기</div>
-				</header>
-				<div class="lists">
-				<c:forEach   var="projKanban" items="${projKanban}">
-					<div class="list">
-						<div class="title">${projKanban.prog_title}</div>
-						<div class="list-item" draggable="true">${projKanban.iss_title}</div>
-						
-					</div>
-					</c:forEach>
-								</div>
-			</div>
 </div>
-		</div>
-
-
-
-		<script src="<c:url value="/resources/js/project/projKanban.js" />"></script>
+</div>
 </body>
 </html>

@@ -41,7 +41,7 @@
 			<tr>
 
 				<td><a
-					href='<c:url value='/project/projIssMain?iss_code=${projDetail2.iss_code}'/>'>${projDetail2.iss_title}</a></td>
+					href='<c:url value='/project/projIssDetail?iss_code=${projDetail2.iss_code}'/>'>${projDetail2.iss_title}</a></td>
 				<td>${projDetail2.emp_info_name}</td>
 				<td>${projDetail2.prog_title}</td>
 				<td>${projDetail2.situ_title}</td>
@@ -61,18 +61,17 @@
 						<th class="iss_title">관련 업무명</th>
 						<th class="pro_title">작성자</th>
 						<th class="prog_title">파일명</th>
-						<th class="situ_title">다운로드</th>
 					</tr>
 	<c:forEach var="projDetail3" items="${projDetail3}">
 						<tr>
 							<td><a
-								href='<c:url value='/project/projIssMain?iss_code=${projDetail3.iss_code}'/>'>${projDetail3.iss_title}</a></td>
+								href='<c:url value='/project/projIssDetail?iss_code=${projDetail3.iss_code}'/>'>${projDetail3.iss_title}</a></td>
 							<td>
 							<td>
 							${projDetail3.emp_info_name }
 							</td>
-							<td>${projDetail3.files_oname}</td>
-							<td><a href="/project/projdownload?no=${projDetail3.files_code}">다운로드</a></td>
+							<td><a 
+							href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>${projDetail3.files_oname}</a></td>
 						</tr>
 	</c:forEach>
 				</table>

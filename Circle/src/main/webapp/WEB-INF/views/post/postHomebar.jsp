@@ -5,10 +5,15 @@
 
 <!DOCTYPE html>
 <html>
-<script>
+<style type="text/css">
+hearder{
+width: 20%;
+text-align:left;
+}
 
 
-</script>
+
+</style>
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css"
@@ -16,22 +21,16 @@
 </head>
 <body>
 	<div class="postHomeBar">
-		<div>
-		<c:choose>
-		<c:when test="${! empty post_title }">
-			<c:if test="${! empty post_title }">
-				<c:out value="${post_title }" />
-			</c:if>
-			</c:when>
-			<c:otherwise>
-				<c:out value="전체 게시판"/>
-			</c:otherwise>
-			</c:choose>
+		<div class="hearder">
+		<c:forEach var="postSelect" items="${postSelect}">
+		<p class="head">${postSelect.post_title}게시판에 오신 것을 환영합니다.</p>
+		</c:forEach>
 		</div>
 		<div>
 
 
 				<!-- 게시판 선택용 -->
+				<div><p class="sub">이동할 게시판을 선택 하세요</p> </div>
 			<select name="post_type" onchange="location.href=this.value">
 				<option value="">이동할 게시판</option>
 				<option  value="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">게시판 메인</option>
@@ -44,6 +43,7 @@
 			
 			<button type="button" id="postInsert" onclick="location.href='${pageContext.request.contextPath}/post/postInsert'">글쓰기</button>
 		</div>
+		
 	</div>
 
 

@@ -17,16 +17,8 @@
 <body>
 	<div class="postHomeBar">
 		<div>
-		<c:choose>
-		<c:when test="${! empty postName }">
-			<c:if test="${! empty postName }">
-				<c:out value="${postName }" />
-			</c:if>
-			</c:when>
-			<c:otherwise>
 				<c:out value="프로젝트"/>
-			</c:otherwise>
-			</c:choose>
+	
 		</div>
 		<div>
 		<div>
@@ -42,18 +34,12 @@
 				업무 생성</button>
 		</div>
 		<div>
-			<button class="buttonSize"
-				onclick="location='${pageContext.request.contextPath}/project/projMain'">프로젝트
-				리스트</button>
+			<a	href="${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트 리스트</a>
+			
 		</div>
 		<div>
-			<button class="buttonSize"
-				onclick="location='${pageContext.request.contextPath}/project/projIssAll'">업무
-				리스트</button>
-		</div>
-	<div>
-			<button class="buttonSize"
-				onclick="location='${pageContext.request.contextPath}/project/projKanban'">Kanban Board</button>
+			
+				<a	href="${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무리스트</a>
 		</div>
 			<div>
 			<button class="buttonSize"

@@ -1,6 +1,7 @@
 package com.kh.circle.project.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.core.io.ByteArrayResource;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.project.entity.ProjFile;
 import com.kh.circle.project.entity.ProjPaging;
 import com.kh.circle.project.entity.Project;
 
@@ -19,7 +21,7 @@ public interface ProjectService {
 
 	List<Project> projMain(String emp_no);
 
-	int countPost();
+	int countProject();
 
 	String projEmpNo(String emp_no);
 
@@ -50,10 +52,19 @@ public interface ProjectService {
 
 	List<Project> projMemberlist(String pro_code);
 
-	ResponseEntity<ByteArrayResource> download(int iss_code);
 
 
-	List<Project> projDetail3(String iss_code);
+	List<ProjFile> projDetail3(String pro_code);
+
+	List<Project> projGetIss(String pro_code);
+
+	ResponseEntity<ByteArrayResource> download(String files_code) throws UnsupportedEncodingException, IOException;
+
+	List<ProjFile> projIssDetail(String iss_code);
+
+	List<Project> projKanban(String pro_code);
+
+	String projKanbanHead(String pro_code);
 
 
 }

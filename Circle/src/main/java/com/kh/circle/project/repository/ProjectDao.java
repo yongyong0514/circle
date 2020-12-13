@@ -3,6 +3,7 @@ package com.kh.circle.project.repository;
 import java.util.List;
 
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.project.entity.ProjFile;
 import com.kh.circle.project.entity.ProjPaging;
 import com.kh.circle.project.entity.Project;
 
@@ -12,7 +13,7 @@ public interface ProjectDao {
 
 	List<Project> projIssMain(String pro_code);
 
-	int countProj();
+	int countProject();
 
 	String projEmpNo(String emp_no);
 
@@ -40,7 +41,15 @@ public interface ProjectDao {
 
 	List<Project> projMemberlist(String pro_code);
 
-	List<Project> projDetail3(String iss_code);
+	List<ProjFile> projDetail3(String pro_code);
+
+	List<Project> projGetIss(String pro_code);
+
+	List<ProjFile> projIssDetail(String iss_code);
+
+	List<Project> projKanban(String pro_code);
+
+	String projKanbanHead(String pro_code);
 
 
 

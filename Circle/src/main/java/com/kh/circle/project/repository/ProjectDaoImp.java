@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.project.entity.ProjFile;
 import com.kh.circle.project.entity.ProjPaging;
 import com.kh.circle.project.entity.Project;
 
@@ -34,7 +35,7 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 
 	@Override
-	public int countProj() {
+	public int countProject() {
 
 		int num = sqlSession.selectOne("project.projCount");
 
@@ -85,10 +86,8 @@ public class ProjectDaoImp implements ProjectDao {
 		
 		
 		String iss_situ_code = "SITU000001";
-		System.out.println(iss_situ_code);
 		project.setIss_situ_code(iss_situ_code);
 		
-		System.out.println("DDDDDDDDDDDDWE" +  project + "sksksksksks");
 		
 		sqlSession.insert("project.proIssInsert", project);
 		
@@ -165,9 +164,47 @@ List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", p
 	}
 
 	@Override
-	public List<Project> projDetail3(String iss_code) {
-		List<Project> projDetail3 = sqlSession.selectList("project.projDetail3", iss_code);
+	public List<ProjFile> projDetail3(String pro_code) {
+		
+		List<ProjFile> projDetail3 = sqlSession.selectList("project.projDetail3", pro_code);
+		
+		
 		return projDetail3;
+	}
+
+	@Override
+	public List<Project>  projGetIss(String pro_code) {
+		
+		
+		
+		List<Project>  iss_code = sqlSession.selectList("project.projGetIss", pro_code);
+
+		
+		return iss_code;
+	}
+
+	@Override
+	public List<ProjFile> projIssDetail(String iss_code) {
+
+		List<ProjFile> iss = sqlSession.selectList("project.projIssDetail", iss_code);
+		
+		return iss;
+	}
+
+	@Override
+	public List<Project> projKanban(String pro_code) {
+
+		List<Project> list = sqlSession.selectList("project.projKanban", pro_code);
+		
+		return list;
+	}
+
+	@Override
+	public String projKanbanHead(String pro_code) {
+
+		String projKanbanHead  = sqlSession.selectOne("project.projKanbanHead", pro_code);
+		
+		return projKanbanHead;
 	}
 
 
