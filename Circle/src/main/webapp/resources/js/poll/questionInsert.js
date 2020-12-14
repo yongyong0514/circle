@@ -133,6 +133,10 @@ $(document).ready(function(){
 		
 		/* 문항 타입 선택 */
 		$(document).on("change","select[name=question-type]",function(){
+		
+			selectChange();
+		});
+		function selectChange(){
 			switch($("select[name=question-type]").val()){
 			/* 선택형 선택시 */
 			case "select" : $("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
@@ -158,7 +162,7 @@ $(document).ready(function(){
 							});
 							break;
 			}
-		});
+		}
 		
 				/*********************************
 		** 선택형 문항 내부 기능 ** 
@@ -222,11 +226,28 @@ $(document).ready(function(){
 		**********************************/
 		/* 완료버튼 클릭 */
 		$(document).on("click", ".poll-action span:contains('완료')", function(){
+			
+			
 			confirmAddQuestion();
 			
 		});
 		/* 취소버튼 클릭 */
-		$(document).on("click", ".poll-action span:contains('취소')", removeQuestionEditForm);
+		$(document).on("click", ".poll-action span:contains('취소')", function(){
+			//수정용 or 추가용 확인
+			var x = $(this).closest('.question-item').prop('class');
+			
+			console.log(x);
+			
+			if(x == 'question-item question-item-modify'){
+				$(this).closest('.question-item-modify').next().show();
+				$(this).closest('.question-item-modify').remove();
+			} else {
+				$(this).closest('.question-item-edit').remove();
+			}
+						
+			
+			/*removeQuestionEditForm();*/
+		});
 		/*********************************/
 		/* 문항 개별삭제 아이콘 클릭 */
 		$(document).on("click", ".remove-question-btn", function(){
