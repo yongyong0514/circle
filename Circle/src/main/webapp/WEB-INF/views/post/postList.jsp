@@ -9,6 +9,8 @@
 <title>Circle</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
+	<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/post/postTable.css">
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

@@ -8,86 +8,10 @@
 <title>Circle</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/reset.css">
-<style>
-table.postParts {
-	border-collapse: collapse;
-	text-align: left;
-	width: 80%;
-	lin-height: 1.5;
-	margin-top: 50px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-table.postParts thead th {
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	color: #369;
-	border-bottom: 3px solid #036;
-}
-
-table.postParts tbody th {
-	width: 150px;
-	padding: 10px;
-	font-weight: bold;
-	vertical-align: top;
-	border-bottom: 1px solid #ccc;
-	background: #f3f6f7;
-}
-
-table.postParts td {
-	width: 350px;
-	padding: 10px;
-	vertical-align: top;
-	border-bottom: 1px solid #ccc;
-}
-
-div.wrap {
-	position: relative;
-}
-
-select{
-
-width: 200px;
-padding: .8em .5em;
-border: 1px solid #999;
-font-family: inherit;
-background: url('arrow.jpg') no-repeat 95% 50%;
-border-radius: 0px;
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
-}
-
-
-#searchBtn{
-width: 200px;
-padding: .8em .5em;
-border: 1px solid #999;
-font-family: inherit;
-background: url('arrow.jpg') no-repeat 95% 50%;
-border-radius: 0px;
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-}
-
-select::-ms-expand {
-    display: none;
-}
-
-
-</style>
-
-
-
+<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/post/postHomebar.css">
+		<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/post/postTable.css">
 
 
 </head>
@@ -108,12 +32,14 @@ select::-ms-expand {
 
 				<!-- 본문 -->
 
-
+				<div class="tableHearder">
+					<h1>전체보기 게시판</h1>
+				</div>
 
 				<!-- 개수로 보기 -->
-				<div style="float: right;  text-align:right;">
+				<div style="float: right; text-align: right;" class="select">
 					<select id="cntPerPage" name="sel" onchange="selChange()">
-						<option value="5"
+						<option value="5" selected
 							<c:if test="${postCount.cntPerPage == 5}">selected</c:if>>5줄
 							보기</option>
 						<option value="10"
@@ -128,7 +54,7 @@ select::-ms-expand {
 					</select>
 				</div>
 				<!-- 전체 게시판 불러오기 -->
-				<table class="postParts" id="main-table" class="table table-fixed">
+				<table class="post" id="main-table" >
 					<thead>
 						<tr>
 							<th class="head_line post_code" scope="cols" style="width: 10%;">글번호</th>
@@ -153,14 +79,13 @@ select::-ms-expand {
 				</table>
 
 				<!-- 뷰 페이징 처리 -->
-				<div style="text-align:center;">
+				<div style="text-align: center;" class="pagination">
 					<c:set var="Post" />
+					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"	var="p">
 					<c:if test="${paging.startPage != 1}">
 						<a
 							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">◀</a>
 					</c:if>
-					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"
-						var="p">
 						<c:choose>
 							<c:when test="${p == paging.nowPage }">
 								<b>${p}</b>
@@ -185,21 +110,31 @@ select::-ms-expand {
 
 				<!-- 검색 -->
 
-				<div id="postSearch"  style="text-align:center;">
+				<div id="postSearch" style="text-align: center;">
 					<form id="searchForm" method="get"
 						action="${pageContext.request.contextPath}/post/postSearch">
-						<select name="type">
-							<option value="">선택하기</option>
-							<option value="post_title">제목</option>
-							<option value="post_comt">내용</option>
-							<option value="emp_info_name">작성자</option>
+						<div class="postSearch">
+							<select name="type">
+								<option value="" selected>선택하기</option>
+								<option value="post_title">제목</option>
+								<option value="post_comt">내용</option>
+								<option value="emp_info_name">작성자</option>
 
-						</select> <input type="search" name="keyword"> 
-						<input type="submit"
-							id="searchBtn btn" value="검색">
+							</select>
+						</div>
+						<div class="wrapper">
+							<div class="container">
+								<input type="search" class="input" name="keyword"
+									placeholder="Search"> <input type="submit"
+									id="searchBtn btn" class="close-btn" value="검색">
+							</div>
+						</div>
+
 					</form>
 
 				</div>
+
+
 
 
 

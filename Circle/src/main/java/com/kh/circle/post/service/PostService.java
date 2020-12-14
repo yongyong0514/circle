@@ -18,6 +18,8 @@ public interface PostService {
 
 	// 자세히보기
 	List<Post> postMain(Model model, PostPaging postPaging);
+	
+
 
 	List<Post> postParts(String post_type);
 
@@ -53,6 +55,15 @@ public interface PostService {
 	String postEmpNo(String emp_no);
 
 	String viewEmpNo(String post_code);
+
+
+
+	List<Post> selecePost3(PostPaging postPaging);
+
+
+
+
+	
 
 
 }
