@@ -47,45 +47,19 @@ public class VacationServiceImpl implements VacationService {
 	}
 
 	@Override
-	public void addVacation(VacationInfo vacationInfo) {
-		vacationRepository.addVacation(vacationInfo);
-	}
-
-	@Override
 	public SignWriteInsert formVacation(VacationInfo vacationInfo) {
 		// 받아온 정보를 vo형식으로 변환
 		String emp_no = vacationInfo.getEmpNo();
 		
 		
 		// 휴가계 내용 html 형식으로 변환
-		String vType = "";			// 휴가구분
-		String halfType = "";		// 전일/반일 구분
 		String jSignerList = "";	// 결재자 사원번호 List("/"로 연결)
-		
-		switch(vacationInfo.getVacationType()) {
-			case "annual": vType = "연차"; break;
-			case "half": vType = "반차"; break;
-			case "event": vType = "경조사"; break;
-			case "maternity": vType = "출산/육아"; break;
-			case "menstrual": vType = "보건"; break;
-			case "military": vType = "예비군/민방위"; break;
-			case "sick": vType = "병가"; break;
-			case "etc": vType = "기타"; break;
-		}
-
-		switch(vacationInfo.getIsHalf()) {
-			case "full": halfType = "전일"; break;
-			case "amHalf": halfType = "오전반차"; break;
-			case "pmHalf": halfType = "오후반차"; break;
-		}
-		
-		
 		// html 구문
 		String formedNote = "<ul style='list-style-type : disc; padding-left:3rem'>";
 		
 		formedNote += "<li>신청일자 : " + vacationInfo.getRegitDate() + "</li><br>";
-		formedNote += "<li>구분 : " + vType + "</li><br>";
-		formedNote += "<li>전일/반일 : " + halfType + "</li><br>";
+		formedNote += "<li>구분 : " + vacationInfo.getVacationType() + "</li><br>";
+		formedNote += "<li>전일/반일 : " + vacationInfo.getIsHalf() + "</li><br>";
 		formedNote += "<li>기간 : " + vacationInfo.getStartDate() + " ~ " + vacationInfo.getEndDate() + "</li><br>";
 		formedNote += "<li>내용 : " + vacationInfo.getContent() + "</li>";
 
@@ -160,4 +134,14 @@ public class VacationServiceImpl implements VacationService {
 		return signForm;
 	}
 
+	@Override
+	public void addVacation(VacationInfo vacationInfo) {
+		vacationRepository.addVacation(vacationInfo);
+	}
+
+	@Override
+	public String findSignCode(String emp_no) {
+		return vacationRepository.findSignCode(emp_no);
+	}
+	
 }

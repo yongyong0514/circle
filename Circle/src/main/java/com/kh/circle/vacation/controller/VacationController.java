@@ -67,21 +67,42 @@ public class VacationController {
 		vacationInfo.setEmpNo(emp_no);
 		vacationInfo.setEmpName(emp_name);
 
+		String vType = "";			// 휴가구분
+		String halfType = "";		// 전일/반일 구분
+		
+		switch(vacationInfo.getVacationType()) {
+			case "annual": vType = "연차"; break;
+			case "half": vType = "반차"; break;
+			case "event": vType = "경조사"; break;
+			case "maternity": vType = "출산/육아"; break;
+			case "menstrual": vType = "보건"; break;
+			case "military": vType = "예비군/민방위"; break;
+			case "sick": vType = "병가"; break;
+			case "etc": vType = "기타"; break;
+		}
+
+		switch(vacationInfo.getIsHalf()) {
+			case "full": halfType = "전일"; break;
+			case "amHalf": halfType = "오전반차"; break;
+			case "pmHalf": halfType = "오후반차"; break;
+		}
+		
+		vacationInfo.setVacationType(vType);
+		vacationInfo.setIsHalf(halfType);
+		
+		
 		SignWriteInsert insertVacation = vacationService.formVacation(vacationInfo);
 
 		
 		// 2. sign서비스에 값 전달하여 insert
 		signService.insert(insertVacation);
 		
-
-		
 		// 3. 휴가정보 저장
 		
-//		VacationInfo vacationInfo = (VacationInfo) map.get("vacationInfo");
+		vacationInfo.setConfirm("Y");
+		vacationInfo.setSign_code(vacationService.findSignCode(vacationInfo.getEmpNo()));
 		
-		// 4. 처리여부 ("/insertVacation"에서)회신 후 insert
-//		vacationService.addVacation(vacationInfo);
-		
+		vacationService.addVacation(vacationInfo);
 		
 		return "redirect:/vacation/myVacation";
 	}

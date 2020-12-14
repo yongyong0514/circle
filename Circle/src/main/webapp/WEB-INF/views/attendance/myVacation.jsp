@@ -66,9 +66,11 @@
 								<th>종료일</th>
 								<th>일수</th>
 								<th>내용</th>
+<!-- 								
 								<th>결재상태</th>
 								<th>승인여부</th>
 								<th>관련서류</th>
+ -->							
 							</tr>
 							<!-- 반복 불러오기 시작 -->
 							<c:if test="${!empty map.vList }">
@@ -83,9 +85,11 @@
 											<c:out value="${Vacation.days }"/>일
 										</td>
 										<td><c:out value="${Vacation.anva_hstr_cont }"/></td>
+<%-- 										
 										<td></td>
 										<td><c:out value="${Vacation.anva_hstr_conf }"/></td>
 										<td><input type="button" value="전자결재" /></td>
+ --%>									
 									</tr>
 								</c:forEach>
 							</c:if>
@@ -135,9 +139,11 @@
 									<td>전자결제상태</td>
 									<td><input type="text" id="permission"
 										name="permission" readonly value="결제대기"></td>
+<!-- 									
 									<td>실제사용여부</td>
 									<td><input type="checkbox" name="used" onclick="return false;"></td>
-									<!-- 결재완료/해당 일자 지남 -->
+									결재완료/해당 일자 지남
+ -->								
 								</tr>
 								<tr>
 									<td>내용</td>
@@ -215,7 +221,7 @@
 					// 휴가기간 옵션과 연계
 					// 휴가기간 중 선택되지 않은 값이 있는 경우 -> 기본값(0) 출력
 					if(isNull(sDate) || isNull(eDate)){
-						$(".calcDate").val(resultDays);
+						$(".calcDate").val("");
 					}
 					// 시작일과 종료일이 모두 선택된 경우
 					else{
@@ -226,8 +232,8 @@
 						}						
 						// 2. 두 값이 다를 경우 -> 종료일을 시작일로 변경 후 일수 계산
 						else{
-							$(".endDate").val(sDate);
-							resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000) + 0.5;
+							$(".endDate").val($(".startDate").val());
+							resultDays = 0.5;
 							$(".calcDate").val(resultDays);
 						}						
 					}
@@ -243,24 +249,23 @@
 					$(".isHalf option[value='full']").prop("selected", true);
 					
 					// 휴가기간 옵션과 연계
-					// 휴가기간 중 선택되지 않은 값이 있는 경우
-					if(isNull(sDate) || isNull(eDate)){
-						resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
-						$(".calcDate").val(resultDays);
-					}
 					// 시작일과 종료일이 모두 선택된 경우
-					else{
+					if( !isNull(sDate) && !isNull(eDate) ){
+						
 						// 1. 두 값이 같을 경우 -> 종료일을 null값으로 변환
 						if(isSameDate){
-							$(".endDate").val("");
-							resultDays = 0;
-							$(".calcDate").val(resultDays);
+							$(".endDate").trigger("reset");
+							$(".calcDate").val(0);
 						}
 						// 2. 두 값이 다를 경우 -> 계산 후 출력
-						else{
+						else {
 							resultDays = (eDate - sDate) / (24 * 60 * 60 * 1000);
 							$(".calcDate").val(resultDays);
 						}
+					}
+					// 휴가기간 중 선택되지 않은 값이 있는 경우
+					else{
+						$(".calcDate").val(0);
 					}
 				}
 			});

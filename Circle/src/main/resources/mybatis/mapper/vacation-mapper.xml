@@ -22,7 +22,7 @@
 			 , nvl(to_number(anva_hstr_edat - anva_hstr_sdat), 0) as nights
 		  from anva_hstr
 		 where anva_hstr_emp_no = #{emp_no}
-		 order by anva_hstr_rdat desc
+		 order by anva_hstr_rdat desc, anva_hstr_sdat desc, anva_hstr_edat desc
 	</select>
 	
 	<select id="annualTerm" parameterType="string" resultType="string">
@@ -54,31 +54,6 @@
 		       )
 	</select>
 	
-	<insert id="addVacation" parameterType="vacationInfo">
-		insert into anva_hstr
-			 ( anva_hstr_ordr
-			 , anva_hstr_emp_no
-			 , anva_hstr_type
-			 , anva_hstr_rdat
-			 , anva_hstr_sdat
-			 , anva_hstr_edat
-			 , anva_hstr_cont
-			 , anva_hstr_conf
-			 , anva_hstr_sign_code
-			)
-		values
-			 ( anhs_seq.nextval
-			 , #{empNo}
-			 , #{vacationType}
-			 , #{regitDate}
-			 , #{startDate}
-			 , #{endDate}
-			 , #{content}
-			 , #{confirm}
-			 , #{sign_code}
-			 )
-	</insert>
-	
 	<select id="myDeptCode" parameterType="string" resultType="string">
 		select emp_info_dept_code
 		  from emp_info
@@ -109,6 +84,41 @@
 	   connect by nocycle prior dept_info_code = dept_info_uper
 	</select>
 	
+	<select id="findSignCode" parameterType="string" resultType="string">
+		select sign_code
+		  from (select rownum as rnum
+					 , sign_code
+				  from sign
+				 order by sign_wdat desc
+			   )
+		 where 2 > rnum
+	</select>
+	
+	
+	<insert id="addVacation" parameterType="vacationInfo">
+		insert into anva_hstr
+			 ( anva_hstr_ordr
+			 , anva_hstr_emp_no
+			 , anva_hstr_type
+			 , anva_hstr_rdat
+			 , anva_hstr_sdat
+			 , anva_hstr_edat
+			 , anva_hstr_cont
+			 , anva_hstr_conf
+			 , anva_hstr_sign_code
+			)
+		values
+			 ( anho_seq.nextval
+			 , #{empNo}
+			 , #{vacationType}
+			 , #{regitDate}
+			 , #{startDate}
+			 , #{endDate}
+			 , #{content}
+			 , #{confirm}
+			 , #{sign_code}
+			 )
+	</insert>
 </mapper>
 
 

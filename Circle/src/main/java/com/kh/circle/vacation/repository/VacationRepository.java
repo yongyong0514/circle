@@ -16,8 +16,6 @@ public interface VacationRepository {
 	
 	public double usedVacationDays (String emp_no);
 	
-	public void addVacation(VacationInfo vacationInfo);
-	
 	public String myDeptCode(String emp_no);
 	
 	public String ceoEmpNo();
@@ -25,4 +23,8 @@ public interface VacationRepository {
 	public String upperEmp(String dept_code);
 	
 	public String highDept(String dept_code);
+
+	public String findSignCode(String emp_no);
+	
+	public void addVacation(VacationInfo vacationInfo);
 }

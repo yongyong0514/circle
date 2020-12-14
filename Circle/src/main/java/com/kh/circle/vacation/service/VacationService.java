@@ -11,5 +11,7 @@ public interface VacationService {
 	
 	public SignWriteInsert formVacation(VacationInfo vacationInfo);
 	
+	public String findSignCode(String emp_no);
+	
 	public void addVacation(VacationInfo vacationInfo);
 }
