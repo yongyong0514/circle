@@ -13,4 +13,9 @@ public class ScheduleController  {
 		return "schedule/schMain";
 	}
 	
+	@GetMapping("/miniCalendar")
+	public String miniCalendar() {
+		return "schedule/miniCalendar";
+	}
 }
+

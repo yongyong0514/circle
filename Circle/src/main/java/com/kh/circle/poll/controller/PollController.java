@@ -40,6 +40,9 @@ public class PollController {
 	public String pollMain(HttpSession session, ModelMap modelMap) {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		List<HashMap<String, String>> list = pollService.homeList(empNo);
+		
+		
+		
 		modelMap.addAttribute("post", list);
 		return "/poll/pollMain";
 	}

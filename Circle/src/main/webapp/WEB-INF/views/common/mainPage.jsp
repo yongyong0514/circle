@@ -49,7 +49,9 @@
 					</div>
 				</div>
 				<div class="boardList6">
-					<div class="boardList6_1"></div>
+					<div class="boardList6_1">
+						<c:import url="../schedule/miniCalendar.jsp"/>
+					</div>
 				</div>
 			
 				
@@ -104,8 +106,8 @@
 		</div>
 	</div>
 <!-- SCRIPT 영역 -->
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>

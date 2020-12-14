@@ -68,7 +68,7 @@
 						<li>
 							<a class="toolbar-btn-wrap">
 								<span class="toolbar-icon del"></span>
-								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
+								<span class="poll-post-toolbar-delete-btn-txt" onclick="deleteModalOpen();">삭제</span>
 							</a>
 						</li>
 					</ul>
@@ -492,11 +492,15 @@
 				</ul>
 			</section>
 		</div>
-
+	</div>
+	
+	<div>
+		<jsp:include page="../modalBody.jsp"></jsp:include>
 	</div>
 	
 	<script src="/circle/resources/js/poll/jquery.min.js"></script>
 	<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
 	
 	<script>
 	/******************************************************* 실행 부분 *****************************************************/
@@ -515,6 +519,11 @@
 		})
 	});
 	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 삭제확인 모달 팝업 */
+	function deleteModalOpen(){
+		$('#alertModal').modal();
+	}
 	
 	/* 필수 문항 입력 확인 */
 	function requiredCheck(){

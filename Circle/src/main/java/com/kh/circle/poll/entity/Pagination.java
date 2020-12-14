@@ -15,6 +15,7 @@ public class Pagination {
 	private String empNo;
 	private String searchTitle;
 	private String searchWriter;
+	private String sec;
 	
 	//페이지용 객체
 	public Pagination(int total, int nowPage, int cntPerPage, String empNo, String searchTitle, String searchWriter) {
