@@ -18,27 +18,28 @@ h2 {
 }
 
 /*버튼 구현*/
- .btnm{
- 	position: absolute;
- 
-  width: 60px;
-  height: 38px;
-  left: 19%;
-  top: 9%;
+
+  .btnm{
+position: absolute;
+  width: 100px;
+  height:40px;
    padding: 8px 10px;
-  font-size: 15px; 
-  text-align:center;
+  font-size: 10px; 
   border: 0px;
-  background:  #34495e;
+  background:   #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
+  text-align:center;
   outline: none;
+  left: 19%;
+  top: 9%;
 }
 
- .btnm:hover{
-  background: #ffd658;
+.btnm:hover{
+  background:#dbe5f1;
 }
+
 
 /* select bodx*/
 .head_sele {
@@ -77,10 +78,9 @@ h2 {
 <div class="postHomeBar">
 	<div>
 		<!-- 게시판 선택용 -->
-		<h2>이동할 게시판을 선택 하세요</h2>
 		<div class="head_sele">
 			<select name="post_type" onchange="location.href=this.value">
-				<option value="" selected>이동할 게시판</option>
+				<option value="" selected>게시판 선택</option>
 				<option
 					value="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">게시판
 					메인</option>

@@ -52,37 +52,32 @@
 		</tbody>
 	</c:forEach>
 	</table>
-<!-- 뷰 페이징 처리 -->
-				<div style="text-align: center;" class="pagination">
-					<c:set var="Post" />
-					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"	var="p">
-					<c:if test="${paging.startPage != 1}">
-						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">◀</a>
-					</c:if>
-						<c:choose>
-							<c:when test="${p == paging.nowPage }">
-								<b>${p}</b>
-							</c:when>
-							<c:when test="${ p != paging.nowPage }">
-								<a
-									href="${pageContext.request.contextPath}/post/postMain?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
-							</c:when>
+<!-- 뷰 페이징 처리 -->		
+		<div style="text-align: center;" class="pagination">
 
-						</c:choose>
-					</c:forEach>
-					<c:if test="${paging.endPage != paging.lastPage }">
-						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">▶</a>
-					</c:if>
+<c:set var="Post"/>
+<c:if test="${paging.startPage != 1}">
+<a href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+	<a href="post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
 
-				</div>
-				<br>
+</c:if>
+<c:forEach begin="${paging.startPage }" end="${paging.endPage}" var="p">
+<c:choose>
+<c:when test="${p == paging.nowPage }">
+<b>${p}</b>
+</c:when>
+<c:when test="${ p != paging.nowPage }">
+<a href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+</c:when>
 
+</c:choose>
+</c:forEach>
+<c:if test="${paging.endPage != paging.lastPage }">
+	<a href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
+</c:if>
 
-
-
-				<!-- 검색 -->
+</div>
+<br><!-- 검색 -->
 
 				<div id="postSearch" style="text-align: center;">
 					<form id="searchForm" method="get"

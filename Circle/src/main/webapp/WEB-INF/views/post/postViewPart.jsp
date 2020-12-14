@@ -45,7 +45,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:  #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -55,7 +55,7 @@ position: absolute;
 
  
 .wrapper.btn1:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 .wrapper  .btn2{
 position: absolute;
@@ -63,7 +63,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:  #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -72,7 +72,7 @@ position: absolute;
 }
 
 .wrapper  .btn2:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 
 
@@ -82,7 +82,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:  #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -91,7 +91,7 @@ position: absolute;
 }
 
 .wrapper.btn3:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 
 
@@ -102,7 +102,136 @@ position: absolute;
 	font-size: 14px;
 }
 
-.wrapper .form .inputfield .input, .wrapper .form .inputfield .textarea
+
+
+
+
+
+
+
+.reply {
+	max-width: 500px;
+	width: 100%;
+	background: #fff;
+	margin: 50px auto;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+	padding: 30px;
+}
+
+
+
+.reply .rephead {
+	font-size: 12px;
+	font-weight: 700;
+	margin-bottom: 25px;
+	color: #34495e;
+	text-transform: uppercase;
+	text-align: right;
+}
+
+
+.reply .rephead2 {
+	font-size: 15px;
+	left: 90%;
+	font-weight: 700;
+	margin-bottom: 25px;
+	color: #34495e;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+
+
+.reply  .btnr{
+position: absolute;
+  width: 80px;
+  height:20px;
+   padding: 8px 10px;
+  font-size: 10px; 
+  border: 0px;
+  background:  #0072c6;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align:center;
+  outline: none;
+  left:45%
+}
+
+.reply.btnr:hover{
+  background: #dbe5f1;
+}
+
+
+.reply  .btnr2{
+position: absolute;
+  width: 80px;
+  height:20px;
+   padding: 8px 10px;
+  font-size: 10px; 
+  border: 0px;
+  background:  #0072c6;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align:center;
+  outline: none;
+  left:35%
+}
+
+.reply.btnr2:hover{
+  background: #dbe5f1;
+}
+
+
+.reply  .inputfield {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.reply  .inputfield label {
+	width: 200px;
+	color: #34495e;
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+
+
+
+.writereply {
+	max-width: 500px;
+	width: 100%;
+	background: #fff;
+	margin: 50px auto;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+	padding: 30px;
+}
+
+.writereply  .replyInsertBtn{
+position: absolute;
+  width: 100px;
+  height:40px;
+   padding: 8px 10px;
+  font-size: 10px; 
+  border: 0px;
+  background:  #0072c6;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+  text-align:center;
+  outline: none;
+  left:56%
+}
+
+.writereply .replyInsertBtn:hover{
+  background: #dbe5f1;
+}
+
+
+
+.writereply .form  .input
 	{
 	width: 100%;
 	outline: none;
@@ -113,34 +242,14 @@ position: absolute;
 	transition: all 0.3s ease;
 }
 
-.wrapper .form .inputfield .textarea {
-	width: 100%;
-	height: 400px;
-	resize: none;
+.writereply .post_repl_cont {
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 25px;
+	color: #34495e;
+	text-transform: uppercase;
+	text-align: center;
 }
-
-
-
-
-.wrapper .form .inputfield .replyInsertBtn{
-position: absolute;
-  width: 100px;
-   padding: 8px 10px;
-  font-size: 15px; 
-  border: 0px;
-  background:  #fec107;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 3px;
-  outline: none;
-  left:39%
-}
-
-.wrapper .form .inputfield .replyInsertBtn:hover{
-  background: #ffd658;
-
-
-
 
 
 </style>
@@ -164,15 +273,6 @@ position: absolute;
 
 <!-- 버튼 부분 -->
 
-
-<input type="hidden" name="post_code"
-					value="${postCheck.post_code }"> <input type="submit"
-					value="글쓰기" class="btn1" name="submit" id="submit"> <input
-					type="button" value="돌아가기" class="btn3" name="return" id="return">
-
-
-
-
 <div class="btn">
 <c:if test="${empNo eq viewEmpNo }">
 	<c:forEach var="postView" items="${postView}">
@@ -181,28 +281,31 @@ position: absolute;
 	</c:forEach>
 	</c:if>
 		<button  class="btn3" type="button"  onClick="location.href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">돌아가기</button>
-</div>
+	</div>
 
 		</div>
+		
+		
+		
+		
+		
 <!--  덧글 -->
 <div class="reply">
 <!-- 덧글 리스트 -->
 <div>
 	<div id="reply" class="rebody2">
 			<c:forEach var="listReply" items="${listReply}">
-				${listReply.post_repl_emp }
-					<p>
-						작성자 : ${listReply.emp_info_name} 작성날짜 :
-						<fmt:formatDate value="${listReply.post_repl_wdat}"
-							pattern="yyyy-MM-dd" />
+					<p class="rephead">
+						 ${listReply.emp_info_name}
+						 <fmt:formatDate value="${listReply.post_repl_wdat}" pattern="yyyy-MM-dd" />
 					</p>
-					<p>${listReply.post_repl_cont}</p>
+					<p class="rephead2">${listReply.post_repl_cont}</p>
 					
 					<c:if test="${empNo eq listReply.post_repl_emp }">
 					<div>
 						<div>
-										<button  class="btn1" type="button"  onClick="location.href='<c:url value='/post/postReplyUpdate?post_code=${listReply.post_repl_post}'/>'">수정하기</button>
-										<button  class="btn2" type="button"  onClick="location.value='/post/postReplyDelete?post_code=${listReply.post_repl_post}'/>'">삭제하기</button>
+										<button  class="btnr" type="button"  onClick="location.href='<c:url value='/post/postReplyUpdate?post_code=${listReply.post_repl_post}'/>'">수정하기</button>
+										<button  class="btnr2" type="button"  onClick="location.value='/post/postReplyDelete?post_code=${listReply.post_repl_post}'/>'">삭제하기</button>
 						
 						</div>
 					</div>
@@ -210,27 +313,20 @@ position: absolute;
 			</c:forEach>
 	</div>
 </div>
-
+</div>
 
 <!--  덧글 작성 -->
-<div class="rebody">
-<div class="inputfield">
-<form name="replyForm"
-	action="${pageContext.request.contextPath}/post/replyInsertAdd"
-	method="post">
-	<input type="hidden" id="post_repl_post" name="post_repl_post"
-		value="${post.post_code}" /> <input type="hidden" id="post_repl_emp"
-		name="post_repl_emp" value="${post.post_emp}" />
+
+<div class="writereply">
+<div class="form">
+<form name="replyForm" 	action="${pageContext.request.contextPath}/post/replyInsertAdd" method="post">
+	<input type="hidden" id="post_repl_post" name="post_repl_post" value="${post.post_code}" /> <input type="hidden" id="post_repl_emp" name="post_repl_emp" value="${post.post_emp}" />
 	
 		<label for="post_repl_cont">댓글</label>
-		<input type="text" class="post_repl_cont"
-			id="post_repl_cont" name="post_repl_cont" />
-	
-
+		<input type="text" class="post_repl_cont" id="post_repl_cont" name="post_repl_cont" />
 		<input type="submit" class="replyInsertBtn"  value="작성하기" />
-
 
 </form>
 </div>
 </div>
-</div>
+
