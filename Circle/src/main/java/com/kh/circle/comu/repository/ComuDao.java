@@ -66,9 +66,10 @@ public interface ComuDao {
 	
 	//가입신청서 받아주기
 	
-		public String comuApp3(String comu_info_comu_code);
 		public String comuApp4(String emp_no);
-		//글쓰기
+		
+		public String comuApp3(String comu_post_list_code);
+		//가입 승인
 		public void comuInfoInsert(Comu comu);
 	
 }

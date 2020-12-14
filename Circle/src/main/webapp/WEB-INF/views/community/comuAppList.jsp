@@ -77,8 +77,8 @@
 				</tr>
 			
 				 
-				 <c:forEach var="comuAppList" items="${comuAppList}" varStatus="status" >
 				<tbody>
+				 <c:forEach var="comuAppList" items="${comuAppList}" varStatus="status" >
 					
 				
 						<tr>		
@@ -95,12 +95,14 @@
 						<input type="hidden" name="comu_list_code" value="${ comuAppList.comu_list_code}">
 						</th>
 						</tr>
+					
 					<tr class="List">
 						<td><br>${comuAppList.emp_info_name}</td>
 						<td><br>${comuAppList.comu_list_name}</td>
 						<td><br>${comuAppList.job_info_name}</td>
 						<td><br><a href='<c:url value='/community/appDetail?comu_post_ordr=${comuAppList.comu_post_ordr}'/>'>${comuAppList.comu_post_cont}</a></td>
 						<td><br><c:out value="${ comuAppList.comu_post_dat }"/></td>
+						
 					<%-- 	<td><br><input type="submit"
 										style="background-color: #F0FBD1; color: black;"
 										class="btn btn-default pull-right" value="가입 승인" name="${status.count} " /></td>
@@ -111,10 +113,11 @@
 										<!-- 주주 -->
 									</td> --%>
 <%-- 						   <th><input type="hidden" name="comu_post_type" value="${comuAppList.comu_post_type}"><th> --%>
+				
 					</tr>
 				
-				</tbody>
 				</c:forEach> 
+				</tbody>
 				
 			</table>
 					</form>

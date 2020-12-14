@@ -69,7 +69,7 @@ public class ComuController {
 		//번호가져와서 해당하는 번호를 볼수있게
 		model.addAttribute("comuListPost",service.comuListPost(comu_list_code));
 		
-		System.out.println("controller 개별로 나오는지 확인"+model);
+		//System.out.println("controller 개별로 나오는지 확인"+model);
 		return "community/comuListPost";
 	}
 	//가입신청서 별 리스트
@@ -79,7 +79,7 @@ public class ComuController {
 		//타입 가져오기
 		model.addAttribute("comuAppList",service.comuAppList());
 		
-		System.out.println("controller 가입신청서 나오냐 "+model);
+		//System.out.println("controller 가입신청서 나오냐 "+model);
 		return "community/comuAppList";
 	}
 	
@@ -103,13 +103,8 @@ public class ComuController {
 	public String comuAddAction(HttpSession session ,
 					@ModelAttribute Comu comu)throws Exception{
 		//여기까지가 1번째 단계
-		
-		//System.out.println("대충 : " + comu);
-		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-		//System.out.println("DDD : " + emp_no);		
+		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();	
 		String emp_name = service.comuAdd2(emp_no);
-		
-		//System.out.println("DDFD : " + emp_name);
 		//2번째 단계 끝
 		comu.setComu_post_wrtr_emp_no(emp_no);
 		comu.setEmp_info_name(emp_name);
@@ -120,6 +115,23 @@ public class ComuController {
 		
 		return"redirect:/community/comuList";
 	}
+//	@PostMapping("/comuAppAction")
+//	public String comuAppAction(HttpSession session ,
+//			@ModelAttribute Comu comu)throws Exception{
+//		//여기까지가 1번째 단계
+//		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();	
+//		String emp_name = service.comuAdd2(emp_no);
+//		//2번째 단계 끝
+//		comu.setComu_post_wrtr_emp_no(emp_no);
+//		comu.setEmp_info_name(emp_name);
+//		
+//		service.comuInsert(comu);
+//		
+//		System.out.println("last : " + comu);
+//		
+//		return"redirect:/community/comuList";
+//	}
+	
 
 	//게시글 상세조회
 	@GetMapping ("comuDetail")
@@ -138,8 +150,7 @@ public class ComuController {
 		model.addAttribute("viewEmpNo",comu_emp);
 		
 		model.addAttribute("comuDetail",detail);
-		model.addAttribute("msg", "수정하기로"); 
-		model.addAttribute("url", "comuUpdate.jsp"); 
+	
 		
 		return "community/comuDetail";
 	}
@@ -164,6 +175,10 @@ public class ComuController {
 		model.addAttribute("comuCheck",comuCheck);
 		
 		System.out.println("comuCheck controller"+model);
+		
+		model.addAttribute("msg", "수정하기로"); 
+		model.addAttribute("url", "comuUpdate.jsp"); 
+		
 		return "community/comuUpdate";
 	}
 	@PostMapping("/comuUpdate")//필요한 정보 한번에 가져오기Model
@@ -259,9 +274,9 @@ public class ComuController {
 		
 		return "community/comuLeftBar";
 	}
-	@PostMapping("/comuAppList")
-	public String comuAppList(HttpSession session ,
-					@ModelAttribute Comu comu)throws Exception{
+	@PostMapping("/comuInfoInsert")
+	public String comuInfoInsert(HttpSession session ,
+					@ModelAttribute Comu comu){
 		//여기까지가 1번째 단계
 		
 		//System.out.println("대충 : " + comu);
@@ -269,10 +284,15 @@ public class ComuController {
 		System.out.println("가입신청사번 출력  : " + emp_no);		
 		String emp_name = service.comuApp4(emp_no);
 		
-		//System.out.println("DDFD : " + emp_name);
+		//String emp_code = service.comuApp3(emp_no);
+		//System.out.println("뭐뽑았냐? : " + emp_code);
 		//2번째 단계 끝
+		
 		comu.setComu_info_emp_no(emp_no);
 		comu.setComu_info_comu_code(emp_name);
+		
+		//comu.setComu_info_comu_code(emp_code);
+		System.out.println("가입신청허가"+comu);
 		
 		service.comuInfoInsert(comu);
 		

@@ -44,16 +44,16 @@
 }
 </style>
 <script type="text/javascript">
-	/* $(document).ready(function(){
+	/*  $(document).ready(function(){
 		$('input[=submit]').on('click', function(e){
-			alert('gg');
+			alert('가입신청이 완료됭');
 		})
 	}) */
 	
 	function asubmit(){
-		var x = $(this);
-		alert(x);
-	}
+		/* var x = $(this); */
+		alert("가입신청 되었습니다.");
+	} 
 </script>
 
 </head>
