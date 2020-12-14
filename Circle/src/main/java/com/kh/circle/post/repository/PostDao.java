@@ -15,6 +15,7 @@ public interface PostDao {
 	List<Post> postMain(Model model, PostPaging postPaging);
 
 	List<Post> postParts(String post_type);
+	
 
 	int countPost();
 
@@ -51,6 +52,11 @@ public interface PostDao {
 	String postEmpNo(String emp_no);
 
 	String viewEmpNo(String post_code);
+
+	List<Post> selectPost3(PostPaging postPaging);
+
+
+
 
 
 
