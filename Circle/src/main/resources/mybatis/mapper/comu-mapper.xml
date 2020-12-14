@@ -252,13 +252,24 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no) -->
 	
 	
 	<!-- 동호회 LeftBar 리스트 가져오기 -->
+	<select id="leftListName" parameterType="String" resultType="String">
+		select emp_info_name
+			from emp_info
+			where emp_info_emp_no = #{emp_no} 
+		<!-- 	select 
+        *
+from emp_info e
+join comu_info i on(i.comu_info_emp_no = e.emp_info_emp_no)
+join comu_list l on(i.comu_info_comu_code = l.comu_list_code)
+where e.emp_info_emp_no = #{emp_no} -->
+	</select>
 	<select id="leftList" parameterType="String" resultType="empInfo">
 		select 
         *
 from emp_info e
 join comu_info i on(i.comu_info_emp_no = e.emp_info_emp_no)
 join comu_list l on(i.comu_info_comu_code = l.comu_list_code)
-where e.emp_info_emp_no = #{emp_info_emp_no}
+where e.emp_info_emp_no = '200101090031'
 	</select>
 	
 	<!-- 사원번호 가져오기 -->
@@ -289,13 +300,8 @@ where e.emp_info_emp_no = #{emp_info_emp_no}
 	</select>
 	
 	<!-- 동호회 가입 시키기 -->
-	<select id="comuApp3"  resultType="String" parameterType="string">
-		   select distinct i.comu_info_comu_code
-			from emp_info e
-			join comu_info i on(e.emp_info_emp_no = i.comu_info_emp_no)
-			join comu_post p on(p.comu_post_list_code = i.comu_info_comu_code)
-            where p.comu_post_list_code = #{comu_post_list_code}
-            and p.comu_post_type = '2'
+	<select id="comuApp3"  resultType="comuList" parameterType="string">
+		    SELECT * FROM comu_list 
 	</select>
 	
 	<select id="comuApp4"  resultType="String" parameterType="string">
@@ -305,13 +311,12 @@ where e.emp_info_emp_no = #{emp_info_emp_no}
 			where e.emp_info_emp_no = #{emp_no} 
 			and i.comu_info_comu_code = #{comu_info_comu_code} -->
 			
-			 <!-- select emp_info_name
+			<!--  select emp_info_name
 			from emp_info
-			where emp_info_emp_no = #{emp_no}  -->
-			
-			  select comu_info_comu_code
+			where emp_info_emp_no = #{emp_no}   -->
+		select comu_info_comu_code
 			from comu_info
-			where comu_info_emp_no =  #{emp_no};
+			where comu_info_emp_no = #{emp_no}
 	</select>
 
 		<insert id="comuInfoInsert" parameterType="comu">

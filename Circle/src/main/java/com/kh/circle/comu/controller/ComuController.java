@@ -27,6 +27,8 @@ import com.kh.circle.comu.service.ComuService;
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.post.entity.Post;
 
+import oracle.net.ano.Service;
+
 @Controller
 @RequestMapping("/community")
 public class ComuController {
@@ -111,28 +113,9 @@ public class ComuController {
 		
 		service.comuInsert(comu);
 		
-		System.out.println("last : " + comu);
 		
 		return"redirect:/community/comuList";
 	}
-//	@PostMapping("/comuAppAction")
-//	public String comuAppAction(HttpSession session ,
-//			@ModelAttribute Comu comu)throws Exception{
-//		//여기까지가 1번째 단계
-//		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();	
-//		String emp_name = service.comuAdd2(emp_no);
-//		//2번째 단계 끝
-//		comu.setComu_post_wrtr_emp_no(emp_no);
-//		comu.setEmp_info_name(emp_name);
-//		
-//		service.comuInsert(comu);
-//		
-//		System.out.println("last : " + comu);
-//		
-//		return"redirect:/community/comuList";
-//	}
-	
-
 	//게시글 상세조회
 	@GetMapping ("comuDetail")
 		public String comuDetail(Model model,Comu comu,
@@ -262,13 +245,20 @@ public class ComuController {
 	
 	//comuLeftBar에 가입한 동호회 리스트
 	@GetMapping("/comuLeftBar")
-	public String leftList(Model model, @RequestParam("emp_info_emp_no") String emp_info_emp_no) {
-		//comuList.getComu_list_code();
+	public String leftList(Model model,
+			/* @RequestParam("emp_info_emp_no") */ String emp_info_emp_no) {
 		
-		//List<ComuList> leftList = sqlSession.selectList("comu.leftList");
+//		String emp_no = ((EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
+//		//String emp_name = service.leftListName(emp_no);
+//		System.out.println("레프트 바에 emp_no 가져오냐?"+emp_no);
+//		comu.setEmp_info_emp_no(emp_no);
+		//comu.setComu_list_name(emp_name);
 		
-		
-		model.addAttribute("leftList",service.leftList(emp_info_emp_no));
+		//model.addAttribute(comu);
+		List<EmpInfo> leftBar = service.leftList(emp_info_emp_no);
+		model.addAttribute("empNo",leftBar);
+		//model.addAttribute("leftBar",leftBar);
+		//model.addAttribute("leftList",service.leftList(comu_list_code));
 		
 		System.out.println("controller 레프트 바 가져왓냐"+model);
 		
@@ -289,7 +279,7 @@ public class ComuController {
 		//2번째 단계 끝
 		
 		comu.setComu_info_emp_no(emp_no);
-		comu.setComu_info_comu_code(emp_name);
+		comu.setEmp_info_name(emp_name);
 		
 		//comu.setComu_info_comu_code(emp_code);
 		System.out.println("가입신청허가"+comu);

@@ -54,6 +54,7 @@ public interface ComuDao {
 	public void comuAppAction(Comu comu);
 	
 	//leftbar 가입 동호회 리스트 가져오기
+	public String leftListName(String emp_no);
 	public List<EmpInfo> leftList(String emp_info_emp_no);
 	
 	//디테일에 정보가져오기(완료)
@@ -68,7 +69,7 @@ public interface ComuDao {
 	
 		public String comuApp4(String emp_no);
 		
-		public String comuApp3(String comu_post_list_code);
+		public String comuApp3(String emp_info_emp_no);
 		//가입 승인
 		public void comuInfoInsert(Comu comu);
 	

@@ -64,16 +64,17 @@ public interface ComuService {
 		
 	
 	//leftBar 리스트 가져오기
+	public String leftListName(String emp_no);
 	public List<EmpInfo> leftList(String emp_info_emp_no);
 	
+	
 	String comuEmpNo(String emp_no);
-
 	String viewEmpNo(String comu_post_ordr);
 	
 	//리스트에 comu_info_emp_no 값 가져오기
 	String comuInfoNo(String comu_info_emp_no);
 	
-	public String comuApp3(String comu_post_list_code);
+	public String comuApp3(String emp_info_emp_no);
 	public String comuApp4(String emp_no);
 	// 글쓰기
 	public void comuInfoInsert(Comu comu);
