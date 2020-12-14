@@ -12,12 +12,11 @@
 <body>
 	<div class="wrap">
 		<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
-		<c:if test="${empInfo != null }">
+		<c:if test="${!empty empInfo}">
 			<script>
 				location.href="${pageContext.request.contextPath}/common/mainPage";
 			</script>
 		</c:if>
-		<c:if test="${empInfo == null }">
 		<div class="loginBox">
 			<table>
 				<tr>
@@ -70,7 +69,6 @@
 				</tr>
 			</table>
 		</div>
-		</c:if>
 		<c:if test="${message == false}">
 			<p>로그인실패: 사원번호 비밀번호가 틀렸습니다</p>
 		</c:if>

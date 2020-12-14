@@ -24,7 +24,7 @@ public interface SignDao {
 
 	//결재 서명 파일 등록
 	void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
-			String empCode);
+			String iempCode);
 
 	//결서 서명 파일 로드
 	byte[] loadFile(String files_cname) throws IOException;

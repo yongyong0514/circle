@@ -53,9 +53,10 @@ public class SignRestController {
 	@PostMapping("/signFilesSignature")
 	public String uploadSignature(HttpSession session, MultipartHttpServletRequest multipartRequest) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
-		int checkValue = sqlSession.selectOne("sign.sfsListCount", empCode);
+		String iempCode = 'i' + empCode;
+		int checkValue = sqlSession.selectOne("sign.sfsListCount", iempCode);
 		Iterator<String> itr =  multipartRequest.getFileNames();
-		String filePath = "d:/resources/files/empInfo/signature";
+		String filePath = "d:/resources/files/sign/signature/image";
 		
 		if(checkValue < 5) {
 			while (itr.hasNext()) {
@@ -70,7 +71,7 @@ public class SignRestController {
 				try {
 					multipartFile.transferTo(new File(files_route));
 					
-					signService.insertFilesSignature(files_oname, files_size, files_type, files_cname, files_route, empCode);
+					signService.insertFilesSignature(files_oname, files_size, files_type, files_cname, files_route, iempCode);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -212,14 +213,23 @@ public class SignRestController {
 	}
 	
 	
-//	Update 전자 결재 한명 반려 프로세스
-	@PostMapping("/signCancel")
-	public String signCancel(@RequestParam String signCode){
+//	Update signDenied
+	@PostMapping("/signDenied")
+	public String signCancel(@RequestParam String signCode, HttpSession session){
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
-		return "redirect:/sign/signSelecOne/?signCode="+signCode;
-	}
-
-
+		//반려 상태 프로세스 추가
+		//반려 상태 sign 한 건 반려 처리
+		sqlSession.insert("sign.signProcessAdd4", signCode);
+		
+		sqlSession.delete("sign.signProcessDel2", signCode);
+		
+		sqlSession.update("sign.signDenied", signCode);
+		 
+		return "redirect:/sign/signSelecOne?signCode="+signCode;
+	}	
+	
+	
 //	Delete 결재 서명 첨부 파일 삭제
 	@PostMapping("/sfsDelete")
 	public void sfsDelete(@RequestParam String fileCode) {

@@ -25,7 +25,7 @@
 				<div class="signHomeListBar">
 					<ul>
 						<li class="signHomeListTitle">
-							<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
+							<c:if test="${signSelectOne.sign_step == 'SIPC000004'}">
 								<c:if test="${signSelectOne.sign_emp_code == empInfo.emp_info_emp_no}" >
 									<button class="signSelectOneModifyBtn">수정하기</button>
 								</c:if>
@@ -123,21 +123,26 @@
 								<td class="formBox7" colspan="2">
 									<c:forEach var="join" items="${signListJoiner}">
 										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
-											<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
-												<c:if test="${join.sign_join_check == 'N' }">
-													<button id="formBtn3">결재</button>
-													<ul id="signSelect1">
-														<li>
-															<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
-															<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
-														</li>
-													</ul>
+											<c:if test="${signSelectOne.sign_step != 'SIPC000004'}">
+												<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
+													<c:if test="${join.sign_join_check == 'N' }">
+														<button id="formBtn3">결재</button>
+														<ul id="signSelect1">
+															<li>
+																<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
+																<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
+															</li>
+														</ul>
+													</c:if>
 												</c:if>
 											</c:if>
 										</c:if>
 									</c:forEach>
 										<c:if test="${signSelectOne.sign_step == 'SIPC000003'}">
 											<button id="formBtn3" disabled>결재가 완료되었습니다</button>
+										</c:if>
+										<c:if test="${signSelectOne.sign_step == 'SIPC000004'}">
+											<button id="formBtn3" disabled>이 결재는 반려 되었습니다</button>
 										</c:if>
 											<div id="signModalForm">
 												<div class="signModalArea">
@@ -440,7 +445,15 @@
 	<!-- 결재 진행 -->
 	<script>
     	$(".submitAgree").click(function(){
-    		$("#signModalForm").attr("style", "display: block");
+    		var count = '<c:out value="${checkValue}"/>';
+    		if(count > 0){
+    			$("#signModalForm").attr("style", "display: block");
+    		} 
+    		
+    		else {
+    			var base = "${pageContext.request.contextPath}";
+    			if(confirm("최초 서명을 등록해야 합니다. 서명을 등록하기 위해 전자결재 설정으로 이동합니다.")) document.location = base + "/sign/signConfig";
+    		}
     	});
     </script>
     
@@ -458,7 +471,7 @@
 			var tag2 = tag1[0].currentSrc;
 			var fileCode = tag2.split("=");
 			var signCode = document.location.href.split("=");
-			
+						
 			$.ajax({
 				url: uploadURL,
 				type: "POST",
@@ -471,10 +484,10 @@
 		});
 	</script>
 	
-	<script>
-		$(".submitDenied").click(function({
+ 	<script>
+		$(".submitDenied").click(function(){
 			var base = "${pageContext.request.contextPath}";
-			var uploadURL = base + "/signResult/signCancel";
+			var uploadURL = base + "/signResult/signDenied";
 			var signCode = document.location.href.split("=");
 			
 			$.ajax({

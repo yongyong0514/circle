@@ -20,7 +20,7 @@ public interface SignService {
 	void insertReply(SignReplyInsert signReplyInsert);
 
 	//결재 서명 파일 등록
-	void insertFilesSignature(String files_oname, long files_size, String files_type, String files_cname, String files_route, String empCode);
+	void insertFilesSignature(String files_oname, long files_size, String files_type, String files_cname, String files_route, String iempCode);
 
 	//결재 동의 댓글 등록
 	void insertReplyAgree(String empCode, String signCode, String fileCode);

@@ -21,4 +21,5 @@ public class SignWriteInsert {
 	private String seqSign;
 	private String jCodeList;
 	private String wCodeList;
+	private String sign_code;
 }

@@ -11,12 +11,12 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common/menu/menuRightList.css">
 </head>
 <body>
-	<c:if test="${ empInfo == null}">
+	<c:if test="${ empty empInfo}">
 		<script>
-			location.href="${pageContext.request.contextPath}/login";
+			location.replace("${pageContext.request.contextPath}/login");
 		</script>
 	</c:if>
-	<c:if test="${ empInfo != null}">
+	<c:if test="${ !empty empInfo}">
 <nav>
 	<div class="menuTopBar">
 		<ul>
@@ -45,7 +45,7 @@
 					</div>
 				</div>					
 			</li>
-			<li><button class="menuBtn" onclick="mainPage();">페이퍼컴퍼니</button></li>
+			<li><button class="menuBtn" onclick="location.href='${pageContext.request.contextPath}/common/mainPage'">페이퍼컴퍼니</button></li>
 			<li><button class="menuBtn2">My Page</button></li>
 			<li><button class="menuBtn2">My Profile</button></li>
 			
@@ -73,6 +73,7 @@
 		<jsp:include page="../common/menuScrollList.jsp" />
 	</div> --%>
 </nav>
+	</c:if>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 	$(".menuBtnLeft").mouseenter(function(){
@@ -100,7 +101,6 @@
 		location.href = "${pageContext.request.contextPath}/mainPage";
 	}
 </script>
-	</c:if>
 </body>
 
 
