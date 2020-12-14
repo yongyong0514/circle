@@ -79,4 +79,62 @@
 			 )
 	</insert>
 	
+	<select id="myDeptCode" parameterType="string" resultType="string">
+		select emp_info_dept_code
+		  from emp_info
+		 where emp_info_emp_no = #{emp_no}
+	</select>
+	
+	<select id="ceoEmpNo" resultType="string">
+		select emp_info_emp_no
+		  from emp_info
+		 where emp_info_job_code = 'J0000'
+	</select>
+	
+	<select id="isUpperEmp" parameterType="map" resultType="string">
+		select emp_info_emp_no
+          from emp_info
+         where emp_info_dept_code = #{dept_code}
+           and emp_info_job_code = (select min(emp_info_job_code)
+                                      from emp_info
+                                     where emp_info_dept_code = #{dept_code}
+                                   )
+	</select>
+	
+	<select id="highDept" parameterType="string" resultType="string">
+		select dept_info_uper
+		  from dept_info
+         where dept_info_code = #{dept_code}
+		 start with dept_info_code = 'D0000'
+	   connect by nocycle prior dept_info_code = dept_info_uper
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

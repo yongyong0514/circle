@@ -90,6 +90,11 @@ td{
 	border-right: 0;
 }
 
+.vacationHistoryArea{
+	max-height: 300px;
+	overflow: auto;
+}
+
 .vacationHistory,
 .vacationHistoryTable,
 .vacationApplyTable{

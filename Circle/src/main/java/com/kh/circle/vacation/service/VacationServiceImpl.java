@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.sign.vo.SignWriteInsert;
 import com.kh.circle.vacation.entity.Vacation;
 import com.kh.circle.vacation.entity.VacationInfo;
@@ -53,19 +52,111 @@ public class VacationServiceImpl implements VacationService {
 	}
 
 	@Override
-	public SignSelectOne formVacation(VacationInfo vacationInfo) {
+	public SignWriteInsert formVacation(VacationInfo vacationInfo) {
 		// 받아온 정보를 vo형식으로 변환
+		String emp_no = vacationInfo.getEmpNo();
 		
-		SignSelectOne signForm = SignSelectOne.builder()
-										.sign_code("SIGN000001")
-										.sign_emp_code(vacationInfo.getEmpNo())
-										.sign_type_name("휴가계")
-										.sign_title("휴가 신청서입니다.")
-										.emp_info_name(vacationInfo.getEmpName())
-										.build();
 		
-		//내용물 저장은 어디에?
+		// 휴가계 내용 html 형식으로 변환
+		String vType = "";			// 휴가구분
+		String halfType = "";		// 전일/반일 구분
+		String jSignerList = "";	// 결재자 사원번호 List("/"로 연결)
 		
+		switch(vacationInfo.getVacationType()) {
+			case "annual": vType = "연차"; break;
+			case "half": vType = "반차"; break;
+			case "event": vType = "경조사"; break;
+			case "maternity": vType = "출산/육아"; break;
+			case "menstrual": vType = "보건"; break;
+			case "military": vType = "예비군/민방위"; break;
+			case "sick": vType = "병가"; break;
+			case "etc": vType = "기타"; break;
+		}
+
+		switch(vacationInfo.getIsHalf()) {
+			case "full": halfType = "전일"; break;
+			case "amHalf": halfType = "오전반차"; break;
+			case "pmHalf": halfType = "오후반차"; break;
+		}
+		
+		
+		// html 구문
+		String formedNote = "<ul style='list-style-type : disc; padding-left:3rem'>";
+		
+		formedNote += "<li>신청일자 : " + vacationInfo.getRegitDate() + "</li><br>";
+		formedNote += "<li>구분 : " + vType + "</li><br>";
+		formedNote += "<li>전일/반일 : " + halfType + "</li><br>";
+		formedNote += "<li>기간 : " + vacationInfo.getStartDate() + " ~ " + vacationInfo.getEndDate() + "</li><br>";
+		formedNote += "<li>내용 : " + vacationInfo.getContent() + "</li>";
+
+		formedNote += "</ul>";
+		
+		
+		// 결제자 선정
+		// 본인을 제외한 해당 부서 상급자 또는 상위부서 상급자
+		
+		// 1) 내 부서 확인
+		String dept_code = vacationRepository.myDeptCode(emp_no);
+		
+		Map<String, Object> empMap = new HashMap<String, Object>();
+		empMap.put("emp_no", emp_no);
+		empMap.put("dept_code", dept_code);
+		
+		// 2) 결제자 수, 결제자 리스트
+		// 대표이사인 경우
+		String totalSigner = "";
+		if("D0000".equals(dept_code)) {
+			//자신을 결재자로 추가
+			totalSigner = "1";
+			
+			jSignerList = vacationRepository.ceoEmpNo();
+		}
+		// 대표이사가 아닌 경우
+		else {
+			//부서장 사원번호 추출
+			String upperEmp = vacationRepository.upperEmp(dept_code);
+			
+			//자신이 부서장인 경우
+			if(emp_no.equals(upperEmp)) {
+				//상급 부서장(1명)을 결재자로 등록
+				totalSigner = "1";
+				
+				//상급 부서코드 추출
+				String highDept = vacationRepository.highDept(dept_code);
+				
+				//상급 부서장 추가
+				jSignerList = vacationRepository.upperEmp(highDept);
+			}
+			//자신이 부서장이 아닌 경우
+			else {
+				//부서장(1명), 상급부서장(1명)을 결제자로 등록
+				totalSigner = "2";
+				
+				//1)부서장 사원번호 추출
+				upperEmp = vacationRepository.upperEmp(dept_code);
+				
+				//2)상급 부서 부서장 사원번호 추출
+				//상급 부서코드 추출
+				String highDept = vacationRepository.highDept(dept_code);
+				String highDeptEmp = vacationRepository.upperEmp(highDept);
+				
+				//부서장, 상급 부서장 추가
+				jSignerList = upperEmp + "/" + highDeptEmp;
+			}
+		}
+		
+		// vo에 저장
+		SignWriteInsert signForm = SignWriteInsert.builder()
+									.sign_type_code("SITC000001")
+									.sign_keep("1095")	// 3년 고정
+									.sign_acc("4")		// c등급
+									.sign_title(vacationInfo.getRegitDate() + " " + vacationInfo.getEmpName() + " 휴가계")
+									.sign_note(formedNote)
+									.sign_emp_code(vacationInfo.getEmpNo())
+									.sign_count(totalSigner)		// 결재자 수
+									.jCodeList(jSignerList)		// 결재자"/"로 연결
+									.wCodeList("")				// 참조자 0명
+									.build();
 		return signForm;
 	}
 

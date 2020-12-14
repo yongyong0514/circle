@@ -1,6 +1,8 @@
 package com.kh.circle.vacation.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,25 @@ public class VacationRepositoryImpl implements VacationRepository{
 	public void addVacation(VacationInfo vacationInfo) {
 		sqlSession.insert("vacation.addVacation", vacationInfo);
 	}
+	
+	@Override
+	public String myDeptCode(String emp_no) {
+		return sqlSession.selectOne("vacation.myDeptCode", emp_no);
+	}
+	
+	@Override
+	public String ceoEmpNo() {
+		return sqlSession.selectOne("vacation.ceoEmpNo");
+	}
+	
+	@Override
+	public String upperEmp(String dept_code) {
 
+		return sqlSession.selectOne("vacation.isUpperEmp", dept_code);
+	}
+	
+	@Override
+	public String highDept(String dept_code) {
+		return sqlSession.selectOne("vacation.highDept", dept_code);
+	}
 }
