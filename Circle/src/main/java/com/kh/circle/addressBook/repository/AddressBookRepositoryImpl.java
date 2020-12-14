@@ -40,4 +40,12 @@ public class AddressBookRepositoryImpl implements AddressBookRepository{
 		
 		return empInfo;
 	}
+
+	@Override
+	public List<String> deptList() {
+
+		List<String> deptList = sqlSession.selectList("address.deptList");
+		
+		return deptList;
+	}
 }

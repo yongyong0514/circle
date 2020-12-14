@@ -27,10 +27,8 @@
 		<div class="container">
 			<div class="content">
 				<!-- 주소록 이름 -->
-				<h1>전사주소록</h1>
-<!-- 				
+				<h1>전사주소록(주소록 이름)</h1>
 				<button value="alertAll">이 그룹에게 전체쪽지 보내기</button>
- -->				
 				<br>
 				<br>
 				<form class="searchAddress" action="${pageContext.request.contextPath}/addressBook/allEmp">
@@ -38,13 +36,8 @@
 					<input class="name" type="text" name="name" placeholder="이름(표시명)" value="${name }"/>
 					<input class="email" type="text" name="email" placeholder="이메일 주소" value="${email }"/>
 					<input class="tel" type="text" name="tel" placeholder="휴대전화번호" value="${tel }"/>
-					<select class="deptName" name="deptName">
-						<option value="all">전체</option>
-						<c:forEach var="i" items="${deptList}">
-							<option value="${i}">${i}</option>
-						</c:forEach>			
-					</select>
 					<input type="submit" value="검색하기"></input>&nbsp;
+					<button value="insert">추가하기</button>
 					<!-- 검색창 끝 -->
 
 					&nbsp;
@@ -89,10 +82,10 @@
 				
 							<!-- c:forEach -->
 							<!-- 사용자 필드 설정에 따라 변경 -->
-							<th>이름(표시명)</th>
-							<th>휴대전화</th>
-							<th>이메일</th>
-							<th>부서명</th>
+							<th>이름(표시명)<a href="#">▲</a><a href="#">▼</a></th>
+							<th>휴대전화<a href="#">▲</a><a href="#">▼</a></th>
+							<th>이메일<a href="#">▲</a><a href="#">▼</a></th>
+							<th>회사명<a href="#">▲</a><a href="#">▼</a></th>
 						</tr>
 				
 						<!-- 주소 리스트 시작 -->
@@ -107,7 +100,7 @@
 								</td>
 								<td><c:out value="${AddressInfo.tel }"/></td>
 								<td><c:out value="${AddressInfo.email}"/></td>
-								<td><c:out value="${AddressInfo.deptName}"/></td>
+								<td><c:out value="${AddressInfo.cmpName}"/></td>
 							</tr>
 						</c:forEach>
 						<!-- 주소 리스트 끝 -->
@@ -176,7 +169,7 @@
 					$(".leftBar").removeClass("fixed");
 				}
 			})
-
+			
 			<!-- 페이지 당 출력 개수 선택 표시 -->
 			$(".perPage").val(${map.pInfo.perPage});
 			
@@ -195,7 +188,7 @@
 			
 			<!-- 1명 클릭 시 -->
  			$(".addressTr").click(function(){
-				$(".emp_no").val($(this).find(".checkEmpNo").val());
+				$(".emp_no").val($(".checkEmpNo").val());
 				$(".detailForm").submit();
 			});
  			
@@ -205,7 +198,6 @@
  			}).mouseout(function(){
  				$(this).closest("td").removeClass("greyColor");
  			});
- 			
 		});
 		
 		// 페이지 당 출력 개수 변경 시
@@ -222,19 +214,15 @@
 			var url = "nowPage=" + nowPage + "&perPage=" + perPage + "&index=" + index;
 			
 			if( !isNull(${name}) ){
-				url += "&name=".concat('${name}');
+				url += "&name=".concat(${name});
 			}
 			
 			if( !isNull(${email}) ){
-				url += "&email=".concat('${email}');
+				url += "&email=".concat(${email});
 			}
 			
 			if( !isNull(${tel}) ){
-				url += "&tel=".concat('${tel}');
-			}
-			
-			if( $(".deptName option:selected").val() != "all" ){
-				url += "$deptNam=".concat( $(".deptName option:selected").val() );
+				url += "&tel=".concat(${tel});
 			}
 			
 			location.href="${pageContext.request.contextPath}/addressBook/allEmp?" + url;

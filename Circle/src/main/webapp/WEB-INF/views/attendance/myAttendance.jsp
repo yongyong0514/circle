@@ -78,6 +78,7 @@
 				<!-- 현재(이번주) 근태현황 끝 -->
 				<br><br>
 				<!-- 근태이력(리스트) 시작 -->
+				<div class="tableBox">
 				<table class="historyTable">
 					<tr>
 						<th>일자</th>

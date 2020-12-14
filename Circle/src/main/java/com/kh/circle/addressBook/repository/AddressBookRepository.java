@@ -12,4 +12,6 @@ public interface AddressBookRepository {
 	public List<AddressInfo> pagingEmp(PagingInfo pInfo);
 	
 	public EmpInfoAll detail(String emp_no);
+	
+	public List<String> deptList();
 }

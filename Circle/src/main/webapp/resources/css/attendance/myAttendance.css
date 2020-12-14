@@ -92,6 +92,13 @@ td {
 	border-right: 0;
 }
 
+.tableBox{
+	box-sizing: content-box;
+	max-height: 400px;
+	overflow: auto;
+	padding: 0.5rem;
+}
+
 .historyTable{
 	width: 100%;
 }

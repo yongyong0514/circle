@@ -116,6 +116,7 @@
 	function sTimeCheck(){
 		var today = getFormatDate(new Date());
 		var sTime = getFormatDateAndTime(new Date());
+		location.reload();
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/attendance/sTimeCheck",
@@ -134,6 +135,7 @@
 	
 	function eTimeCheck(){
 		var eTime = getFormatDateAndTime(new Date());
+		location.reload();
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/attendance/eTimeCheck",

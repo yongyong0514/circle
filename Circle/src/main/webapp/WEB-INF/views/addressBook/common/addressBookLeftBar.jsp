@@ -13,21 +13,26 @@
 		
 			<!-- 메뉴 시작 -->
 			<div class="menuLeftListTop">주소록</div>
+<!-- 
 			<div class="menuLeftListBtn"><button class="menuLeftBtn">새 주소 추가</button></div>
+ -->
 			<div class="menuLeftList0"></div>
 
 			<div class="menuLeftListTitle">공용주소록</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/addressBook/allEmp'">전사 주소록</div>
-
+<%-- 
 			<div class="menuLeftListTitle">부서 주소록</div>		
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서1 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서2 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서3 ...</div>
-
+ --%>
+<%--  
 			<div class="menuLeftListTitle">개인 주소록</div>		
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록1 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록2 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록3 ...</div>
+ --%>
+
 			<!-- 메뉴 끝 -->
 		</div>
 	</div>

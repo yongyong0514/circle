@@ -46,4 +46,12 @@ public class AddressBookServiceImpl implements AddressBookService{
 		return empInfo;
 	}
 
+	@Override
+	public List<String> deptList() {
+	
+		List<String> deptList = addressBookRepository.deptList();
+		
+		return deptList;
+	}
+
 }

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.circle.login.entity.EmpInfo;
-import com.kh.circle.sign.vo.SignWriteInsert;
+import com.kh.circle.sign.vo.SignSelectOne;
 import com.kh.circle.vacation.entity.VacationInfo;
 import com.kh.circle.vacation.service.VacationService;
 
@@ -63,16 +63,10 @@ public class VacationController {
 
 		// 처리과정
 		// 1. 받아온 정보를 휴가계 양식에 맞도록 SignWrite 형으로 변형
-		SignWriteInsert signWriteInsert = vacationService.formVacation(vacationInfo);
-
+		SignSelectOne insertVacation = vacationService.formVacation(vacationInfo);
+		
 		// 2. 전달할 값을 map에 저장
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("VacationInfo", vacationInfo);
-		map.put("signWriteInsert", signWriteInsert);
-		
 		// 3. sign controller에 값 전달
-		attr.addFlashAttribute("map", map);
-		
 		// 4. 처리여부 ("/insertVacation"에서)회신 후 insert
 		
 		// 논의 필요한 부분
