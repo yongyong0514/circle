@@ -301,6 +301,7 @@
              , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR
              , SI.SIGN_STEP
              , SI.SIGN_COUNT
+             , SI.SIGN_CODE
  		  FROM SIGN SI
  		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
@@ -364,7 +365,7 @@
 		 WHERE SIGN_TYPE_CODE = #{typeCode}
 	</select>
 	
-	<select id="signEmpList" resultType="signEmpList">
+	<select id="signEmpList" parameterType="String" resultType="signEmpList">
 	 	 SELECT EI.EMP_INFO_EMP_NO 
       	 	  , EI.EMP_INFO_NAME
      		  , JI.JOB_INFO_CODE
@@ -375,6 +376,8 @@
   		   JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
            JOIN DEPT_INFO DI ON(DI.DEPT_INFO_CODE = EI.EMP_INFO_DEPT_CODE)
 LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
+		  WHERE EI.EMP_INFO_EDAT IS NULL
+		  AND NOT(EI.EMP_INFO_EMP_NO = #{empCode})
  	      ORDER BY JI.JOB_INFO_CODE ASC
 	</select>
 <!-- signWrite page mapper end -->
@@ -444,7 +447,7 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 										   , #{files_cname}
 										   , #{files_route}
 										   , SYSDATE
-										   , #{empCode}
+										   , #{iempCode}
 										   , 'N'
 										   , #{files_size})
 	</insert>
@@ -674,9 +677,50 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 <!-- select signListAll and Paging end -->
 
 
-<!-- select signDecision start -->
-<!-- 	<select id="signDecision" resultType="signDecision">
-		
-	</select> -->
-<!-- select signDecision end -->
+<!-- signDenied start -->
+	<insert id="signProcessAdd4" parameterType="String">
+		INSERT INTO SIGN_PROCESS VALUES('SIPC000004'
+				  , #{sign_code}
+				  , SYSDATE)	
+	</insert>
+	
+	
+	<delete id="signProcessDel2" parameterType="String">
+		DELETE
+  		  FROM SIGN_PROCESS
+		 WHERE SIGN_PRO_CODE = 'SIPC000001'
+   		   AND SIGN_CODE = #{signCode}
+	</delete>
+	
+	<update id="signDenied" parameterType="String">
+		UPDATE SIGN
+		   SET SIGN_STEP = 'SIPC000004'
+		 WHERE SIGN_CODE = #{signCode}
+	</update>
+<!-- signDenied end -->
+
+<!-- update signModify start -->
+	<update id="signModifyUpdate" parameterType="signWriteInsert">
+		UPDATE SIGN
+		   SET SIGN_TITLE = #{sign_title}
+		     , SIGN_TYPE_CODE = #{sign_type_code}
+		     , SIGN_ACC = #{sign_acc}
+		     , SIGN_KEEP = SYSDATE+#{sign_keep}
+		     , SIGN_NOTE = #{sign_note}
+		 WHERE SIGN_CODE = #{sign_code}
+	</update>
+	
+	<delete id="signProcessDel4" parameterType="String">
+		DELETE
+  		  FROM SIGN_PROCESS
+ 		 WHERE SIGN_PRO_CODE = 'SIPC000004'
+  		   AND SIGN_CODE = #{signCode}
+	</delete>
+	
+	<update id="signProcessAdd5" parameterType="String">
+		UPDATE SIGN
+		   SET SIGN_STEP = 'SIPC000002'
+		 WHERE SIGN_CODE = #{signCode}
+	</update>
+
 </mapper>

@@ -43,7 +43,7 @@
 							<li>
 								<button class="submitAgree">이미지 선택<br><a class="fontSize1">선택한 이미지로 결재합니다</a></button>&nbsp;&nbsp;&nbsp;
 								
-								<button class="submitDenied">서명 작성하기<br><a class="fontSize1">입력한 서명으로 결재합니다</a></button>
+								<button class="submitDefault">서명 작성하기<br><a class="fontSize1">입력한 서명으로 결재합니다</a></button>
 							</li>
 						</ul>
 					</div>
@@ -81,8 +81,21 @@
 						</div>
 						<div class="signModalLayer"></div>
 					</div>
-
-					
+					<div id="signModalForm1">
+						<div class="signModalArea1">
+							<div id="signature-pad" class="m-signature-pad">
+								<div class="signModalClose1">x</div>
+        						<div class="m-signature-pad--body">
+        							<canvas></canvas>
+								</div>
+        						<div class="m-signature-pad--footer">
+            					<div class="description">기본으로 사용할 서명을 작성해주세요</div>
+            						<button type="button" class="button save" data-action="save">저장</button>
+            						<button type="button" class="button clear" data-action="clear">지우기</button>
+        						</div>
+    						</div>
+    					</div>
+					</div>
 					<div class="signConfigBtnSet">
 						<div class="signConfigArea"></div>
 						<button class="signConfigBtn2">결재 문서 양식 등록</button>
@@ -95,6 +108,9 @@
 	<script src="${pageContext.request.contextPath}/resources/js/common/jquery.min.js"></script>
 	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/sign/signature_pad.min.js" type="text/javascript"></script>
+
+
 
 <!-- 왼쪽바 고정 추가 옵션 시작 -->
 	<script>
@@ -122,8 +138,8 @@
     		$("#signSelect").fadeOut(100);
     	});
     </script>
- 
 
+	
 <!-- 결재 서명 파일 시작 -->
 	<script>
 		$(".submitAgree").click(function(){
@@ -192,5 +208,78 @@
 		});
 	</script>
 	<!-- 주석처리 -->
+
+
+    
+<!-- 결재 필수 서명 파일 시작 -->
+	<script>
+		$(".submitDefault").click(function(){
+			$("#signModalForm1").attr("style", "display: block");
+			signLaunch();
+		});
+	</script>
+	
+	<script>
+		$(".signModalClose1").click(function(){
+			$("#signModalForm1").attr("style", "display: none");
+		});
+	</script>
+	
+	<script>
+		$("#signModalForm1").mouse
+	</script>	
+	<script>
+		function signLaunch(){
+    	    var canvas = $("#signature-pad canvas")[0];
+    	    var sign = new SignaturePad(canvas, {
+    	        minWidth: 5,
+    	        maxWidth: 10,
+   	       	 	penColor: "rgb(66, 133, 244)"
+   	    	});
+   	      
+        	$("[data-action]").on("click", function(){
+            	if ( $(this).data("action")=="clear" ){
+                	sign.clear();
+            	}
+            	else if ( $(this).data("action")=="save" ){
+                	if (sign.isEmpty()) {
+                    	alert("서명을 작성해주세요");
+                	} else {
+                    	$.ajax({
+                        	url : "save.jsp",
+                        	method : "post",
+                        	dataType : "json",
+                        	data : {
+                        	    sign : sign.toDataURL()
+                        	},
+                        	success : function(r){
+                        	    alert("저장완료 : " + r.filename);
+                        	    sign.clear();
+                        	},
+                        	error : function(res){
+                        	    console.log(res);
+                        	}
+                    	});
+                	}
+            	}
+        	});
+         
+         
+        	function resizeCanvas(){
+            	var canvas = $("#signature-pad canvas")[0];
+     
+            	var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            	canvas.width = canvas.offsetWidth * ratio;
+            	canvas.height = canvas.offsetHeight * ratio;
+            	canvas.getContext("2d").scale(ratio, ratio);
+        	}
+         
+        	$(window).on("resize", function(){
+            	resizeCanvas();
+        	});
+ 
+        	resizeCanvas();
+		}
+    </script>
 </body>
 </html>

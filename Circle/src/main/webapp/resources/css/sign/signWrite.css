@@ -119,7 +119,7 @@ body {
 	background: linear-gradient(to top, #FFFFFF, #D8D8D8);
 }
 
-#sign_emp_code, #sign_count, #sign_note {
+.sign_code, #sign_emp_code, #sign_count, #sign_note {
 	display: none;
 }
 

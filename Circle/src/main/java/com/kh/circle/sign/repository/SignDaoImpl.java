@@ -133,7 +133,7 @@ public class SignDaoImpl implements SignDao {
 	//결재 서명 파일 등록
 	@Override
 	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
-			String empCode) {
+			String iempCode) {
 		
 		//시퀀스 번호 생성 및 파일 등록
 		String seqSignFiles = sqlSession.selectOne("sign.seqSignFiles");	
@@ -146,14 +146,17 @@ public class SignDaoImpl implements SignDao {
 		map.put("files_type", files_type);
 		map.put("files_cname", files_cname);
 		map.put("files_route", files_route);
-		map.put("empCode", empCode);
+		map.put("iempCode", iempCode);
 		
 		sqlSession.insert("sign.signFilesSignatureInsert", map);
 	}
 	
-	//결재 서명 파일 경로
-	private final String path2 = "d:/resources/files/empInfo/signature";
+	//결재 서명 이미지 파일 경로
+	private final String path2 = "d:/resources/files/sign/signature/image";
 
+	//결재 서명 기본 파일 경로
+	private final String path3 = "d:/resources/files/sign/signature/default";
+	
 	//결재 서명 파일 다운
 	@Override
 	public byte[] loadFile(String files_cname) throws IOException {

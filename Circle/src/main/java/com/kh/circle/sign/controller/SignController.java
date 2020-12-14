@@ -96,11 +96,13 @@ public class SignController {
 	
 //	Result signWrite
 	@GetMapping("/signWrite")
-	public String signWrite(Model model) {
+	public String signWrite(HttpSession session, Model model) {
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
 		List<SignType> list = sqlSession.selectList("sign.signTypeList");
 		model.addAttribute("list", list);
 		
-		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList");
+		List<SignEmpList> list2 = sqlSession.selectList("sign.signEmpList", empCode);
 		model.addAttribute("list2", list2);
 		
 		return "sign/signWrite";
@@ -125,7 +127,7 @@ public class SignController {
 				currentPage = Integer.parseInt(currentPages);
 			}
 			
-			limit = 8;
+			limit = 9;
 			
 			int listCount = sqlSession.selectOne("sign.signListAllCount", empCode);
 			
@@ -183,7 +185,12 @@ public class SignController {
 	@GetMapping("/signSelectOne")
 	public String signSelectOne(@RequestParam String signCode, Model model, HttpSession session) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		String iempCode = 'i' + empCode;
 		SignSelectOne signSelectOne = sqlSession.selectOne("sign.signSelectOne", signCode);
+		int checkValue = sqlSession.selectOne("sign.sfsListCount", iempCode);
+		
+		model.addAttribute("checkValue", checkValue);
+		
 		model.addAttribute("signSelectOne", signSelectOne);
 		
 		List<SignListJoiner> signListJoiner = sqlSession.selectList("sign.signJoinerCode", signCode);	
@@ -192,7 +199,7 @@ public class SignController {
 		List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
 		model.addAttribute("list3", list3);
 		
-		List<SignFiles> list4 = sqlSession.selectList("sign.sfsListMini2", empCode);
+		List<SignFiles> list4 = sqlSession.selectList("sign.sfsListMini2", iempCode);
 		model.addAttribute("list4", list4);
 		
 		List<SignReply> list5 = sqlSession.selectList("sign.signResult", signCode);
@@ -225,10 +232,11 @@ public class SignController {
 	@GetMapping("/signConfig")//여기서 다운로드 처리해야 함
 	public String signConfig(HttpSession session, Model model) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
-		List<SignFiles> list = sqlSession.selectList("sign.signFilesSignatureList", empCode);
+		String iempCode = 'i' + empCode;
+		List<SignFiles> list = sqlSession.selectList("sign.signFilesSignatureList", iempCode);
 		model.addAttribute("list", list);
 		
-		List<SignFiles> list2 = sqlSession.selectList("sign.sfsListMini", empCode);
+		List<SignFiles> list2 = sqlSession.selectList("sign.sfsListMini", iempCode);
 		model.addAttribute("list2", list2);
 		
 		return "sign/signConfig";
@@ -246,9 +254,16 @@ public class SignController {
 	
 // 	Update signModify
 	@PostMapping("/signModify")
-	public String signModify() {
+	public String signModify(@ModelAttribute SignWriteInsert signWriteInsert) { 
 		
-		return "sign/signList";
-	}
-
+		String signCode = signWriteInsert.getSign_code();
+		
+		sqlSession.update("sign.signModifyUpdate", signWriteInsert);
+		
+		sqlSession.delete("sign.signProcessDel4", signCode);
+		
+		sqlSession.update("sign.signProcessAdd5", signCode);
+		
+		return "redirect:signList";
+	}	
 }
