@@ -27,8 +27,10 @@
 		<div class="container">
 			<div class="content">
 				<!-- 주소록 이름 -->
-				<h1>전사주소록(주소록 이름)</h1>
+				<h1>전사주소록</h1>
+<!-- 				
 				<button value="alertAll">이 그룹에게 전체쪽지 보내기</button>
+ -->				
 				<br>
 				<br>
 				<form class="searchAddress" action="${pageContext.request.contextPath}/addressBook/allEmp">
