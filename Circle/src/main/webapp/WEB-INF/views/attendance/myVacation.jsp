@@ -133,13 +133,15 @@
 									<input class="startDate" name="startDate" type="date" required>
 									~
 									<input class="endDate" name="endDate" type="date" required>
-									&nbsp;&nbsp;&nbsp;&nbsp;일수: 
+									</td>
+									<td>일수:</td>
+									<td colspan="3"> 
 									<input class="calcDate" name="calcDate" type="text" value="0" readonly />
-									<!-- 일수는 바로 계산 --></td>
+									</td>
+<!--
 									<td>전자결제상태</td>
 									<td><input type="text" id="permission"
-										name="permission" readonly value="결제대기"></td>
-<!-- 									
+										name="permission" readonly value="결제대기"></td>									
 									<td>실제사용여부</td>
 									<td><input type="checkbox" name="used" onclick="return false;"></td>
 									결재완료/해당 일자 지남
