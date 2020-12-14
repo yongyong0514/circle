@@ -1,275 +1,288 @@
-/*********************************  함수 정의 영역  ****************************/
-
-/* 문항추가 입력폼 추가 */
-function addQuestionEditFrom(){
-	$("#question-form-template").tmpl().insertBefore("li.action");
-}
-/* 문항추가 입력폼 제거 */
-function removeQuestionEditForm(){
-	$(".question-item-edit").remove();
-}
-/* 문항 추가 폼 존재확인 */
-function confirmAddQuestionFromExist(){
-	if($('.question-item-edit').length > 0) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/* 문항추가폼 미입력 부분 확인/ 확인후 후속 추가동작 */
-function confirmAddQuestion(){
-	/* 질문 입력창 입력 확인 - 경고메세지 출력*/
-	
-	console.log($("input[name=question]").val().length);
-	
-	if($("input[name=question]").val().length < 2 || $("input[name=question]").val() == ""){
-		($("input[name=question]").siblings(".desc-top-wrap").css("display","block")
-		,$("input[name=question]").css({"border-color": "red","color": "red"})
-		.focus());
-	} else {
+	$(document).ready(function(){
 		
-		/* 선택형, 텍스트형, 점수형 입력폼검사/폼추가 */
-		switch(extractQuestionType()){
-			case 'select' : {	($(".desc-top-wrap").css("display","none")
-								,$("input[name=question]").css({"border-color": "#ddd","color": "#333"}));
-								/* 보기 입력창 존재 확인 - 경고창 출력 */
-								if(confirmAddQuestionFromSelectExist() == false){
-									alert("등록된 문항이 없습니다");
-								} else {
-									/* 보기 입력창 미입력 확인 - 경고메세지 출력 */
-									var inputCheck = 0;
-									$(".question-form").find("input[name=option-2]").each(function(index,item) {
-										if($(item).val().length < 1){
-											($(item).siblings(".desc-top-wrap").css("display","block")
-											, $(item).css({"border-color": "red","color": "red"}));
-											inputCheck += 1;
-										} else {
-											($(item).siblings(".desc-top-wrap").css("display","none"), $(item)
-											.css({"border-color": "#ddd","color": "#333"}));
-										}
-									});
-									if(inputCheck == 0){
-										/* 확인완료/추가창 제거/완성태그 추가 */
-										addPreview();
-										removeQuestionEditForm();
-										
-										return true;
-									}
-								}
-							};break;
-			case 'text' :	{addPreview();
-							removeQuestionEditForm();
-							return true;
-							}break;
-			case 'score': 	{addPreview();
-							removeQuestionEditForm();
-							return true;
-							}break;
-		}
+		/* 조직도 드래그 기능 */
+		$('#insert-organ-panel').draggable();
+		
+		/************************
+		** 설문 대상 추가 기능 ** 
+		************************/		
+			//설문대상자 직접선택 라디오 버튼 숨기기
+			$("#organ-view").hide();
+			//설문대상자 직접선택 라디오 버튼 변경 인식
+			$("input:radio[name=joinMember]").on("change", function(){
+					if($("#radio-my").prop("checked")){
+						$("#organ-view").show();
+					} else {
+						$("#organ-view").hide();
+					}
+			});
+			
+			//인원추가 버튼 클릭 인식/ 조직도 위치조정 후 오픈
+			$(".icon-addlist").closest(".btn-wrap").on("click", organOpen);
+			
+			//전체삭제 버튼 기능
+			$('.remove-all-tag').on('click', function(){
+				var location = $(this).closest('.addOrRefer').prop('id');
+				switch(location){
+				case 'referer-list' : removeAllReferFormFlush();
+										console.log('참조 삭제');
+										console.log(realReferInfo);
+										break;
+				default : removeAllAttendFormFlush();
+							console.log('참가 삭제');
+							console.log(realAttendInfo);
+							break;
+				}
+			});
+			//참가/참여자 개별 삭제 아이콘 클릭시
+			$(document).on('click','.icon-del', function(){
+				var iconLocation = $(this).closest('li.name-icon');
+				iconLocation.remove();
+			});
+		
+		/************************
+		** 다음/취소 버튼 기능 ** 
+		************************/		
+			$(document).on("click","#next-btn", function(){
+				if(titleInputCheck() && dateCheck() && memberCheck()){
+					
+					console.log("참가자 정보");
+					console.log(realAttendInfo);
+					
+					console.log("참조자 정보");
+					console.log(realReferInfo);
+					/* 
+					$('#poll-form').prop('action',"${pageContext.request.contextPath}/poll/questionInsert").submit();
+					 */
+				}				
+				
+			})
+		/* ******************* */
+		
+		/* 조직도 확인버튼 클릭시 */				
+		$('#insert-organ-confirm').on('click', organConfirm);
+		
+	});
+	
+	/*********************************************************** 함수 정의 부분 *******************************************************/
+	
+	/* 참가자 전체삭제 버튼 기능 */
+	function removeAllAttendFormFlush(){
+		attendFormFlush();
+		checkedAttendId = [];
+		checkedAttendName = [];
+		checkedAttendInfo = [];
+		realAttendInfo = [];
 	}
-}
-/* 문항 제목 변수화 */
-function extractTitle(){
-	title = $('.question-form input[name=question]').val();
-	return title;
-}
-/* 문항 타입 체크 (select, text, score)*/
-function extractQuestionType(){
-	return $("select[name=question-type]").val();
-}
-/* 문항 필수 체크 */
-function extractNecessary(){
-	var temp;
-	$('#checkbox-required').prop('checked') ? temp = "[필수]" : temp = "";
-	return temp;
-}
-
-/*******************************
-	선택형 문항 추가 관련 함수 
-********************************/
-
-	/* 복수형 선택시 최대선택 개수 선택지 추가 */
-	function addPluralNum() {
-		$("#question-option-plural-only").tmpl().insertBefore(".question-answer-row");
+	/* 참조자 전체삭제 버튼 기능 */
+	function removeAllReferFormFlush(){
+		referFormFlush();
+		checkedReferId = [];
+		checkedReferName = [];
+		checkedReferInfo = [];
+		realReferInfo = [];
 	}
-	/* 최대선택 개수 선택지 제거 */
-	function removePluralNum() {
-		$(".plural-only").remove();
-	}
-	/* 일반 선택형 보기 존재 확인 */
-	function selectionExist(){
-		if($('.question-option-item').length > 0){
+	
+	/* 참가자 입력창 확인(직접선택인 경우) */
+	function memberCheck(){
+		if($('#radio-my').prop('checked')){
+			console.log('radio checked');
+			
+			if($('#organ-view').find("li.name-icon").length > 0){
+				return true;
+			} else {
+				alert('참가인원을 추가 해주세요');
+				console.log("참가자 정보");
+				console.log(realAttendInfo);
+				
+				console.log("참조자 정보");
+				console.log(realReferInfo);
+				return false;
+			}
+			
+		} else {
 			return true;
 		}
 	}
 	
-	/* 기타 선택형 보기 존재 확인 */
-	function etcSelectionExist(){
-		if($('.question-option-item-etc').length > 0) {
+	/* 날짜 입력창 확인 */
+	function dateCheck(){
+		var startDate = $('#start-date').val();
+        var startDateArr = startDate.split('-');
+         
+        var endDate = $('#end-date').val();
+        var endDateArr = endDate.split('-');
+                 
+        var startDateCompare = new Date(startDateArr[0], startDateArr[1], startDateArr[2]);
+        var endDateCompare = new Date(endDateArr[0], endDateArr[1], endDateArr[2]);
+         
+        if(startDateCompare.getTime() > endDateCompare.getTime()) {
+             
+            alert("시작날짜와 종료날짜를 확인해 주세요.");
+             
+            return false;
+        } else {
+        	return true;
+        }
+	}
+	
+	/* 제목 입력창 확인 */
+	function titleInputCheck(){
+		if($("input[name=title]").val() == ''){
+			$(".desc-top-wrap").css("display","block"),$("input[name=question]").css({"border-color": "red","color": "red"});
+			return false;
+		}else {
 			return true;
 		}
 	}
-	
-/*********************************  실행 영역  **************************************************************************/
-$(document).ready(function(){
 	
 	/************************
-	**					   **
-	** 문항 추가 관련 기능 ** 
-	**                     **
-	************************/
-	
-		/* 문항 추가 버튼 클릭기능 */
-		$("#add-question-btn").on("click", function(){
-			if(confirmAddQuestionFromExist() == true){
-				confirmAddQuestion();
-				if(confirmAddQuestion()) addQuestionEditFrom();
-				
-			} else {
-				addQuestionEditFrom();
-			}
-		});
+	** 설문 대상 추가 기능 ** 
+	************************/	
+		/* 변수 선언 */
 		
-		/* 문항 타입 선택 */
-		$(document).on("change","select[name=question-type]",function(){
+		checkedReferId = [];
+		checkedReferName = [];
+		checkedReferInfo = [];
+		realReferInfo = [];
 		
-			selectChange();
-		});
-		function selectChange(){
-			switch($("select[name=question-type]").val()){
-			/* 선택형 선택시 */
-			case "select" : $("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
-							$(".question-answer-row").css("display","table-row");
-							$(function(){
-								buttonChange();
-							});
-							break;
+		checkedAttendId = [];
+		checkedAttendName = [];
+		checkedAttendInfo = [];
+		realAttendInfo = [];
 			
-			/* 텍스트형 선택시 */
-			case "text" :   $(".question-answer-row").css("display","none");
-							$("select[name=question-sub-type]").html("<option value='text'>단문 입력</option><option value='textarea'>장문 입력</option>");
-							$(function(){
-								removePluralNum();
-							});
-							break;
-			
-			/* 점수형 선택시 */
-			case "score" : $(".question-answer-row").css("display","none");
-							$("select[name=question-sub-type]").html("<option value='3'>3 점</option><option value='5'>5 점</option><option value='7'>7 점</option><option value='10'>10 점</option>");
-							$(function(){
-								removePluralNum();
-							});
-							break;
+		//인원추가용 조직도 오픈 기능
+		function organOpen(){
+			var p = $(this).offset();
+			$(".insert-organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
+			/* 참조/참여 확인 */
+			addOrRefer = $(event.target).closest('div.addOrRefer').attr('id');
+			console.log(addOrRefer);
+		}	
+		//조직도 확인버튼 기능
+		function organConfirm(){
+			switch(addOrRefer){
+			case 'referer-list' : referInput();break;
+			default : attendInput();break;
 			}
 		}
-		
-				/*********************************
-		** 선택형 문항 내부 기능 ** 
-		**********************************/		
-		/* 복수선택 select 선택시 */
-		$(document).on("change", "select[name=question-sub-type]", function(){
-			buttonChange();
-			switch($(this).val()){
-				case 'single' : $(function(){
-									removePluralNum();
-								});
-								break;	
-				case 'plural' : $(function(){addPluralNum();});break;	
-			}
+		/* 참조자에 변수에 이름넣기 */
+		function referInput(){
+			/* 변수 비우기 */
+			checkedReferInfo = [];
+			checkedReferId = [];
+			checkedReferName = [];
+			$('ul.tree .empBtn input[type=checkbox]:checked').each(function(){
+				checkedReferId.push($(this).data('name'));
+				checkedReferName.push($(this).parent().text().trim());
+			});
 			
-		});
-		
-		/* 최대 개수 제한 숫자 자동변경 */
-		$(document).on("click", ".question-form li", function(){
-			$("#maxSelectCase").children("option:not(:first)").remove();
-			/* 보기 숫자 카운팅 변수 */
-			var count = (($(".question-answer-row .answer-wrap li").length) - 2);
+			/* 체크박스 비우기 */
+			$('ul.tree input[type=checkbox]').prop("checked",false);
 			
-			for(var i = 1;  i <= count; i++){
-				$("<option value=" + i + ">" + i + "</option>").appendTo("#maxSelectCase");
-			}
-		});
-		
-		/* 선택형 보기 입력창 클릭시 기능 */
-		$(document).on("click", ".add-question-btn input[type='text']", function(){
-			switch($("select[name=question-sub-type]").val()){
-				case 'single' : $("#question-option-template-radio").tmpl().insertBefore($(".question-form ul.answer-wrap li span.add-question-btn").parent());break;
-				case 'plural' : $("#question-option-template-checkbox").tmpl().insertBefore($(".question-form ul.answer-wrap li span.add-question-btn").parent());break;
-			}
-		});
-		/* 선택형 보기 입력창 제거 아이콘 클릭 */
-		$(document).on("click", "span.icon-del", function(){
-			$(this).closest(".question-option-item").remove();
-		});
-		/* 기타 추가 클릭 */
-		$(document).on("click", ".add-etc-question-btn", function(){
-			$(this).css("display","none");
-			switch($("select[name=question-sub-type]").val()){
-				case 'single' : $("#question-etc-option-template-radio").tmpl().appendTo(".question-form ul.answer-wrap");break;
-				case 'plural' : $("#question-etc-option-template-checkbox").tmpl().appendTo(".question-form ul.answer-wrap");break;
-			}
-		});
-		/* 기타 제거 아이콘 클릭*/
-		$(document).on("click", "span.del-etc", function(){
-			$(this).closest(".question-option-item-etc").remove();
-			$(".add-etc-question-btn").css("display","block");
-		});
-		/*************************/
-		
-		
-
-
-		
-		/*********************************
-		** 문항추가 완료/취소 버튼 기능 ** 
-		**********************************/
-		/* 완료버튼 클릭 */
-		$(document).on("click", ".poll-action span:contains('완료')", function(){
+			checkedReferInfo.push(checkedReferId);
+			checkedReferInfo.push(checkedReferName);
+			inputNameToReferForm(checkedReferInfo);
+		}
+		/* 참가자 변수에 이름넣기 */
+		function attendInput(){
+			/* 변수 비우기 */
+			checkedAttendInfo = [];
+			checkedAttendId = [];
+			checkedAttendName = [];
+			$('ul.tree .empBtn input[type=checkbox]:checked').each(function(){
+				checkedAttendId.push($(this).data('name'));
+				checkedAttendName.push($(this).parent().text().trim());
+			});
 			
+			/* 체크박스 비우기 */
+			$('ul.tree input[type=checkbox]').prop("checked",false);
 			
-			confirmAddQuestion();
+			checkedAttendInfo.push(checkedAttendId);
+			checkedAttendInfo.push(checkedAttendName);
+			inputNameToAttendForm(checkedAttendInfo);		
+		}
+		//조직도에 체크된 이름 <참조자> 폼에 넣기
+		function inputNameToReferForm(checkedReferInfo){
+			/* 참조자 폼에 있는 이름 제거 */
+			referFormFlush();
+			/* 서버 전송용 참조자 데이터 비우기 */
+			realReferInfo = [];
+			/* 폼에 이름 넣기 */
+			$.each(checkedReferInfo[0], function (index, item){
+				
+				var overlap = false;
+				/* 참가자와 중복 검사 */
+				if(realAttendInfo != null){
+					$.each(realAttendInfo, function(innerIndex, innerItem){
+						if(item == innerItem){
+							console.log('중복 발견')
+							console.log(item);
+							overlap = true;
+							return false;
+						}		
+					});
+				} 
+				/* 변수화 */
+				var tempIdName = {"name" : checkedReferName[index], "id" : checkedReferId[index], "type" : "refer"};
+				/* 중복이 없을 시 이름 넣기 */
+				if(overlap == false){
+					$('#add-name-template').tmpl(tempIdName).insertBefore('#referer-list ul.name-tag .create');
+					/* 서버 전송용 변수에 추가 */
+					realReferInfo.push(item);
+				}
+			})
+			/* 체크박스 비우기 */
+			$('ul.tree input[type=checkbox]').prop("checked",false);
+			checkedReferId = [];
+			checkedReferName = [];
+			checkedReferInfo = [];
 			
-		});
-		/* 취소버튼 클릭 */
-		$(document).on("click", ".poll-action span:contains('취소')", function(){
-			//수정용 or 추가용 확인
-			var x = $(this).closest('.question-item').prop('class');
+			console.log(realReferInfo);
+		};
+		//조직도에 체크된 이름 <참가자> 폼에 넣기
+		function inputNameToAttendForm(checkedAttendInfo){
+			/* 참여자 폼에 있는 이름 제거 */
+			attendFormFlush();
+			/* 서버 전송용 참가자 데이터 비우기 */
+			realAttendInfo = [];
+			/* 폼에 이름 넣기 */
+			$.each(checkedAttendInfo[0], function (index, item){
+				var overlap = false;
+				/* 참조자와 중복 검사 */
+				if(realReferInfo != null){
+					$.each(realReferInfo, function(innerIndex, innerItem){
+						if(item == innerItem){
+							console.log('중복 발견')
+							console.log(item);
+							overlap = true;
+							return false;
+						}				
+					});
+				} 
+				/* 변수화 */
+				var tempIdName = {"name" : checkedAttendName[index], "id" : checkedAttendId[index], "type" : "attend"};
+				/* 중복이 없을 시 이름 넣기 */
+				if(overlap == false){
+					$('#add-name-template').tmpl(tempIdName).insertBefore('#organ-view ul.name-tag .create');
+					/* 서버 전송용 변수에도 추가 */
+					realAttendInfo.push(item);
+				}
+				
+			})
+			/* 체크박스 비우기 */
+			$('ul.tree input[type=checkbox]').prop("checked",false);
+			checkedAttendId = [];
+			checkedAttendName = [];
+			checkedAttendInfo = [];
 			
-			console.log(x);
-			
-			if(x == 'question-item question-item-modify'){
-				$(this).closest('.question-item-modify').next().show();
-				$(this).closest('.question-item-modify').remove();
-			} else {
-				$(this).closest('.question-item-edit').remove();
-			}
-						
-			
-			/*removeQuestionEditForm();*/
-		});
-		/*********************************/
-		/* 문항 개별삭제 아이콘 클릭 */
-		$(document).on("click", ".remove-question-btn", function(){
-			
-			/* 클릭한 문항 미리보기 번호 추출 */
-			var here = $(this).parent().parent().find('.seq').text();
-			here = here - 0;
-			
-			/* 추출된 번호에 맞는 객체 찾기 */
-			var findArray = questions.findIndex(x => x.seq == here);
-			
-			/* 객체 삭제 */
-			questions.splice(findArray, 1);
-			
-			/* 태그 삭제 */
-			$(this).closest('.question-item').remove();
-
-			console.log(questions);
-		});
-		
-		
-		
-	/*********************************/
-	
-});
+			console.log(realAttendInfo);
+		};
+		/* 참가자 폼 비우기 */
+		function attendFormFlush(){
+			$('#organ-view ul.name-tag li.name-icon').remove();
+		}
+		/* 참조자 폼에 있는 이름 제거 */
+		function referFormFlush(){
+			$('#referer-list ul.name-tag li.name-icon').remove();
+		}
