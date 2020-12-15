@@ -30,7 +30,7 @@
 					</ul>
 				</div>
 				<div class="homeListBar">
-					<button class="listBtn" type="submit">수정완료</button>
+					<button class="listBtn" type="submit">저장하기</button>
 				</div>	
 			</div>
 			<div class="content">

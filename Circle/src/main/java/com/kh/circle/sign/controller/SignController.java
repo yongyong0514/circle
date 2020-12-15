@@ -161,6 +161,216 @@ public class SignController {
 	}
 
 	
+//	Result signListWait
+	@GetMapping("/signListWait")
+	public String signListWait(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("sign.signListWaitCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("sign.signListWait", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}	
+		
+		return "sign/signListWait";
+	}
+	
+	
+	
+//	Result signListProcess
+	@GetMapping("/signListProcess")
+	public String signListProcess(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+	
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("sign.signListProcessCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("sign.signListProcess", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}
+		
+		return "sign/signListProcess";
+	}
+	
+	
+	
+//	Result signListDenied
+	@GetMapping("/signListDenied")
+	public String signListDenied(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("sign.signListDeniedCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("sign.signListDenied", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}
+		
+		return "sign/signListDenied";
+	}
+	
+	
+	
+//	Result signListComplete
+	@GetMapping("/signListComplete")
+	public String signListComplete(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("sign.signListCompleteCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("sign.signListComplete", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}
+		
+		return "sign/signListComplete";
+	}
+
+	
+
 //	Result signList
 	@GetMapping("/signList")
 	public String signList(Model model, HttpSession session) {
