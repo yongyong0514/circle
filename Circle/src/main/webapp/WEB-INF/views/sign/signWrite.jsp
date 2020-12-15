@@ -555,16 +555,34 @@
 
 											watcher.push(data);
 										}
+										
+										if(sessionStorage.getItem("joiner") != null) {
+											var jsonData = sessionStorage.getItem("joiner");
+											var data = JSON.parse(jsonData);
+											//watcher data 비교
+											for(var i = 0; i < data.length; i++){
+												for(var j = 0; j < watcher.length; j++){
+													if(data[i].jCode == watcher[j].wCode){
+														alert("참조자가 중복되었습니다. 다시 설정해주세요.");
 
-										sessionStorage.setItem('watcher', JSON.stringify(watcher));
-
+													} 
+												}
+											}
+											
+										} else {
+											alert("null");
+										}
+										
+/* 										sessionStorage.setItem('watcher', JSON.stringify(watcher));
+										
 										showWList();
 
 										$(".watcherForm1").fadeOut(100);
 										$(".watcherAlert").fadeIn(1000);
 										$(".watcherAlert").fadeOut(1000);
-										location.redirect();
+										location.redirect();*/
 									}
+								 
 							});
 					};
 			});

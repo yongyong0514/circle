@@ -457,7 +457,8 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	<select id="sfsListCount" resultType="int" parameterType="String">
 		SELECT COUNT(*)
 		  FROM FILES
-		 WHERE FILES_TYPE = #{empCode}
+		 WHERE FILES_STATUS = 'N'
+		   AND FILES_TYPE = #{empCode}
 	</select>
 
 <!-- select sign signature count end -->
@@ -675,6 +676,302 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 	</select>
 
 <!-- select signListAll and Paging end -->
+
+
+<!-- select signListWait and Paging start -->
+	<select id="signListWaitCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN SI
+		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+		 WHERE SI.SIGN_STEP = 'SIPC000001'
+  		   AND SI.SIGN_STATUS = 'N'
+  		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+	</select>
+
+	<select id="signListWait" parameterType="map" resultType="signList">
+		SELECT RNUM
+    		 , SIGN_CODE
+    		 , SIGN_TYPE_NAME
+    		 , SIGN_TITLE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+    		 , SIGN_WDAT
+    		 , SIGN_WHOUR
+    		 , SIGN_EDAT
+    		 , SIGN_EHOUR
+    		 , SIGN_STEP
+    		 , SIGN_COUNT
+ 		  FROM (SELECT ROWNUM RNUM
+            		 , SIGN_CODE
+           			 , SIGN_TYPE_NAME
+            		 , SIGN_TITLE
+            		 , EMP_INFO_NAME
+            		 , JOB_INFO_NAME
+            		 , SIGN_WDAT
+            		 , SIGN_WHOUR
+            		 , SIGN_EDAT
+            		 , SIGN_EHOUR
+            		 , SIGN_STEP
+            		 , SIGN_COUNT
+         		  FROM (SELECT SI.SIGN_CODE
+		   		    		 , ST.SIGN_TYPE_NAME
+    						 , SI.SIGN_TITLE
+    						 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+    						 , TO_CHAR(SI.SIGN_WDAT, 'yyyy-mm-dd') AS SIGN_WDAT
+            				 , TO_CHAR(SI.SIGN_WDAT, 'hh:dd') AS SIGN_WHOUR
+    						 , TO_CHAR(SI.SIGN_EDAT, 'yyyy-mm-dd') AS SIGN_EDAT
+            				 , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR
+            				 , SI.SIGN_STEP
+            				 , SI.SIGN_COUNT
+ 		 		 		  FROM SIGN SI
+ 				 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+  						  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+               			  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+ 						 WHERE SI.SIGN_STEP = 'SIPC000001'
+ 			     		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+               			 GROUP BY SI.SIGN_CODE
+                	   		    , ST.SIGN_TYPE_NAME
+                        		, SI.SIGN_TITLE
+    							, EI.EMP_INFO_NAME
+                        		, JI.JOB_INFO_NAME
+    				    		, SI.SIGN_WDAT
+            		    		, SI.SIGN_WDAT
+    				    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_STEP
+            		    		, SI.SIGN_COUNT
+ 			   		     ORDER BY SI.SIGN_CODE DESC
+                		)
+        		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+<!-- select signListWait and Paging end -->
+
+
+<!-- select signListProcess and Paging start -->
+	<select id="signListProcessCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN SI
+		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+		 WHERE SI.SIGN_STEP = 'SIPC000002'
+  		   AND SI.SIGN_STATUS = 'N'
+  		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+	</select>
+
+	<select id="signListProcess" parameterType="map" resultType="signList">
+		SELECT RNUM
+    		 , SIGN_CODE
+    		 , SIGN_TYPE_NAME
+    		 , SIGN_TITLE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+    		 , SIGN_WDAT
+    		 , SIGN_WHOUR
+    		 , SIGN_EDAT
+    		 , SIGN_EHOUR
+    		 , SIGN_STEP
+    		 , SIGN_COUNT
+ 		  FROM (SELECT ROWNUM RNUM
+            		 , SIGN_CODE
+           			 , SIGN_TYPE_NAME
+            		 , SIGN_TITLE
+            		 , EMP_INFO_NAME
+            		 , JOB_INFO_NAME
+            		 , SIGN_WDAT
+            		 , SIGN_WHOUR
+            		 , SIGN_EDAT
+            		 , SIGN_EHOUR
+            		 , SIGN_STEP
+            		 , SIGN_COUNT
+         		  FROM (SELECT SI.SIGN_CODE
+		   		    		 , ST.SIGN_TYPE_NAME
+    						 , SI.SIGN_TITLE
+    						 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+    						 , TO_CHAR(SI.SIGN_WDAT, 'yyyy-mm-dd') AS SIGN_WDAT
+            				 , TO_CHAR(SI.SIGN_WDAT, 'hh:dd') AS SIGN_WHOUR
+    						 , TO_CHAR(SI.SIGN_EDAT, 'yyyy-mm-dd') AS SIGN_EDAT
+            				 , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR
+            				 , SI.SIGN_STEP
+            				 , SI.SIGN_COUNT
+ 		 		 		  FROM SIGN SI
+ 				 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+  						  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+               			  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+ 						 WHERE SI.SIGN_STEP = 'SIPC000002'
+ 			     		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+               			 GROUP BY SI.SIGN_CODE
+                	   		    , ST.SIGN_TYPE_NAME
+                        		, SI.SIGN_TITLE
+    							, EI.EMP_INFO_NAME
+                        		, JI.JOB_INFO_NAME
+    				    		, SI.SIGN_WDAT
+            		    		, SI.SIGN_WDAT
+    				    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_STEP
+            		    		, SI.SIGN_COUNT
+ 			   		     ORDER BY SI.SIGN_CODE DESC
+                		)
+        		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+<!-- select signListProcess and Paging end -->
+
+
+<!-- select signListDenied and Paging start -->
+	<select id="signListDeniedCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN SI
+		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+		 WHERE SI.SIGN_STEP = 'SIPC000004'
+  		   AND SI.SIGN_STATUS = 'N'
+  		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+	</select>
+
+	<select id="signListDenied" parameterType="map" resultType="signList">
+		SELECT RNUM
+    		 , SIGN_CODE
+    		 , SIGN_TYPE_NAME
+    		 , SIGN_TITLE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+    		 , SIGN_WDAT
+    		 , SIGN_WHOUR
+    		 , SIGN_EDAT
+    		 , SIGN_EHOUR
+    		 , SIGN_STEP
+    		 , SIGN_COUNT
+ 		  FROM (SELECT ROWNUM RNUM
+            		 , SIGN_CODE
+           			 , SIGN_TYPE_NAME
+            		 , SIGN_TITLE
+            		 , EMP_INFO_NAME
+            		 , JOB_INFO_NAME
+            		 , SIGN_WDAT
+            		 , SIGN_WHOUR
+            		 , SIGN_EDAT
+            		 , SIGN_EHOUR
+            		 , SIGN_STEP
+            		 , SIGN_COUNT
+         		  FROM (SELECT SI.SIGN_CODE
+		   		    		 , ST.SIGN_TYPE_NAME
+    						 , SI.SIGN_TITLE
+    						 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+    						 , TO_CHAR(SI.SIGN_WDAT, 'yyyy-mm-dd') AS SIGN_WDAT
+            				 , TO_CHAR(SI.SIGN_WDAT, 'hh:dd') AS SIGN_WHOUR
+    						 , TO_CHAR(SI.SIGN_EDAT, 'yyyy-mm-dd') AS SIGN_EDAT
+            				 , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR
+            				 , SI.SIGN_STEP
+            				 , SI.SIGN_COUNT
+ 		 		 		  FROM SIGN SI
+ 				 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+  						  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+               			  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+ 						 WHERE SI.SIGN_STEP = 'SIPC000004'
+ 			     		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+               			 GROUP BY SI.SIGN_CODE
+                	   		    , ST.SIGN_TYPE_NAME
+                        		, SI.SIGN_TITLE
+    							, EI.EMP_INFO_NAME
+                        		, JI.JOB_INFO_NAME
+    				    		, SI.SIGN_WDAT
+            		    		, SI.SIGN_WDAT
+    				    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_STEP
+            		    		, SI.SIGN_COUNT
+ 			   		     ORDER BY SI.SIGN_CODE DESC
+                		)
+        		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+<!-- select signListDenied and Paging end -->
+
+
+<!-- select signListComplete and Paging start -->
+	<select id="signListCompleteCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+ 		  FROM SIGN SI
+		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+		 WHERE SI.SIGN_STEP = 'SIPC000003'
+  		   AND SI.SIGN_STATUS = 'N'
+  		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+	</select>
+
+	<select id="signListComplete" parameterType="map" resultType="signList">
+		SELECT RNUM
+    		 , SIGN_CODE
+    		 , SIGN_TYPE_NAME
+    		 , SIGN_TITLE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+    		 , SIGN_WDAT
+    		 , SIGN_WHOUR
+    		 , SIGN_EDAT
+    		 , SIGN_EHOUR
+    		 , SIGN_STEP
+    		 , SIGN_COUNT
+ 		  FROM (SELECT ROWNUM RNUM
+            		 , SIGN_CODE
+           			 , SIGN_TYPE_NAME
+            		 , SIGN_TITLE
+            		 , EMP_INFO_NAME
+            		 , JOB_INFO_NAME
+            		 , SIGN_WDAT
+            		 , SIGN_WHOUR
+            		 , SIGN_EDAT
+            		 , SIGN_EHOUR
+            		 , SIGN_STEP
+            		 , SIGN_COUNT
+         		  FROM (SELECT SI.SIGN_CODE
+		   		    		 , ST.SIGN_TYPE_NAME
+    						 , SI.SIGN_TITLE
+    						 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+    						 , TO_CHAR(SI.SIGN_WDAT, 'yyyy-mm-dd') AS SIGN_WDAT
+            				 , TO_CHAR(SI.SIGN_WDAT, 'hh:dd') AS SIGN_WHOUR
+    						 , TO_CHAR(SI.SIGN_EDAT, 'yyyy-mm-dd') AS SIGN_EDAT
+            				 , TO_CHAR(SI.SIGN_EDAT, 'hh:dd') AS SIGN_EHOUR
+            				 , SI.SIGN_STEP
+            				 , SI.SIGN_COUNT
+ 		 		 		  FROM SIGN SI
+ 				 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = SI.SIGN_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+  						  JOIN SIGN_TYPE ST ON (ST.SIGN_TYPE_CODE = SI.SIGN_TYPE_CODE)
+               			  JOIN SIGN_JOIN SJ ON (SJ.SIGN_CODE = SI.SIGN_CODE)
+ 						 WHERE SI.SIGN_STEP = 'SIPC000003'
+ 			     		   AND (SJ.SIGN_JOIN_EMP_CODE = #{empCode} OR SI.SIGN_EMP_CODE = #{empCode})
+               			 GROUP BY SI.SIGN_CODE
+                	   		    , ST.SIGN_TYPE_NAME
+                        		, SI.SIGN_TITLE
+    							, EI.EMP_INFO_NAME
+                        		, JI.JOB_INFO_NAME
+    				    		, SI.SIGN_WDAT
+            		    		, SI.SIGN_WDAT
+    				    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_EDAT
+            		    		, SI.SIGN_STEP
+            		    		, SI.SIGN_COUNT
+ 			   		     ORDER BY SI.SIGN_CODE DESC
+                		)
+        		)
+		WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+<!-- select signListComplete and Paging end -->
 
 
 <!-- signDenied start -->

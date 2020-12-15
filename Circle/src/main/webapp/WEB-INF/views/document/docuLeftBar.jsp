@@ -16,13 +16,13 @@
 			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">내 문서</div>
 			<div class="menuLeftList">전체</div>
-			<div class="menuLeftList"></div>					
-			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>
+			<div class="menuLeftList0"></div>					
+			<div class="menuLeftList0"></div>
+			<div class="menuLeftList0"></div>
+			<div class="menuLeftList0"></div>
 			<div class="menuLeftListTitle">공용 문서</div>						
 			<div class="menuLeftList">전체</div>
-			<div class="menuLeftList"></div>															
+			<div class="menuLeftList0"></div>															
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
