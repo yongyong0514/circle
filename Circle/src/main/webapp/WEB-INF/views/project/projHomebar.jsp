@@ -11,6 +11,12 @@ hearder {
 	font-size: 15pt;
 }
 
+.postHomeBar {
+	text-align: right;
+	margin: 10px auto;
+	display: flex;
+}
+
 h2 {
 	font-size: 15px;
 	text-align: left;
@@ -18,98 +24,119 @@ h2 {
 
 /*버튼 구현*/
 .button-1 {
-	width: 80px;
-	height: 30px;
-	top: 15%;
-	left: 10%;
-	border: 2px solid #34495e;
-	float: left;
-	text-align: center;
-	cursor: pointer;
-	position: relative;
-	head_sele-sizing: border-head_sele;
-	overflow: hidden;
-	margin: 0 0 40px 0;
-}
-
-.button-1 a {
-	  background: #ffd658;
-}
-
-
-.button-1:hover a {
-	font-color: white;
-}
-
-/* select bodx*/
-.head_sele {
 	position: absolute;
-	top: 14%;
-	left: 14%;
-	transform: translate(-50%, -50%);
-}
-
-.head_sele select {
-	background-color: #fff;
-	color: bla;
-	padding: 12px;
-	width: 160px;
-	height: 40px;
-	border: none;
+	width: 100px;
+	height: 30px;
+	padding: 8px 10px;
 	font-size: 10px;
-	head_sele-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-	-webkit-appearance: button;
-	appearance: button;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
 	outline: none;
+	overflow: hidden;
+	top: 5%;
+	left: 10%;
 }
 
-.head_sele:hover::before {
-	color: #34495e;
-	background-color: #34495e;
+.button-1:hover {
+	background: #dbe5f1;
 }
 
-.head_sele select option {
-	padding: 30px;
+.button-2 {
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	padding: 8px 10px;
 	font-size: 10px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	outline: none;
+	overflow: hidden;
+	top: 5%;
+	left: 16%;
+}
+
+.button-2:hover {
+	background: #dbe5f1;
+}
+
+.button-3 {
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	padding: 8px 10px;
+	font-size: 10px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	outline: none;
+	overflow: hidden;
+	top: 5%;
+	left: 22%;
+}
+
+.button-3:hover {
+	background: #dbe5f1;
+}
+
+.button-4 {
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	padding: 8px 10px;
+	font-size: 10px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	outline: none;
+	overflow: hidden;
+	top: 5%;
+	left: 28%;
+	
+}
+
+.button-4:hover {
+	background: #dbe5f1;
 }
 </style>
-<script>
-
-
-</script>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/post/postHomebar.css">
-</head>
-<body>
 	<div class="postHomeBar">
-		<div>
-				<c:out value="프로젝트"/>
-	
-		</div>
-		<div>
-		<div>
-<div class="button-1">
-			<a	href="${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트 리스트</a>
-		</div>
 		<div class="button-1">
-				<a	href="${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무리스트</a>
+			<a
+				href="${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트
+				리스트</a>
 		</div>
-		<div class="button-1">
-				<a	href="${pageContext.request.contextPath}/project//project/projInsertProject'">프로젝트 생성</a>
+		<div class="button-2">
+			<a
+				href="${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무리스트</a>
 		</div>
-		<div class="button-1">
-				<a	href="${pageContext.request.contextPath}/project/projInsertIss">업무 생성</a>
+		<div class="button-3">
+			<a
+				href="${pageContext.request.contextPath}/project//project/projInsertProject'">프로젝트
+				생성</a>
 		</div>
-		
+		<div class="button-4">
+			<a href="${pageContext.request.contextPath}/project/projInsertIss">업무
+				생성</a>
+			<button class="button-1" type="button" onClick="location.href="
+				${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트</button>
+			<button class="button-1" type="button" onClick="location.href="
+				${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무</button>
+			<button class="button-1" type="button" onClick="location.href="${pageContext.request.contextPath}/project//project/projInsertProject">프로젝트생성</button>
+			<button class="button-1" type="button" onClick="location.href="${pageContext.request.contextPath}/project/projInsertIss">업무
+				생성</button>
 
-
-</div>
 		</div>
-
 	</div>
-
-
-</body>
-</html>

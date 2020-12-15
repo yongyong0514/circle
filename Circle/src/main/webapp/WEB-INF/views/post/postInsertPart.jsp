@@ -105,7 +105,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:   #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -114,7 +114,7 @@ position: absolute;
 }
 
 .wrapper .form .inputfield .btn1:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 .wrapper .form .inputfield .btn2{
 position: absolute;
@@ -122,7 +122,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:   #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -131,7 +131,7 @@ position: absolute;
 }
 
 .wrapper .form .inputfield .btn2:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 .wrapper .form .inputfield .btn3{
 position: absolute;
@@ -139,7 +139,7 @@ position: absolute;
    padding: 8px 10px;
   font-size: 15px; 
   border: 0px;
-  background:  #fec107;
+  background:   #0072c6;
   color: #fff;
   cursor: pointer;
   border-radius: 3px;
@@ -148,7 +148,7 @@ position: absolute;
 }
 
 .wrapper .form .inputfield .btn3:hover{
-  background: #ffd658;
+  background: #dbe5f1;
 }
 
 .wrapper .form .inputfield:last-child{

@@ -26,6 +26,7 @@
 			<div class="contentBar">
 				 <jsp:include page="../post/postHomebar.jsp" />
 			</div>
+			<br>
 	
 		<div class="content">
 		<jsp:include page="../post/postViewPart.jsp" />

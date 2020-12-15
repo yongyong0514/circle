@@ -69,44 +69,7 @@ text-align:left;
 }
 
 
-
-
-/* select bodx*/
-.head_sele {
-  position: absolute;
-  top:14%;
-  left: 14%;
-  transform: translate(-50%, -50%);
-}
-
-.head_sele select {
-  background-color:#fff;
-  color: bla;
-  padding: 12px;
-  width: 160px;
-  height: 40px;
-  border: none;
-   font-size:10px;
-
-  head_sele-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
-}
-
-
-.head_sele:hover::before {
-  color: #34495e;
-  background-color: #34495e;
-}
-
-.head_sele select option {
-  padding: 30px;
-    font-size:10px;
-  
-}
-	
-	table.projParts {
+table.projParts {
 	border-collapse: collapse;
 	text-align: left;
 	width: 80%;
@@ -190,8 +153,8 @@ h1 {
 
 .close-btn {
 	position: absolute;
-	top: 23.5px;
-	right: 53px;
+	top: 25px;
+	right: 52px;
 	cursor: pointer;
 	color: #34495e;
 	background: #fff;
@@ -216,19 +179,17 @@ h1 {
 
 .projSearch select {
 	background-color: #fff;
-	color: bla;
+	color: black;
 	padding: 12px;
-	height: 25px;
-	width: 120px;
-	font-size: 15pt;
-	border: none;
-	font-size: 10px;
-	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+	width: 160px;
+	height: 38px;
+	border: 1px solid;
+	border-radius: 3px;
+	font-size: 11px;
+	head_sele-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
 	-webkit-appearance: button;
 	appearance: button;
 	outline: none;
-	width: 120px;
-	font-size: 15pt;
 }
 
 .projSearch::before {
@@ -238,6 +199,12 @@ h1 {
 
 .projSearch select option {
 	padding: 30px;
+	font-size: 11px;
+}
+
+.projSearch select option {
+	padding: 30px;
+	font-size: 11px;
 }
 
 /* 개수 선택  se*/
@@ -250,14 +217,14 @@ h1 {
 
 .select select {
 	background-color: #fff;
-	color: bla;
+	color: black;
 	padding: 12px;
-	height: 30px;
-	width: 120px;
-	font-size: 10pt;
-	border: none;
-	font-size: 10px;
-	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+	width: 160px;
+	height: 38px;
+	border: 1px solid;
+	border-radius: 3px;
+	font-size: 11px;
+	head_sele-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
 	-webkit-appearance: button;
 	appearance: button;
 	outline: none;
@@ -270,9 +237,8 @@ h1 {
 
 .select select option {
 	padding: 30px;
+	font-size: 11px;
 }
-	
-	
 	</style>
 </head>
 <body>
@@ -297,16 +263,16 @@ h1 {
 				<div style="float: right; text-align: right;" class="select">
 					<select id="cntPerPage" name="sel" onchange="selChange()">
 						<option value="5" selected
-							<c:if test="${postCount.cntPerPage == 5}">selected</c:if>>5줄
+							<c:if test="${projPartsCount.cntPerPage == 5}">selected</c:if>>5줄
 							보기</option>
 						<option value="10"
-							<c:if test="${postCount.cntPerPage == 10}">selected</c:if>>10줄
+							<c:if test="${projPartsCount.cntPerPage == 10}">selected</c:if>>10줄
 							보기</option>
 						<option value="15"
-							<c:if test="${postCount.cntPerPage == 15}">selected</c:if>>15줄
+							<c:if test="${projPartsCount.cntPerPage == 15}">selected</c:if>>15줄
 							보기</option>
 						<option value="20"
-							<c:if test="${postCount.cntPerPage == 20}">selected</c:if>>20줄
+							<c:if test="${projPartsCount.cntPerPage == 20}">selected</c:if>>20줄
 							보기</option>
 					</select>
 				</div>
@@ -347,11 +313,11 @@ h1 {
 
 			<!-- 뷰 페이징 처리 -->
 				<div style="text-align: center;" class="pagination">
-					<c:set var="Post" />
+					<c:set var="projParts" />
 					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"	var="p">
 					<c:if test="${paging.startPage != 1}">
 						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">◀</a>
+							href="${pageContext.request.contextPath}/projParts/projPartsMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">◀</a>
 					</c:if>
 						<c:choose>
 							<c:when test="${p == paging.nowPage }">
@@ -359,14 +325,14 @@ h1 {
 							</c:when>
 							<c:when test="${ p != paging.nowPage }">
 								<a
-									href="${pageContext.request.contextPath}/post/postMain?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+									href="${pageContext.request.contextPath}/projParts/projPartsMain?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
 							</c:when>
 
 						</c:choose>
 					</c:forEach>
 					<c:if test="${paging.endPage != paging.lastPage }">
 						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">▶</a>
+							href="${pageContext.request.contextPath}/projParts/projPartsMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">▶</a>
 					</c:if>
 
 				</div>
@@ -379,12 +345,12 @@ h1 {
 
 				<div id="projSearch" style="text-align: center;">
 					<form id="searchForm" method="get"
-						action="${pageContext.request.contextPath}/post/projSearch">
+						action="${pageContext.request.contextPath}/project/projSearch">
 						<div class="projSearch">
 							<select name="type">
 								<option value="" selected>선택하기</option>
-								<option value="post_title">제목</option>
-								<option value="post_comt">내용</option>
+								<option value="projParts_title">제목</option>
+								<option value="projParts_comt">내용</option>
 								<option value="emp_info_name">작성자</option>
 
 							</select>

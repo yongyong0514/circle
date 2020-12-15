@@ -8,9 +8,11 @@
 <title>Circle</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css"	href="${pageContext.request.contextPath}/resources/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/post/postHomebar.css">
-		<link rel="stylesheet" type="text/css"
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/reset.css">
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/post/postHomebar.css">
+<link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/post/postTable.css">
 
 
@@ -54,7 +56,7 @@
 					</select>
 				</div>
 				<!-- 전체 게시판 불러오기 -->
-				<table class="post" id="main-table" >
+				<table class="post" id="main-table">
 					<thead>
 						<tr>
 							<th class="head_line post_code" scope="cols" style="width: 10%;">글번호</th>
@@ -80,26 +82,31 @@
 
 				<!-- 뷰 페이징 처리 -->
 				<div style="text-align: center;" class="pagination">
+
 					<c:set var="Post" />
-					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"	var="p">
 					<c:if test="${paging.startPage != 1}">
 						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">◀</a>
+							href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+						<a
+							href="post/postList/${url}?nowPage=${paging.startPage - 1}&cntPerPage${paging.cntPerPage}">&lt;</a>
+
 					</c:if>
+					<c:forEach begin="${paging.startPage }" end="${paging.endPage}"
+						var="p">
 						<c:choose>
 							<c:when test="${p == paging.nowPage }">
 								<b>${p}</b>
 							</c:when>
 							<c:when test="${ p != paging.nowPage }">
 								<a
-									href="${pageContext.request.contextPath}/post/postMain?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+									href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
 							</c:when>
 
 						</c:choose>
 					</c:forEach>
 					<c:if test="${paging.endPage != paging.lastPage }">
 						<a
-							href="${pageContext.request.contextPath}/post/postMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">▶</a>
+							href="${pageContext.request.contextPath}/post/postList/${url}?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">&gt;</a>
 					</c:if>
 
 				</div>
