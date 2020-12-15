@@ -161,12 +161,17 @@ public class ComuDaoImp implements ComuDao {
 	
 	//leftBar 리스트 가져오기
 	@Override
+	public String leftListName(String emp_no) {
+		String emp_info_no = sqlSession.selectOne("comu.leftListName",emp_no);
+		return emp_info_no;
+	}
+	
+	@Override
 	public List<EmpInfo> leftList(String emp_info_emp_no) {
 		
-		//List<ComuList> leftList =sqlSession.selectList("comu.leftList",comu_list_code);
+		List<EmpInfo> comu =sqlSession.selectList("comu.leftList",emp_info_emp_no);
 		
-		System.out.println("dao 레프트 바 가져오냐 " + emp_info_emp_no);
-		return sqlSession.selectList("comu.leftList",emp_info_emp_no);
+		return comu;
 		
 	}
 	
@@ -193,22 +198,24 @@ public class ComuDaoImp implements ComuDao {
 	
 	//동호회 회원 insert
 	@Override
-	public String comuApp3(String comu_post_list_code) {
-		String emp_name = sqlSession.selectOne("comu.comuApp3",comu_post_list_code);
+	public String comuApp3(String emp_info_emp_no) {
+		String emp_name = sqlSession.selectOne("comu.comuApp3",emp_info_emp_no);
 		return emp_name;
 	}
 
 	
 	@Override
 	public String comuApp4(String emp_no) {
-		String emp_info_no = sqlSession.selectOne("comu.comuApp4",emp_no);
-		return emp_info_no;
+		String emp_name = sqlSession.selectOne("comu.comuApp4",emp_no);
+		return emp_name;
 	}
 	@Override
 	public void comuInfoInsert(Comu comu) {
 		sqlSession.insert("comu.comuInfoInsert",comu);
 		
 	}
+
+
 	
 	
 	

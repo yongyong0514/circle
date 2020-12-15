@@ -143,6 +143,11 @@ public class ComuServiceImp implements ComuService {
 		}
 		
 	//leftBar 리스트 가져오기
+		@Override
+	public String leftListName(String emp_no) {
+		
+		return dao.leftListName(emp_no);
+	}	
 	@Override
 	public List<EmpInfo> leftList(String emp_info_emp_no) {
 		
@@ -169,10 +174,10 @@ public class ComuServiceImp implements ComuService {
 	
 	//동호회 가입시키기
 		@Override
-		public String comuApp3(String comu_post_list_code) {
+		public String comuApp3(String emp_info_emp_no) {
 
 
-			return dao.comuApp3(comu_post_list_code);
+			return dao.comuApp3(emp_info_emp_no);
 		}
 
 		@Override
@@ -184,7 +189,7 @@ public class ComuServiceImp implements ComuService {
 		public String comuApp4(String emp_no) {
 			
 			return dao.comuApp4(emp_no);
-		}	
+		}
 	
 	}
 

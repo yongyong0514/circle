@@ -36,6 +36,5 @@ public class Comu {
 	private String comu_info_join;
 	private Date comu_info_join_rqst_dat;
 	
-	
 	private String job_info_name;
 }

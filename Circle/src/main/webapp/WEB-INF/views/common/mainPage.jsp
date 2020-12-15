@@ -81,13 +81,14 @@
 				
 				<div class="boardList2">
 					<div class="boardList2_1">
-						<div class="textTop1">타이틀</div>
+						<div class="textTop1">커뮤니티</div>
 						<div class="textTop2">등록일</div>
-						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">업데이트 준비중입니다.</div><div class="textTitle2">2020-12-15</div>
+						
+						<!-- <div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
 						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
 						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>	
+						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>	 -->
 					</div>
 				</div>
 				<div class="boardList3">
