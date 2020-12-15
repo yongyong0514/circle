@@ -17,6 +17,7 @@
 				<div class="menuPhoto">
 					<img src="" onerror="this.src='https://conservation-innovations.org/wp-content/uploads/2019/09/Dummy-Person.png'" class="imgSize1">
 				</div>
+				<div>${empInfo.emp_info_name}</div>
 				<br>
 				<div class="clock"></div>
 				<div>

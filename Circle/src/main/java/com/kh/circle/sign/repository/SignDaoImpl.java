@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignReplyInsert;
+import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Repository
@@ -188,6 +189,37 @@ public class SignDaoImpl implements SignDao {
 	@Override
 	public void update(String fileCode) {
 		sqlSession.update("sign.sfsDelete", fileCode);
+	}
+
+	//결재 댓글 삭제
+	@Override
+	public void add(String replyCode) {
+		sqlSession.delete("sign.signReplyDelete", replyCode);
+		
+	}
+
+	//결재 타입 추가
+	@Override
+	public void add(SignType signType) {
+		
+		String seqSignType = sqlSession.selectOne("sign.seqSignType");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignType", seqSignType);
+		map.put("sign_type_code", signType.getSign_type_code());
+		map.put("sign_type_name", signType.getSign_type_name());
+		map.put("sign_type_content", signType.getSign_type_content());
+
+		sqlSession.insert("sign.signTypeInsert", map);
+		
+	}
+
+	//결재 타입 삭제
+	@Override
+	public void addDeleteSignType(String typeCode) {
+		sqlSession.delete("sign.signTypeDelete", typeCode);
+		
 	}
 
 }

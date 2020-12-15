@@ -442,7 +442,7 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 						, FILES_DATE
 						, FILES_TYPE
 						, FILES_STATUS
-						, FILES_SIZE) VALUES ('FILE'||TRIM(TO_CHAR(#{seqSignFiles},'000000'))
+						, FILES_SIZE) VALUES 
 										   , #{files_oname}
 										   , #{files_cname}
 										   , #{files_route}
@@ -1019,5 +1019,53 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 		   SET SIGN_STEP = 'SIPC000002'
 		 WHERE SIGN_CODE = #{signCode}
 	</update>
+	
+	<delete id="signReplyDelete" parameterType="String">
+		DELETE
+		  FROM SIGN_REPLY
+		 WHERE SIGN_REPLY_CODE = #{replyCode}
+	</delete>
 
+
+<!-- result signType start -->
+	<select id="signTemplateList" resultType="signType">
+		SELECT *
+		  FROM (SELECT SIGN_TYPE_NAME
+		  			 , SIGN_TYPE_CODE
+		  			 , SIGN_TYPE_CONTENT
+  		  		  FROM SIGN_TYPE
+  		  	  ORDER BY SIGN_TYPE_CODE DESC
+  		  	   )
+  		 WHERE ROWNUM &lt; 10
+	</select>
+
+<!-- Result signTypeSelectOne start -->
+	<select id="signTypeSelectOne" parameterType="String" resultType="signType">
+		SELECT *
+	      FROM SIGN_TYPE
+	     WHERE SIGN_TYPE_CODE = #{typeCode}
+	</select>
+
+
+<!-- Result seqSignType start -->
+	<select id="seqSignType" resultType="String">
+		SELECT SITC_SEQ.NEXTVAL FROM DUAL
+	</select>
+
+
+<!-- insert signType start -->
+	<insert id="signTypeInsert"	parameterType="map">
+		INSERT INTO SIGN_TYPE (sign_type_code
+							 , sign_type_name
+							 , sign_type_content) VALUES ('SITC'||TRIM(TO_CHAR(#{seqSignType},'000000'))
+								   , #{sign_type_name}
+								   , #{sign_type_content})
+	</insert>
+	
+<!-- delete signType start -->
+	<delete id="signTypeDelete" parameterType="String">
+		DELETE
+		  FROM SIGN_TYPE
+		 WHERE SIGN_TYPE_CODE = #{typeCode}
+	</delete>
 </mapper>

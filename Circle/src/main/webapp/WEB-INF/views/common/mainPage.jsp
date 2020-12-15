@@ -23,29 +23,31 @@
 		<div class="content">
 			<div class="boardArea">
 				<div class="boardList0">
-					<div class="boardList0_1"></div>
+					<div class="boardList0_1">
+						<a class="weatherwidget-io" href="https://forecast7.com/en/37d57126d98/seoul/" data-label_1="SEOUL" data-label_2="WEATHER" data-theme="original" >SEOUL WEATHER</a>
+					</div>
 				</div>
 
 				<div class="boardList4">
 					<div class="boardList4_1">
 						<div class="textTop1">알림</div>
 						<div class="textTop2">등록일</div>
-						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">업데이트 준비중입니다.</div><div class="textTitle2">2020-12-15</div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
 					</div>
 				</div>
 				<div class="boardList5">
 					<div class="boardList5_1">
 					<div class="textTop1">쪽지</div>
 						<div class="textTop2">등록일</div>
-						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>
+						<div class="textTitle1">업데이트 준비중입니다.</div><div class="textTitle2">2020-12-15</div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
 					</div>
 				</div>
 				<div class="boardList6">
@@ -112,6 +114,9 @@
 
 <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
+		!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+	</script>
+	<script>
 		$(function() {
     		var leftBar = $(".leftBar").offset().top;
     			$(window).scroll(function() {
@@ -123,6 +128,6 @@
     			}
     		})
     	});
-    </script>	
+    </script>
 </body>
 </html>

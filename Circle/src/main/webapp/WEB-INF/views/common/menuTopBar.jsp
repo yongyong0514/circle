@@ -27,19 +27,19 @@
 						<div></div>
 					</div>
 					<div class="buttonArea">
-						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/alert/alertList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/159-email.png" class="menuIcon"><br>알림</button></div>
+						<div><button class="buttonSizeNull" onclick="location='${pageContext.request.contextPath}/alert/alertList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/159-email.png" class="menuIcon"><br>알림</button></div>
 						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath}/post/postMain"'><img src="${pageContext.request.contextPath}/resources/img/common/menu/049-copy.png" class="menuIcon"><br>게시판</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/community/comuList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/077-menu-1.png" class="menuIcon"><br>커뮤니티</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/sign/signList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/068-pencil.png" class="menuIcon"><br>전자결재</button></div>
-						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/storage/storageList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/120-diskette.png" class="menuIcon"><br>자료실</button></div>
+						<div><button class="buttonSizeNull" onclick="location='${pageContext.request.contextPath}/storage/storageList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/120-diskette.png" class="menuIcon"><br>자료실</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/docu/docuList'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/041-folder.png" class="menuIcon"><br>문서관리</button></div>
 						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath}/project/projMain"'>><img src="${pageContext.request.contextPath}/resources/img/common/menu/165-menu.png" class="menuIcon"><br>프로젝트</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/schedule/schMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/163-calendar.png" class="menuIcon"><br>일정</button></div>
-						<div><button class="buttonSize" disabled><img src="${pageContext.request.contextPath}/resources/img/common/menu/167-wall-clock.png" class="menuIcon"><br>예약</button></div>
+						<div><button class="buttonSizeNull"><img src="${pageContext.request.contextPath}/resources/img/common/menu/167-wall-clock.png" class="menuIcon"><br>예약</button></div>
 						<div><button class="buttonSize" onclick="location='${pageContext.request.contextPath}/poll/pollMain'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/121-paste.png" class="menuIcon"><br>설문</button></div>
 						<div><button class="buttonSize" onclick="location.href='${pageContext.request.contextPath}/addressBook/allEmp'"><img src="${pageContext.request.contextPath}/resources/img/common/menu/109-smartphone.png" class="menuIcon"><br>주소록</button></div>
 						<div><button class="buttonSize" onclick='location.href="${pageContext.request.contextPath }/attendance/myAttendance"'><img src="${pageContext.request.contextPath}/resources/img/common/menu/032-briefcase.png" class="menuIcon"><br>근태관리</button></div>
-						<div><button class="buttonSize1"><img src="${pageContext.request.contextPath}/resources/img/common/menu/152-followers.png" class="menuIcon"><br>관리자</button></div>
+						<div><button class="buttonSizeNull"><img src="${pageContext.request.contextPath}/resources/img/common/menu/152-followers.png" class="menuIcon"><br>관리자</button></div>
 					</div>
 					<div class="changePlan">
 					</div>
@@ -65,8 +65,18 @@
 					</div>
 				</div>
 			</li>
-			<li><input type="text" class="menuAlert" id="menuAlert" value="" placeholder ="0" readonly></li>
-			<li><input type="text" class="menuSearchBox" id="menuSearchBox" placeholder="검색" onfocus="this.placeholder = ''" onblur="this.placeholder='검색'"></li>	
+			<li><input type="text" class="menuAlert" id="menuAlert" value="" placeholder ="0" readonly>
+				<div class="menuBox2">
+					<div class="buttonArea1">
+						<div><button class="buttonSize4" onclick="">&nbsp;알림</button></div>
+						<div><button class="buttonSize2" onclick="">업데이트 준비중입니다.</button></div>
+						<div><button class="buttonSize2" onclick="">&nbsp;</button></div>
+						<div><button class="buttonSize2" onclick="">&nbsp;</button></div>
+						<div><button class="buttonSize2" onclick="">&nbsp;</button></div>
+					</div>
+				</div>
+			</li>
+			<li><input type="text" class="menuSearchBox" id="menuSearchBox" placeholder="업데이트 준비중입니다." onfocus="this.placeholder = ''" onblur="this.placeholder='검색'"></li>	
 		</ul>
 	</div>
 <%-- 	<div class="menuScroll">
@@ -79,17 +89,23 @@
 	$(".menuBtnLeft").mouseenter(function(){
 		$(".menuBox").fadeIn(150);
 	});
-	
 	$(".menuBox").mouseleave(function(){
 		$(".menuBox").fadeOut(100);
 	});
+	
 	$(".menuBtnRight").mouseenter(function(){
 		$(".menuBox1").fadeIn(150);
 	});
-	
 	$(".menuBox1").mouseleave(function(){
 		$(".menuBox1").fadeOut(100);
 	});
+	
+	$(".menuAlert").mouseenter(function(){
+		$(".menuBox2").fadeIn(150);
+	});
+	$(".menuBox2").mouseleave(function(){
+		$(".menuBox2").fadeOut(150);
+	});	
 </script>
 <script>
 	function logout(){

@@ -100,8 +100,8 @@
 						   , DOCU_CHECK
 						   , DOCU_DATE
 						   , DOCU_EMP_CODE) VALUES ('DOCU'||TRIM(TO_CHAR(#{seqDocu},'000000'))
-						   						  , #{docu_acc}
-						   						  , SYSDATE+#{docu_keep}
+						   						  , #{docu_type}
+						   						  , SYSDATE+#{docu_year}
 						   						  , #{docu_title}
 						   						  , #{docu_note}
 						   						  , 'N'
@@ -128,9 +128,14 @@
 													   , #{docu_repl_emp_code})
 	</insert>
 	
-	<!-- update docuemnt -->
-	<!-- <update id="docuUpdate" parameterType="docuSelectOne">
-	</update> -->
+	<update id="docuUpdate" parameterType="docuSelectOne">
+		UPDATE DOCUMENT
+		   SET DOCU_YEAR = SYSDATE+#{docu_year}
+		     , DOCU_type = #{docu_type}
+		     , DOCU_TITLE = #{docu_title}
+		     , DOCU_CONTENT = #{docu_note}
+		 WHERE DOCU_CODE = #{docu_code}   
+	</update>
 	
 	<!-- delete document -->
 	<update id="docuDelete" parameterType="String">
@@ -196,4 +201,106 @@
 		 WHERE FILES_TYPE=#{docuCode}
 		   AND FILES_STATUS = 'N'
 	</select>
+	
+	<select id="docuAllPersonalCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM DOCUMENT DO
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 WHERE DO.DOCU_STATUS = 'N'
+ 		   AND DO.DOCU_TYPE = '1'
+ 		   AND DO.DOCU_EMP_CODE = #{empCode}
+	</select>
+	
+	<select id="docuAllPersonal" parameterType="map" resultType="docuList">
+		SELECT RNUM
+			 , DOCU_CODE
+			 , DOCU_TYPE
+			 , DOCU_TITLE
+			 , DOCU_CHECK
+			 , DOCU_WDAT
+			 , DOCU_WHOUR
+			 , DOCU_EMP_CODE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+		  FROM (SELECT ROWNUM RNUM
+		   			 , DOCU_CODE
+					 , DOCU_TYPE
+					 , DOCU_TITLE
+					 , DOCU_CHECK
+					 , DOCU_WDAT
+					 , DOCU_WHOUR
+					 , DOCU_EMP_CODE
+		    		 , EMP_INFO_NAME
+    				 , JOB_INFO_NAME
+				  FROM (SELECT DO.DOCU_CODE
+					 		 , DO.DOCU_TYPE
+							 , DO.DOCU_TITLE
+							 , DO.DOCU_CHECK
+							 , TO_CHAR(DO.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+							 , TO_CHAR(DO.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+							 , DO.DOCU_EMP_CODE
+		    				 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+		  				  FROM DOCUMENT DO
+		  				  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+		  				 WHERE DO.DOCU_STATUS = 'N'
+		  				   AND DO.DOCU_TYPE = '1'
+		  				   AND DO.DOCU_EMP_CODE = #{empCode}
+		  				 ORDER BY DO.DOCU_CODE DESC
+		  				)
+		  		)
+		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+
+	<select id="docuAllPublicCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM DOCUMENT DO
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 WHERE DO.DOCU_STATUS = 'N'
+ 		   AND DO.DOCU_TYPE = '2'
+	</select>
+	
+	<select id="docuAllPublic" parameterType="map" resultType="docuList">
+		SELECT RNUM
+			 , DOCU_CODE
+			 , DOCU_TYPE
+			 , DOCU_TITLE
+			 , DOCU_CHECK
+			 , DOCU_WDAT
+			 , DOCU_WHOUR
+			 , DOCU_EMP_CODE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+		  FROM (SELECT ROWNUM RNUM
+		   			 , DOCU_CODE
+					 , DOCU_TYPE
+					 , DOCU_TITLE
+					 , DOCU_CHECK
+					 , DOCU_WDAT
+					 , DOCU_WHOUR
+					 , DOCU_EMP_CODE
+		    		 , EMP_INFO_NAME
+    				 , JOB_INFO_NAME
+				  FROM (SELECT DO.DOCU_CODE
+					 		 , DO.DOCU_TYPE
+							 , DO.DOCU_TITLE
+							 , DO.DOCU_CHECK
+							 , TO_CHAR(DO.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+							 , TO_CHAR(DO.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+							 , DO.DOCU_EMP_CODE
+		    				 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+		  				  FROM DOCUMENT DO
+		  				  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+		  				 WHERE DO.DOCU_STATUS = 'N'
+		  				   AND DO.DOCU_TYPE = '2'
+		  				 ORDER BY DO.DOCU_CODE DESC
+		  				)
+		  		)
+		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
 </mapper>

@@ -393,7 +393,7 @@ body {
 	border: 1px solid lightgrey;
 }
 
-.ModifyBtn {
+.ModifyBtn, .DeleteBtn {
 	margin-left: 20px;
 	margin-top: 2px;
 	float: left;
@@ -406,6 +406,12 @@ body {
 	background: #D8D8D8;
 	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
 	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+}
+
+.ModifyBtn:hover, .DeleteBtn:hover {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to bottom, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to bottom, #D8D8D8, #FFFFFF);
 }
 
 .title1 {
@@ -829,4 +835,22 @@ body {
 	background:rgba(0, 0, 0, 0.1);
 }
 
+
+.homeBar {
+	width: auto;
+	height: 30px;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);
+	border: 1px solid lightgrey;
+}
+
+.homeTitle {
+	display:inline-block;
+	margin-top: 5px;
+	margin-left: 10px;
+	height: 30px;
+	font-size: 17px;
+	font-weight: bolder;
+}
 

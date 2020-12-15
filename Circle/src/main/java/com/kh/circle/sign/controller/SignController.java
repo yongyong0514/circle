@@ -461,6 +461,42 @@ public class SignController {
 		return entity;
 	}
 	
+
+//	Result signConfigTemplate
+	@GetMapping("/signConfigTemplate")
+	public String signConfigTemplate(Model model) {
+		List<SignType> list1 = sqlSession.selectList("sign.signTemplateList");
+		model.addAttribute("list1", list1);
+		
+		return "sign/signConfigTemplate";	
+	}
+
+
+//	Result signTemplateWrite
+	@GetMapping("/signConfigTemplateWrite")
+	public String signTemplateWrite() {
+		
+		return "sign/signConfigTemplateWrite";
+	}
+	
+	
+//	Result signTemplateSelectOne
+	@GetMapping("/signTemplateSelectOne")
+	public String signTemplateSelectOne() {
+		
+		return "sign/signTemplateSelectOne";
+	}
+	
+	
+//  Create signTypeInsert
+	@PostMapping("/signConfigTemplateWrite")
+	public String signConfigTemplateWrite(@ModelAttribute SignType signType) {
+		
+		signService.insert(signType);
+		
+		return "redirect:signConfigTemplate";
+	}
+	
 	
 // 	Update signModify
 	@PostMapping("/signModify")
@@ -476,4 +512,6 @@ public class SignController {
 		
 		return "redirect:signList";
 	}	
+	
+
 }

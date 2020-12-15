@@ -26,11 +26,13 @@
 			<div class="contentBar">
 				<div class="homeBar">
 					<ul>
-						<li class="homeTitle">새 문서 작성</li>
+						<li class="homeTitle">문서 수정</li>
 					</ul>
 				</div>
 				<div class="homeListBar">
-					<button class="listBtn" type="submit" formaction="/docu/docuWrite">저장하기</button>
+				<c:if test="${docuSelectOne.docu_emp_code == empInfo.emp_info_emp_no}">	
+					<button class="listBtn" type="submit" formaction="/docu/docuUpdate">수정하기</button>
+				</c:if>
 				</div>	
 			</div>
 			<div class="content">
@@ -39,7 +41,8 @@
 							<tr>
 								<th class="formBox1">작성자</th>
 								<th class="formBox2"><input type="text" class="formInput1" id="emp_info_name" value="${empInfo.emp_info_name}" readonly>
-									<input type="text" class="formInput1" id="docu_emp_code" name="docu_emp_code" value="${empInfo.emp_info_emp_no}" readonly>
+									<input type="text" class="formInput1" id="docu_emp_code" name="docu_emp_code" value="${empInfo.emp_info_emp_no}" readonly> 
+									<input type="text" id="docu_code" name="docu_code" value="${docuSelectOne.docu_code}" readonly>
 								<th class="formBox1">직급</th>
 								<th class="formBox2"><input type="text" class="formInput1" id="job_info_name" value="${empInfo.job_info_name}" readonly></th>
 							</tr>
@@ -48,25 +51,25 @@
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_year" name="docu_year">
 											<option value="0">보존 연한을 선택하세요</option>
-											<option value="365" selected>1 년</option>
-											<option value="1095" selected>3 년</option>
-											<option value="1825" selected>5 년</option>
-											<option value="3650" selected>10 년</option>
-											<option value="9999" selected>영구</option>
+											<option value="365" <c:if test="${docuSelectOne.docu_year eq '365'}">selected</c:if>>1 년</option>
+											<option value="1095" <c:if test="${docuSelectOne.docu_year eq '1095'}">selected</c:if>>3 년</option>
+											<option value="1825" <c:if test="${docuSelectOne.docu_year eq '1825'}">selected</c:if>>5 년</option>
+											<option value="3650" <c:if test="${docuSelectOne.docu_year eq '3650'}">selected</c:if>>10 년</option>
+											<option value="9999" <c:if test="${docuSelectOne.docu_year eq '9999'}">selected</c:if>>영구</option>
 									</select>
 								</th>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_type" name="docu_type">
 											<option value="0">문서 유형을 선택하세요</option>
-											<option value="1" selected>개인</option>
-											<option value="2" selected>공용</option>
+											<option value="1" <c:if test="${docuSelectOne.docu_type eq '1'}">selected</c:if>>개인</option>
+											<option value="2" <c:if test="${docuSelectOne.docu_type eq '2'}">selected</c:if>>공용</option>
 									</select>
 								</th>
 							</tr>
 							<tr>
 								<th class="formBox1">제목</th>
-								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="docu_title" name="docu_title"></th>
+								<th class="formBox4" colspan="3"><input type="text" class="formInput2" id="docu_title" name="docu_title" value="${docuSelectOne.docu_title}"></th>
 							</tr>
 							<tr>
 								<th class="formBox0"></th>
@@ -76,6 +79,13 @@
 								<th class="formBox7" colspan="3">
 									<div id="fileUpload" class="dragAndDropDiv">파일을 여기에 드래그해서 추가하세요</div>
 									<input type="file" name="fileUpload" id="fileUpload" style="display:none;" multiple/>
+									<c:forEach var="file" items="${list1}">
+										<div class='statusbar'>
+											<div class='filename' onclick="location.href='${pageContext.request.contextPath}/docuRest/docuFileDownload?fileCode=${file.files_code}'">${file.files_oname}</div>
+											<div class='filesize'>${file.files_size}</div>
+											<div class='filecode' style='display: none;'></div>
+										</div>
+									</c:forEach>
 								</th>
 							</tr>
 							<tr>
@@ -83,7 +93,7 @@
 							</tr>
 						</table>
 						<div class="formBox5" id="editor"></div>
-						<textarea id="docu_note" name="docu_note"></textarea>
+						<textarea id="docu_note" name="docu_note">${docuSelectOne.docu_note}</textarea>
 					</div>
 				</div>
 			</form>
@@ -115,6 +125,14 @@
 			el : document.querySelector("#editor"),
 			height : "630px",
 			initialEditType : "markdown",
+		});
+	</script>
+
+<!-- 수정 폼 로드 시 가져올 일부 본문 값 -->
+	<script>
+		$(document).ready(function(){
+			var note = $('#docu_note').val();
+			editor.setHtml(note);
 		});
 	</script>
 
@@ -269,7 +287,7 @@
     </script>  
 
 	<!-- FORM 전송 시작 전 체크 -->
-	 <script>
+	<script>
 		$("#formArea").submit(function(e) {
 			var base = "${pageContext.request.contextPath}";
 			e.preventDefault();

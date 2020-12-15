@@ -71,7 +71,7 @@ body {
 	font-weight: bolder;
 }
 
-#docu_emp_code, #docu_count, #docu_note {
+#docu_emp_code, #docu_count, #docu_note, #docu_code {
 	display: none;
 }
 

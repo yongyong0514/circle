@@ -22,12 +22,21 @@
 	</div>
 	<div class="container">
 		<div class="contentBar">
-			<jsp:include page="../sign/signSelectOneHomeBar.jsp"/>
+			<div class="homeBar">
+					<ul>
+						<li class="homeTitle">문서 내용</li>
+					</ul>
+				</div>
 			<div class="oneListBar">
 				<div>
 					<div class="title1">
 						<c:if test="${docuSelectOne.docu_emp_code == empInfo.emp_info_emp_no}">
-							<button class="ModifyBtn" onclick="location='${pageContext.request.contextPath}/docu/docuWrite?docuCode=<c:out value="${docuSelectOne.docu_code}"/>'">수정하기</button>
+							<button class="ModifyBtn" onclick="location='${pageContext.request.contextPath}/docu/docuUpdate?docuCode=<c:out value="${docuSelectOne.docu_code}"/>'">수정하기</button>
+						</c:if>
+					</div>
+					<div>
+						<c:if test="${docuSelectOne.docu_emp_code == empInfo.emp_info_emp_no}">	
+							<button class="DeleteBtn" value="${docuSelectOne.docu_code}">삭제하기</button>
 						</c:if>
 					</div>
 					<div class="title2">작성일</div>
@@ -236,6 +245,23 @@
 			});
 		});
 	</script>
+	<script>
+		$(".DeleteBtn").click(function(){
+			var base = "${pageContext.request.contextPath}";
+			var docuCode = $(this).val();
 
+			$.ajax({
+				url: base + "/docu/docuDelete",
+				type: "post",
+				data: {docuCode : docuCode},
+				success: function(){
+					location.href = "${pageContext.request.contextPath}/docu/docuList";
+				},
+				error: function(){
+					alert("error");
+				}
+			});
+		});
+	</script>
 </body>
 </html>

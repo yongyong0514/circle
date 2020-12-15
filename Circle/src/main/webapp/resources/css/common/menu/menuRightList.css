@@ -9,6 +9,17 @@
 	z-index: 99;
 }
 
+.menuBox2 {
+	display: none;
+	right   : 50px;
+	margin-right: 5px;
+	position: fixed;
+	margin-top: 40px;
+	width: 250px;
+	background: none;
+	z-index: 99;
+}
+
 .buttonArea1 {
 	min-height: 90px;
 	overflow: hidden;
@@ -47,4 +58,16 @@
 	border: none;
 	outline: none;
 	cursor: pointer;	
+}
+
+.buttonSize4 {
+	text-align: left;
+	float: left;
+	width: 250px;
+	height: 40px;
+	background: #f7f7f7;
+	font-weight: bolder;
+	font-size: 14px;
+	border: none;
+	outline: none;
 }

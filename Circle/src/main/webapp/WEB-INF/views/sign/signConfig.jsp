@@ -8,6 +8,8 @@
 <title>Circle</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signConfig.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signHomeBar.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/sign/signHomeListBar.css">
 </head>
 <body>
 	<div class="wrap">
@@ -23,8 +25,16 @@
 		</div>
 		<div class="container">
 			<div class="contentBar">
-				<jsp:include page="../sign/signConfigBar.jsp" />
-				<jsp:include page="../sign/signConfigListBar.jsp" />
+				<div class="signHomeBar">
+					<ul>
+						<li class="signHomeTitle">전자결재 설정</li>
+					</ul>
+				</div>
+				<div class="signHomeListBar">
+					<ul>
+						<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">결재 옵션</li>
+					</ul>
+				</div>
 			</div>
 			<div class="content">
 				<div class="signConfigBtnArea">
@@ -97,8 +107,8 @@
     					</div>
 					</div>
 					<div class="signConfigBtnSet">
-						<div class="signConfigArea"></div>
-						<button class="signConfigBtn2">결재 문서 양식 등록</button>
+						<div class="signConfigArea"><img class="imgSize3" src="${pageContext.request.contextPath}/resources/img/sign/documents.png"></div>
+						<button class="signConfigBtn2" onclick="location='${pageContext.request.contextPath}/sign/signConfigTemplate'">결재 문서 양식 등록</button>
 					</div>
 				</div>
 			</div>

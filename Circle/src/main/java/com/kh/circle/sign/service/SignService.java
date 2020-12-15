@@ -6,6 +6,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
 
 import com.kh.circle.sign.vo.SignReplyInsert;
+import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 public interface SignService {
@@ -37,5 +38,14 @@ public interface SignService {
 	
 	//결재 서명 파일 삭제 업데이트
 	void update(String fileCode);
+
+	//결재 댓글 삭제
+	void deleteSignReply(String replyCode);
+
+	//결재 문서 양식 등록
+	void insert(SignType signType);
+
+	//결재 타입 삭제
+	void deleteSignType(String typeCode);
 }
 	

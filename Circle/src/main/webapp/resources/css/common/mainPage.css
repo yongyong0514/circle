@@ -24,7 +24,12 @@ body {
 .boardList0 {
 	min-width: 1250px;
 	width: 100%;
-	height: 70px;
+	height: 120px;
+	
+}
+
+.weatherwidget-io {
+	border-radius: 10px;
 }
 
 .boardList0_1 {
@@ -33,11 +38,11 @@ body {
 	margin-left: 10px;
 	min-width: 1220px;
 	width: calc(100% - 30px);
-	height: 50px;
-	border-radius: 10px;
-	background: white;
-	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
-		rgba(0, 0, 0, 0.22);
+	height: 98px;
+ 	background: #1F577C;
+ 	border-radius: 10px;
+	margin-left: 10px;
+	margin-top: 10px;
 }
 
 .boardList1 {

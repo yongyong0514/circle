@@ -2,8 +2,10 @@ package com.kh.circle.document.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -27,7 +29,9 @@ import com.kh.circle.document.vo.DocuReply;
 import com.kh.circle.document.vo.DocuSelectOne;
 import com.kh.circle.document.vo.DocuWriteInsert;
 import com.kh.circle.login.entity.EmpInfo;
+import com.kh.circle.sign.vo.PageInfo;
 import com.kh.circle.sign.vo.SignFiles;
+import com.kh.circle.sign.vo.SignList;
 
 @Controller
 @RequestMapping("/docu")
@@ -50,31 +54,6 @@ public class DocuController {
 		
 	}
 	
-//	Create Document
-	@GetMapping("/docuWrite")
-	public String docuWriteInsert(@RequestParam(required = false) String docuCode, Model model){
-		
-		String signCode = docuCode;
-		
-		if(docuCode != null) {
-			
-			DocuSelectOne docuSelectOne = sqlSession.selectOne("docu.docuSelectOne", docuCode);
-			model.addAttribute("docuSelectOne", docuSelectOne);
-
-			List<DocuFiles> list1 = sqlSession.selectList("docu.docuFileList", docuCode);
-			model.addAttribute("list1", list1);			
-			
-			List<SignFiles> list3 = sqlSession.selectList("sign.signFileList", signCode);
-			model.addAttribute("list3", list3);			
-			
-			return "document/docuWrite";
-		}
-		
-		else {
-			
-			return "document/docuWrite";
-		}
-	}
 	
 //	Create docuFiles
 	@PostMapping("/docuFiles")
@@ -150,12 +129,147 @@ public class DocuController {
 		
 		return "document/docuSelectOne";
 	}
+
+	
+//	Result docuAllPersonal
+	@GetMapping("/docuAllPersonal")
+	public String docuAllPersonal(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("docu.docuAllPersonalCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("docu.docuAllPersonal", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}	
+		
+		return "document/docuAllPersonal";
+	}
+	
+
+
+//	Result docuAllPublic
+	@GetMapping("/docuAllPublic")
+	public String docuAllPublic(@RequestParam(required = false) String currentPages, HttpSession session, Model model) {
+		
+		if(null != session.getAttribute("empInfo")) {
+			String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+			int currentPage;
+			int limit;
+			int maxPage;
+			int startPage;
+			int endPage;
+			
+			currentPage = 1;
+			
+			if(currentPages != null) {
+				currentPage = Integer.parseInt(currentPages);
+			}
+			
+			limit = 9;
+			
+			int listCount = sqlSession.selectOne("docu.docuAllPublicCount", empCode);
+			
+			maxPage = (int)((double) listCount / limit + 0.9);
+			
+			startPage = (((int)((double) currentPage / limit + 0.9)) - 1) * 10 + 1;
+			
+			endPage = startPage + 10 - 1;
+			
+			if(maxPage < endPage) {
+				endPage = maxPage;
+			}
+			
+			PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getLimit() + 1;
+			int endRow = startRow + pi.getLimit() -1;
+			
+			Map<String, Object> map = new HashMap<>();
+			
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("empCode", empCode);
+			
+			List<SignList> list = sqlSession.selectList("docu.docuAllPublic", map);
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+		}	
+		
+		return "document/docuAllPublic";
+	}	
+	
+//	Update docuUpdate
+	@GetMapping("/docuUpdate")
+	public String docuUpdate(@RequestParam String docuCode, HttpSession session, Model model) {
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
+		
+		DocuSelectOne docuSelectOne = sqlSession.selectOne("docu.docuSelectOne", docuCode);
+		model.addAttribute("docuSelectOne", docuSelectOne);
+
+		List<DocuFiles> list1 = sqlSession.selectList("docu.docuFileList", docuCode);
+		model.addAttribute("list1", list1);
+		
+		return "document/docuUpdate";
+	}
+	
+	
+	
 	
 //	Update docuUpdate
 	@PostMapping("/docuUpdate")
-	public String docuUpdate(@ModelAttribute DocuWriteInsert docuWriteInsert) {
+	public String docuUpdate(@ModelAttribute DocuSelectOne docuSelectOne) {
 		
-		return "document/docuList";
+		sqlSession.update("docu.docuUpdate", docuSelectOne);
+		
+		return "redirect:docuList";
+	}
+	
+
+//	Delete document
+	@PostMapping("/docuDelete")
+	public String docudelete(@RequestParam String docuCode) {
+		
+		sqlSession.update("docu.docuDelete", docuCode);
+	
+	return "redirect:docuList";
+	
 	}
 	
 }

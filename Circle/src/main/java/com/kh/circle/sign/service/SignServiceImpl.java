@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.circle.sign.repository.SignDao;
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignReplyInsert;
+import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Service
@@ -100,6 +101,30 @@ public class SignServiceImpl implements SignService {
 	@Override
 	public void update(String fileCode) {
 		signDao.update(fileCode);
+	}
+
+
+//	결재 댓글 삭제
+	@Override
+	public void deleteSignReply(String replyCode) {
+		signDao.add(replyCode);
+		
+	}
+
+
+//	결재 문서 양식 등록
+	@Override
+	public void insert(SignType signType) {
+		signDao.add(signType);
+		
+	}
+
+
+//	결재 타입 삭제
+	@Override
+	public void deleteSignType(String typeCode) {
+		signDao.addDeleteSignType(typeCode);
+		
 	}
 
 }
