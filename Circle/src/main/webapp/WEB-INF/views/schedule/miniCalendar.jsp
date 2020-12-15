@@ -112,7 +112,6 @@ $(document).ready(function(){
 											
 											//월, 년 변경되었거나 자료 변경에 따라 다시 불러오기
 											callback(events);
-											console.log(events)
 						      		}
 								});
 			},

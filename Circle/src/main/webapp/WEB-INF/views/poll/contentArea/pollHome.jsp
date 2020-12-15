@@ -60,7 +60,6 @@
 			
 			/* 설문 마감여부 추출 */
 			var closing = $(this).find('.post-closing').text();
-			console.log(closing);
 			
 			/* 현재날짜 변수화 */
 			var sysdate = Date.parse(nowDate());
@@ -100,7 +99,7 @@
 			</div>
 			<div class="dr-wrapper">
 				<div class="dashboard-box">
-					<c:forEach var="item" items="${post}" begin="0" end="1" varStatus="number">
+					<c:forEach var="item" items="${post}" begin="0" end="2" varStatus="number">
 						<div class="card-item-wrapper">
 							<section class="card-item poll-home-card">
 								<div class="h-border"></div>

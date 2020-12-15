@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -21,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
+import com.kh.circle.poll.entity.PostList;
 import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.service.PollService;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 import oracle.jdbc.proxy.annotation.Pre;
 
 @Slf4j
@@ -170,6 +174,7 @@ public class PollController {
 		int totalAttend = pollService.getTotalAttend(params);
 		int realAttend = pollService.getRealAttend(params);
 		
+		modelMap.put("postCode", postCode);
 		modelMap.put("post", list);
 		modelMap.put("totalAttend", totalAttend);
 		modelMap.put("realAttend", realAttend);
@@ -196,6 +201,7 @@ public class PollController {
 		modelMap.put("totalAttend", totalAttend);
 		modelMap.put("realAttend", realAttend);
 		modelMap.put("qustRealAttend", qustRealAttend);
+		modelMap.put("postCode", postCode);
 		
 		log.info(modelMap.toString());
 		
@@ -241,5 +247,15 @@ public class PollController {
 		
 		log.info(formData.toString());
 	}
-
+	
+	@GetMapping("/deleteOne")
+	public String deleteOne(@RequestParam String postCode) {
+		
+		log.info("삭제용 코드 : {}",postCode);
+		
+		pollService.deleteOne(postCode);
+		
+		return "/poll/pollMain";
+	}
+	
 }

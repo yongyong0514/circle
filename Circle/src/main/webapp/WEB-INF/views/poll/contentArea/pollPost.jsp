@@ -66,16 +66,16 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
-								<span class="poll-post-toolbar-delete-btn-txt" onclick="deleteModalOpen();">삭제</span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
 						</li>
 					</ul>
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goProgress();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -475,7 +475,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -484,7 +484,7 @@
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goProgress();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -493,7 +493,7 @@
 			</section>
 		</div>
 	</div>
-	
+		<input type="hidden" id="postCode" value="${postCode }"/>
 	<div>
 		<jsp:include page="../modalBody.jsp"></jsp:include>
 	</div>
@@ -522,7 +522,9 @@
 			var z = $('#modal-action-divide').val();
 			
 			switch(z){
-				case 'delete' : console.log('delete');break;
+				case 'delete' : var code = $('#postCode').val();
+								location.href = "${pageContext.request.contextPath}/poll/deleteOne?postCode=" + code;
+								break;
 				case 'submit' : var convertedData =  formDataConvert(); dataSubmit(convertedData);break;
 				default : break;
 			}
@@ -532,6 +534,11 @@
 	
 	
 	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 목록으로 가기 버튼 클릭 */
+	function goProgress(){
+		location.href = "${pageContext.request.contextPath}/poll/progress";
+	}
 	
 	/* 모달 동작 구분용 변수 */
 	ModalAction = "";
@@ -588,9 +595,6 @@
 				var x = $(item).find('.necessary').text();
 				if(x == '[필수]'){
 					
-					console.log('필수 항목 발견');
-					console.log(item);
-					
 					if(($(item).find('input[type=checkbox]').length > 0 || $(item).find('input[type=radio]').length > 0) && $(item).find('input:checked').length == 0){
 						isTrue = false;
 					}
@@ -606,7 +610,6 @@
 			});
 			return isTrue;
 		} else {
-			console.log('필수 없음');
 			return true;
 		}
 		
@@ -616,8 +619,6 @@
 	function dataSubmit(data){
 		
 		var lastData = JSON.stringify(data);
-		
-		console.log(lastData);
 		
 		$.ajax({
 			type		:	'post'
@@ -630,7 +631,6 @@
 			   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 		   ,success		: 	function(data){
 							   var returnedUrl = data;
-							   console.log(returnedUrl);
 							   setTimeout(function(){
 								   location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + returnedUrl;
 							   }, 1000);
