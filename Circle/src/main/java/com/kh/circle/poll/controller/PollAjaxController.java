@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.poll.entity.AttendedServey;
 import com.kh.circle.poll.entity.AttendedServeyMember;
+import com.kh.circle.poll.entity.PostCode;
 import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.entity.Question;
 import com.kh.circle.poll.service.PollService;
@@ -64,5 +65,16 @@ public class PollAjaxController {
 		log.info("ajax로 리턴할 url : {}", url);
 		
 		return url;
+	}
+	
+	@PostMapping("/deleteAll")
+	public void deleteAll(@RequestBody List<String> code) {
+		
+		log.info("code : {}",code);
+		
+		for (String postCode : code) {
+			pollService.deleteOne(postCode);
+		}
+		
 	}
 }

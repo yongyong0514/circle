@@ -71,7 +71,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -483,7 +483,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -500,16 +500,77 @@
 				</ul>
 			</section>
 		</div>
+			<input type="hidden" id="postCode" value="${postCode }"/>
+		<div>
+			<jsp:include page="../modalBody.jsp"></jsp:include>
+		</div>
 
 	</div>
 	
 	<script type="text/html" id="chart-template">
-		
 	</script>
 	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+	
     <script type="text/javascript">
-    	
+	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 모달 동작 구분용 변수 */
+	ModalAction = "";
+	
+	/* 모달 내용 초기화 */
+	function modalInit(){
+		$('#alertModal').find('.modal-title').text("");
+		$('#alertModal').find('.modal-body').children().text("");
+	}
+	/* 모달 제목 입력 */
+	function modalTitleInput(title){
+		$('#alertModal').find('.modal-title').text(title);
+	}
+	/* 모달 내용 입력 */
+	function modalContentInput(content){
+		$('#alertModal').find('.modal-body').children().text(content);
+	}
+	
+	/* 삭제확인 모달 팝업 */
+	function deleteModalOpen(){
+		modalInit();
+		modalActiondivide('delete');
+		modalTitleInput("설문을 삭제 하시겠습니까?");
+		modalContentInput("삭제된 설문은 복구할 수 없습니다.");
+		$('#alertModal').modal();
+		
+		console.log($('#alertModal').find('#modal-action-divide').val());
+		
+	}
+	/* 모달 기능 구분용 데이터 입력 */
+	function modalActiondivide(input){
+		
+		console.log(input);
+		
+		$('#alertModal').find('#modal-action-divide').val(input);
+		
+		console.log($('#alertModal').find('#modal-action-divide').val());
+	}
+	
+	
+	/*************************************************************** 실행 영역 **************************************************/
+	
     	$(document).ready(function(){
+    		
+    		/* 모달 확인 버튼 클릭시 */
+    		$('#modal-confirm').on('click', function(){
+    			var z = $('#modal-action-divide').val();
+    			
+    			switch(z){
+    				case 'delete' : var code = $('#postCode').val();
+    								location.href = "${pageContext.request.contextPath}/poll/deleteOne?postCode=" + code;
+    								break;
+    				case 'submit' : var convertedData =  formDataConvert(); dataSubmit(convertedData);break;
+    				default : break;
+    			}
+    		})
+    		
     		
     		/* 챠트 그리기 */
     		$('.drawTable').each(function(index, item){

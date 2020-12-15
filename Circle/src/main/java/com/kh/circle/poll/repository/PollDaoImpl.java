@@ -2,16 +2,14 @@ package com.kh.circle.poll.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
 import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.entity.Question;
 
@@ -198,6 +196,49 @@ public class PollDaoImpl implements PollDao{
 		
 		return url;
 	}
+
+
+	@Override
+	public List<String> answerSearch(String postCode) {
+		//답변 코드 추출
+		return sqlSession.selectList("poll.answerSearch", postCode);
+	}
+	@Override
+	public void deleteMember(String postCode) {
+		//설문 멤버 삭제
+		sqlSession.delete("poll.deleteMember",postCode);
+	}
+	@Override
+	public void deleteAttender(List<String> answers) {
+		//답변자 삭제
+		sqlSession.delete("poll.deleteAttender", answers);
+	}
+	@Override
+	public int deleteAnswer(String postCode) {
+		return sqlSession.delete("poll.deleteAnswer",postCode);
+	}
+	@Override
+	public void deleteQuestion(String postCode) {
+		//문항 삭제
+		sqlSession.delete("poll.deleteQuestion",postCode);
+	}
+	@Override
+	public void deleteOne(String postCode) {
+		//설문 상태 삭제로 변경
+		sqlSession.update("poll.deleteOne", postCode);
+	}
+
+
+	@Override
+	public void deleteAll(PostCode postList) {
+		sqlSession.delete("poll.deleteAll", postList);
+	}
+
+
+
+
+
+
 
 
 

@@ -772,4 +772,43 @@
 		  join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
 		 where POLL_POST_QUST_ANSW_CODE = #{list[1].id}
 	</select>
+	
+	
+	<!-- 설문 참여가능 멤버 삭제 -->
+	<delete id="deleteMember" parameterType="String">
+		delete from POLL_POST_JOIN where POLL_JOIN_POST = #{postCode}
+	</delete>
+	<!-- 삭제용 답변 코드 추출 -->
+	<select id="answerSearch" parameterType="String" resultType="String">
+		select POLL_POST_QUST_ANSW_CODE 
+		  from POLL_POST_QUST_ANSW 
+		 where POLL_POST_QUST_ANSW_POST = #{postCode}
+	</select>
+	
+	<!-- 답변자 삭제 -->
+	<delete id="deleteAttender" parameterType="java.util.List">
+		delete from POLL_POST_QUST_ANSW_JOIN
+		<where>
+			<foreach collection="list" item="item" separator="OR">
+				POLL_POST_QUST_ANSW_JOIN_CODE = #{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 답변 삭제 -->
+	<delete id="deleteAnswer" parameterType="String">
+		delete from POLL_POST_QUST_ANSW where POLL_POST_QUST_ANSW_POST = #{postCode}
+	</delete>
+	
+	<!-- 문항 삭제 -->
+	<delete id="deleteQuestion" parameterType="String">
+		delete from POLL_POST_QUST where POLL_POST_QUST_POST = #{postCode}
+	</delete>
+	
+	<!-- 개별 설문 삭제 -->
+	<update id="deleteOne" parameterType="String">
+		update POLL_POST set POLL_POST_STAT = 'N'
+		 where POLL_POST_CODE = #{postCode}
+	</update>
+	
 </mapper>

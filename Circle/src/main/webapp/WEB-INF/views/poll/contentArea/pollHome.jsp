@@ -100,7 +100,7 @@
 			</div>
 			<div class="dr-wrapper">
 				<div class="dashboard-box">
-					<c:forEach var="item" items="${post}" begin="0" end="1" varStatus="number">
+					<c:forEach var="item" items="${post}" begin="0" end="2" varStatus="number">
 						<div class="card-item-wrapper">
 							<section class="card-item poll-home-card">
 								<div class="h-border"></div>

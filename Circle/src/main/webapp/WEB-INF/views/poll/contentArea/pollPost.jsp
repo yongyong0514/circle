@@ -66,9 +66,9 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
-								<span class="poll-post-toolbar-delete-btn-txt" onclick="deleteModalOpen();">삭제</span>
+								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
 						</li>
 					</ul>
@@ -475,7 +475,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -493,7 +493,7 @@
 			</section>
 		</div>
 	</div>
-	
+		<input type="hidden" id="postCode" value="${postCode }"/>
 	<div>
 		<jsp:include page="../modalBody.jsp"></jsp:include>
 	</div>
@@ -522,7 +522,9 @@
 			var z = $('#modal-action-divide').val();
 			
 			switch(z){
-				case 'delete' : console.log('delete');break;
+				case 'delete' : var code = $('#postCode').val();
+								location.href = "${pageContext.request.contextPath}/poll/deleteOne?postCode=" + code;
+								break;
 				case 'submit' : var convertedData =  formDataConvert(); dataSubmit(convertedData);break;
 				default : break;
 			}
