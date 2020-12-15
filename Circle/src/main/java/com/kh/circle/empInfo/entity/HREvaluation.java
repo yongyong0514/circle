@@ -1,5 +1,7 @@
 package com.kh.circle.empInfo.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +24,6 @@ public class HREvaluation {
 	//join
 	private String dept_info_name;				//부서명
 	private String emp_info_name;				//평가자 이름
+	
+	private List<HREvaluation> hrevList;
 }

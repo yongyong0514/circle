@@ -30,7 +30,8 @@
 				<form action="${pageContext.request.contextPath }/empInfo/allInfoList" method="GET">
 					<span class="totalNumber">전체 <c:out value="${map.pInfo.total }"/>명</span>
 					&nbsp;
-					<input type="button" class="insertInfo" value="인사정보 추가"/>
+					<input type="button" class="insertInfo" value="인사정보 추가"
+							onclick ="location.href='${pageContext.request.contextPath}/empInfo/myInfoInsert'"/>
 					<br><br>
 					<input type="text" name="empNo" placeholder="사원번호" value="${empNo}">
 					<input type="text" name="name" placeholder="이름" value="${name}">
@@ -55,7 +56,7 @@
 								<th>내선번호</th>
 							</tr>
 							<c:forEach var="EmpInfoAll" items="${map.empList }">
-								<tr>
+								<tr class="selTr">
 									<td><c:out value="${EmpInfoAll.emp_info_emp_no }"/></td>
 									<td><c:out value="${EmpInfoAll.emp_info_name }"/></td>
 									<td><c:out value="${EmpInfoAll.dept_info_name }"/></td>
@@ -129,8 +130,20 @@
 			
 			<!-- 현재 페이지 강조 -->
 			$(".nowPageNum").addClass("selectedNum");
-		});
+
+ 			<!-- 마우스 오버 시 강조 -->
+ 			$(".selTr").mouseover(function(){
+ 				$(this).addClass("greyColor");
+ 			}).mouseout(function(){
+ 				$(this).removeClass("greyColor");
+ 			});
+			
+ 			
+ 			$(".selTr").click(function(){
+				location.href = "${pageContext.request.contextPath}/empInfo/oneInfo?emp_no=" + $(this).find("td:eq(0)").text();
+ 			});
 		
+		});
 		
 		// 페이지 당 출력 개수 변경 시
 		function movePerPage(){

@@ -1,5 +1,7 @@
 package com.kh.circle.empInfo.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.circle.addressBook.entity.PagingInfo;
+import com.kh.circle.empInfo.entity.CareerInfo;
+import com.kh.circle.empInfo.entity.CertificateInfo;
 import com.kh.circle.empInfo.entity.EmpInfoAll;
+import com.kh.circle.empInfo.entity.HREvaluation;
+import com.kh.circle.empInfo.entity.RewardDiscipline;
 import com.kh.circle.empInfo.service.EmpInfoService;
 import com.kh.circle.login.entity.EmpInfo;
 
@@ -46,6 +52,25 @@ public class EmpInfoController {
 			return "common/error";
 		}
 	}
+	
+	
+	@GetMapping("/oneInfo")
+	public String myInfo(@RequestParam String emp_no,
+						Model model) {
+
+		if(emp_no != null) {
+			Map<String, Object> map = empInfoService.empInfoOne(emp_no);
+			
+			model.addAttribute("map", map);
+
+			return "attendance/myInfo";
+		} else {
+			model.addAttribute("msg", "로그인 후 사용 가능합니다.");
+			
+			return "common/error";
+		}
+	}
+	
 	
 	@GetMapping("/allInfoList")
 	public String allInfoList(@RequestParam(value="nowPage", defaultValue="1") int nowPage,
@@ -114,11 +139,45 @@ public class EmpInfoController {
 		//1. 기존 정보와 변경하려는 정보 비교
 		List<String> updatedColNameList = empInfoService.compare(inputMap);
 		
-		
-		
-		
 		return "redirect:myInfo";
 	}
+	
+	@GetMapping("/myInfoInsert")
+	public String myInfoInsert(Model model) {
+		
+		//부서목록
+		Map<String, Object> dMap = empInfoService.deptMap();
+		
+		//직책목록
+		Map<String, Object> jMap = empInfoService.jobMap();
+		
+		model.addAttribute("dMap", dMap);
+		model.addAttribute("jMap", jMap);
+
+		return "attendance/myInfoInsert";
+	}
+	
+	@PostMapping("/myInfoInsert")
+	public String myInfoInsert(@ModelAttribute EmpInfoAll eInfo,
+							@ModelAttribute CertificateInfo crtf,
+							@ModelAttribute CareerInfo cInfo,
+							@ModelAttribute HREvaluation hre,
+							@ModelAttribute RewardDiscipline redi
+							) {
+
+		System.out.println("eInfo: " + eInfo);
+		
+		empInfoService.insertEmpInfoAll(eInfo);
+		/*
+		 * empInfoService.insertCertificateInfo(crtf);
+		 * empInfoService.insertCareerInfo(cInfo);
+		 * empInfoService.insertHREvaluation(hre);
+		 * empInfoService.insertRewardDiscipline(redi);
+		 */
+
+		return "redirect:/empInfo/allInfoList";
+	}
+	
 }
 
 

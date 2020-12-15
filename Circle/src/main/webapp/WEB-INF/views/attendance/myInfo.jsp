@@ -33,7 +33,7 @@
 					<!-- 대표정보 시작 -->
 					<table class="infoMainTable">
 						<tr>
-							<td rowspan="4" class="photoCell"><img src=""></td>
+							<td rowspan="4" class="photoCell"><img src="" onerror="this.src='https://conservation-innovations.org/wp-content/uploads/2019/09/Dummy-Person.png'" ></td>
 							<td class="titleCell">이름
 								<input type="hidden" name="emp_info_emp_no" value="${map.empInfoOne.emp_info_emp_no }">
 							</td>

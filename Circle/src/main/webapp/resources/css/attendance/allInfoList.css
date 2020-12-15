@@ -127,3 +127,10 @@ form > select{
 	border: 1px solid  #0072C6;
 	color: white;
 }
+
+
+.greyColor{
+	background: #AFDBFF;
+	border-bottom:1px solid #AFDBFF;
+	cursor: pointer;
+}

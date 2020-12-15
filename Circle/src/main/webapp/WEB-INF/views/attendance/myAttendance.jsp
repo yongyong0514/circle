@@ -102,7 +102,7 @@
 							</td>
 							<td><c:out value="${AttendanceInfo.atdc_hstr_writ_type}"/></td>
 							<td><c:out value="${AttendanceInfo.atdc_hstr_type}"/></td>
-							<td>휴게시간 1h 제외</td>
+							<td>휴게시간 1h 포함</td>
 							<td></td>
 						</tr>
 					</c:forEach>

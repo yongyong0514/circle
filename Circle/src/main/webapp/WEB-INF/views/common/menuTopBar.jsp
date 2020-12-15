@@ -46,8 +46,10 @@
 				</div>					
 			</li>
 			<li><button class="menuBtn" onclick="location.href='${pageContext.request.contextPath}/common/mainPage'">페이퍼컴퍼니</button></li>
+<!-- 
 			<li><button class="menuBtn2">My Page</button></li>
-			<li><button class="menuBtn2">My Profile</button></li>
+ -->
+			<li><button class="menuBtn2" onclick="location.href='${pageContext.request.contextPath}/empInfo/myInfo'">My Profile</button></li>
 			
 			<li>
 				<div class="menuBtn3">${empInfo.emp_info_name} ${empInfo.job_info_name} 님</div>
