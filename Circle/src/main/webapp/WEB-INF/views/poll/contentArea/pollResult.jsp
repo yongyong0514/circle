@@ -80,7 +80,7 @@
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goResult();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -492,7 +492,7 @@
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goResult();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -514,6 +514,11 @@
 	
     <script type="text/javascript">
 	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 목록 클릭시 메인으로 이동 */
+	function goResult(){
+		location.href = "${pageContext.request.contextPath}/poll/pollMain";
+	}
 	
 	/* 모달 동작 구분용 변수 */
 	ModalAction = "";
@@ -540,17 +545,10 @@
 		modalContentInput("삭제된 설문은 복구할 수 없습니다.");
 		$('#alertModal').modal();
 		
-		console.log($('#alertModal').find('#modal-action-divide').val());
-		
 	}
 	/* 모달 기능 구분용 데이터 입력 */
 	function modalActiondivide(input){
-		
-		console.log(input);
-		
 		$('#alertModal').find('#modal-action-divide').val(input);
-		
-		console.log($('#alertModal').find('#modal-action-divide').val());
 	}
 	
 	
@@ -612,7 +610,7 @@
 			    		            center: ['50%', '55%'],
 			    		            label: {
 			    		                position: 'outer',
-			    	                	formatter: '{b}：{c}명  ({d}%)  '
+			    	                	formatter: '{b}：{c}표  ({d}%)  '
 			    		            },
 			    		            data:chartMap,
 			    		            itemStyle: {

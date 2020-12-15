@@ -288,8 +288,6 @@
 			postCode.push(code);
 		})
 		
-		console.log(postCode);
-		
 		$.ajax({
 			url		:	"${pageContext.request.contextPath}/pollAjax/deleteAll",
 			type	:	"post",

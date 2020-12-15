@@ -47,8 +47,7 @@
 									</th>
 									<td>
 										<div class="txtarea-wrap">
-											<textarea class="w-large"  name="poll-start-sentence" maxlength="1000">
-											</textarea>
+											<textarea class="w-large"  name="poll-start-sentence" maxlength="1000"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -418,8 +417,6 @@
 
 /* 미리보기 수정창 입력폼 채우기 */
 function fillModifyForm(tempData){
-	console.log(tempData);
-	console.log($(".question-item-modify").find('option[value=' + tempData.type + ']').val());
 	$(".question-item-modify").find('option[value=' + tempData.type + ']').prop('selected',true);
 	
 	var type = tempData.type;
@@ -512,9 +509,7 @@ function addPreview(){
 		/* 결과 변수에 저장 */
 		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"text","checkLowerType":textLowerType()};
 		
-		console.log(oneQuestion);
 		questions.push(oneQuestion);
-		console.log(questions);
 		
 		initVar();
 		
@@ -534,8 +529,6 @@ function addPreview(){
 		
 		var score = checkScore();
 
-		console.log("score : " + score);
-		
 		/* 점수 선택지 미리보기 추가 */
 		var scoreContent =new Array();
 		for(var i = 1; i <= score; i++){
@@ -549,11 +542,7 @@ function addPreview(){
 		
 		/* 결과 변수에 저장 */
 		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"score","pluralMaximum":0,"score":score, "selectContents":selectContents};
-		
-		console.log(oneQuestion);
 		questions.push(oneQuestion);
-		console.log(questions);
-		
 		initVar();
 	}
 
@@ -599,11 +588,7 @@ function addPreview(){
 		
 		/* 결과 변수에 저장 */
 		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"select","pluralMaximum":pluralMaximum,"checkLowerType":textLowerType(), "selectContents":selectContents };
-		
-		console.log(oneQuestion);
 		questions.push(oneQuestion);
-		console.log(questions);
-		
 		initVar();
 	}
 	
@@ -679,8 +664,6 @@ $(document).ready(function(){
 		if(dataCheck()){
 	    	var data = JSON.stringify(questions);
 	    	
-	    	console.log(data);
-			
 			var base = "${pageContext.request.contextPath}";
 			$.ajax({
 				type		:	'post'
@@ -691,10 +674,8 @@ $(document).ready(function(){
 	       	   ,contentType	:	"application/json; charset=utf-8;"
 			   ,error		: 	function(request,status,error){
 	       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-			   ,success		: 	console.log("data send success")
+			   ,success		: 	location.href = "${pageContext.request.contextPath}/poll/my"
 			})
-			
-			location.href = "${pageContext.request.contextPath}/poll/my";
 			
 		} else {
 			alert('문항을 입력해주세요');
@@ -727,8 +708,6 @@ function confirmAddQuestionFromExist(){
 /* 문항추가폼 미입력 부분 확인/ 확인후 후속 추가동작 */
 function confirmAddQuestion(){
 	/* 질문 입력창 입력 확인 - 경고메세지 출력*/
-	
-	console.log($("input[name=question]").val().length);
 	
 	if($("input[name=question]").val().length < 2 || $("input[name=question]").val() == ""){
 		($("input[name=question]").siblings(".desc-top-wrap").css("display","block")
@@ -946,8 +925,6 @@ $(document).ready(function(){
 			//수정용 or 추가용 확인
 			var x = $(this).closest('.question-item').prop('class');
 			
-			console.log(x);
-			
 			if(x == 'question-item question-item-modify'){
 				$(this).closest('.question-item-modify').next().show();
 				$(this).closest('.question-item-modify').remove();
@@ -975,7 +952,6 @@ $(document).ready(function(){
 			/* 태그 삭제 */
 			$(this).closest('.question-item').remove();
 
-			console.log(questions);
 		});
 		
 		

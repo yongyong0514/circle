@@ -60,7 +60,6 @@
 			
 			/* 설문 마감여부 추출 */
 			var closing = $(this).find('.post-closing').text();
-			console.log(closing);
 			
 			/* 현재날짜 변수화 */
 			var sysdate = Date.parse(nowDate());

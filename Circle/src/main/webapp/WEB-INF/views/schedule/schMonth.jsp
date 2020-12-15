@@ -272,8 +272,6 @@
       		//fullcalendar onload function
             $(document).ready(function() {
             	
-            	console.log($('#empNo').val());
-            	
             	//풀캘린더 로드
                 $("#calendar").fullCalendar({
                 	defaultView			: 'month',	//기본 뷰 설정
@@ -340,6 +338,7 @@
 						        							var end = $(this).prop('end');
 						        							var	start = $(this).prop('start');
 						        							
+						        							
 						        							if(allDay == "on"){
 						        								yn = true;
 						        								if (start !== end) {
@@ -371,7 +370,6 @@
 						        						
 						        						//월, 년 변경되었거나 자료 변경에 따라 다시 불러오기
 														callback(events);
-														console.log(events)
 						                    		}
                  							});
                  	},
@@ -417,7 +415,6 @@
                 	eventClick			: function(event, jsEvent, view) {
                 												
                 							nowEvent = event;
-                							console.log(nowEvent);
                 							entry=[];
                 							
                 							//참여자 데이터 불러오기
@@ -468,7 +465,6 @@
                         							$('#view-desc').text(event.content);
                         							
                         							
-                        							console.log(entry);
                         							/* 참가자 입력 */
                         							$.each(entry, function (index, item){
                         								$('#view-name-template').tmpl(item).appendTo('#eventModal .name-tag');
@@ -476,7 +472,6 @@
                         							
                         							//autority check
                         							if(event.writer != loginId) {
-        												console.log("wrong id");
         												
         												$(".modalBtnContainer-viewEvent").hide();
                         							} else {
@@ -517,8 +512,6 @@
                 	return;
                 }
                 
-                console.log(attendCheck());
-                
                 if(attendCheck() == true){
                 	$('#attend-check').hide();
                 } else {
@@ -526,8 +519,6 @@
                 	return;
                 }
                 
-            	console.log("button click success");
-            	
                 // input emp.no 
                 $("#insertId").val(loginId);
                 
@@ -537,21 +528,20 @@
         			$('#edit-start').prop(date);
                 	
                 } else {
+                	if($('#end-time').val() == null) {
+						$('#end-time').val() = $('#start-time').val();
+						
+                	}
                 	startDateTime = startDateTime.concat(" ", $('#start-time').val());
                 	endDateTime = endDateTime.concat(" ", $('#end-time').val());
                 	
                 	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
                 	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
                 	
-                	if($('#end-time') == null) {
-                		console.log('end is null');
-                	}
                 	
                 }
                 
                 var insertEvent = $("form[name=insert-event]").serializeObject();
-                
-                console.log("insertEvent : " + JSON.stringify(insertEvent));
                 
                 $.ajax({
                 	type 		: 'post',
@@ -633,11 +623,8 @@
 				
         		var id = $('#view-sch-id').val();
         		
-        		console.log(id);
-				
 				var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
 				if(deleteConfirm) {
-					console.log('delete ajax on');
 					
 					$.ajax({
 						url			: base+'/schAjax/schDelete',
@@ -658,14 +645,11 @@
 	                	},
 					});
 				} else {
-					console.log('delete cancle');
 				}
         	})
         	
         	//modify button click function
         	$('#updateEvent').on('click', function() {
-        		
-        		console.log(entry);
         		
         		//view-modal close
         		$('#eventModal').modal('hide');
@@ -732,8 +716,6 @@
         	//modify-save button click function
         	$('#modify-save-event').on('click', function(){
                 	
-                	console.log("button click success");
-
                 	//input title check
                 	if($('#edit-title').val() == '' ) {
     					$('#edit-title').focus();
@@ -763,21 +745,19 @@
                     	var date = $('#edit-start').substr(0,10);
             			$('#edit-start').prop(date);
                     } else {
+                    	if($('#end-time').val() == null) {
+                    		$('#end-time').val() = $('#start-time').val();
+                    	}
                     	startDateTime = startDateTime.concat(" ", $('#start-time').val());
                     	endDateTime = endDateTime.concat(" ", $('#end-time').val());
                     	
                     	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
                     	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
                     	
-                    	if($('#end-time') == null) {
-                    		console.log('end is null');
-                    	}
                     	
                     }
 	                    
                     var updateEvent = $("form[name=insert-event]").serializeObject();
-                    
-                    console.log("updateEvent : " + JSON.stringify(updateEvent));
                     
                      $.ajax({
                     	type 		: 'post',
@@ -807,27 +787,22 @@
         	
         	//grouping checkbox onchange function
         	$('#myCalendar').change(function(){
-        		console.log($('#myCalendar').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#poll').change(function(){
-        		console.log($('#poll').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#project').change(function(){
-        		console.log($('#project').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#community').change(function(){
-        		console.log($('#community').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#vacation').change(function(){
-        		console.log($('#vacation').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
@@ -898,7 +873,6 @@
 			});
 			checkedAttendInfo.push(checkedAttendId);
 			checkedAttendInfo.push(checkedAttendName);
-			console.log(checkedAttendInfo);
 			inputNameToAttendForm();		
 		}
 		
@@ -907,7 +881,6 @@
 			attendFormFlush();
 			/* 폼에 이름 넣기 */
 			$.each(checkedAttendInfo[1], function (index, item){
-				console.log(item);
 				var tempIdName = {"name" : checkedAttendName[index], "id" : checkedAttendId[index], "type" : "attend"};
 					$('#add-name-template').tmpl(tempIdName).insertBefore('#organ-view ul.name-tag .create');
 			})
@@ -923,7 +896,6 @@
       	/* 참가자 null 확인 */
 		function attendCheck(){
 			var co = $('#add-eventModal ul.name-tag').children('li.name-icon').length;
-			console.log(co);
       		if(co > 0){
       			return true
       		} else{

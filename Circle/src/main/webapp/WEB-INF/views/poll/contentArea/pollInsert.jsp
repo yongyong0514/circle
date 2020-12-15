@@ -230,12 +230,8 @@ $(document).ready(function(){
 			var location = $(this).closest('.addOrRefer').prop('id');
 			switch(location){
 			case 'referer-list' : removeAllReferFormFlush();
-									console.log('참조 삭제');
-									console.log(realReferInfo);
 									break;
 			default : removeAllAttendFormFlush();
-						console.log('참가 삭제');
-						console.log(realAttendInfo);
 						break;
 			}
 		});
@@ -249,10 +245,8 @@ $(document).ready(function(){
 				//참조자 리스트인 경우
 				//서버 전송용 변수에서 참조자 사번 삭제
 				realReferInfo.splice(realReferInfo.indexOf(empNo),1);
-				console.log(realReferInfo);
 			} else {
 				realAttendInfo.splice(realAttendInfo.indexOf(empNo),1);
-				console.log(realAttendInfo);
 			}
 			
 			var iconLocation = $(this).closest('li.name-icon');
@@ -265,11 +259,6 @@ $(document).ready(function(){
 		$(document).on("click","#next-btn", function(){
 			if(titleInputCheck() && dateCheck() && memberCheck()){
 				
-				console.log("참가자 정보");
-				console.log(realAttendInfo);
-				
-				console.log("참조자 정보");
-				console.log(realReferInfo);
 				$('#poll-form').prop('action',"${pageContext.request.contextPath}/poll/questionInsert").submit();
 			}				
 			
@@ -303,17 +292,11 @@ function removeAllReferFormFlush(){
 /* 참가자 입력창 확인(직접선택인 경우) */
 function memberCheck(){
 	if($('#radio-my').prop('checked')){
-		console.log('radio checked');
 		
 		if($('#organ-view').find("li.name-icon").length > 0){
 			return true;
 		} else {
 			alert('참가인원을 추가 해주세요');
-			console.log("참가자 정보");
-			console.log(realAttendInfo);
-			
-			console.log("참조자 정보");
-			console.log(realReferInfo);
 			return false;
 		}
 		
@@ -374,7 +357,6 @@ function titleInputCheck(){
 		$(".insert-organPanel").css({"position":"absolute","top":p.top,"left":p.left}).show();
 		/* 참조/참여 확인 */
 		addOrRefer = $(event.target).closest('div.addOrRefer').attr('id');
-		console.log(addOrRefer);
 	}	
 	//조직도 확인버튼 기능
 	function organConfirm(){
@@ -433,8 +415,6 @@ function titleInputCheck(){
 			if(realAttendInfo != null){
 				$.each(realAttendInfo, function(innerIndex, innerItem){
 					if(item == innerItem){
-						console.log('중복 발견')
-						console.log(item);
 						overlap = true;
 						return false;
 					}		
@@ -455,7 +435,6 @@ function titleInputCheck(){
 		checkedReferName = [];
 		checkedReferInfo = [];
 		
-		console.log(realReferInfo);
 	};
 	//조직도에 체크된 이름 <참가자> 폼에 넣기
 	function inputNameToAttendForm(checkedAttendInfo){
@@ -470,8 +449,6 @@ function titleInputCheck(){
 			if(realReferInfo != null){
 				$.each(realReferInfo, function(innerIndex, innerItem){
 					if(item == innerItem){
-						console.log('중복 발견')
-						console.log(item);
 						overlap = true;
 						return false;
 					}				
@@ -493,7 +470,6 @@ function titleInputCheck(){
 		checkedAttendName = [];
 		checkedAttendInfo = [];
 		
-		console.log(realAttendInfo);
 	};
 	/* 참가자 폼 비우기 */
 	function attendFormFlush(){
