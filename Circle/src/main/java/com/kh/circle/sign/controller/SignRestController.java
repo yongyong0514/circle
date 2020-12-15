@@ -236,4 +236,19 @@ public class SignRestController {
 		signService.update(fileCode);
 	}
 	
+
+//	Delete signReply
+	@PostMapping("/signReplyDelete")
+	public void signReplyDelete(@RequestParam String replyCode) {
+		
+		signService.deleteSignReply(replyCode);
+		
+	}
+	
+//	Delete signType
+	@PostMapping("/signTypeDelete")
+	public void signTypeDelete(@RequestParam String typeCode) {
+		
+		signService.deleteSignType(typeCode);
+	}
 }

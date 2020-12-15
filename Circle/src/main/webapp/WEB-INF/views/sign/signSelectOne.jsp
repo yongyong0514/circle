@@ -290,12 +290,14 @@
 							var $empName = $("<input type='text' class='formResult2' readonly>").val(data[key].emp_info_name);
 							var $jobName = $("<input type='text' class='formResult2' readonly>").val(data[key].job_info_name);
 							var $replyDate = $("<input type='text' class='formResult4' readonly>").val(data[key].sign_reply_date);
+							var $deleteReply = $("<button class='deleteReply' readonly>삭제</button>").val(data[key].sign_reply_code);
 							var $formReply = $("<td class='formReply'>");
 							var $replyNote = $("<textarea class='replyNote' readonly></textarea>").text(data[key].sign_reply_content);
 
 							$replyUser.append($empName);
 							$replyUser.append($jobName);
 							$replyUser.append($replyDate);
+							$replyUser.append($deleteReply);
 							
 							$tr1.append($replyImage);
 							$tr1.append($replyUser);
@@ -342,6 +344,26 @@
 			} else {
 				alert("댓글을 입력해주세요.");
 			}
+		});
+	</script>
+	
+	<!-- 댓글 삭제 -->
+	<script>
+		$(document).on('click', '.deleteReply', function(){
+			var base = "${pageContext.request.contextPath}";
+ 			var replyCode = $(this).val();
+ 			
+ 			$.ajax({
+				url: base + "/signResult/signReplyDelete",
+				type: "post",
+				data: {replyCode : replyCode},
+				success: function(){
+						signReply();
+				},
+				error: function(){
+					alert("error");
+				}
+			});
 		});
 	</script>
 	

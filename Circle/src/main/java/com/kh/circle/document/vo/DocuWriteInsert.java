@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DocuWriteInsert {
-	private String docu_keep;
-	private String docu_acc;
+	private String docu_code;
+	private String docu_type;
+	private String docu_year;
 	private String docu_title;
 	private String docu_note;
 	private String docu_emp_code;

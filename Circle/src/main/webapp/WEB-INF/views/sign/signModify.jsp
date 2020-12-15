@@ -282,6 +282,7 @@
 			editor.setHtml(note);
 		});
 	</script>
+	
 	<script>
 		$(document).ready(function(){
 				var base = "${pageContext.request.contextPath}";
