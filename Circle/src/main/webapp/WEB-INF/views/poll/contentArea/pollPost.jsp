@@ -56,7 +56,7 @@
 								
 								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
 									<li>
-										<a class="toolbar-btn-wrap" onclick="alert('ddddfdf')">
+										<a class="toolbar-btn-wrap" onclick="alert('마감')">
 											<span class="toolbar-icon end"></span>
 											<span class="poll-post-toolbar-end-btn-txt">마감</span>
 										</a>
@@ -509,49 +509,104 @@
 		$('.poll-submit-btn').on('click', function(){
 			
 			if(requiredCheck()){
-				var convertedData = formDataConvert();
-				/* dataSubmit(convertedData); */
-				alert('win');
+				pollSubmitModalOpen();
+				
 			} else {
-				alert('필수 항목을 입력해주세요');
+				requiredCheckModalOpen();
 			}
 			
 		})
+		
+		/* 모달 확인 버튼 클릭시 */
+		$('#modal-confirm').on('click', function(){
+			var z = $('#modal-action-divide').val();
+			
+			switch(z){
+				case 'delete' : console.log('delete');break;
+				case 'submit' : var convertedData =  formDataConvert(); dataSubmit(convertedData);break;
+				default : break;
+			}
+		})
+		
 	});
+	
+	
 	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 모달 동작 구분용 변수 */
+	ModalAction = "";
+	
+	/* 모달 내용 초기화 */
+	function modalInit(){
+		$('#alertModal').find('.modal-title').text("");
+		$('#alertModal').find('.modal-body').children().text("");
+	}
+	/* 모달 제목 입력 */
+	function modalTitleInput(title){
+		$('#alertModal').find('.modal-title').text(title);
+	}
+	/* 모달 내용 입력 */
+	function modalContentInput(content){
+		$('#alertModal').find('.modal-body').children().text(content);
+	}
 	
 	/* 삭제확인 모달 팝업 */
 	function deleteModalOpen(){
+		modalInit();
+		modalActiondivide('delete');
+		modalTitleInput("설문을 삭제 하시겠습니까?");
+		modalContentInput("삭제된 설문은 복구할 수 없습니다.");
 		$('#alertModal').modal();
+	}
+	/* 설문제출 모달 팝업 */
+	function pollSubmitModalOpen(){
+		modalInit();
+		modalActiondivide('submit');
+		modalTitleInput("설문을 제출 하시겠습니까?");
+		$('#alertModal').modal();
+	}
+	/* 필수입력확인 모달 팝업 */
+	function requiredCheckModalOpen(){
+		modalInit();
+		modalActiondivide('none');
+		modalTitleInput("필수질문 응답 안내");
+		modalContentInput("응답하지 않은 필수 질문이 존재합니다. 확인 후 다시 제출해 주시기 바랍니다.");
+		$('#alertModal').modal();
+	}
+	/* 모달 기능 구분용 데이터 입력 */
+	function modalActiondivide(input){
+		$('#alertModal').find('#modal-action-divide').val(input);
 	}
 	
 	/* 필수 문항 입력 확인 */
 	function requiredCheck(){
 	
 		if($('li.question-response').find('.necessary').text().length > 0){
+			
+			var isTrue = true;
 			$('li.question-response').each(function(index, item){
 				var x = $(item).find('.necessary').text();
 				if(x == '[필수]'){
+					
+					console.log('필수 항목 발견');
+					console.log(item);
+					
 					if(($(item).find('input[type=checkbox]').length > 0 || $(item).find('input[type=radio]').length > 0) && $(item).find('input:checked').length == 0){
 						isTrue = false;
-						return;
 					}
 					if($(item).find('input[type=text]').length > 0 && $(item).find('input[type=text]').val() == 0){
 						if($(item).find('input[type=text]').closest('.etc').length == 0){
 							isTrue = false;
-							return;
 						}
 					}
 					if($(item).find('textarea').length > 0 && $(item).find('textarea').val() == 0){
 						isTrue = false;
-						return;
 					}
-					isTrue = true;
-					return;
 				}
 			});
 			return isTrue;
 		} else {
+			console.log('필수 없음');
 			return true;
 		}
 		
@@ -576,7 +631,10 @@
 		   ,success		: 	function(data){
 							   var returnedUrl = data;
 							   console.log(returnedUrl);
-							   location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + returnedUrl;
+							   setTimeout(function(){
+								   location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + returnedUrl;
+							   }, 1000);
+							   
 							   
 		   }
 		})

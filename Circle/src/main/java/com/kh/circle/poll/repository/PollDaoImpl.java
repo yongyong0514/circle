@@ -100,8 +100,14 @@ public class PollDaoImpl implements PollDao{
 	public void insertPoll(PreInputData temp, List<Question> questions) {
 		//입력할 시퀀스 추출
 		String sequence = sqlSession.selectOne("poll.sequence");
+		
+		
 		//시퀀스 정보 입력
 		temp.setSequence(sequence);
+		
+		log.info(temp.getSequence());
+		
+		
 		//사전정보 입력
 		sqlSession.insert("poll.preInsert", temp);
 		//참가자 확인
@@ -116,6 +122,9 @@ public class PollDaoImpl implements PollDao{
 				deptMember = sqlSession.selectList("poll.findDeptMember", userDept);
 			}
 			temp.setDeptMember(deptMember);
+			
+			log.info(temp.getDeptMember().toString());
+			
 			//부서 인원 입력
 			sqlSession.insert("poll.insertDeptMember", temp);
 		} 
