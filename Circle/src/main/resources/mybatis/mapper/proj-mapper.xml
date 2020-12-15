@@ -244,14 +244,22 @@
 	<select id="projDetail3" resultType="projFile"
 		parameterType="string">
 		select *
-		from files f
-		join project p on (f.files_type = p.pro_code)
+		from pro_files f
+		join project p on (f.pro_files_proj = p.pro_code)
 		join iss i on (p.pro_code = i.iss_pro_code)
 		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
-		where f.files_type = #{pro_code}
+		where f.pro_files_proj = #{pro_code}
 
 	</select>
 
+	<select id="projDetail4" resultType="projFile"
+		parameterType="string">
+	  select *
+		from pro_files f
+	
+		where f.pro_files_iss  = #{iss_code}
+
+	</select>
 
 
 	<select id="projMemberlist" resultType="project"

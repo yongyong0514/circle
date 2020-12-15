@@ -207,5 +207,18 @@ List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", p
 		return projKanbanHead;
 	}
 
+	@Override
+	public List<ProjFile> projDetail4(String iss_code) {
+		
+		
+		System.out.println("check : " + iss_code);
+		
+		List<ProjFile> projDetail4 = sqlSession.selectList("project.projDetail4", iss_code);
+		
+		System.out.println(projDetail4);
+		
+		return projDetail4;
+	}
+
 
 }

@@ -51,6 +51,8 @@ public interface ProjectDao {
 
 	String projKanbanHead(String pro_code);
 
+	List<ProjFile> projDetail4(String iss_code);
+
 
 
 }

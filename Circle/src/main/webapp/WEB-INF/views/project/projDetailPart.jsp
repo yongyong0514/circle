@@ -387,7 +387,7 @@ h1 {
 				<td>
 				<td>${projDetail3.emp_info_name }</td>
 				<td><a
-					href='<c:url value='/project/projDownload?files_code=${projDetail3.files_code}'/>'>${projDetail3.files_oname}</a></td>
+					href='<c:url value='/project/projDownload?pro_files_code=${projDetail3.pro_files_code}'/>'>${projDetail3.pro_files_oname}</a></td>
 			</tr>
 		</c:forEach>
 	</table>
