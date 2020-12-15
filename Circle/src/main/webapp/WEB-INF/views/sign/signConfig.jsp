@@ -255,7 +255,8 @@
                 	if (sign.isEmpty()) {
                     	alert("서명을 작성해주세요");
                 	} else {
-                    	$.ajax({
+                		alert("업데이트 준비중입니다.")
+/*                     	$.ajax({
                         	url : "save.jsp",
                         	method : "post",
                         	dataType : "json",
@@ -269,7 +270,7 @@
                         	error : function(res){
                         	    console.log(res);
                         	}
-                    	});
+                    	}); */
                 	}
             	}
         	});
