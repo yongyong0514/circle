@@ -397,7 +397,7 @@
 		});  
     </script>
     
-<!--     <script>
+     <script>
     	$(function(){
     		var content = $("#viewer").data("content"); //data-content의 값을 불러와라
     		$("#viewer").data("content", ""); //data-content의 값을 삭제(불러왔기 때문에)
@@ -409,7 +409,7 @@
                 initialValue: content,
             });
         });
-    </script> -->
+    </script>
     
     <script>
     	$("#formBtn3").click(function(){
