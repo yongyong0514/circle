@@ -116,7 +116,6 @@
 	function sTimeCheck(){
 		var today = getFormatDate(new Date());
 		var sTime = getFormatDateAndTime(new Date());
-		location.reload();
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/attendance/sTimeCheck",
@@ -125,6 +124,7 @@
 			data: {"today": today,
 				   "sTime": sTime},
 			success: function(data){
+				location.reload();
 				$(".sTimeBtn").prop("disabled", true);
 				$(".eTimeBtn").prop("disabled", false);
 			}, error: function(err){
@@ -135,7 +135,6 @@
 	
 	function eTimeCheck(){
 		var eTime = getFormatDateAndTime(new Date());
-		location.reload();
 		
 		$.ajax({
 			url: "${pageContext.request.contextPath}/attendance/eTimeCheck",
@@ -143,6 +142,7 @@
 			dataType: "text",
 			data: {"eTime": eTime},
 			success: function(data){
+				location.reload();
 				$(".eTimeBtn").prop("disabled", true);
 				$(".sTimeBtn").prop("disabled", false);
 			}, error: function(err){

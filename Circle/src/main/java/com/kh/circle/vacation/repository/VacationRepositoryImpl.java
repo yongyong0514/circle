@@ -51,10 +51,35 @@ public class VacationRepositoryImpl implements VacationRepository{
 			return 0.0;
 		}
 	}
+	
+	@Override
+	public String myDeptCode(String emp_no) {
+		return sqlSession.selectOne("vacation.myDeptCode", emp_no);
+	}
+	
+	@Override
+	public String ceoEmpNo() {
+		return sqlSession.selectOne("vacation.ceoEmpNo");
+	}
+	
+	@Override
+	public String upperEmp(String dept_code) {
+
+		return sqlSession.selectOne("vacation.isUpperEmp", dept_code);
+	}
+	
+	@Override
+	public String highDept(String dept_code) {
+		return sqlSession.selectOne("vacation.highDept", dept_code);
+	}
+	
+	@Override
+	public String findSignCode(String emp_no) {
+		return sqlSession.selectOne("vacation.findSignCode", emp_no);
+	}
 
 	@Override
 	public void addVacation(VacationInfo vacationInfo) {
 		sqlSession.insert("vacation.addVacation", vacationInfo);
 	}
-
 }
