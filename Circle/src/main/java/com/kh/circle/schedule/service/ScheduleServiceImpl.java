@@ -49,8 +49,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List<HashMap<String,String>> entryList(String id) {
 		
-		log.info("id : {}", id);
-		
 		List<HashMap<String, String>> list =schDao.entryList(id);
 		return list;
 	}

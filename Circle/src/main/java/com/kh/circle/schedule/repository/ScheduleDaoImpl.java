@@ -48,10 +48,7 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		switch(checkId) {
 			case "SCHN" : list = sqlSession.selectList("sch.selectEntryList", id);break;
 			default		: list = sqlSession.selectList("sch.selectEntryList", id);break;
-//			default		: list = sqlSession.selectList("sch.selectVacationEntryList", id);break;
 		}
-		
-		log.info("entry list : {}", list);
 		
 		return list;
 	}
@@ -60,10 +57,6 @@ public class ScheduleDaoImpl implements ScheduleDao{
 	public void insert(HashMap<String, Object> insertEvent) {
 		String seq = sqlSession.selectOne("sch.seq");
 		insertEvent.put("seq", seq);
-		
-		log.info("seq confirm : {}" , insertEvent.get("seq"));
-		log.info("final insert data : {}" , insertEvent);
-		
 		//일정 데이터 입력
 		sqlSession.insert("sch.insert", insertEvent);
 		
@@ -71,10 +64,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		
 		//일정 참가자 입력
 		if(check.length() < 13) {
-			log.info("한명 : {}",check);
 			sqlSession.insert("sch.insertOneMember",insertEvent);
 		} else {
-			log.info("여러명 : {}",check);
 			sqlSession.insert("sch.insertMember", insertEvent);
 		}
 		
@@ -97,10 +88,8 @@ public class ScheduleDaoImpl implements ScheduleDao{
 		
 		//일정 참가자 입력
 		if(check.length() < 13) {
-			log.info("한명 : {}",check);
 			sqlSession.insert("sch.updateOneMember",updateEvent);
 		} else {
-			log.info("여러명 : {}",check);
 			sqlSession.insert("sch.updateMember", updateEvent);
 		}
 		
