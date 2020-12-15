@@ -37,11 +37,6 @@ public class PollAjaxController {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
 
-		log.info(temp.toString());
-		log.info(temp.getTitle());
-
-		log.info(questions.toString());
-		
 		temp.setWriter(empNo);
 		
 		pollService.insertPoll(temp, questions);
@@ -56,21 +51,13 @@ public class PollAjaxController {
 		addEmpNo.put("empNo",empNo); 
 		list.add(0,addEmpNo);
 		
-		
-		
-		log.info(list.toString());
-		
 		String url = pollService.insertAttendedServey(list);
-		
-		log.info("ajax로 리턴할 url : {}", url);
 		
 		return url;
 	}
 	
 	@PostMapping("/deleteAll")
 	public void deleteAll(@RequestBody List<String> code) {
-		
-		log.info("code : {}",code);
 		
 		for (String postCode : code) {
 			pollService.deleteOne(postCode);

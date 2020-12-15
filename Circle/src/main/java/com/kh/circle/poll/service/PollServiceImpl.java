@@ -112,7 +112,6 @@ public class PollServiceImpl implements PollService{
 		
 		//삭제용 답변 코드 추출
 		List<String> answers = pollDao.answerSearch(postCode);
-		log.info(answers.toString());
 		
 		//답변자 삭제
 		pollDao.deleteAttender(answers);
@@ -120,8 +119,6 @@ public class PollServiceImpl implements PollService{
 		
 		//답변 삭제
 		int result = pollDao.deleteAnswer(postCode);
-		
-		log.info("답변 삭제 결과 : {}" , result);
 		
 		//문항 삭제
 		pollDao.deleteQuestion(postCode);
