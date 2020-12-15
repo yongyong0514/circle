@@ -42,10 +42,7 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(EmpInfo empInfo,
 			/*JoinMember joinmember*/HttpServletRequest req,RedirectAttributes rttr) throws Exception{
-		/* log.info("선수입장"); */
 		
-		
-		/* System.out.println("controller empInfo:" + empInfo); */
 		
 		HttpSession session = req.getSession();
 		EmpInfo login = service.login(empInfo, session);

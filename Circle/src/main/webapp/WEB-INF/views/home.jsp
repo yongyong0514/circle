@@ -54,7 +54,7 @@
 					</th>
 				</tr>
 				<tr>
-					<th class="row7" onclick="pwdfind();">&nbsp;&nbsp;&nbsp;&nbsp;사원번호나 비밀번호를 잊어버렸습니다</th>
+					<th class="row7" onclick="pwdfind();">&nbsp;&nbsp;&nbsp;&nbsp;사원번호나 비밀번호를 잊어버린 경우 문의주세요.<br>&nbsp;&nbsp;&nbsp;&nbsp;010-5766-1187</th>
 				</tr>
 				<tr>
 					<th class="row6">
