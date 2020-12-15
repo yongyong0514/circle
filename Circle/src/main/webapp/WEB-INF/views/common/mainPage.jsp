@@ -70,13 +70,13 @@
 				</div>
 				<div class="boardList3">
 					<div class="boardList3_1">
-						<div class="textTop1">타이틀</div>
+						<div class="textTop1">게시판</div>
 						<div class="textTop2">등록일</div>
-						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>						
+						<div class="textTitle1">업데이트 준비중입니다.</div><div class="textTitle2">2020-12-15</div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>					
 					</div>
 				</div>
 			
@@ -95,13 +95,13 @@
 				</div>
 				<div class="boardList3">
 					<div class="boardList3_1">
-						<div class="textTop1">타이틀</div>
+						<div class="textTop1">프로젝트</div>
 						<div class="textTop2">등록일</div>
-						<div class="textTitle1">목록1234567890</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록2</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록3</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록4</div><div class="textTitle2">목록날짜1</div>
-						<div class="textTitle1">목록5</div><div class="textTitle2">목록날짜1</div>	
+						<div class="textTitle1">업데이트 준비중입니다.</div><div class="textTitle2">2020-12-15</div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
+						<div class="textTitle1"></div><div class="textTitle2"></div>
 					</div>
 				</div>
 
