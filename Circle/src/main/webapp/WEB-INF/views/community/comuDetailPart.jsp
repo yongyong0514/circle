@@ -103,7 +103,7 @@ li{
 		 	<c:forEach var="comuDetail" items="${comuDetail}">
 			<li align="right"><a onclick="upDate1();" class="up" href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
 			
-			<a onclick="delete1();" href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li><br>
+			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li><br>
 			</c:forEach>
 			</c:if>
 		</ul>
@@ -132,18 +132,16 @@ li{
 		</div>
 		
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-			
-<script type="text/javascript"> 
+		
+<!-- <script type="text/javascript"> 
 	 $(".up").on('click',function(){
 		 var message = '${msg}'; 
 		 var returnUrl = '${url}'; 
 		 alert(mag); 
 		 document.location.href = url; 
 	 })
-</script>
-<script type="text/javascript">
+</script> -->
+<script >
 function delete1(){
 	alert("글이 삭제 되었습니다.");
 }

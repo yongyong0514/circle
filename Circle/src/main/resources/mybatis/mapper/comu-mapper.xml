@@ -111,7 +111,7 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no) -->
 		)
 		values
 		(
-				copo_seq.nextval
+			  CONCAT('COPO', LPAD(COPO_SEQ.NEXTVAL, 6, 0)
 			, #{comu_post_title}
 			, #{comu_post_cont}
 			, sysdate
@@ -238,7 +238,7 @@ join emp_info e on(p.comu_post_wrtr_emp_no = e.emp_info_emp_no) -->
 		)
 		values
 		(
-				copo_seq.nextval
+			  CONCAT('COPO', LPAD(COPO_SEQ.NEXTVAL, 6, 0)
 			, #{comu_post_title}
 			, #{comu_post_cont}
 			, sysdate
