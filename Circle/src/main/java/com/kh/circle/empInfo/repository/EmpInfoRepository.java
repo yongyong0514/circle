@@ -26,4 +26,14 @@ public interface EmpInfoRepository {
 	
 	public void updateChangeInfo(EmpInfoAll changeInfo);
 	
+	public List<String> deptCodeList();
+	
+	public List<String> deptNameList();
+
+	public List<String> jobCodeList();
+	
+	public List<String> jobNameList();
+	
+	public void insert(EmpInfoAll eInfo);
+	
 }

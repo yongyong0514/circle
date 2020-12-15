@@ -1,6 +1,5 @@
 package com.kh.circle.empInfo.service;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -157,9 +156,57 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	}
 
 	@Override
-	public List<String> updatedColName(EmpInfoAll empInfoAll) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> deptMap() {
+		
+		Map<String, Object> deptMap = new HashMap<String, Object>();
+		
+		List<String> dCodeList = empInfoRepository.deptCodeList();
+		List<String> dNameList = empInfoRepository.deptNameList();
+		
+		deptMap.put("dCodeList", dCodeList);
+		deptMap.put("dNameList", dNameList);
+
+		return deptMap;
+	}
+
+	@Override
+	public Map<String, Object> jobMap() {
+		
+		Map<String, Object> jobMap = new HashMap<String, Object>();
+		
+		List<String> jCodeList = empInfoRepository.jobCodeList();
+		List<String> jNameList = empInfoRepository.jobNameList();
+		
+		jobMap.put("jCodeList", jCodeList);
+		jobMap.put("jNameList", jNameList);
+
+		return jobMap;
+	}
+
+	@Override
+	public void insertEmpInfoAll(EmpInfoAll eInfo) {
+		
+		empInfoRepository.insert(eInfo);
+	}
+
+	@Override
+	public void insertCertificateInfo(CertificateInfo crtf) {
+//		certificateInfoRepository.insert(crtf);
+	}
+
+	@Override
+	public void insertCareerInfo(CareerInfo cInfo) {
+//		careerInfoRepository.insert(cInfo);
+	}
+
+	@Override
+	public void insertHREvaluation(HREvaluation hre) {
+//		hREvaluationRepository.insert(hre);
+	}
+
+	@Override
+	public void insertRewardDiscipline(RewardDiscipline redi) {
+//		rewardDisciplineRepository.insert(redi);
 	}
 
 }

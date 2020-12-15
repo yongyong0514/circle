@@ -25,13 +25,11 @@
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서1 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서2 ...</div>
 			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">부서3 ...</div>
- --%>
-<%--  
+ --%>  
 			<div class="menuLeftListTitle">개인 주소록</div>		
-			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록1 ...</div>
-			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록2 ...</div>
-			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">목록3 ...</div>
- --%>
+			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">거래처</div>
+			<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/  '">공공기관</div>
+			
 
 			<!-- 메뉴 끝 -->
 		</div>

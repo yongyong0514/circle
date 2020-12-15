@@ -1,5 +1,7 @@
 package com.kh.circle.empInfo.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +22,7 @@ public class CertificateInfo {
 	private String crtf_info_sdat;
 	private String crtf_info_edat;
 	private String crtf_info_rm;
+	
+	private List<CertificateInfo> crtfList;
+	
 }

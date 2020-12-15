@@ -2,10 +2,8 @@ package com.kh.circle.empInfo.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,4 +89,35 @@ public class EmpInfoRepositoryImpl implements EmpInfoRepository{
 
 		sqlSession.update("empInfo.updateChange", changeInfo);
 	}
+
+
+	@Override
+	public List<String> deptCodeList() {
+		return sqlSession.selectList("empInfo.deptCodeList");
+	}
+
+
+	@Override
+	public List<String> deptNameList() {
+		return sqlSession.selectList("empInfo.deptNameList");
+	}
+
+	@Override
+	public List<String> jobCodeList() {
+		return sqlSession.selectList("empInfo.jobCodeList");
+	}
+
+
+	@Override
+	public List<String> jobNameList() {
+		return sqlSession.selectList("empInfo.jobNameList");
+	}
+
+
+	@Override
+	public void insert(EmpInfoAll eInfo) {
+		sqlSession.insert("empInfo.add", eInfo);
+	}
+
+
 }
