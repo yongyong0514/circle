@@ -47,20 +47,20 @@
 								<th class="formBox1">보존 연한</th>
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_year" name="docu_year">
-											<option value="0">보존 연한을 선택하세요</option>
-											<option value="365" selected>1 년</option>
-											<option value="1095" selected>3 년</option>
-											<option value="1825" selected>5 년</option>
-											<option value="3650" selected>10 년</option>
-											<option value="9999" selected>영구</option>
+											<option value="0" selected>보존 연한을 선택하세요</option>
+											<option value="365">1 년</option>
+											<option value="1095">3 년</option>
+											<option value="1825">5 년</option>
+											<option value="3650">10 년</option>
+											<option value="9999">영구</option>
 									</select>
 								</th>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox2">
 									<select class="formSelect1" id="docu_type" name="docu_type">
-											<option value="0">문서 유형을 선택하세요</option>
-											<option value="1" selected>개인</option>
-											<option value="2" selected>공용</option>
+											<option value="0" selected>문서 유형을 선택하세요</option>
+											<option value="1">개인</option>
+											<option value="2">공용</option>
 									</select>
 								</th>
 							</tr>

@@ -30,7 +30,6 @@ import com.kh.circle.document.vo.DocuSelectOne;
 import com.kh.circle.document.vo.DocuWriteInsert;
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.sign.vo.PageInfo;
-import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignList;
 
 @Controller
@@ -42,6 +41,13 @@ public class DocuController {
 	
 	@Autowired
 	private DocuService docuService;
+	
+//	Create Document
+	@GetMapping("/docuWrite")
+	public String docuWrite() {
+		
+		return "document/docuWrite";
+	}
 	
 	
 //	Create Document

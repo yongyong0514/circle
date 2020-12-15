@@ -107,7 +107,7 @@
     					</div>
 					</div>
 					<div class="signConfigBtnSet">
-						<div class="signConfigArea"><img class="imgSize3" src="${pageContext.request.contextPath}/resources/img/sign/documents.png"></div>
+						<div class="signConfigArea1"><img class="imgSize4" src="${pageContext.request.contextPath}/resources/img/sign/documents.png"></div>
 						<button class="signConfigBtn2" onclick="location='${pageContext.request.contextPath}/sign/signConfigTemplate'">결재 문서 양식 등록</button>
 					</div>
 				</div>

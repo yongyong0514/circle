@@ -352,18 +352,39 @@
 		$(document).on('click', '.deleteReply', function(){
 			var base = "${pageContext.request.contextPath}";
  			var replyCode = $(this).val();
+ 			var empCode= ${empInfo.emp_info_emp_no};
  			
  			$.ajax({
-				url: base + "/signResult/signReplyDelete",
-				type: "post",
-				data: {replyCode : replyCode},
-				success: function(){
-						signReply();
-				},
-				error: function(){
-					alert("error");
-				}
-			});
+ 				url: base + "/signResult/signReplyOwner",
+ 				type: "get",
+ 				data: {replyCode: replyCode},
+ 				success: function(data){
+ 					
+ 					if(data == empCode){
+ 			  			
+ 						$.ajax({
+ 							url: base + "/signResult/signReplyDelete",
+ 							type: "post",
+ 							data: {replyCode : replyCode},
+ 							success: function(){
+ 									signReply();
+ 							},
+ 							error: function(){
+ 								alert("error");
+ 							}
+ 						});
+ 						
+ 					} else {
+ 						alert("댓글 작성자만 삭제할 수 있습니다.");
+ 					}
+ 				}, 
+ 				
+ 				error: function(){
+ 					alert("서버 연결 실패");
+ 				}
+ 				
+ 			});
+
 		});
 	</script>
 	
