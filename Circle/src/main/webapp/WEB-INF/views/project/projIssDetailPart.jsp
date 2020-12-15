@@ -40,7 +40,7 @@
 	text-align: right;
 }
 
-.body  .no1 {
+.wrapper  .btns0 {
 	position: absolute;
 	width: 100px;
 	padding: 8px 10px;
@@ -54,7 +54,7 @@
 	left: 58%
 }
 
-.body.no1:hover {
+.wrapper.btns0:hover {
 	background: #dbe5f1;
 }
 </style>
@@ -88,20 +88,19 @@
 			<div class="head2">
 				${projIssDetail.iss_cont}
 			</div>
-
 		</div>
 		<div>
 			업무관련 자료
 			<div>
-				<c:if test="${projIssDetail.files_code  eq null}">
+				<c:if test="${projDetail4.pro_files_code  eq null}">
 					<label>관련 자료가 없습니다. </label>
 				</c:if>
-				<c:if test="${projIssDetail.files_code  != null}">
-			파일 명 : ${projIssDetail.files_oname}<a
-						href='<c:url value='/project/projDownload?files_code=${projIssDetail.files_code}'/>'>다운로드</a>
+				<c:if test="${projDetail4.pro_files_code  != null}">
+			파일 명 : ${projDetail4.pro_files_oname}<a
+						href='<c:url value='/project/projDownload?pro_files_code=${projDetail4.pro_files_code}'/>'>${projDetail4.pro_files_oname}</a>
 				</c:if>
 			</div>
-			<button class="no1">변경하기</button>
+			<button class="btns0">변경하기</button>
 		</div>
 	</c:forEach>
 
@@ -115,15 +114,11 @@
 <div>
 	<c:if test="${empNo eq viewEmpNo }">
 		<c:forEach var="projDetail" items="${projDetail}">
-					<button  class="btn1" type="button"  onClick="location.href='<c:url value='/project/projUpdate?pro_code=${projDetail.pro_code}'/>'">수정하기</button>
-				<button  class="btn2" type="button"  onClick="location.href='<c:url value='/project/projDelete?pro_code=${projDetail.pro_code}'/>'>">삭제하기</button>
+					<button  class="btns" type="button"  onClick="location.href='<c:url value='/project/projUpdate?pro_code=${projDetail.pro_code}'/>'">수정하기</button>
+				<button  class="btns2" type="button"  onClick="location.href='<c:url value='/project/projDelete?pro_code=${projDetail.pro_code}'/>'>">삭제하기</button>
 	
 		</c:forEach>
 	</c:if>
-	<div>
-		<a
-			href='<c:url value='/project/projDelete?pro_code=${projDetail.pro_code}'/>'>돌아가기</a>
-	</div>
 </div>
 		
 

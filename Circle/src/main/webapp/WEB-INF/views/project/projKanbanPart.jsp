@@ -6,9 +6,6 @@
 
 
 <style>
-body {
-	font-family: 'Roboto', Helvetica, sans-serif;
-}
 
 .app {
 	display: flex;

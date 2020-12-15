@@ -17,7 +17,7 @@ public class ProjFileDaoImp implements ProjFileDao{
 	
 	@Transactional
 	@Override
-	public String insert(ProjFile projFile, String iss_code, String pro_code) {
+	public String insert(ProjFile projFile, String iss_code, String pro_code, String emp_no) {
 		
 
 
@@ -25,9 +25,10 @@ public class ProjFileDaoImp implements ProjFileDao{
 
 		System.out.println("pro code : " + pro_code);
 		
-		projFile.setFiles_code(files_code);
-		projFile.setFiles_type(pro_code);
-		projFile.setFiles_status(iss_code);
+		projFile.setPro_files_code(files_code);
+		projFile.setPro_files_proj(pro_code);
+		projFile.setPro_files_iss(iss_code);
+		projFile.setPro_files_emp(emp_no);
 		
 		sqlSession.insert("projFile.issFileInsert", projFile);
 		

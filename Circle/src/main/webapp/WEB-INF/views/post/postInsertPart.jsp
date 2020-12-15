@@ -176,6 +176,8 @@ position: absolute;
 	<form name="postInsert" id="postInsert"
 		action="${pageContext.request.contextPath}/post/postInsertAdd"
 		method="POST">
+		
+		
 		<div class="form">
 			<div class="inputfield">
 				<label for="post_title">제목</label> <input type="text" class="input"

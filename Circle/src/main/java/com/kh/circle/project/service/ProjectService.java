@@ -32,7 +32,7 @@ public interface ProjectService {
 
 	List<Project> issMember();
 
-	void projInsertIss(Project project, MultipartFile iss_file) throws IllegalStateException, IOException;
+	void projInsertIss(Project project, MultipartFile iss_file, String emp_no) throws IllegalStateException, IOException;
 
 	List<Project> issProg();
  
@@ -65,6 +65,8 @@ public interface ProjectService {
 	List<Project> projKanban(String pro_code);
 
 	String projKanbanHead(String pro_code);
+
+	List<ProjFile> projDetail4(String iss_code);
 
 
 }

@@ -228,7 +228,7 @@ public class ProjectController {
 
 
 
-		projService.projInsertIss(project, iss_file);
+		projService.projInsertIss(project, iss_file, emp_no);
 
 		model.addAttribute("projIssMain", projService.projIssMain(pro_code));
 		
@@ -331,8 +331,7 @@ public class ProjectController {
 		model.addAttribute("projDetail2", projDetail2);
 		model.addAttribute("projDetail3", projDetail3);
 		model.addAttribute("projMemberlist", projMemberlist);
-
-
+		
 		// end
 
 		
@@ -357,10 +356,10 @@ public class ProjectController {
 	}
 
 	@GetMapping("/projDownload")
-	public ResponseEntity<ByteArrayResource> download2(@RequestParam("files_code") String files_code) throws IOException {
+	public ResponseEntity<ByteArrayResource> download2(@RequestParam("pro_files_code") String pro_files_code) throws IOException {
 		
 		
-		ResponseEntity<ByteArrayResource> entity = projService.download(files_code);
+		ResponseEntity<ByteArrayResource> entity = projService.download(pro_files_code);
 		
 		
 		return entity;
@@ -369,7 +368,7 @@ public class ProjectController {
 	
 	
 	@GetMapping("/projIssDetail")
-	public String projIssDetail(Post post, Model model, @RequestParam("iss_code") String iss_code, HttpSession session,
+	public String projIssDetail(Post post, Model model, @RequestParam("iss_code") String iss_code,HttpSession session,
 			 ProjPaging projPaging, //뷰페이징
 				@RequestParam(value = "nowPage", required = false) String nowPage, // 뷰페이징
 				@RequestParam(value = "cntPerPage", required = false) String cntPerPage, // 뷰페이징
@@ -385,11 +384,16 @@ public class ProjectController {
 				String myEmp = projService.projEmpNo(emp_no);
 
 				model.addAttribute("empNo", myEmp);
+				
+				System.out.println(iss_code);
 
-
+				List<ProjFile> projDetail4 = projService.projDetail4(iss_code);
+				System.out.println(projDetail4);
+				
 				List<ProjFile> projIssDetail = projService.projIssDetail(iss_code);
 
 				// 게시글 정보
+				model.addAttribute("projDetail4", projDetail4);
 				model.addAttribute("projIssDetail", projIssDetail);
 
 				// end

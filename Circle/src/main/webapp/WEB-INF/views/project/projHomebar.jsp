@@ -105,38 +105,29 @@ h2 {
 	overflow: hidden;
 	top: 5%;
 	left: 28%;
-	
 }
 
 .button-4:hover {
 	background: #dbe5f1;
 }
 </style>
-	<div class="postHomeBar">
-		<div class="button-1">
-			<a
-				href="${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트
-				리스트</a>
-		</div>
-		<div class="button-2">
-			<a
-				href="${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무리스트</a>
-		</div>
-		<div class="button-3">
-			<a
-				href="${pageContext.request.contextPath}/project//project/projInsertProject'">프로젝트
-				생성</a>
-		</div>
-		<div class="button-4">
-			<a href="${pageContext.request.contextPath}/project/projInsertIss">업무
-				생성</a>
-			<button class="button-1" type="button" onClick="location.href="
-				${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트</button>
-			<button class="button-1" type="button" onClick="location.href="
-				${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무</button>
-			<button class="button-1" type="button" onClick="location.href="${pageContext.request.contextPath}/project//project/projInsertProject">프로젝트생성</button>
-			<button class="button-1" type="button" onClick="location.href="${pageContext.request.contextPath}/project/projInsertIss">업무
-				생성</button>
-
-		</div>
+<div class="postHomeBar">
+	<div class="button-1">
+		<a
+			href="${pageContext.request.contextPath}/project/projMain?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">프로젝트
+			리스트</a>
 	</div>
+	<div class="button-2">
+		<a
+			href="${pageContext.request.contextPath}/project/projIssAll?nowPage=${paging.startPage}&cntPerPage=${paging.cntPerPage}">업무리스트</a>
+	</div>
+	<div class="button-3">
+		<a href="${pageContext.request.contextPath}/project/projInsertProject">프로젝트
+			생성</a>
+	</div>
+	<div class="button-4">
+		<a href="${pageContext.request.contextPath}/project/projInsertIss">업무
+			생성</a>
+
+	</div>
+</div>

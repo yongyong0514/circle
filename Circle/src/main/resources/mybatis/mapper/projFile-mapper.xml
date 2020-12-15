@@ -9,14 +9,14 @@
 <mapper namespace="projFile">
 
 <select id="seq" resultType="string">
-		select CONCAT('FILE', LPAD(ISSU_SEQ.CURRVAL, 6, 0)) from dual
+		select CONCAT('PRFI', LPAD(PRFI_SEQ.NEXTVAL, 6, 0)) from dual
 
 </select>
 
 <insert id="issFileInsert" parameterType="projFile">
 
-insert into files(files_code, files_oname, files_cname, files_route, files_date, files_type, files_status, files_size)
-values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDATE, #{files_type}, #{files_status}, #{files_size})
+insert into pro_files(pro_files_code, pro_files_oname, pro_files_cname, pro_files_route, pro_files_date, pro_files_proj, pro_files_iss, pro_files_size, pro_files_emp)
+values (#{pro_files_code}, #{pro_files_oname}, #{pro_files_cname}, 'D:/resources/iss', SYSDATE, #{pro_files_proj}, #{pro_files_iss}, #{pro_files_size}, #{pro_files_emp})
 
 
 
@@ -26,8 +26,8 @@ values (#{files_code}, #{files_oname}, #{files_cname}, 'D:/resources/iss', SYSDA
 <select id="proFileFind" resultType="projFile" parameterType="String">
 
 select *
- from files
-where files_code = #{files_code}
+ from pro_files
+where pro_files_code = #{pro_files_code}
 
 </select>
 

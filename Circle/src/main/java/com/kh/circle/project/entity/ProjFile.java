@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 
 public class ProjFile {
 
-	private String files_code;
-	private String files_oname;
-	private String files_cname;
-	private String files_route;
-	private Date files_date;
-	private String files_type;
-	private String files_status;
-	private long files_size;
+	private String pro_files_code;
+	private String pro_files_oname;
+	private String pro_files_cname;
+	private String pro_files_route;
+	private Date pro_files_date;
+	private String pro_files_proj;
+	private String pro_files_iss;
+	private long pro_files_size;
+	private String pro_files_emp;
+	
 	
 	
 	// iss table

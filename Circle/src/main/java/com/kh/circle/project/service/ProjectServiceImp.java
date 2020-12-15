@@ -84,7 +84,7 @@ public class ProjectServiceImp implements ProjectService{
 
 
 	@Override
-	public void projInsertIss(Project project,  MultipartFile iss_file) throws IllegalStateException, IOException {
+	public void projInsertIss(Project project,  MultipartFile iss_file, String emp_no) throws IllegalStateException, IOException {
 		
 		
 		String pro_code = projDao.projGetPro(project);
@@ -93,17 +93,19 @@ public class ProjectServiceImp implements ProjectService{
 		String iss_code = projDao.projInsertIss(project);
 		
 		
+		
+		
 		if(!iss_file.isEmpty()) {
 			
 			ProjFile projFile = ProjFile.builder()
-									.files_oname(iss_file.getOriginalFilename())
-									.files_cname(iss_file.getContentType())
-									.files_size(iss_file.getSize())
-									.files_code(iss_code)
+									.pro_files_oname(iss_file.getOriginalFilename())
+									.pro_files_cname(iss_file.getContentType())
+									.pro_files_size(iss_file.getSize())
+									.pro_files_code(iss_code)
 									.build();
 			
 		
-			String file_code = projFileDao.insert(projFile, iss_code, pro_code);
+			String file_code = projFileDao.insert(projFile, iss_code, pro_code, emp_no);
 			
 			//저장
 			projSaveDao.save(iss_file, file_code);
@@ -181,7 +183,7 @@ public class ProjectServiceImp implements ProjectService{
 			return ResponseEntity.notFound().build();
 		}
 		
-		byte[] data = projSaveDao.load(file.getFiles_code());
+		byte[] data = projSaveDao.load(file.getPro_files_code());
 		
 		
 		ByteArrayResource resource = new ByteArrayResource(data);
@@ -189,9 +191,9 @@ public class ProjectServiceImp implements ProjectService{
 		
 		ResponseEntity<ByteArrayResource> entity =
 				ResponseEntity.ok()
-				.header("Content-Length", String.valueOf(file.getFiles_size()))
+				.header("Content-Length", String.valueOf(file.getPro_files_size()))
 				.header("Content-Type", "application/octet-stream; charset=UTF-8")
-				.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(file.getFiles_oname(), "UTF-8")+"\"")
+				.header("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(file.getPro_files_oname(), "UTF-8")+"\"")
 				.body(resource);
 		
 		return entity;
@@ -228,6 +230,12 @@ public class ProjectServiceImp implements ProjectService{
 	public String projKanbanHead(String pro_code) {
 		
 		return projDao.projKanbanHead(pro_code);
+	}
+
+
+	@Override
+	public List<ProjFile> projDetail4(String iss_code) {
+		return projDao.projDetail4(iss_code);
 	}
 
 
