@@ -26,7 +26,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>근태현황(메뉴명)</h1>
+				<h2>내 인사정보</h2>
 				<br> <br>
 				<!-- 정보 수정용 form 시작 -->
 				<form action="${pageContext.request.contextPath}/empInfo/editEmpInfo" method="post">

@@ -25,7 +25,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>인사정보</h1>
+				<h2>인사정보</h2>
 				<br><br>
 				<form action="${pageContext.request.contextPath }/empInfo/allInfoList" method="GET">
 					<span class="totalNumber">전체 <c:out value="${map.pInfo.total }"/>명</span>

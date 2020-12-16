@@ -25,7 +25,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>내 연차이력</h1>
+				<h2>내 연차이력</h2>
 				<br>
 				<br>
 				<!-- 연사 사용내역 요약 시작 -->

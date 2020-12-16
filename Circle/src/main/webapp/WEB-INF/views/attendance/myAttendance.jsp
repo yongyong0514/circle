@@ -28,7 +28,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>근태현황(메뉴명)</h1>
+				<h2>근태현황</h2>
 				<br>
 				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
