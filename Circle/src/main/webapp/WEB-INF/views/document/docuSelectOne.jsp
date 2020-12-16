@@ -98,7 +98,7 @@
 									<div id="fileUpload" class="dragAndDropDiv"></div>
 									<c:forEach var="file" items="${list1}">
 										<div class='statusbar'>
-											<div class='filename' onclick="location.href='${pageContext.request.contextPath}/docuResult/docuFileDownload?fileCode=${file.files_code}'">${file.files_oname}</div>
+											<div class='filename' onclick="location.href='${pageContext.request.contextPath}/docuRest/docuFileDownload?fileCode=${file.files_code}'">${file.files_oname}</div>
 											<div class='filesize'>${file.files_size}</div>
 											<div class='filecode' style='display: none;'></div>
 										</div>
@@ -266,21 +266,6 @@
  			
 		});
 	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	<script>
 		$(".DeleteBtn").click(function(){

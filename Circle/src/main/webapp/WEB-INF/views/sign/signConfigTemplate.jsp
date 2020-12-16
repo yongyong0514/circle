@@ -43,7 +43,7 @@
 							<tr class="result">
 								<td class="textBox0"></td>
 								<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/wlist.png" class="img0"></td>
-								<td class="textBox2"><%-- onclick="location='${pageContext.request.contextPath}/sign/signTemplateSelectOne?typeCode=<c:out value="${list1.sign_type_code}"/>'"><c:out value="${list1.sign_type_name}"/> --%></td>
+								<td class="textBox2"><%-- onclick="location='${pageContext.request.contextPath}/sign/signTemplateSelectOne?typeCode=<c:out value="${list1.sign_type_code}"/>'">--%><c:out value="${list1.sign_type_name}"/></td>
 								<td class="test"><button class="delBtn" value="${list1.sign_type_code}">삭제</button></td>						
 							</tr>
 						</c:forEach>
