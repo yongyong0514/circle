@@ -251,4 +251,14 @@ public class SignRestController {
 		
 		signService.deleteSignType(typeCode);
 	}
+	
+	
+//	Result signReplyOwner
+	@GetMapping("/signReplyOwner")
+	public String signReplyOwner(@RequestParam String replyCode) {
+		
+		String empCode = sqlSession.selectOne("sign.signReplyOwner", replyCode);
+		
+		return empCode;
+	}
 }

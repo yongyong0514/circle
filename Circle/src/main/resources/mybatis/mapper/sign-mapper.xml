@@ -442,7 +442,7 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 						, FILES_DATE
 						, FILES_TYPE
 						, FILES_STATUS
-						, FILES_SIZE) VALUES 
+						, FILES_SIZE) VALUES ('FILE'||TRIM(TO_CHAR(#{seqSignFiles},'000000'))
 										   , #{files_oname}
 										   , #{files_cname}
 										   , #{files_route}
@@ -1068,4 +1068,11 @@ LEFT OUTER JOIN FILES FI ON(FI.FILES_TYPE = EI.EMP_INFO_EMP_NO)
 		  FROM SIGN_TYPE
 		 WHERE SIGN_TYPE_CODE = #{typeCode}
 	</delete>
+	
+<!-- select signReplyOwner -->
+	<select id="signReplyOwner" parameterType="String" resultType="String">
+		SELECT SIGN_REPLY_EMP_CODE
+  		  FROM SIGN_REPLY
+ 		 WHERE SIGN_REPLY_CODE = #{replyCode}
+	</select>
 </mapper>

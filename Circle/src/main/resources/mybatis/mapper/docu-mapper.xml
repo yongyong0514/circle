@@ -302,5 +302,11 @@
 		  		)
 		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
-	
+
+<!-- select signReplyOwner -->
+	<select id="docuReplyOwner" parameterType="String" resultType="String">
+		SELECT DOCU_REPL_EMP_CODE
+  		  FROM DOCU_REPL
+ 		 WHERE DOCU_REPL_CODE = #{replyCode}
+	</select>
 </mapper>

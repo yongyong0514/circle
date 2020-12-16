@@ -205,6 +205,7 @@ body {
 	position: absolute;
 	width: 620px;
 	height: 510px;
+	z-index: 99;
 }
 
 .watcherForm1 {
@@ -215,6 +216,7 @@ body {
 	position: absolute;
 	width: 620px;
 	height: 510px;
+	z-index: 99;
 }
 
 .joinArrow {

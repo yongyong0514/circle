@@ -59,7 +59,7 @@
 					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list2.docu_code}"/>'">
 						<td class="textBox0"><c:out value="${list2.docu_code}"/></td>
 						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
-						<td><img src="${pageContext.request.contextPath}/resources/img/sign/private.png" class="img1"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/public.png" class="img1"></td>
 						<td class="textBox4"><br><c:out value="${list2.docu_wdat}"/><br><br><c:out value="${list2.docu_whour}"/></td>
 						<td class="textBox1"><br><c:out value="${list2.emp_info_name}"/><br><c:out value="${list2.job_info_name}"/></td>
 						<td class="textBox2"><c:out value="${list2.docu_title}"/></td>						
