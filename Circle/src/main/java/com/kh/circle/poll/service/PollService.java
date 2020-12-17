@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
+import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 
 public interface PollService {
 
@@ -26,6 +29,14 @@ public interface PollService {
 	List<HashMap<String, String>> getQustRealAttend(HashMap<String, String> params);
 
 	List<HashMap<String, String>> userInfo(String empNo);
+
+	void insertPoll(PreInputData temp, List<Question> questions);
+
+	String insertAttendedServey(List<HashMap<String, String>> list);
+
+	void deleteOne(String postCode);
+	void deleteAll(PostCode postList);
+
 
 
 

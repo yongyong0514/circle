@@ -12,7 +12,7 @@
 		select *
  		  from sch_unit
 		  join sch_unit_join on (sch_unit_code = sch_join_code)
- 		 where sch_join_emp = #{id}
+ 		 where sch_join_emp = #{id} or SCH_UNIT_WRTR =#{id}
 	</select>
 	
 	<select id="selectMap" parameterType="map" resultMap="selectMapList">
@@ -112,8 +112,10 @@
  	<select id="selectEntryList" parameterType="String" resultMap="selectEntryMap">
 		select emp_info_name
 			  ,emp_info_emp_no
+			  ,job_info_name
 		  from sch_unit_join
 		  join emp_info on (sch_join_emp = emp_info_emp_no)
+		  join job_info on (emp_info_job_code = job_info_code)
 		 where sch_join_code = #{id} 
 	</select>
 	<resultMap type="hashMap" id="selectEntryMap">
@@ -181,8 +183,14 @@
 		<!-- 일정 참가자 수정용 참가자 전체삭제 -->
 		<delete id="allDeleteMember" parameterType="map">
 			delete from sch_unit_join
-			 where sch_unit_code = #{code}
+			 where sch_join_code = #{code}
 		</delete>
+		
+		<!-- 일정참가자 한명일때 재입력 -->
+		<insert id="updateOneMember" parameterType="java.util.Map">
+			insert into sch_unit_join values(#{code}, #{attender})
+		</insert>
+		<!-- 일정참가자 여러명일때 재입력 -->
 		<insert id="updateMember" parameterType="java.util.Map">
 			<foreach collection="attender" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
 				into sch_unit_join values(#{code}, #{item})

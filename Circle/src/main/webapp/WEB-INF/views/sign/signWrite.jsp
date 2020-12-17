@@ -256,7 +256,8 @@
 		var editor = new toastui.Editor({
 			el : document.querySelector("#editor"),
 			height : "630px",
-			initialEditType : "wysiwyg",
+			initialEditType : "markdown",
+			previewStyle : "vertical",
 		});
 	</script>
 
@@ -555,9 +556,9 @@
 
 											watcher.push(data);
 										}
-
+										
 										sessionStorage.setItem('watcher', JSON.stringify(watcher));
-
+											
 										showWList();
 
 										$(".watcherForm1").fadeOut(100);
@@ -604,7 +605,6 @@
 			var isSubmit = false;
 			var editorValue = editor.getHtml();
 			$("#sign_note").val(editorValue);
-			console.log(editorValue);
 			
 			/*Load Session Data*/
 			var jsonData1 = sessionStorage.getItem("joiner");
@@ -648,13 +648,36 @@
 								if(joiner) {
 									/*Count about joiner and include form field*/
 									var signCount = "";
-									 signCount = joiner.length;
+									signCount = joiner.length;
 									$("#sign_count").val(signCount);
 									$("#jCodeList").val(jCodeList);
-
+									
+									
 									if(watcher) {
-										isSubmit = true;
-										$("#wCodeList").val(wCodeList);
+										var jsonDataJ = sessionStorage.getItem("joiner");
+										var dataJ = JSON.parse(jsonDataJ);
+										var jsonDataW = sessionStorage.getItem("watcher");
+										var dataW = JSON.parse(jsonDataW);
+										
+										for(var i = 0; i < dataJ.length; i++){
+
+											for(var j = 0; j < dataW.length; j++){
+											
+												if(joiner[i].jCode == watcher[j].wCode){	
+										
+													alert("결재자와 참조자가 중복되었습니다. 다시 설정해주세요.");
+											
+													return false;
+											
+												} else {
+		
+													isSubmit = true;
+											
+													$("#wCodeList").val(wCodeList);
+									
+												}
+											}
+										}
 										
 									} else {
 										var result = confirm("참조자를 등록하지 않았습니다. 계속하시겠습니까?");

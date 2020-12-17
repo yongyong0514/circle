@@ -20,11 +20,13 @@
 		<jsp:include page="../sign/signLeftBar.jsp" />
 	</div>
 	<div class="container">
-		<form id="formArea" method="get" enctype="multipart/form-data">
+		<form id="formArea" method="post" enctype="multipart/form-data">
 			<div class="contentBar">
 				<jsp:include page="../sign/signModifyBar.jsp" />
 				<div class="signHomeListBar">
 					<button class="signListBtn" type="submit">수정하기</button>
+					<!-- <a>문서번호</a> -->
+					<input type="text" class="sign_code" name="sign_code" value="${signModify.sign_code}" readonly> 
 				</div>
 				<div class="content">
 					<div class="formBox">
@@ -63,11 +65,8 @@
 							<tr>
 								<th class="formBox1">문서 유형</th>
 								<th class="formBox4" colspan="3">
-									<select class="formSelect2" id="sign_type_code" name="sign_type_code" disabled>
-										<option value="0">문서 유형을 선택하세요</option>
-										<c:forEach var="item" items="${list}">
-											<option value="${item.sign_type_code}" <c:if test="${signModify.sign_type_code eq item.sign_type_code}">selected</c:if>>${item.sign_type_name}</option>
-										</c:forEach>
+									<select class="formSelect2" id="sign_type_code" name="sign_type_code">
+											<option value="${signModify.sign_type_code}" selected>${signModify.sign_type_name}</option>
 									</select>
 								</th>
 							</tr>
@@ -97,7 +96,7 @@
 							</tr>
 						</table>
 						<div class="formBox5" id="editor"></div>
-						<textarea id="sign_note" name="sign_note" readonly>${signModify.sign_note}</textarea>
+						<textarea id="sign_note" name="sign_note">${signModify.sign_note}</textarea>
 					</div>
 					<div class="formRight">
 						<div>
@@ -170,12 +169,8 @@
 							<div class="formBtn1" id="signWatcherBtn" onclick="signWatcher();" style="color:grey;">참조자 등록</div>
 							<div class="watcherAlert">참조자가 저장되었습니다</div>
 							<div class="watcherForm1">
-								<%-- <div>
-									<img src="${pageContext.request.contextPath}/resources/img/sign/arrow2.png" class="joinArrow">
-								</div> --%>
 								<div class="watcherForm2">
 									<div class="watcherForm3">
-										<!-- <input type="text" class="joinerSearchBox" placeholder="&nbsp;사번/이름/직급/부서 검색"> -->
 										<input type="text" class="searchTitle" value="참조자를 왼쪽으로 드래그해서 등록하세요" readonly>
 									</div>
 									<div class="watcherForm4">
@@ -228,8 +223,6 @@
 							</table>
 						</div>
 					</div>
-					<input type="hidden" id="jCodeList" name="jCodeList" value="" readonly>
-					<input type="hidden" id="wCodeList" name="wCodeList" value="" readonly>
 				</div>
 			</div>
 		</form>
@@ -289,6 +282,7 @@
 			editor.setHtml(note);
 		});
 	</script>
+	
 	<script>
 		$(document).ready(function(){
 				var base = "${pageContext.request.contextPath}";
@@ -351,61 +345,7 @@
 			});
 	 	});
 	</script>
-<!-- 	<script>
-		$(document).ready(function(){
-				var base = "${pageContext.request.contextPath}";
-				var signCode = document.location.href.split("=");
-				
-				$.ajax({
-					url: base + "/signResult/signFileList",
-					type: "get",
-					data: {signCode : signCode[1]},
-					success: function(data) {
-						var objDragAndDrop = $(".dragAndDropDiv");
-						
-						for(var key in data) 
-							var fileCode = data[key].files_code;
-							var $statusbar = $("<div class='statusbar' onClick='location.href=signFileDownload?no='+fileCode>")
-							console.log($statusbar);
-							var $filename = $("<div class='filename'>").text(data[key].files_oname);
-							var size = data[key].files_size/1024;
-								if(size > 1024) {
-									size = size.toFixed(2) + " MB";
-								} else {
-									size = size.toFixed(2) + " KB";
-								}
-							var $size = $("<div class='filesize'>").text(size);
-							var $filecode = $("<div class='filecode' style='display: none;'>").text(data[key].files_code);
-							
-							$statusbar.append($filename);
-							$statusbar.append($size);
-							$statusbar.append($filecode);
-							
-							objDragAndDrop.after($statusbar);
-					}
-				});
-		});
-	</script> -->
-	<script>
-	</script>
-<!-- 문서 종류 옵션 시작 -->
-	<script>
-		$("#sign_type_code").on("change", function() {
-			var base = "${pageContext.request.contextPath}";
-			var typeCode = $("#sign_type_code").val();
-			$.ajax({
-				url : base + "/signResult/signTypeContent",
-				type : "get",
-				data : {
-					typeCode : typeCode
-				},
-				success : function(data) {
-					editor.setHtml(data.result);
-				}
-			});
-		});
-	</script>
-	
+
 <!-- 첨부파일 시작 -->
         <script>
             $(function(){
@@ -552,60 +492,6 @@
                 
             });
     </script>
-    
-<!-- 결재자 추가 시작 -->
-	<!-- 결재자 등록 HOVER -->
-<!-- 	<script>
-		function signJoiner() {
-			$(".joinForm1").fadeIn(100);
-		};
-	</script> -->
-	
-		<!-- 결재자 추가 목록 표시 -->
-	<script>
-		$(function() {
-			$("#resultBox1, #resultBox2").sortable({
-				connectWith : ".connectedSortable"
-			}).disableSelection();
-		});
-	</script>
-	
-<!-- 결재자 추가 후 세션 저장 -->
-	<script>
-		$(document).on('click', function() {
-					if ($(".joinForm1").css("display") != "none") {
-						$(".joinForm1").mouseleave(
-								function(e) {
-									if (!$(e.target).is(".joinForm1")) {
-										var tag1 = $("#resultBox2").children();
-										var joinerLength = tag1.length;
-										var joiner = new Array();
-
-										for (var i = 1; i < joinerLength; i++) {
-											var data = new Object();
-											data.jCode = tag1.eq(i).children()
-													.eq(1).text();
-											data.jName = tag1.eq(i).children()
-													.eq(2).text();
-											data.jJob = tag1.eq(i).children()
-													.eq(3).text();
-
-											joiner.push(data);
-										}
-
-										sessionStorage.setItem('joiner', JSON.stringify(joiner));
-
-										showList();
-
-										$(".joinForm1").fadeOut(100);
-										$(".joinAlert").fadeIn(1000);
-										$(".joinAlert").fadeOut(1000);
-										location.redirect();
-									}
-							});
-					};
-			});
-	</script>
 
 <!-- 결재자 추가 후 표시 리스트 -->
 	<script>
@@ -630,57 +516,7 @@
 			}
 		}
 	</script>
-
-<!-- 참여자 추가 시작 -->
-	<!-- 참조자 등록 HOVER -->
-<!-- 	<script>
-		function signWatcher() {
-			$(".watcherForm1").fadeIn(100);
-		};
-	</script> -->
 	
-	<!-- 참조자 추가 목록 표시 -->
-	<script>
-		$(function() {
-			$("#resultBox3, #resultBox4").sortable({
-				connectWith : ".connectedSortable"
-			}).disableSelection();
-		});
-	</script>
-<!-- 참조자자 추가 후 세션 저장 -->
-	<script>
-		$(document).on('click', function() {
-					if ($(".watcherForm1").css("display") != "none") {
-						$(".watcherForm1").mouseleave(
-								function(e) {
-									if (!$(e.target).is(".watcherForm1")) {
-										var tag1 = $("#resultBox4").children();
-										var watcherLength = tag1.length;
-										var watcher = new Array();
-
-										for (var i = 1; i < watcherLength; i++) {
-											var data = new Object();
-											data.wCode = tag1.eq(i).children().eq(1).text();
-											data.wName = tag1.eq(i).children().eq(2).text();
-											data.wJob = tag1.eq(i).children().eq(3).text();
-
-											watcher.push(data);
-										}
-
-										sessionStorage.setItem('watcher', JSON.stringify(watcher));
-
-										showWList();
-
-										$(".watcherForm1").fadeOut(100);
-										$(".watcherAlert").fadeIn(1000);
-										$(".watcherAlert").fadeOut(1000);
-										location.redirect();
-									}
-							});
-					};
-			});
-	</script>
-
 	<!-- 참조자 추가 후 표시 리스트 -->
 	<script>
 		function showWList() {
@@ -715,35 +551,7 @@
 			var isSubmit = false;
 			var editorValue = editor.getHtml();
 			$("#sign_note").val(editorValue);
-			
-			/*Load Session Data*/
-			var jsonData1 = sessionStorage.getItem("joiner");
-			var joiner = "";
-			joiner = JSON.parse(jsonData1);
-			
-			var jList = "";	
-			if(joiner != null) {
-				for (var i = 0; i < joiner.length; i++) {
-
-					jList += joiner[i].emp_info_emp_no + "/";
-				}
-			}
-			var jCodeList = jList.substring(0, jList.length-1);
-
-			
-			var jsonData2 = sessionStorage.getItem("watcher");
-			var watcher = "";
-			watcher = JSON.parse(jsonData2);
-
-			var wList = "";
-			if(watcher != null) {
-				for (var i = 0; i < watcher.length; i++) {
-	
-					wList += watcher[i].emp_info_emp_no + "/";
-				}
-			}
-			var wCodeList = wList.substring(0, wList.length-1);
-			
+		
 			/*Check empty field*/
 			if($("#sign_keep").val() != '0') {
 				
@@ -754,34 +562,7 @@
 						if($("#sign_title").val() != '') {
 							
 							if(editorValue != "") {
-								
-								if(joiner) {
-									/*Count about joiner and include form field*/
-									var signCount = "";
-									 signCount = joiner.length;
-									$("#sign_count").val(signCount);
-									$("#jCodeList").val(jCodeList);
-
-									if(watcher) {
-										isSubmit = true;
-										$("#wCodeList").val(wCodeList);
-										
-									} else {
-										var result = confirm("참조자를 등록하지 않았습니다. 계속하시겠습니까?");
-										
-										if(result == true) {
-											isSubmit = true;
-											$("#wCodeList").val(wCodeList);
-											
-										} else if(result == false) {
-											return false;
-										}
-									}
-									
-								} else {
-									alert("결재자를 선택해주세요");
-									return false;
-								}
+								isSubmit = true;
 								
 							} else {
 								alert('문서 내용을 입력해주세요');

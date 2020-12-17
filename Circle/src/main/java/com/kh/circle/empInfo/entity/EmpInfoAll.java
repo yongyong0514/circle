@@ -37,11 +37,14 @@ public class EmpInfoAll {
 	private String emp_info_vetr_no;
 	private String emp_info_vetr_rel;
 	private String emp_info_mils;
-	private Date emp_info_edat;
-	private Date emp_info_sdat;
+	private String emp_info_edat;
+	private String emp_info_sdat;
 	
 	//join result
 	private String dept_info_name;		//부서명
 	private String job_info_name;		//직책명
 	private String cmp_info_name;		//회사명
+	
+	//update result
+	private String changePwd;			//변경할 비밀번호
 }	

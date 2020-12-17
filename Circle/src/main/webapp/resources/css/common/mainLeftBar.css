@@ -1,3 +1,4 @@
+/* edit */
 .menuLeftBar {
 	width: 180px;
 	height: 100vh;
@@ -8,7 +9,7 @@
 
 .menuLeftListTop {
 	width: 180px;
-	height: 200px;
+	height: 300px;
 	line-height: 50px;
 	text-align: center;
 	font-size: 20px;
@@ -110,4 +111,16 @@
 	position: fixed;
 	left: 0px;
 	top: 0px;
+}
+
+
+/* 시계 css */
+.clock{
+	text-align: center;
+	font-size: small;
+	line-height: normal;
+}
+
+.smallFont{
+	font-size: small;
 }

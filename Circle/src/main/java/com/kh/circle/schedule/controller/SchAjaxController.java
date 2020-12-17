@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.schedule.entity.SchAjax;
-import com.kh.circle.schedule.entity.SchAjaxEntry;
+import com.kh.circle.schedule.entity.Entry;
 import com.kh.circle.schedule.entity.Sch_unit;
 import com.kh.circle.schedule.service.ScheduleService;
 
@@ -55,9 +55,6 @@ public class SchAjaxController  {
 		map.put("projectCheck", projectCheck);
 		map.put("communityCheck", communityCheck);
 		
-		
-		log.info("calendar data(id,date, grouping check data) received into server: {}", map);
-		
 		List<SchAjax> MergedList = new ArrayList<SchAjax>();
 		if(myCalendarCheck.length() < 5 ) {
 			List<SchAjax>list = schService.list(map);
@@ -67,27 +64,11 @@ public class SchAjaxController  {
 			List<SchAjax>list = schService.vacationList(map);
 			MergedList.addAll(list);
 		}
-//		if(pollCheck.length() < 5 ) {
-//			List<SchAjax>list = schService.pollList(map);
-//			MergedList.addAll(list);
-//		}
-//		if(projectCheck.length() < 5 ) {
-//			List<SchAjax>list = schService.projectList(map);
-//			MergedList.addAll(list);
-//		}
-//		if(communityCheck.length() < 5 ) {
-//			List<SchAjax>list = schService.list(map);
-//			MergedList.addAll(list);
-//		}
-		
-		log.info("month events callback data send to page: {} " , MergedList);
 		return MergedList;
 	}
 	
 	@PostMapping("/entry")
 	public List<HashMap<String, String>> entryList(@RequestBody String id){
-		
-		log.info("id : {}", id);
 		
 		List<HashMap<String, String>> list = schService.entryList(id);
 		
@@ -97,26 +78,17 @@ public class SchAjaxController  {
 	@PostMapping("/schInsert")
 	public void schInsert(HttpSession session, @RequestBody HashMap<String, Object> insertEvent) {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
-//		insertEvent.put("attender", empNo);
-		
-		log.info("insert data received into server: {} " ,insertEvent);
-		
-		
 		schService.insert(insertEvent);
 		
 	}
 	
 	@PostMapping("/schDelete")
 	public void schDelete(@RequestBody String id) {
-		log.info("delete data received into server: {} ", id);
-		
 		schService.delete(id);
 	}
 	
 	@PostMapping("/schUpdate")
 	public void schUpdate(@RequestBody HashMap<String, Object> updateEvent) {
-		log.info("update date received into server: {}", updateEvent);
-		
 		schService.update(updateEvent);
 	}
 	

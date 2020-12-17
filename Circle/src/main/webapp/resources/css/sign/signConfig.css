@@ -49,6 +49,16 @@ body {
 		rgba(0, 0, 0, 0.22);
 }
 
+.signConfigArea1 {
+	margin-top: 40px;
+	margin-left: 80px;
+	width: 150px;
+	height: 150px;
+	border-radius: 20px;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
+		rgba(0, 0, 0, 0.22);
+}
+
 /* 박스 이미지 출력 */
 .case2{
 	margin-left: 10px;
@@ -57,6 +67,7 @@ body {
 	width: 60px;
 	height: 60px;
 }
+
 
 .imgSize3{
 	margin-top: 5px;
@@ -122,6 +133,10 @@ body {
 	z-index: 1;
 }
 
+#signModalForm1 {
+	display:none;
+}
+
 .signModalArea {
   left: 50%;
   top: 50%;
@@ -136,7 +151,14 @@ body {
  
 }
 
-.signModalLayer { 
+.signModalArea1 {
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  margin-left: -120px;
+}
+
+.signModalLayer, .signModalLayer1 { 
   position:fixed;
   top:0;
   left:0;
@@ -152,6 +174,17 @@ body {
 
 .signModalClose {
 	margin-right: -25px;
+	width: 50px;
+	height: 50px;
+	font-size: 30px;
+	font-weight: bolder;
+	cursor: pointer;
+}
+
+.signModalClose1 {
+	margin-right: -30px;
+	margin-top: -5px;
+	float: right;
 	width: 50px;
 	height: 50px;
 	font-size: 30px;
@@ -189,12 +222,20 @@ body {
 	cursor: pointer;
 }
 
-.imgSize2{
+.imgSize2 {
 	margin-top: 10px;
 	width: 100px;
 	height: 100px;
 	border-radius: 100%;
 }
+
+.imgSize4 {
+	margin-left: 25px;
+	margin-top: 25px;
+	width: 100px;
+	height: 100px;
+}
+
 .case1 {
 	float: left;
 	margin-left: 15px;
@@ -230,3 +271,108 @@ body {
 	background:rgba(0, 0, 0, 0.1);
 }
 
+.m-signature-pad {
+  position: absolute;
+  font-size: 10px;
+  width: 700px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  margin-left: -350px;
+  margin-top: -200px;
+  background: white;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25), 0 5px 5px
+	rgba(0, 0, 0, 0.22); 
+  border-radius: 10px;
+}
+
+.m-signature-pad--body {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 20px;
+  bottom: 60px;
+  border: 1px solid #f4f4f4;
+}
+
+.m-signature-pad--body
+  canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.02) inset;
+  }
+
+.m-signature-pad--footer {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  height: 40px;
+}
+
+.m-signature-pad--footer
+  .description {
+    color: #C3C3C3;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 1.8em;
+  }
+
+.m-signature-pad--footer
+  .button {
+    position: absolute;
+    bottom: 0;
+  }
+
+.m-signature-pad--footer
+  .button.clear {
+  	width: 70px;
+  	height: 30px;
+  	border: 1px solid black;
+  	border-radius: 5px;
+  	cursor: pointer;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);  	
+    left: 0;
+  }
+
+.m-signature-pad--footer
+  .button.save {
+    width: 70px;
+  	height: 30px;
+  	border: 1px solid black;
+  	border-radius: 5px;
+  	cursor: pointer;
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #D8D8D8, #FFFFFF);
+	background: linear-gradient(to top, #D8D8D8, #FFFFFF);  
+    right: 0;
+  }
+  
+  .m-signature-pad--footer
+    .button.clear:hover
+, .m-signature-pad--footer
+    .button.save:hover  {
+	background: #D8D8D8;
+	background: -webkit-linear-gradient(to top, #FFFFFF, #D8D8D8);
+	background: linear-gradient(to top, #FFFFFF, #D8D8D8);	
+}
+
+  .m-signature-pad--footer {
+    left: 20px;
+    right: 20px;
+    bottom: 4px;
+    height: 28px;
+  }
+  .m-signature-pad--footer
+    .description {
+      font-size: 1em;
+      margin-top: 1em;
+    }
+}

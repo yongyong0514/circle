@@ -1,5 +1,6 @@
 package com.kh.circle.poll.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
+import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,6 +93,147 @@ public class PollDaoImpl implements PollDao{
 	public List<HashMap<String, String>> userInfo(String empNo) {
 		return sqlSession.selectList("poll.userInfo", empNo);
 	}
+	
+	@Override
+	public void insertPoll(PreInputData temp, List<Question> questions) {
+		//입력할 시퀀스 추출
+		String sequence = sqlSession.selectOne("poll.sequence");
+		
+		
+		//시퀀스 정보 입력
+		temp.setSequence(sequence);
+		
+		//사전정보 입력
+		sqlSession.insert("poll.preInsert", temp);
+		//참가자 확인
+		if(temp.getJoinMember().toString().equals("userDept")) {
+			//로그인 유저의 부서 확인
+			String userDept = sqlSession.selectOne("poll.findDept", temp);
+			List<String> deptMember = new ArrayList<>();
+			//부서 구성원 추출
+			if(temp.getSubDept() != null && temp.getSubDept().toString().equals("Y")) {
+				deptMember = sqlSession.selectList("poll.findWholeDeptMember", userDept);
+			} else {
+				deptMember = sqlSession.selectList("poll.findDeptMember", userDept);
+			}
+			temp.setDeptMember(deptMember);
+			
+			//부서 인원 입력
+			sqlSession.insert("poll.insertDeptMember", temp);
+		} 
+		//직접 추가한 참가자 있는경우
+		if(temp.getAttend() != null) {
+			sqlSession.insert("poll.insertAttend", temp);
+		}
+		//참조자가 있는경우
+		if(temp.getRefer() != null) {
+			sqlSession.insert("poll.insertRefer", temp);
+		}
+		
+		
+		
+		
+		//문항정보 입력
+		for (Question question : questions) {
+			//셀렉트형일때
+			if(question.getType().equals("select")) {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertSelectQuestion", question);
+				//문항 선택지 입력
+				sqlSession.insert("poll.insertSelectSelection", question);
+				
+			//점수형일때
+			} else if(question.getType().equals("score")) {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertScoreQuestion", question);
+				//문항 선택지 입력
+				sqlSession.insert("poll.insertScoreSelection",question);
+			//텍스트형일때
+			} else {
+				//설문 시퀀스 정보 입력
+				question.setPopn(sequence);
+				//문항 시퀀스 추출
+				String questionSeq = sqlSession.selectOne("poll.questionSeq");
+				//문항 시퀀스 정보 입력
+				question.setPopq(questionSeq);
+				
+				//문항 질문 입력
+				sqlSession.insert("poll.insertTextQuestion", question);
+				//문항 질문 입력
+				sqlSession.insert("poll.insertTextSelection", question);
+			}
+		}
+	}
+
+
+	@Override
+	public String insertAttendedServey(List<HashMap<String, String>> list) {
+
+		//DB에 설문 참가 완료 정보 입력
+		sqlSession.insert("poll.insertAttendedServey", list);
+		
+		//POST 식별코드 추출
+		String url = sqlSession.selectOne("poll.selectPostCode", list);
+		
+		return url;
+	}
+
+
+	@Override
+	public List<String> answerSearch(String postCode) {
+		//답변 코드 추출
+		return sqlSession.selectList("poll.answerSearch", postCode);
+	}
+	@Override
+	public void deleteMember(String postCode) {
+		//설문 멤버 삭제
+		sqlSession.delete("poll.deleteMember",postCode);
+	}
+	@Override
+	public void deleteAttender(List<String> answers) {
+		//답변자 삭제
+		sqlSession.delete("poll.deleteAttender", answers);
+	}
+	@Override
+	public int deleteAnswer(String postCode) {
+		return sqlSession.delete("poll.deleteAnswer",postCode);
+	}
+	@Override
+	public void deleteQuestion(String postCode) {
+		//문항 삭제
+		sqlSession.delete("poll.deleteQuestion",postCode);
+	}
+	@Override
+	public void deleteOne(String postCode) {
+		//설문 상태 삭제로 변경
+		sqlSession.update("poll.deleteOne", postCode);
+	}
+
+
+	@Override
+	public void deleteAll(PostCode postList) {
+		sqlSession.delete("poll.deleteAll", postList);
+	}
+
+
+
+
+
+
 
 
 

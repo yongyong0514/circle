@@ -42,16 +42,17 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 		String sDate = "";
 		String eDate = "";
 		
-		if(!weekAttList.isEmpty()) {
+		if(!weekAttList.isEmpty() && !(weekAttList.size() == 0)) {
 	
-			sDate =(String) ( (List<AttendanceInfo>) map.get("weekAttList") ).get(0).getWeekStartDate();
-			eDate =(String) ( (List<AttendanceInfo>) map.get("weekAttList") ).get(0).getWeekEndDate();
+			sDate = (String) weekAttList.get(0).getWeekStartDate();
+			eDate = (String) weekAttList.get(0).getWeekEndDate();
 			
 			int wtime = ( (int) map.get("worktimePerWeek"));
 	
 			//// 1) 주간 누적 근무시간(시)
 			//// 2) 주간 누적 근무시간(분)
 			WeekStackInfo wsInfo  = attendanceInfoRepository.weekStackWorkTime(inputMap);
+			
 			wsInfo.setWeekStartDate(sDate);
 			wsInfo.setWeekEndDate(eDate);
 			wsInfo.setWorktimePerWeek(wtime);
@@ -130,11 +131,15 @@ public class AttendanceInfoServiceImpl implements AttendanceInfoService {
 		//1.재직중인 전 사원의 사원번호 추출
 		List<String> empNoList = attendanceInfoRepository.empNoList();
 		
-		//2.추출한 사원번호에 맞춰 주간 근무정보(AttendanceInfo) 추출하여 리스트로 저장
+		//2.추출한 사원번호에 맞춰 주간 근무정보 추출하여 리스트로 저장
 		List<AttendanceInfoSummary> summaryList = new ArrayList<AttendanceInfoSummary>();
 		
+		////사원 번호 하나씩 꺼내서 AttendanceInfoSummary 객체 생성 -> 리스트에 저장
+		
 		for(String emp_no : empNoList) {
-			//반복
+			
+			//근무시간 리스트 추출
+			AttendanceInfoSummary empSummary = attendanceInfoRepository.empSummary(inputMap, emp_no);
 		}
 		
 		

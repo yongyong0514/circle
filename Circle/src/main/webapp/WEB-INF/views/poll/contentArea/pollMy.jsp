@@ -41,7 +41,7 @@
 								<span class="toolbar-icon end"></span>
 								<span class="poll-post-toolbar-progress-btn-txt">마감</span>
 							</a>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteCheck();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -65,7 +65,7 @@
 						<thead>
 							<tr>
 								<th>
-									<input type="checkbox" id="checkedAll">
+									<input type="checkbox" id="checkedAll" onclick="checkAll();">
 								</th>
 								<th>번호</th>
 								<th><p>상태</p></th>
@@ -118,15 +118,23 @@
 										 	<span class="txt"><c:out value="${item.POLL_POST_NAME}"/></span>
 										</a>									
 									</td>
-									<td class="poll-term-td"><c:out value="${item.POLL_POST_SDAT} ~ ${item.POLL_POST_EDAT}"></c:out></td>
+									<td class="poll-term-td">
+										<fmt:formatDate value="${item.POLL_POST_SDAT}" pattern="yyyy-MM-dd" />
+										<c:out value=" ~ "/>
+										<fmt:formatDate value="${item.POLL_POST_EDAT}" pattern="yyyy-MM-dd" />
+									</td>
 									<td class="poll-rate-td">
 										<span class="txt">
-											0/5
-											<strong> (20.00%)</strong>
+											<c:out value="${item.ACTUALATTENDMEMBER}"/>/<c:out value="${item.TOTALATTENDABLEMEMBER}"/>
+											
+											<fmt:parseNumber value="${item.ACTUALATTENDMEMBER}" var="ACTUALATTENDMEMBER"/>
+											<fmt:parseNumber value="${item.TOTALATTENDABLEMEMBER}" var="TOTALATTENDABLEMEMBER"/>
+											<strong> (<fmt:formatNumber value="${ACTUALATTENDMEMBER/TOTALATTENDABLEMEMBER}" pattern="#,###.00%"/>)</strong>
 										</span>
 									</td>
 									<td class="post-code" hidden="true"><c:out value="${item.POLL_POST_CODE}"></c:out></td>
-									<td class="post-join" hidden="true"><c:out value="${item.JOIN_COUNT}"></c:out></td>
+									<td class="post-joinable" hidden="true"><c:out value="${item.MYVOTERIGHT}"></c:out></td>
+									<td class="post-realjoin" hidden="true"><c:out value="${item.MYVOTECONDITION}"></c:out></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -261,51 +269,131 @@
 		</div>
 	</div>
 	
+	<form id="deleteForm"  method="post">
+	</form>
+	
+	
+	<script src="/circle/resources/js/poll/jquery.min.js"></script>
 	<script>
-		$(document).ready(function(){
-			//메뉴바 내설문 부분 색상 변경
-			$('#poll-my').css('color','black');
+	/************************************************** 함수 부분 **************************************************/
+	
+	/* 삭제확인 */
+	function deleteCheck(){
+		alert("설문을 삭제 하시겠습니까?");
+		
+		var postCode = new Array();
+		
+		$('input:checkbox[name="code"]:checked').each(function(index, item){
+			var code = $(item).parent().siblings('.post-code').text();
+			postCode.push(code);
+		})
+		
+		$.ajax({
+			url		:	"${pageContext.request.contextPath}/pollAjax/deleteAll",
+			type	:	"post",
+			traditional : true,
+			data	:	JSON.stringify(postCode),
+			dataType 	: "text",
+        	contentType	:"application/json; charset=utf-8;",
+        	error		: function(request,status,error){
+        		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        	},
+			success	: setTimeout(function(){location.href = "${pageContext.request.contextPath}/poll/my"} , 1000)   
+			, beforeSend: function () {
+	              var width = 0;
+	              var height = 0;
+	              var left = 0;
+	              var top = 0;
+
+	              width = 50;
+	              height = 50;
+
+
+	              top = ( $(window).height() - height ) / 2 + $(window).scrollTop();
+	              left = ( $(window).width() - width ) / 2 + $(window).scrollLeft();
+
+	 
+
+	              if($("#div_ajax_load_image").length != 0) {
+	                     $("#div_ajax_load_image").css({
+	                            "top": top+"px",
+	                            "left": left+"px"
+	                     });
+	                     $("#div_ajax_load_image").show();
+	              }
+	              else {
+	                     $('body').append('<div id="div_ajax_load_image" style="position:absolute; top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px; z-index:9999; background:#f0f0f0; filter:alpha(opacity=50); opacity:alpha*0.5; margin:auto; padding:0; "><img src="${pageContext.request.contextPath}/resources/img/poll/loading.gif" style="width:auto; height:auto;"></div>');
+	              }
+
+	       }
+	       , complete: function () {
+	                     $("#div_ajax_load_image").hide();
+	       }
+
+		})
+		
+		
+	}
+	
+	/* 일괄 체크 */
+	function checkAll(){
+		var now = $('#checkedAll').prop('checked');
+		
+		if(now){
+			$('input[name=code]').prop('checked',true);		
+		} else {
+			$('input[name=code]').prop('checked',false);		
 			
-			//topBar title 변경
-			$('.pollHomeTitle').text('내 설문');
-			
-			//검색버튼 클릭시 기능
-			$('.search-bar .search-btn').on('click', function(){
-				
-				//검색어 가공후 전역변수에 저장(searchKeyword)
-				var searchKeyword = $('section.search-box input.search-box').val();
-								
-				//주소 리턴
-			 	location.href="${pageContext.request.contextPath}/poll/my?searchTitle=" + searchKeyword;
-			})
-			
-			//페이지당 post출력 개수 변경
-			$('.poll-toolbar .poll-post-list select[name=poll-table-length]').on('change', function(){
-				var i = $(this).val();
-				location.href = "${pageContext.request.contextPath}/poll/my?cntPerPage=" + i;
-			});
-			
-			//설문 post 클릭시
-			$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
-				/* 설문코드 추출 */
-				var code = $(this).parent().parent().find('.post-code').text();
-				
-				/* 참여여부 추출 */
-				var attend = $(this).parent().parent().find('.post-join').text();
-				
-				/* 마감여부 추출 */
-				var complete = $(this).parent().parent().find('.poll-state-td span').prop("class");
-				
-				if(complete == 'poll-state complete' || attend == 1) {
-					location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
-				} else {
-					location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
-				}
-				
-			});
-			
-			
-		});
+		}
+	}
+	//검색버튼 클릭시 기능
+	$('.search-bar .search-btn').on('click', function(){
+		
+		//검색어 가공후 전역변수에 저장(searchKeyword)
+		var searchKeyword = $('section.search-box input.search-box').val();
+						
+		//주소 리턴
+	 	location.href="${pageContext.request.contextPath}/poll/my?searchTitle=" + searchKeyword;
+	})
+	
+	//페이지당 post출력 개수 변경
+	$('.poll-toolbar .poll-post-list select[name=poll-table-length]').on('change', function(){
+		var i = $(this).val();
+		location.href = "${pageContext.request.contextPath}/poll/my?cntPerPage=" + i;
+	});
+	
+	//설문 post 클릭시
+	$('table.poll-list tbody tr td.poll-title-td a').on('click', function(){
+		/* 설문코드 추출 */
+		var code = $(this).parent().parent().find('.post-code').text();
+		
+		/* 참여여부 추출 */
+		var joinable = $(this).parent().parent().find('.post-joinable').text();
+		var realjoin = $(this).parent().parent().find('.post-realjoin').text();
+		
+		/* 마감여부 추출 */
+		var complete = $(this).parent().parent().find('.poll-state-td span').prop("class");
+		
+		if(complete == 'poll-state complete' || joinable == 0 || (joinable > 0 && realjoin > 0)) {
+			location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + code;
+		} else {
+			location.href = "${pageContext.request.contextPath}/poll/post?postCode=" + code;
+		}
+		
+	});
+	
+	/************************************************** 실행부분 **************************************************/
+	
+	$(document).ready(function(){
+		//메뉴바 내설문 부분 색상 변경
+		$('#poll-my').css('color','black');
+		
+		//topBar title 변경
+		$('.pollHomeTitle').text('내 설문');
+		
+		
+		
+	});
 
 	</script>
 

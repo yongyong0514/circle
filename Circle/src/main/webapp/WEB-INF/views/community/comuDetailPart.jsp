@@ -99,11 +99,13 @@ li{
 			</li>
 		
 		 	<br>
+		 	<c:if test="${empNo eq viewEmpNo }">
 		 	<c:forEach var="comuDetail" items="${comuDetail}">
-			<li align="right"><a href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
+			<li align="right"><a onclick="upDate1();" class="up" href='<c:url value='/community/comuUpdate?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[수정하기]</a>
 			
-			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li>
+			<a href='<c:url value='/community/comuDelete?comu_post_ordr=${comuDetail.comu_post_ordr}'/>'>[삭제하기]</a></li><br>
 			</c:forEach>
+			</c:if>
 		</ul>
 		</div>
 		<%-- </c:when>
@@ -128,3 +130,19 @@ li{
 		</div>		
 			</div>
 		</div>
+		
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		
+<!-- <script type="text/javascript"> 
+	 $(".up").on('click',function(){
+		 var message = '${msg}'; 
+		 var returnUrl = '${url}'; 
+		 alert(mag); 
+		 document.location.href = url; 
+	 })
+</script> -->
+<script >
+function delete1(){
+	alert("글이 삭제 되었습니다.");
+}
+</script>

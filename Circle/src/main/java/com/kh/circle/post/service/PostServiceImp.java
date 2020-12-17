@@ -34,6 +34,9 @@ public class PostServiceImp implements PostService {
 
 		return postDao.postMain(model, postPaging);
 	}
+	
+
+	
 
 	@Override
 	public List<Post> postParts(String post_type) {
@@ -135,6 +138,19 @@ public class PostServiceImp implements PostService {
 	public String viewEmpNo(String post_code) {
 		return postDao.viewEmpNo(post_code);
 	}
+
+
+
+
+	@Override
+	public List<Post> selecePost3(PostPaging postPaging) {
+		return postDao.selectPost3(postPaging);
+	}
+
+
+
+
+
 
 
 

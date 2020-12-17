@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.attendance.entity.AttendanceInfo;
+import com.kh.circle.attendance.entity.AttendanceInfoSummary;
 import com.kh.circle.attendance.entity.WeekStackInfo;
 import com.kh.circle.attendance.entity.WorkAndOff;
 
@@ -64,6 +65,15 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 	public List<String> empNoList() {
 		
 		return sqlSession.selectList("attendance.empNoList");
+	}
+	@Override
+	public AttendanceInfoSummary empSummary(Map<String, Object> inputMap, String emp_no) {
+
+		AttendanceInfoSummary empSummary = sqlSession.selectOne("attendance.empSummary", emp_no);
+		//커밋용 주석
+		empSummary.setEmp_no(emp_no);
+		
+		return empSummary;
 	}
 
 

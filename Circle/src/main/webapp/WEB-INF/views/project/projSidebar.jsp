@@ -23,6 +23,7 @@ z-index:99;
 			
 			<div class="menuLeftListTitle"><a href="#">이슈 리스트</a></div>
 			<div class="menuLeftListTitle"><a href="#">칸반 보드</a></div>
+			<div class="menuLeftListTitle"><a href="#">To-Do</a></div>
 		</div>
 		<div class="organChart">
 			<c:import url="/organChart/getInfo"/>

@@ -107,6 +107,7 @@
 .attendanceStatusTable .clock{
 	text-align: center;
 	font-size: medium;
+	line-height: 2rem;
 }
 
 .attendanceStatus{

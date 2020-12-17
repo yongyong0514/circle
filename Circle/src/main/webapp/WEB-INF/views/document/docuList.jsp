@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,12 +22,51 @@
 			<div class="contentBar">
 				<jsp:include page="docuHomeBar.jsp" />
 			</div>
-			<div class="homeListBar">
-				<button class="homeListBtn">작성하기</button>
-			</div>			
 			<div class="content">
-				<div class="test">
-				</div>
+			<div class="signHomeListBar">
+				<ul>
+					<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">최근 등록 나의 문서</li>
+					<li><button class="signListBtn3">작성일</button></li>
+					<li><button class="signListBtn1">작성자</button></li>
+					<li><button class="signListBtn0">제목</button></li>
+				</ul>
+			</div>		
+			<div class="docuList">
+				<table id="listArea">
+				<c:forEach var="list1" items="${list1}">
+					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list1.docu_code}"/>'">
+						<td class="textBox0"></td>
+						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/file.png" class="img0"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/personal.png" class="img1"></td>
+						<td class="textBox4"><br><c:out value="${list1.docu_wdat}"/><br><br><c:out value="${list1.docu_whour}"/></td>
+						<td class="textBox1"><br><c:out value="${list1.emp_info_name}"/><br><c:out value="${list1.job_info_name}"/></td>
+						<td class="textBox2"><c:out value="${list1.docu_title}"/></td>						
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
+			<div class="signHomeListBar">
+				<ul>
+					<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">최근 등록 공용 문서</li>
+					<li><button class="signListBtn3">작성일</button></li>
+					<li><button class="signListBtn1">작성자</button></li>
+					<li><button class="signListBtn0">제목</button></li>
+				</ul>
+			</div>
+			<div class="docuList">
+				<table id="listArea">
+				<c:forEach var="list2" items="${list2}">
+					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list2.docu_code}"/>'">
+						<td class="textBox0"><c:out value="${list2.docu_code}"/></td>
+						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/chat.png" class="img0"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/public.png" class="img1"></td>
+						<td class="textBox4"><br><c:out value="${list2.docu_wdat}"/><br><br><c:out value="${list2.docu_whour}"/></td>
+						<td class="textBox1"><br><c:out value="${list2.emp_info_name}"/><br><c:out value="${list2.job_info_name}"/></td>
+						<td class="textBox2"><c:out value="${list2.docu_title}"/></td>						
+					</tr>
+				</c:forEach>
+				</table>
+			</div>
 			</div>
 		</div>
 	</div>
@@ -46,12 +86,5 @@
     		})
     	});
     </script>
-  	<script>
-  		$( function() {
-   	 		$( "#sortable1, #sortable2" ).sortable({
-      			connectWith: ".connectedSortable"
-    				}).disableSelection();
-  		});
-  </script>
 </body>
 </html>

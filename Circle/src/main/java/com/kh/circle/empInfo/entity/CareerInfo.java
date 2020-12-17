@@ -1,5 +1,7 @@
 package com.kh.circle.empInfo.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,4 +28,6 @@ public class CareerInfo {
 	//join result
 	private String dept_info_name;		//부서명
 	private String job_info_name;		//직책명
+
+	private List<CareerInfo> carrList;
 }

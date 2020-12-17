@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -21,10 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.login.entity.EmpInfo;
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
+import com.kh.circle.poll.entity.PostList;
 import com.kh.circle.poll.entity.PreInputData;
 import com.kh.circle.poll.service.PollService;
 
 import lombok.extern.slf4j.Slf4j;
+import oracle.jdbc.proxy.annotation.Post;
 import oracle.jdbc.proxy.annotation.Pre;
 
 @Slf4j
@@ -40,6 +44,7 @@ public class PollController {
 	public String pollMain(HttpSession session, ModelMap modelMap) {
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		List<HashMap<String, String>> list = pollService.homeList(empNo);
+		
 		modelMap.addAttribute("post", list);
 		return "/poll/pollMain";
 	}
@@ -82,8 +87,6 @@ public class PollController {
 		//page정보 담기
 		modelMap.put("pageInfo", pageInfo);
 		
-		log.info("진행설문 조회 : {}", modelMap);
-		
 		return "/poll/progress";
 	}
 	@GetMapping("/finished")
@@ -115,8 +118,6 @@ public class PollController {
 		//page정보 담기
 		modelMap.put("pageInfo", pageInfo);
 		
-		log.info("마감페이지 조회 : {}", modelMap);
-		
 		return "/poll/finished";
 	}
 	@GetMapping("/my")
@@ -146,7 +147,6 @@ public class PollController {
 		//페이지 DB추출
 		List<HashMap<String,String>> list = pollService.myList(pageInfo);
 		
-		log.info(list.toString());
 		//post정보 담기
 		modelMap.put("post", list);
 		//page정보 담기
@@ -156,7 +156,6 @@ public class PollController {
 	@GetMapping("/post")
 	public String post(HttpSession session, @RequestParam String postCode, ModelMap modelMap) {
 		
-		log.info(postCode);
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
 		HashMap<String, String> params = new HashMap<>();
@@ -167,17 +166,15 @@ public class PollController {
 		int totalAttend = pollService.getTotalAttend(params);
 		int realAttend = pollService.getRealAttend(params);
 		
+		modelMap.put("postCode", postCode);
 		modelMap.put("post", list);
 		modelMap.put("totalAttend", totalAttend);
 		modelMap.put("realAttend", realAttend);
-		
-		log.info(modelMap.toString());
 		
 		return "/poll/post";
 	}
 	@GetMapping("/result")
 	public String result(HttpSession session, @RequestParam String postCode, ModelMap modelMap) {
-		log.info(postCode);
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
 		HashMap<String, String> params = new HashMap<>();
@@ -193,8 +190,7 @@ public class PollController {
 		modelMap.put("totalAttend", totalAttend);
 		modelMap.put("realAttend", realAttend);
 		modelMap.put("qustRealAttend", qustRealAttend);
-		
-		log.info(modelMap.toString());
+		modelMap.put("postCode", postCode);
 		
 		return "/poll/result";
 	}
@@ -204,14 +200,10 @@ public class PollController {
 		
 		List<HashMap<String, String>> list = pollService.userInfo(empNo);
 		
-		log.info(list.toString());
-		
 		return "/poll/insert";
 	}
 	@PostMapping("/questionInsert")
 	public String questionInsert(HttpSession session, PreInputData data, ModelMap modelMap) {
-		
-		log.info(data.toString());
 		
 		session.setAttribute("prePollData", data);
 		modelMap.put("preData", data);
@@ -224,12 +216,20 @@ public class PollController {
 	}
 	
 	@PostMapping("/pollInsertComplete")
-	public String insertComplete(HttpSession session) {
+	public void insertComplete(HttpSession session, List<HashMap<String, Object>> questions) {
 		
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
-		log.info(temp.toString());
+	}
+	
+	@PostMapping("/postAttendComplete")
+	public void attendComplete(HttpSession session, List<HashMap<String, Object>> formData) {
+	}
+	
+	@GetMapping("/deleteOne")
+	public String deleteOne(@RequestParam String postCode) {
+		pollService.deleteOne(postCode);
 		
 		return "/poll/pollMain";
 	}
-
+	
 }

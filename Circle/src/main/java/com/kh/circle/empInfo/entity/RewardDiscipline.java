@@ -1,5 +1,7 @@
 package com.kh.circle.empInfo.entity;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,4 +19,6 @@ public class RewardDiscipline {
 	private String rwdp_hstr_cont;	// 내용
 	private String rwdp_hstr_resn;	// 사유
 	private String rwdp_hstr_rm;
+	
+	private List<RewardDiscipline> rediList;
 }

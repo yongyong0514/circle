@@ -28,7 +28,7 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>근태현황(메뉴명)</h1>
+				<h2>근태현황</h2>
 				<br>
 				<!--  근태이력(리스트) 시작 -->
 				<div class="summary">
@@ -78,6 +78,7 @@
 				<!-- 현재(이번주) 근태현황 끝 -->
 				<br><br>
 				<!-- 근태이력(리스트) 시작 -->
+				<div class="tableBox">
 				<table class="historyTable">
 					<tr>
 						<th>일자</th>
@@ -101,7 +102,7 @@
 							</td>
 							<td><c:out value="${AttendanceInfo.atdc_hstr_writ_type}"/></td>
 							<td><c:out value="${AttendanceInfo.atdc_hstr_type}"/></td>
-							<td>휴게시간 1h 제외</td>
+							<td>휴게시간 1h 포함</td>
 							<td></td>
 						</tr>
 					</c:forEach>

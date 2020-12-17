@@ -25,14 +25,22 @@
 		</div>
 		<div class="container">
 			<div class="content">
-				<h1>인사정보</h1>
+				<h2>인사정보</h2>
 				<br><br>
-				<form action="#" method="POST">
-					<span class="totalNumber">전체 n명</span>
-					<input type="button" class="insertInfo" value="인사정보 추가"/>
-					<select>
+				<form action="${pageContext.request.contextPath }/empInfo/allInfoList" method="GET">
+					<span class="totalNumber">전체 <c:out value="${map.pInfo.total }"/>명</span>
+					&nbsp;
+					<input type="button" class="insertInfo" value="인사정보 추가"
+							onclick ="location.href='${pageContext.request.contextPath}/empInfo/myInfoInsert'"/>
+					<br><br>
+					<input type="text" name="empNo" placeholder="사원번호" value="${empNo}">
+					<input type="text" name="name" placeholder="이름" value="${name}">
+					<input type="text" name="deptName" placeholder="부서명" value="${deptName}">
+					&nbsp;
+					<input type="submit" value="검색하기">&nbsp;
+					<select name="perPage" class="perPage" onchange="movePerPage()">
+						<option value="10">10</option>
 						<option value="20">20</option>
-						<option value="30">30</option>
 						<option value="50">50</option>
 					</select>
 					<br><br>
@@ -47,52 +55,59 @@
 								<th>이메일</th>
 								<th>내선번호</th>
 							</tr>
-							<!-- 예시데이터 시작 -->
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<tr>
-								<td>202011120123</td>
-								<td>가나다</td>
-								<td>유통팀</td>
-								<td>대리</td>
-								<td>ganada@circle.com</td>
-								<td>0300-1023</td>
-							</tr>
-							<!-- 예시데이터 끝 -->
+							<c:forEach var="EmpInfoAll" items="${map.empList }">
+								<tr class="selTr">
+									<td><c:out value="${EmpInfoAll.emp_info_emp_no }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.dept_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.job_info_name }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_email }"/></td>
+									<td><c:out value="${EmpInfoAll.emp_info_etel }"/></td>
+								</tr>
+							</c:forEach>
 						</table>
 					</div>
 					<!-- 전체 인사정보(리스트) 끝 -->
 				</form>
+				
+				<!-- 페이지 이동 목록 시작 -->					
+					<div class="changeBtn">
+						<span onclick="moveAll( ${map.pInfo.minPage}, ${map.pInfo.perPage} )">
+							<i class='fas fa-angle-double-left'></i>
+						</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${map.pInfo.nowPage != 1 }">
+							<span onclick="moveAll( ${map.pInfo.nowPage-1}, ${map.pInfo.perPage} );">
+								<i class='fas fa-caret-left'></i>
+							</span>			
+						</c:if>
+						&nbsp;&nbsp;
+						<c:forEach var="page" begin="${map.pInfo.startPage }" end="${map.pInfo.endPage}">
+							<c:choose>
+								<c:when test="${ page eq map.pInfo.nowPage }">
+									<span class="nowPageNum">${page}</span>
+									&nbsp;
+								</c:when>
+								
+								<c:when test="${ page != map.pInfo.nowPage }">
+									<span onclick="moveAll( ${page}, ${map.pInfo.perPage} );">${page}</span>	
+									&nbsp;
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						&nbsp;		
+						<c:if test="${map.pInfo.nowPage != map.pInfo.maxPage}">
+							<span onclick="moveAll(${map.pInfo.nowPage+1},${map.pInfo.perPage}, ${index});">
+								<i class='fas fa-caret-right'></i>
+							</span>			
+						</c:if>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span onclick="moveAll( ${map.pInfo.maxPage}, ${map.pInfo.perPage} )">
+							<i class='fas fa-angle-double-right'></i>
+						</span>
+					</div>
+					<!-- 페이지 이동 목록 끝 -->	
+				
 			</div>
 		</div>
 	</div>
@@ -103,15 +118,65 @@
 			var leftBar = $(".leftBar").offset().top;
 			$(window).scroll(function() {
 				var window = $(this).scrollTop();
-				console.log(leftBar + "left");
-				console.log(window + "window");
 				if (leftBar <= window) {
 					$(".leftBar").addClass("fixed");
 				} else {
 					$(".leftBar").removeClass("fixed");
 				}
-			})
+			});
+			
+			<!-- 페이지 당 출력 개수 선택 표시 -->
+			$(".perPage").val(${map.pInfo.perPage});
+			
+			<!-- 현재 페이지 강조 -->
+			$(".nowPageNum").addClass("selectedNum");
+
+ 			<!-- 마우스 오버 시 강조 -->
+ 			$(".selTr").mouseover(function(){
+ 				$(this).addClass("greyColor");
+ 			}).mouseout(function(){
+ 				$(this).removeClass("greyColor");
+ 			});
+			
+ 			
+ 			$(".selTr").click(function(){
+				location.href = "${pageContext.request.contextPath}/empInfo/oneInfo?emp_no=" + $(this).find("td:eq(0)").text();
+ 			});
+		
 		});
+		
+		// 페이지 당 출력 개수 변경 시
+		function movePerPage(){
+			var selectedValue = $(".perPage").val();
+			
+			var url = "nowPage=" + 1 + "&perPage=" + selectedValue;
+			
+			location.href="${pageContext.request.contextPath}/empInfo/allInfoList?" + url;
+		};
+		
+		// 페이지 이동버튼(숫자 또는 화살표) 선택 시
+		function moveAll(nowPage, perPage){
+			var url = "nowPage=" + nowPage + "&perPage=" + perPage;
+			
+			if( !isNull('${name}') ){
+				url += "&name=".concat('${name}');
+			}
+			
+			if( !isNull('${empNo}') ){
+				url += "&empNo=".concat('${empNo}');
+			}
+			
+			if( !isNull('${deptName}') ){
+				url += "&deptName=".concat('${deptName}');
+			}
+			
+			location.href="${pageContext.request.contextPath}/empInfo/allInfoList?" + url;
+		};
+		
+		function isNull(value){
+			return ( value === undefined || value === null || value === "" ) ? true : false;
+		};
+		
 	</script>
 </body>
 </html>

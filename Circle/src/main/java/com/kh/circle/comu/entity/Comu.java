@@ -1,6 +1,7 @@
 package com.kh.circle.comu.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.kh.circle.comu.entity.Comu;
 
@@ -26,4 +27,14 @@ public class Comu {
 	private String comu_list_code;
 	private String comu_info_emp_no;
 	
+	//comuInfo 정보
+	private String comu_info_comu_code;
+	private Date comu_info_sdat;
+	private Date comu_info_edat;
+	private String comu_info_comu_job_code;
+	private String comu_info_rm;
+	private String comu_info_join;
+	private Date comu_info_join_rqst_dat;
+	
+	private String job_info_name;
 }

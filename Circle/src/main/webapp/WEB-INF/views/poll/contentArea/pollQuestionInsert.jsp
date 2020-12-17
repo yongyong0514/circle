@@ -47,8 +47,7 @@
 									</th>
 									<td>
 										<div class="txtarea-wrap">
-											<textarea class="w-large"  name="poll-start-sentence" maxlength="1000">
-											</textarea>
+											<textarea class="w-large"  name="poll-start-sentence" maxlength="1000"></textarea>
 										</div>
 									</td>
 								</tr>
@@ -95,6 +94,7 @@
 
 <script src="/circle/resources/js/poll/jquery.min.js"></script>
 <script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.serializeObject.js"></script>
 
 <!-- 문항추가 입력 폼 -->
 <script type="text/html" id="question-form-template">
@@ -253,45 +253,6 @@
 </tr>
 </script>
 
-<!-- 선택형 추가완료 폼 샘플 -->
-<script type="text/html" id="question-select-complete-form 샘플">
-<li class="question-item sort">
-	<div class="question-preview">
-		<span class="question">
-			<span class="seq">1</span>
-			.
-			<span class="necessary">[필수]</span>
-			제목
-		</span>
-		<ul class="answer-wrap">
-			<li>
-				<span class="option-wrap">
-					<input id="radio-question-1001-1" name="question-1001" type="radio">
-					<label for="radio-question-1001-2">
-						보기1 입력
-					</label>
-				</span>
-			</li>
-			<li class="etc">
-				<span class="txt-wrap">
-					<input type="radio" name="question-1001">
-					<span class="label-wrap txt">기타입력</span>
-					<input class="wfix-max txt" type="text" name="answer">
-				</span>
-			</li>
-		</ul>
-	</div>
-	<div class="action-wrap">
-		<a class="icon24-btn edit-question-btn" title="수정">
-			<span class="toolbar-icon write"></span>
-		</a>
-		<a class="icon24-btn remove-question-btn" title="삭제">
-			<span class="toolbar-icon del"></span>
-		</a>
-	</div>
-</li>
-</script>
-
 <!-- 미리보기 생성 -->
 <script type="text/html" id="optionable-preview">
 <li class="question-item sort">
@@ -308,7 +269,7 @@
 		</ul>
 	</div>
 	<div class="action-wrap">
-		<a class="icon24-btn edit-question-btn" title="수정">
+		<a class="icon24-btn edit-question-btn" title="수정" onclick="previewModify();">
 			<span class="toolbar-icon write"></span>
 		</a>
 		<a class="icon24-btn remove-question-btn" title="삭제">
@@ -332,7 +293,8 @@
 <script type="text/html" id="optionable-preview-etc-content">
 			<li class="etc">
 				<span class="txt-wrap">
-					<input type="\${checkType}" name="question-\${seq}">
+					<input type="\${checkType}" name="question-\${seq}"
+
 					<span class="label-wrap txt">\${content}</span>
 					<input class="wfix-max txt" type="text" name="answer">
 				</span>
@@ -368,24 +330,363 @@
 			</li>
 </script>
 
+<!-- 문항수정용 입력 폼 -->
+<script type="text/html" id="question-modify-template">
+<li class="question-item question-item-modify">
+<form class="question-form">
+	<table class="poll-form form-table">
+		<tbody>
+			<tr>
+				<th>
+					<span class="title">질문</span>
+				</th>
+				<td>
+					<div class="txt-wrap">
+						<input class="txt w-large" type="text" name="question" value="\${title}">
+						<span class="alert-wrap desc-top-wrap warn-error">
+							<span class="desc caution">2 ~ 255자 까지 입력할 수 있습니다.</span>
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<span class="title">설문 문항 타입</span>
+				</th>
+				<td>
+					<div class="flex-info">
+						<span class="select-wrap">
+							<select name="question-type">
+								<option value="select">선택형</option>
+								<option value="text">텍스트형</option>
+								<option value="score">점수형</option>
+							</select>
+						</span>
+						<span class="select-wrap">
+							<select name="question-sub-type">
+								<option value="single">하나만 선택</option>
+								<option value="plural">복수 선택</option>
+							</select>
+						</span>
+						<span class="spacing1"></span>
+						<span class="option-wrap">
+							<input id="checkbox-required" type="checkbox" name="required" value="Y">
+							<label for="checkbox-required">필수 답변</label>
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr class="question-answer-row">
+				<th>
+					<span class="title">보기</span>
+				</th>
+				<td class="question-answer-container">
+					<ul class="answer-wrap">
+						<li>
+							<span class="add-question-btn txt-wrap disable">
+								<input type="radio" name="radio" value="-1" disabled="disabled">
+								<input class="txt wfix-max" type="text" readonly="readonly" value="보기를 추가하려면 이곳을 클릭하세요.">
+							</span>
+						</li>
+						<li class="create">
+							<span class="add-etc-question-btn btn-wrap btn-create">
+								<span class="icon-form icon-addlist"></span>
+								<span class="txt">기타 추가</span>
+							</span>
+						</li>
+					</ul>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="poll-action">
+		<a class="submit-btn main-btn">
+			<span class="txt">완료</span>
+		</a>
+		<a class="cancle-btn sub-btn">
+			<span class="txt">취소</span>
+		</a>
+	</div>
+</form>
+</li>
+</script>
+
 <!-- <script src="/circle/resources/js/poll/questionInsert.js"></script> -->
 <script type="text/javascript">
 /*********************************  함수 정의 영역  ****************************/
 
+/* 미리보기 수정창 입력폼 채우기 */
+function fillModifyForm(tempData){
+	$(".question-item-modify").find('option[value=' + tempData.type + ']').prop('selected',true);
+	
+	var type = tempData.type;
+	selectChange(type);
+}
+
+
+/* 미리보기 수정 클릭시 */
+function previewModify(){
+	
+	var loc = $(event.target);//클릭위치 확인
+	var num = $(loc).closest('.question-item').find('.seq').text();//클릭한 곳 시퀀스 찾기
+	var tempData = questions[num - 1];//시퀀스에 맞는 데이터 찾기
+	var rep =  $(loc).closest('.question-item');//문항 단위 선택
+	$('#question-modify-template').tmpl(tempData).insertBefore(rep);//문항 앞에 템플릿 추가
+	
+	rep.hide();//문항 숨기기
+	
+	fillModifyForm(tempData);
+	
+	
+}
+
+
 /* 문항 전역변수 초기화 */
-questions = [];			 			//전체 문항 
-seq = 0;							//순번
-title = "";								//제목
-necessary = "";							//필수 체크
-selectType = "";							//선택형
-selectNumberType = "";					//선택 개수
-checkType = "";							//radio - checkbox 종류 선택
-selectContent = new Array();//문항 내용
-subSeq = 0;							//문항순번
-etcSelectContent = "";					//기타 문항 내용
-etcContent = "";
-score = 0;
-pluralMaximum = 0;
+	questions = new Array();					//최종 결과물 
+	seq = 0;							//순번
+	oneQuestion = {};				//문항 하나
+	title = "";								//제목
+	necessary = "";							//필수 체크
+	selectType = "";							//선택형
+	checkType = "";							//radio - checkbox 종류 선택
+	selectContents = new Array();//문항 내용
+	subSeq = 0;							//문항순번
+	etcContent = "";
+	score = 0;
+	pluralMaximum = 0;
+	checkLowerType = "";
+	
+/* 재사용 변수 초기화 */	
+function initVar(){
+	oneQuestion = {};				//문항 하나
+	title = "";								//제목
+	necessary = "";							//필수 체크
+	selectType = "";							//선택형
+	checkType = "";							//radio - checkbox 종류 선택
+	selectContents = new Array();//문항 내용
+	subSeq = 0;							//문항순번
+	etcContent = "";
+	score = 0;
+	pluralMaximum = 0;
+	checkLowerType = "";
+}
+
+
+
+
+/* 문항 완료 미리보기 통합 추가 */
+function addPreview(){
+	seq += 1;
+	title = extractTitle();
+	necessary = extractNecessary();
+	
+	//문항 공통데이터 변수화
+	var data = {"seq":seq, "title":title, "necessary":necessary};
+	
+	//문항 공통데이터 출력
+	$("#optionable-preview").tmpl(data).insertBefore('.action');
+	
+	switch(extractQuestionType()){
+	case 'select'	: addPreviewSelectOptionable();break;
+	case 'text'		: addPreviewTextType();break;
+	case 'score'	: addPreviewScore();break;
+	}
+}
+
+
+
+/*******************************
+텍스트형 문항 추가 관련 함수 
+********************************/
+	/* 텍스트형 - 문항 완료 미리보기 - 추가 */
+	function addPreviewTextType(){
+		/* 단문 장문 확인 */
+		switch(textLowerType()){
+		case 'text': $('#text-short-type-preview').tmpl().appendTo(".question-item:last .answer-wrap");break;
+		case 'textarea'	: $('#text-long-type-preview').tmpl().appendTo(".question-item:last .answer-wrap");break;
+		}
+		
+		/* 결과 변수에 저장 */
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"text","checkLowerType":textLowerType()};
+		
+		questions.push(oneQuestion);
+		
+		initVar();
+		
+	}
+	/* 텍스트형 - 서브타입 단문/장문 선택 - 확인 */
+	function textLowerType(){
+		return $('.question-form select[name=question-sub-type] option:selected').val();
+	}
+	
+	
+/*******************************
+점수형 문항 추가 관련 함수 
+********************************/
+	/* 점수형 - 문항완료 미리보기 - 추가 */
+	function addPreviewScore(){
+		$('.question-item .answer-wrap:last').addClass('rank');//점수문항 css변경용 rank클래스 추가
+		
+		var score = checkScore();
+
+		/* 점수 선택지 미리보기 추가 */
+		var scoreContent =new Array();
+		for(var i = 1; i <= score; i++){
+			scoreContent.push({"seq":seq, "subSeq":i});
+			/* 선택지 변수에 추가 */
+			selectContents.push({"subSeq": i, "content" : i});
+		}
+		
+		$('#score-preview').tmpl(scoreContent).appendTo(".question-item:last .answer-wrap");
+		
+		
+		/* 결과 변수에 저장 */
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"score","pluralMaximum":0,"score":score, "selectContents":selectContents};
+		questions.push(oneQuestion);
+		initVar();
+	}
+
+	/* 점수형 - 점수선택 - 확인 */
+	function checkScore(){
+		return $('.question-form select[name=question-sub-type] option:selected').val();
+	}
+
+	
+/*******************************
+	선택형 문항 추가 관련 함수 
+********************************/
+
+	/* 문항 추가 폼 -선택형- 보기 존재 확인 */
+	function confirmAddQuestionFromSelectExist(){
+		if(selectionExist() || etcSelectionExist()){
+			return true
+		} else {
+			return false
+		}
+	}
+
+	/* 문항 완료 미리보기 - 선택형 - 추가 */
+	function addPreviewSelectOptionable() {
+		/* 일반 보기 존재 확인 */
+		if(selectionExist()) {
+			checkType = extractCheckType();
+			selectContents = extractContent(seq, checkType);
+			//선택형 보기(기타 제외) 출력
+			$('#optionable-preview-content').tmpl(selectContents).appendTo(".question-item:last .answer-wrap");
+		}
+		/* 기타 보기 존재 확인 */
+		if(etcSelectionExist()) {
+			checkType = extractEtcCheckType();
+			selectContents.push(extractEtcContent(seq, checkType));
+			//선택형 보기(기타) 출력
+			$('#optionable-preview-etc-content').tmpl(etcContent).appendTo(".question-item:last .answer-wrap");
+		}
+		/* 하나만/복수선택 확인 */
+		if(checkType == 'checkbox'){
+			pluralMaximum = extractMaximum();
+		}
+		
+		/* 결과 변수에 저장 */
+		oneQuestion = {"seq":seq,"title":title,"necessary":necessary,"type":"select","pluralMaximum":pluralMaximum,"checkLowerType":textLowerType(), "selectContents":selectContents };
+		questions.push(oneQuestion);
+		initVar();
+	}
+	
+	/* 선택형에서 하나만, 복수형 선택시 radio <---> checkbox button 변경 */
+	function buttonChange() {
+		switch($("select[name=question-sub-type]").val()){
+			case "single" :	$(".plural-only").css("display", "none");
+							$(".question-form ul.answer-wrap li span input:checkbox").prop('type','radio');
+							break;
+			case "plural" :	$(".plural-only").css("display", "table-row");
+							$(".question-form ul.answer-wrap li span input:radio").prop('type','checkbox');
+							break;
+		}
+	}
+	
+
+	/* 일반 보기 radio-checkbox (하나만/복수형)선택 변수화 */
+	function extractCheckType(){
+		return $('.question-form .question-option-item .txt-wrap input:first').prop("type");
+	}
+	/* 기타 보기 radio-checkbox (하나만/복수형)선택 변수화 */
+	function extractEtcCheckType(){
+		return $('.question-form .question-option-item-etc .txt-wrap input:first').prop("type");
+	}
+	/* 복수형 선택시 최대갯수 리턴 */
+	function extractMaximum(){
+		return $('.question-form .plural-only option:selected').val();
+	}
+	
+	/* 선택 보기 내용 변수화(기타 제외) */
+	function extractContent(seq, checkType){
+		var contents = new Array();
+		subSeq = 1;
+		$(".question-form").find(".question-option-item input[name=option-2]").each(function(index,item) {
+			var content ={"seq":seq, "checkType":checkType, "subSeq": subSeq, "content":$(item).val()};
+			subSeq+=1;
+			
+			/* 전체 결과에 입력*/
+			/* questions.push(selectContent); */
+			
+			/* 미리보기 입력용 입력 */
+			contents.push(content);
+			
+		});
+		return contents;
+	}
+	/* 선택 보기 내용 변수화(기타) */
+	function extractEtcContent(seq, checkType){
+		var contents;
+		var content = $(".question-form").find(".question-option-item-etc input[name=option-2]").val();
+		var contents = {"seq":seq, "checkType":"etc", "content":content};
+		
+		return contents;
+	}
+	
+	/* 문항 입력 체크 */
+	function dataCheck(){
+		if(questions.length > 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+/*********************************  실행 영역  **************************************************************************/
+$(document).ready(function(){
+	
+	/*********************************/
+	
+	/* 작성완료 클릭시 기능 */
+	$('#finish-btn').on('click', function(){
+		
+		if(dataCheck()){
+	    	var data = JSON.stringify(questions);
+	    	
+			var base = "${pageContext.request.contextPath}";
+			$.ajax({
+				type		:	'post'
+			   ,traditional	:	true
+			   ,url			: 	base+"/pollAjax/writeComplete"
+			   ,data		:	data
+			   ,dataType	: 	'text'
+	       	   ,contentType	:	"application/json; charset=utf-8;"
+			   ,error		: 	function(request,status,error){
+	       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			   ,success		: 	location.href = "${pageContext.request.contextPath}/poll/my"
+			})
+			
+		} else {
+			alert('문항을 입력해주세요');
+		}
+		
+		
+	})
+});
+
+/**************************** js 파일 부분 **********************************/
+/*********************************  함수 정의 영역  ****************************/
 
 /* 문항추가 입력폼 추가 */
 function addQuestionEditFrom(){
@@ -407,8 +708,6 @@ function confirmAddQuestionFromExist(){
 /* 문항추가폼 미입력 부분 확인/ 확인후 후속 추가동작 */
 function confirmAddQuestion(){
 	/* 질문 입력창 입력 확인 - 경고메세지 출력*/
-	
-	console.log($("input[name=question]").val().length);
 	
 	if($("input[name=question]").val().length < 2 || $("input[name=question]").val() == ""){
 		($("input[name=question]").siblings(".desc-top-wrap").css("display","block")
@@ -456,25 +755,6 @@ function confirmAddQuestion(){
 		}
 	}
 }
-
-/* 문항 완료 미리보기 통합 추가 */
-function addPreview(){
-	seq += 1;
-	title = extractTitle();
-	necessary = extractNecessary();
-	
-	//문항 공통데이터 변수화
-	var data = {"seq":seq, "title":title, "necessary":necessary};
-	
-	//문항 공통데이터 출력
-	$("#optionable-preview").tmpl(data).insertBefore('.action');
-	
-	switch(extractQuestionType()){
-	case 'select'	: addPreviewSelectOptionable();break;
-	case 'text'		: addPreviewTextType();break;
-	case 'score'	: addPreviewScore();break;
-	}
-}
 /* 문항 제목 변수화 */
 function extractTitle(){
 	title = $('.question-form input[name=question]').val();
@@ -491,110 +771,10 @@ function extractNecessary(){
 	return temp;
 }
 
-
-/*******************************
-텍스트형 문항 추가 관련 함수 
-********************************/
-	/* 텍스트형 - 문항 완료 미리보기 - 추가 */
-	function addPreviewTextType(){
-		/* 단문 장문 확인 */
-		switch(textLowerType()){
-		case 'text': $('#text-short-type-preview').tmpl().appendTo(".question-item:last .answer-wrap");break;
-		case 'textarea'	: $('#text-long-type-preview').tmpl().appendTo(".question-item:last .answer-wrap");break;
-		}
-		
-		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"text","selectContent":0,"etcContent":0,"pluralMaximum":0
-						,"selectNumberType":0,"score":0,"checkLowerType":textLowerType()});
-		console.log(questions);
-		
-	}
-	/* 텍스트형 - 서브타입 단문/장문 선택 - 확인 */
-	function textLowerType(){
-		return $('.question-form select[name=question-sub-type] option:selected').val();
-	}
-	
-	
-/*******************************
-점수형 문항 추가 관련 함수 
-********************************/
-	/* 점수형 - 문항완료 미리보기 - 추가 */
-	function addPreviewScore(){
-		$('.question-item .answer-wrap:last').addClass('rank');//점수문항 css변경용 rank클래스 추가
-		
-		var score = checkScore();
-		
-		var scoreContent =new Array();
-		for(var i = 1; i <= score; i++){
-			scoreContent.push({"seq":seq, "subSeq":i});
-		}
-		
-		$('#score-preview').tmpl(scoreContent).appendTo(".question-item:last .answer-wrap");
-		
-		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"score","selectContent":0,"etcContent":0,"pluralMaximum":0
-						,"selectNumberType":0,"score":score,"checkLowerType":0});
-		console.log(questions);
-	}
-
-	/* 점수형 - 점수선택 - 확인 */
-	function checkScore(){
-		return $('.question-form select[name=question-sub-type] option:selected').val();
-	}
-
-	
 /*******************************
 	선택형 문항 추가 관련 함수 
 ********************************/
 
-	/* 문항 추가 폼 -선택형- 보기 존재 확인 */
-	function confirmAddQuestionFromSelectExist(){
-		if(selectionExist() || etcSelectionExist()){
-			return true
-		} else {
-			return false
-		}
-	}
-
-	/* 문항 완료 미리보기 - 선택형 - 추가 */
-	function addPreviewSelectOptionable() {
-		/* 일반 보기 존재 확인 */
-		if(selectionExist()) {
-			checkType = extractCheckType();
-			selectContent = extractContent(seq, checkType);
-			//선택형 보기(기타 제외) 출력
-			$('#optionable-preview-content').tmpl(selectContent).appendTo(".question-item:last .answer-wrap");
-		}
-		/* 기타 보기 존재 확인 */
-		if(etcSelectionExist()) {
-			checkType = extractEtcCheckType();
-			etcContent = extractEtcContent(seq, checkType);
-			//선택형 보기(기타) 출력
-			$('#optionable-preview-etc-content').tmpl(etcContent).appendTo(".question-item:last .answer-wrap");
-		}
-		/* 하나만/복수선택 확인 */
-		if(checkType == 'checkbox'){
-			pluralMaximum = extractMaximum();
-		}
-		
-		/* 결과 변수에 저장 */
-		questions.push({"seq":seq,"title":title,"necessary":necessary,"type":"select","selectContent":selectContent,"etcContent":etcContent,"pluralMaximum":pluralMaximum,"selectNumberType":0,"score":0,"checkLowerType":textLowerType()});
-		console.log(questions);
-		
-	}
-	
-	/* 선택형에서 하나만, 복수형 선택시 radio <---> checkbox button 변경 */
-	function buttonChange() {
-		switch($("select[name=question-sub-type]").val()){
-			case "single" :	$(".plural-only").css("display", "none");
-							$(".question-form ul.answer-wrap li span input:checkbox").prop('type','radio');
-							break;
-			case "plural" :	$(".plural-only").css("display", "table-row");
-							$(".question-form ul.answer-wrap li span input:radio").prop('type','checkbox');
-							break;
-		}
-	}
-	
 	/* 복수형 선택시 최대선택 개수 선택지 추가 */
 	function addPluralNum() {
 		$("#question-option-plural-only").tmpl().insertBefore(".question-answer-row");
@@ -616,39 +796,7 @@ function extractNecessary(){
 			return true;
 		}
 	}
-	/* 일반 보기 radio-checkbox (하나만/복수형)선택 변수화 */
-	function extractCheckType(){
-		return $('.question-form .question-option-item .txt-wrap input:first').prop("type");
-	}
-	/* 기타 보기 radio-checkbox (하나만/복수형)선택 변수화 */
-	function extractEtcCheckType(){
-		return $('.question-form .question-option-item-etc .txt-wrap input:first').prop("type");
-	}
-	/* 복수형 선택시 최대갯수 리턴 */
-	function extractMaximum(){
-		return $('.question-form .plural-only option:selected').val();
-	}
 	
-	/* 선택 보기 내용 변수화(기타 제외) */
-	function extractContent(seq, checkType){
-		var contents = new Array();
-		subSeq = 1;
-		$(".question-form").find(".question-option-item input[name=option-2]").each(function(index,item) {
-			contents.push({"seq":seq, "checkType":checkType, "subSeq": subSeq, "content":$(item).val()});
-			subSeq+=1;
-		});
-		return contents;
-	}
-	/* 선택 보기 내용 변수화(기타) */
-	function extractEtcContent(seq, checkType){
-		var contents;
-		var content = $(".question-form").find(".question-option-item-etc input[name=option-2]").val();
-		var contents = {"seq":seq, "checkType":checkType, "content":content};
-		return contents;
-	}
-
-
-
 /*********************************  실행 영역  **************************************************************************/
 $(document).ready(function(){
 	
@@ -671,7 +819,14 @@ $(document).ready(function(){
 		
 		/* 문항 타입 선택 */
 		$(document).on("change","select[name=question-type]",function(){
-			switch($("select[name=question-type]").val()){
+			
+			var type = $("select[name=question-type]").val()
+			
+			selectChange(type);
+		});
+		
+		function selectChange(type){
+			switch(type){
 			/* 선택형 선택시 */
 			case "select" : $("select[name=question-sub-type]").html("<option value='single'>하나만 선택</option><option value='plural'>복수 선택</option>");
 							$(".question-answer-row").css("display","table-row");
@@ -696,9 +851,9 @@ $(document).ready(function(){
 							});
 							break;
 			}
-		});
-
-		/*********************************
+		}
+		
+				/*********************************
 		** 선택형 문항 내부 기능 ** 
 		**********************************/		
 		/* 복수선택 select 선택시 */
@@ -751,16 +906,35 @@ $(document).ready(function(){
 		});
 		/*************************/
 		
+		
+
+
+		
 		/*********************************
 		** 문항추가 완료/취소 버튼 기능 ** 
 		**********************************/
 		/* 완료버튼 클릭 */
 		$(document).on("click", ".poll-action span:contains('완료')", function(){
+			
+			
 			confirmAddQuestion();
 			
 		});
 		/* 취소버튼 클릭 */
-		$(document).on("click", ".poll-action span:contains('취소')", removeQuestionEditForm);
+		$(document).on("click", ".poll-action span:contains('취소')", function(){
+			//수정용 or 추가용 확인
+			var x = $(this).closest('.question-item').prop('class');
+			
+			if(x == 'question-item question-item-modify'){
+				$(this).closest('.question-item-modify').next().show();
+				$(this).closest('.question-item-modify').remove();
+			} else {
+				$(this).closest('.question-item-edit').remove();
+			}
+						
+			
+			/*removeQuestionEditForm();*/
+		});
 		/*********************************/
 		/* 문항 개별삭제 아이콘 클릭 */
 		$(document).on("click", ".remove-question-btn", function(){
@@ -778,39 +952,19 @@ $(document).ready(function(){
 			/* 태그 삭제 */
 			$(this).closest('.question-item').remove();
 
-			console.log(questions);
 		});
 		
 		
 		
-	/*********************************
-	*********************************/
+	/*********************************/
 	
-	/* 작성완료 클릭시 기능 */
-	$('#finish-btn').on('click', function(){
-		console.log(questions);
-		
-		var base = "${pageContext.request.contextPath}";
-		
-    	var data = JSON.stringify(questions);
-    	
-    	console.log(data);
-		
-		$.ajax({
-			type		:	'post'
-		   ,traditional	:	true
-		   ,url			: 	base+"/pollAjax/writeComplete"
-		   ,data		:	{"data" : data}
-		   ,dataType	: 'text'
-       	   ,contentType	:"application/json; charset=utf-8;"
-		   ,error		: 	function(request,status,error){
-       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-		   ,success		: 	console.log("data send success")
-		})
-		
-	})
 });
+
+
+
 </script>
+
+
 </body>
 
 

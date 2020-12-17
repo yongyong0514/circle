@@ -65,7 +65,7 @@ li{
 				<div class="table-area">
 			<table align="center" width="800px" height="50px">
 				<tr>
-					<th>번호 : <input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></th>
+					<th><input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></th>
 					<th align="center" >동호회</th>
 					<td><span name="comu_list_name">${ comuCheck.comu_list_name}</span></td> 
 					<th align="center" >제목</th>
@@ -102,7 +102,7 @@ li{
 		 	 <div class="inputfield">
 			<%-- <label><input type="hidden" name="comu_post_ordr" value="${ comuCheck.comu_post_ordr}"></label>  --%>
 			<br>
-			<label><input type="submit" value="수정하기" class="btn" id="submit"></label>
+			<label><input type="submit" value="수정하기" class="btn" onclick="upDate1();" id="submit"></label>
 
 			</div> 
 			</li>
@@ -112,3 +112,13 @@ li{
 		
 			</div>
 		</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+			
+<script type="text/javascript">
+function upDate1(){
+	alert("글이 수정 되었습니다.");
+}
+</script>

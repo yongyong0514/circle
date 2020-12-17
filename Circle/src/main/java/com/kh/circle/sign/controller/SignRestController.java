@@ -34,7 +34,7 @@ import com.kh.circle.sign.vo.SignReplyInsert;
 
 @RestController
 @RequestMapping("/signResult")
-public class SignResultController {
+public class SignRestController {
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -42,82 +42,21 @@ public class SignResultController {
 	@Autowired
 	private SignService signService;
 
-	@GetMapping("/signJoinerCount")
-	public int signJoinerCount(@RequestParam String signCode) {
-		int result = sqlSession.selectOne("sign.signJoinerCount", signCode);
-		
-		return result;
-	}
-	
-	@GetMapping("/signListJoinerCheck")
-	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {	
-		List<SignListJoiner> list = sqlSession.selectList("sign.signJoinerCheck", signCode);
-		
-		return list;
-	}
-	
-	@GetMapping("/signListJoiner")
-	public List<SignListJoiner> signJoiner(@RequestParam String signCode) {	
-		List<SignListJoiner> list = sqlSession.selectList("sign.signJoiner", signCode);
-		
-		return list;
-	}
-
-	@GetMapping("/signListWatcher")
-	public List<SignListJoiner> signWatcher(@RequestParam String signCode) {
-		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
-		
-		return list;
-	}
-	
-//	결재 타입 지정
-	@GetMapping("/signTypeContent")
-	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
-		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
-		Map<String, Object> map = new HashMap<>();
-		map.put("result", result);
-		
-		return map;
-	}
-	
-//	결재 첨부 파일 로드
-	@GetMapping("/signFileList")
-	public List<SignFiles> signFileList(@RequestParam String signCode) {
-		List<SignFiles> list = sqlSession.selectList("sign.signFileList", signCode);
-		
-		return list;
-	}
-
-// 	결재 첨부 파일 다운로드
-	@GetMapping("/signFileDownload")
-	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
-		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
-		
-		return entity;
-	}
-	
-// 	결재 댓글 로드
-	@GetMapping("/signReply")
-	public List<SignReply> signReply(@RequestParam String signCode, Model model) {
-		List<SignReply> list = sqlSession.selectList("sign.signReply", signCode);
-		model.addAttribute("list", list);
-			
-		return list;
-	}
-	
-// 	결재 댓글 작성
+// 	Create 결재 댓글 작성
 	@PostMapping("/signReplyInsert")
 	public void signReplyInsert(@ModelAttribute SignReplyInsert signReplyInsert) {
 		signService.insertReply(signReplyInsert);
 	}
 
-// 	결재 서명 첨부 파일 등록
+	
+// 	Create 결재 서명 첨부 파일 등록
 	@PostMapping("/signFilesSignature")
 	public String uploadSignature(HttpSession session, MultipartHttpServletRequest multipartRequest) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
-		int checkValue = sqlSession.selectOne("sign.sfsListCount", empCode);
+		String iempCode = 'i' + empCode;
+		int checkValue = sqlSession.selectOne("sign.sfsListCount", iempCode);
 		Iterator<String> itr =  multipartRequest.getFileNames();
-		String filePath = "d:/resources/files/empInfo/signature";
+		String filePath = "d:/resources/files/sign/signature/image";
 		
 		if(checkValue < 5) {
 			while (itr.hasNext()) {
@@ -132,7 +71,7 @@ public class SignResultController {
 				try {
 					multipartFile.transferTo(new File(files_route));
 					
-					signService.insertFilesSignature(files_oname, files_size, files_type, files_cname, files_route, empCode);
+					signService.insertFilesSignature(files_oname, files_size, files_type, files_cname, files_route, iempCode);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -143,16 +82,84 @@ public class SignResultController {
 			System.out.println("denied");
 		}
 		return "sign/signConfig";	
+	}	
+	
+	
+//	Result 결재 참여 결재자 수
+	@GetMapping("/signJoinerCount")
+	public int signJoinerCount(@RequestParam String signCode) {
+		int result = sqlSession.selectOne("sign.signJoinerCount", signCode);
+		
+		return result;
 	}
 	
-//	결재 서명 첨부 파일 삭제
-	@PostMapping("/sfsDelete")
-	public void sfsDelete(@RequestParam String fileCode) {
-		signService.update(fileCode);
+	
+//	Result 결재 참여 결재자 승인 수
+	@GetMapping("/signListJoinerCheck")
+	public List<SignListJoiner> signJoinerCheck(@RequestParam String signCode) {	
+		List<SignListJoiner> list = sqlSession.selectList("sign.signJoinerCheck", signCode);
+		
+		return list;
+	}
+	
+	
+//	Result 결재 참여자 리스트
+	@GetMapping("/signListJoiner")
+	public List<SignListJoiner> signJoiner(@RequestParam String signCode) {	
+		List<SignListJoiner> list = sqlSession.selectList("sign.signJoiner", signCode);
+		
+		return list;
 	}
 
 	
-// 전자 결재 한명 결재 프로세스
+//	Result 결재 참조자 리스트
+	@GetMapping("/signListWatcher")
+	public List<SignListJoiner> signWatcher(@RequestParam String signCode) {
+		List<SignListJoiner> list = sqlSession.selectList("sign.signWatcher", signCode);
+		
+		return list;
+	}
+	
+	
+//	Result 결재 종류 선택시 반환 타입 지정
+	@GetMapping("/signTypeContent")
+	public Map<String, Object> signTypeContent(@RequestParam String typeCode) {
+		String result = sqlSession.selectOne("sign.signTypeContent", typeCode);
+		Map<String, Object> map = new HashMap<>();
+		map.put("result", result);
+		
+		return map;
+	}
+	
+	
+//	Result 결재 첨부 파일 리스트
+	@GetMapping("/signFileList")
+	public List<SignFiles> signFileList(@RequestParam String signCode) {
+		List<SignFiles> list = sqlSession.selectList("sign.signFileList", signCode);
+		
+		return list;
+	}
+
+	
+// 	Result 결재 첨부 파일 다운로드
+	@GetMapping("/signFileDownload")
+	public ResponseEntity<ByteArrayResource> signFileDownload(@RequestParam String fileCode) throws IOException {
+		ResponseEntity<ByteArrayResource> entity = signService.download(fileCode);
+		
+		return entity;
+	}
+	
+// 	Result 결재 댓글 리스트
+	@GetMapping("/signReply")
+	public List<SignReply> signReply(@RequestParam String signCode, Model model) {
+		List<SignReply> list = sqlSession.selectList("sign.signReply", signCode);
+		model.addAttribute("list", list);
+			
+		return list;
+	}
+
+	
+//  Update 결재 참여 결재자 결재 승인 프로세스
 	@PostMapping("/signProcess")
 	public String updateSignProcess(@RequestParam String fileCode, String signCode, HttpSession session) {
 		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
@@ -205,11 +212,53 @@ public class SignResultController {
 		return "redirect:/sign/signSelecOne/?signCode="+signCode;
 	}
 	
-//	전자 결재 한명 반려 프로세스
-	@PostMapping("/signCancel")
-	public String signCancel(@RequestParam String signCode){
+	
+//	Update signDenied
+	@PostMapping("/signDenied")
+	public String signCancel(@RequestParam String signCode, HttpSession session){
+		String empCode = ((EmpInfo)session.getAttribute("empInfo")).getEmp_info_emp_no();
 		
-		return "redirect:/sign/signSelecOne/?signCode="+signCode;
+		//반려 상태 프로세스 추가
+		//반려 상태 sign 한 건 반려 처리
+		sqlSession.insert("sign.signProcessAdd4", signCode);
+		
+		sqlSession.delete("sign.signProcessDel2", signCode);
+		
+		sqlSession.update("sign.signDenied", signCode);
+		 
+		return "redirect:/sign/signSelecOne?signCode="+signCode;
+	}	
+	
+	
+//	Delete 결재 서명 첨부 파일 삭제
+	@PostMapping("/sfsDelete")
+	public void sfsDelete(@RequestParam String fileCode) {
+		signService.update(fileCode);
 	}
+	
 
+//	Delete signReply
+	@PostMapping("/signReplyDelete")
+	public void signReplyDelete(@RequestParam String replyCode) {
+		
+		signService.deleteSignReply(replyCode);
+		
+	}
+	
+//	Delete signType
+	@PostMapping("/signTypeDelete")
+	public void signTypeDelete(@RequestParam String typeCode) {
+		
+		signService.deleteSignType(typeCode);
+	}
+	
+	
+//	Result signReplyOwner
+	@GetMapping("/signReplyOwner")
+	public String signReplyOwner(@RequestParam String replyCode) {
+		
+		String empCode = sqlSession.selectOne("sign.signReplyOwner", replyCode);
+		
+		return empCode;
+	}
 }

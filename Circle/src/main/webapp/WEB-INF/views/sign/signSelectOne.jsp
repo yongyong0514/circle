@@ -25,7 +25,7 @@
 				<div class="signHomeListBar">
 					<ul>
 						<li class="signHomeListTitle">
-							<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
+							<c:if test="${signSelectOne.sign_step == 'SIPC000004'}">
 								<c:if test="${signSelectOne.sign_emp_code == empInfo.emp_info_emp_no}" >
 									<button class="signSelectOneModifyBtn">수정하기</button>
 								</c:if>
@@ -123,21 +123,26 @@
 								<td class="formBox7" colspan="2">
 									<c:forEach var="join" items="${signListJoiner}">
 										<c:if test="${signSelectOne.sign_step != 'SIPC000003'}">
-											<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
-												<c:if test="${join.sign_join_check == 'N' }">
-													<button id="formBtn3">결재</button>
-													<ul id="signSelect1">
-														<li>
-															<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
-															<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
-														</li>
-													</ul>
+											<c:if test="${signSelectOne.sign_step != 'SIPC000004'}">
+												<c:if test="${join.emp_info_emp_no == empInfo.emp_info_emp_no}">
+													<c:if test="${join.sign_join_check == 'N' }">
+														<button id="formBtn3">결재</button>
+														<ul id="signSelect1">
+															<li>
+																<button class="submitAgree">승인<br><a class="fontSize1">결재를 승인합니다</a></button>&nbsp;&nbsp;&nbsp;
+																<button class="submitDenied">반려<br><a class="fontSize1">결재를 거부합니다</a></button>
+															</li>
+														</ul>
+													</c:if>
 												</c:if>
 											</c:if>
 										</c:if>
 									</c:forEach>
 										<c:if test="${signSelectOne.sign_step == 'SIPC000003'}">
 											<button id="formBtn3" disabled>결재가 완료되었습니다</button>
+										</c:if>
+										<c:if test="${signSelectOne.sign_step == 'SIPC000004'}">
+											<button id="formBtn3" disabled>이 결재는 반려 되었습니다</button>
 										</c:if>
 											<div id="signModalForm">
 												<div class="signModalArea">
@@ -168,10 +173,6 @@
 											</div>
 								</td>
 							</tr>
-<!-- 					결재가 완료되었으면 메세지 변경 및 버튼 비활성화	
-						<tr>
-							<td class="formBox7" colspan="2"><button class="formBtn3" disabled>결재가 완료되었습니다</button></td>
-						</tr> -->
 						</table>
 						
 						<table class="signAndReply1"><!-- 댓글과 서명박스 구현 공간 -->
@@ -192,40 +193,6 @@
 									</tr>
 								</tbody>
 							</c:forEach>
-					<%-- 	<c:forEach var="reply" items="${list4}">
-							<tbody class="replyBox">
-								<tr>
-									<td class="replyImage" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="img3"></td>
-									<td class="replyUser" >
-										<input type="text" class="formResult2" value="${reply.emp_info_name}" readonly>
-										<input type="text" class="formResult2" value="${reply.job_info_name}" readonly>
-										<input type="text" class="formResult4" value="${reply.sign_reply_date}" readonly>
-									</td>
-								</tr>
-								<tr>
-									<td class="formReply">
-										<textarea class="replyNote" readonly>${reply.sign_reply_content}</textarea>
-									</td>
-								</tr>
-							</tbody>
-						</c:forEach> --%>
-							<%-- <tr>
-								<td class="formBox2" rowspan="2"><img src="${pageContext.request.contextPath}/resources/img/test/user.png" class="img2"></td>
-								<td class="formBox3">
-									<input type="text" class="formResult2" value="이름공간" readonly>
-									<input type="text" class="formResult2" value="직위" readonly>
-								</td>
-							</tr>
-							<tr>
-								<td class="formBox3">
-									<input type="text" class="formResult4" value="2020-11-11 10:10" readonly>
-								</td>
-							</tr>
-							<tr>
-								<td class="formBox9" colspan="2">
-									<input type="text" class="formResult6" value="결재 도장 이미지" readonly>
-								</td>
-							</tr> --%>
 						</table>
 						<table class="signAndReply">
 						</table>
@@ -235,9 +202,6 @@
 									<div class="formBtn0" id="submitReply">전송</div>
 								</td>
 							</tr>
-<!-- 						<tr>
-								<td class="formBox10" colspan="2"><button class="formBtn2">결재</button></td>
-							</tr> -->
 						</table>
 					</div>
 					<div class="formRight">
@@ -326,12 +290,14 @@
 							var $empName = $("<input type='text' class='formResult2' readonly>").val(data[key].emp_info_name);
 							var $jobName = $("<input type='text' class='formResult2' readonly>").val(data[key].job_info_name);
 							var $replyDate = $("<input type='text' class='formResult4' readonly>").val(data[key].sign_reply_date);
+							var $deleteReply = $("<button class='deleteReply' readonly>삭제</button>").val(data[key].sign_reply_code);
 							var $formReply = $("<td class='formReply'>");
 							var $replyNote = $("<textarea class='replyNote' readonly></textarea>").text(data[key].sign_reply_content);
 
 							$replyUser.append($empName);
 							$replyUser.append($jobName);
 							$replyUser.append($replyDate);
+							$replyUser.append($deleteReply);
 							
 							$tr1.append($replyImage);
 							$tr1.append($replyUser);
@@ -351,25 +317,6 @@
 			});
 		}
 	</script>
-	
-	<!-- 결재 전송-->
-<!-- 	<script>
-		$(".submitAgree").click(function(){
-			var base = "${pageContext.request.contextPath}";
-			var signCode = document.location.href.split("=");
-			var signEmpCode = ${empInfo.emp_info_emp_no};
-			
-			$.ajax({
-				url: base + "/signResult/signDecisionInsert",
-				type: "post",
-				data: {sign_code : signCode[1]
-					 , sign_join_emp_code : signEmpCode},
-				success: function(){
-					signList();
-				}
-			});
-		});
-	</script> -->
 	
 	<!-- 결재 댓글 전송 -->
 	<script>
@@ -400,72 +347,47 @@
 		});
 	</script>
 	
-<!--     <script>
-		$(document).ready(function(){
-				var base = "${pageContext.request.contextPath}";
-				var signCode = document.location.href.split("=");
-				
-				$.ajax({
-					url: base + "/signResult/signFileList",
-					type: "get",
-					data: {signCode : signCode[1]},
-					success: function(data) {
-						var objDragAndDrop = $(".dragAndDropDiv");
-						
-						for(var key in data) {
-							var $statusbar = $("<div class='statusbar'>");
-							var $filename = $("<div class='filename'>").text(data[key].files_oname);
-
-							var size = data[key].files_size/1024;
-								if(size > 1024) {
-									size = size.toFixed(2) + " MB";
-								} else {
-									size = size.toFixed(2) + " KB";
-								}
-							var $size = $("<div class='filesize'>").text(size);
-
-							var $filecode = $("<div class='filecode' style='display: none;'>").text(data[key].files_code);
-							
-							$statusbar.append($filename);
-							$statusbar.append($size);
-							$statusbar.append($filecode);
-							
-							objDragAndDrop.after($statusbar);
-						}
-					}
-				});
-		});
-	</script> -->
-<!-- 	<script>
-		$(document).on("click",".statusbar",function(){
+	<!-- 댓글 삭제 -->
+	<script>
+		$(document).on('click', '.deleteReply', function(){
 			var base = "${pageContext.request.contextPath}";
-			var tag = $(this);
-			var fileCode = tag.children().eq(2).text();
-			$.ajax({
-				url: base + "/signResult/signFileDownload",
-				type: "get",
-				data: {fileCode : fileCode},
-				success: function(response, status, xhr, data) {
-					var tab1 = xhr.getResponseHeader('content-disposition').split('filename=')[1].split(';')[0];
-					var	tab2 = tab1.replace(/\"/g, ""); 
-					var fileName = decodeURI(tab2);
-					
-				    if (response !== null && navigator.msSaveBlob)
-				        return navigator.msSaveBlob(new Blob([response], {type: 'application/octet-stream'}), fileName);
-				    
-				    var a = $("<a style='display: none;'/>");
-				    var url = window.URL.createObjectURL(new Blob([response], {type: 'application/octet-stream'}));
-				    a.attr("href", url);
-				    a.attr("download", fileName);
-				    $("body").append(a);
-				    a[0].click();
-				    window.URL.revokeObjectURL(url);
-				    a.remove();
-				}
-			});
-			
+ 			var replyCode = $(this).val();
+ 			var empCode= ${empInfo.emp_info_emp_no};
+ 			
+ 			$.ajax({
+ 				url: base + "/signResult/signReplyOwner",
+ 				type: "get",
+ 				data: {replyCode: replyCode},
+ 				success: function(data){
+ 					
+ 					if(data == empCode){
+ 			  			
+ 						$.ajax({
+ 							url: base + "/signResult/signReplyDelete",
+ 							type: "post",
+ 							data: {replyCode : replyCode},
+ 							success: function(){
+ 									signReply();
+ 							},
+ 							error: function(){
+ 								alert("error");
+ 							}
+ 						});
+ 						
+ 					} else {
+ 						alert("댓글 작성자만 삭제할 수 있습니다.");
+ 					}
+ 				}, 
+ 				
+ 				error: function(){
+ 					alert("서버 연결 실패");
+ 				}
+ 				
+ 			});
+
 		});
-	</script> -->
+	</script>
+	
     <script>
 		$(".signSelectOneModifyBtn").click(function(){
 			var base = "${pageContext.request.contextPath}";
@@ -474,7 +396,8 @@
 			location.href = "../sign/signModify?signCode=" + signCode;
 		});  
     </script>
-    <script>
+    
+     <script>
     	$(function(){
     		var content = $("#viewer").data("content"); //data-content의 값을 불러와라
     		$("#viewer").data("content", ""); //data-content의 값을 삭제(불러왔기 때문에)
@@ -565,7 +488,15 @@
 	<!-- 결재 진행 -->
 	<script>
     	$(".submitAgree").click(function(){
-    		$("#signModalForm").attr("style", "display: block");
+    		var count = '<c:out value="${checkValue}"/>';
+    		if(count > 0){
+    			$("#signModalForm").attr("style", "display: block");
+    		} 
+    		
+    		else {
+    			var base = "${pageContext.request.contextPath}";
+    			if(confirm("최초 서명을 등록해야 합니다. 서명을 등록하기 위해 전자결재 설정으로 이동합니다.")) document.location = base + "/sign/signConfig";
+    		}
     	});
     </script>
     
@@ -583,7 +514,7 @@
 			var tag2 = tag1[0].currentSrc;
 			var fileCode = tag2.split("=");
 			var signCode = document.location.href.split("=");
-			
+						
 			$.ajax({
 				url: uploadURL,
 				type: "POST",
@@ -596,10 +527,10 @@
 		});
 	</script>
 	
-	<script>
-		$(".submitDenied").click(function({
+ 	<script>
+		$(".submitDenied").click(function(){
 			var base = "${pageContext.request.contextPath}";
-			var uploadURL = base + "/signResult/signCancel";
+			var uploadURL = base + "/signResult/signDenied";
 			var signCode = document.location.href.split("=");
 			
 			$.ajax({

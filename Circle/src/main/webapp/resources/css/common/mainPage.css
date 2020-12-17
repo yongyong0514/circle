@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-	min-width: 1300px;
+	min-width: 1250px;
 	position: absolute;
 	left: 180px;
 	width: calc(100% - 180px);
@@ -24,7 +24,12 @@ body {
 .boardList0 {
 	min-width: 1250px;
 	width: 100%;
-	height: 70px;
+	height: 120px;
+	
+}
+
+.weatherwidget-io {
+	border-radius: 10px;
 }
 
 .boardList0_1 {
@@ -33,11 +38,11 @@ body {
 	margin-left: 10px;
 	min-width: 1220px;
 	width: calc(100% - 30px);
-	height: 50px;
-	border-radius: 10px;
-	background: white;
-	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
-		rgba(0, 0, 0, 0.22);
+	height: 98px;
+ 	background: #1F577C;
+ 	border-radius: 10px;
+	margin-left: 10px;
+	margin-top: 10px;
 }
 
 .boardList1 {
@@ -63,14 +68,14 @@ body {
 	float: left;
 	min-width: 610px;
 	width: 50%;
-	height: 200px;
+	height: 220px;
 }
 
 .boardList2_1, .boardList3_1 {
 	margin-top: 10px;
 	margin-left: 10px;
 	width: calc(100% - 30px);
-	height: 180px;
+	height: 200px;
 	border-radius: 10px;
 	background: white;
 	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
@@ -81,7 +86,7 @@ body {
 	float: left;
 	min-width: 406px;
 	width: 33.1%;
-	height: 200px;
+	height: 220px;
 }
 
 .boardList4_1, .boardList5_1, .boardList6_1 {
@@ -89,9 +94,55 @@ body {
 	margin-top: 10px;
 	margin-left: 10px;
 	width: calc(100% - 20px);
-	height: 180px;
+	height: 200px;
 	border-radius: 10px;
 	box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px
 		rgba(0, 0, 0, 0.22);
+}
+
+.result {
+	cursor: pointer;
+}
+
+.result:hover {
+	background: #e8f0fd;
+}
+
+.textTop1 {
+	float: left;
+	height: 40px;
+	font-size: 20px;
+	font-weight: bolder;
+	line-height: 40px;
+	padding-left: 2rem;
+	background: #f1f9ff;
+}
+
+.textTop2 {
+	text-align: right;
+	height: 40px;
+	font-size: 16px;
+	line-height: 40px;
+	padding-right: 2rem;
+	background: #f1f9ff;
+}
+
+
+.textTitle1 {
+	float: left;
+	height: 30px;
+	font-size: 15px;
+	line-height: 30px;
+	padding-left: 1rem;
+	margin-bottom: 0.1rem;
+}
+
+.textTitle2 {
+	text-align: right;
+	height: 30px;
+	font-size: 15px;
+	line-height: 30px;
+	padding-right: 1rem;
+	margin-bottom: 0.1rem;
 }
 

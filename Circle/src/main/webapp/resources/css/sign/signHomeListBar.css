@@ -22,6 +22,19 @@
 	font-weight: bolder;
 }
 
+.signListBtn0 {
+	float: left;
+	text-align: right;
+	width: 400px;
+	height: 30px;
+	outline: none;
+	border: none;
+	background: none;
+	font-size: 15px;
+	font-weight: bolder;
+	cursor: default;
+}
+
 .signListBtn1 {
 	float: right;
 	width: 120px;

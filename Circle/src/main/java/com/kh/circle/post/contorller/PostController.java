@@ -45,7 +45,8 @@ public class PostController {
 	) {
 
 		List<Post> list = postService.postMain(model, postPaging); // 리스트
-
+		
+		
 		/* 뷰페이징 시작 */
 		int total = postService.countPost();
 		if (nowPage == null && cntPerPage == null) {
@@ -67,6 +68,7 @@ public class PostController {
 		model.addAttribute("paging", postPaging);
 		model.addAttribute("postPaging", postService.selecePost(postPaging));
 		model.addAttribute("postSelect", postService.selecePost(postPaging));
+		model.addAttribute("postSelect3", postService.selecePost3(postPaging));
 
 		return "post/postMain";
 	}

@@ -91,12 +91,26 @@
 
 	<!-- insert -->
 	<!-- project -->
+
+
+
+	<select id="proGetPro" parameterType="project"
+		resultType="string">
+		select distinct p.pro_code
+		from project p
+		join iss i on (p.pro_code = i.iss_pro_code)
+		where i.iss_pro_code = #{iss_pro_code}
+	</select>
+
+
 	<insert id="projInsert" parameterType="project">
 		INSERT INTO
 		PROJECT(PRO_CODE, PRO_MANAGER, PRO_TITLE, PRO_INTRO, PRO_SDATE,
 		PRO_EDATE, PRO_STAT, PRO_WDATE)
-		VALUES(CONCAT('PROJ', LPAD(PROJ_SEQ.NEXTVAL, 6,
-		0)), #{pro_manager}, #{pro_title}, #{pro_intro}, #{pro_sdate},
+		VALUES(CONCAT('PROJ',
+		LPAD(PROJ_SEQ.NEXTVAL, 6,
+		0)), #{pro_manager}, #{pro_title},
+		#{pro_intro}, #{pro_sdate},
 		#{pro_edate}, DEFAULT, SYSDATE)
 
 	</insert>
@@ -118,75 +132,150 @@
 		join dept_info d
 		on(e.emp_info_dept_code = d.dept_info_code)
 	</select>
-	
-	
-	
+
+
+
 	<select id="sysproj" resultType="string">
-	select pro_code
+		select pro_code
 
-from(
+		from(
 
-   select pro_code
+		select
+		pro_code
 
-   from project
+		from project
 
-   order by pro_wdate DESC
+		order by pro_wdate DESC
 
-)
+		)
 
-where ROWNUM = 1
+		where ROWNUM = 1
 
 
 
 	</select>
-	
+
 	<select id="issSeq" resultType="String">
-		select CONCAT('ISS',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
-	</select>
-	
-	<select id="projSeq" resultType="string">
-	select CONCAT('PROJ',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+		select
+		CONCAT('ISS',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
 	</select>
 
- <insert id="proIssInsert" parameterType="project">
- INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
-		ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
-		VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title}, #{iss_pro_code}, #{iss_prog_code},
-		#{iss_situ_code}, #{iss_cont}, SYSDATE)
- </insert>
- 
- 
- 
- 
+	<select id="projSeq" resultType="string">
+		select
+		CONCAT('PROJ',LPAD(ISSU_SEQ.NEXTVAL, 6, 0)) from dual
+	</select>
+
+	<insert id="proIssInsert" parameterType="project">
+		INSERT INTO
+		ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
+		ISS_PROG_CODE,
+		ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
+		VALUES(CONCAT('ISS',
+		LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title},
+		#{iss_pro_code}, #{iss_prog_code},
+		#{iss_situ_code}, #{iss_cont},
+		SYSDATE)
+	</insert>
+
+
+
+
 	<insert id="projInsertIss" parameterType="project">
-INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
-		ISS_PROG_CODE, ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
-		VALUES(CONCAT('ISS', LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title} , #{iss_pro_code}, #{iss_prog_code},
-		#{iss_situ_code}, #{iss_cont}, SYSDATE)
+		INSERT INTO
+		ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
+		ISS_PROG_CODE,
+		ISS_SITU_CODE, ISS_CONT, ISS_WDAT)
+		VALUES(CONCAT('ISS',
+		LPAD(ISSU_SEQ.NEXTVAL, 6, 0)), #{iss_emp_no}, #{iss_title} ,
+		#{iss_pro_code}, #{iss_prog_code},
+		#{iss_situ_code}, #{iss_cont},
+		SYSDATE)
 
 	</insert>
 	<!-- file upload -->
 
 
-
-
-	<!-- 정치적 중립선 -->
-	<select id="projKanban" resultType="project">
+	<!-- proj list -->
+	<select id="projissAll" resultType="project"
+		parameterType="project">
 		select *
-		from project pr
+		from iss i
+		join emp_info e on (i.iss_emp_no
+		=
+		e.emp_info_emp_no)
+		join project p on (i.iss_pro_code = p.pro_code)
 		join
-		iss i on (i.iss_pro_code = pr.pro_code)
-		join
-		emp_info e on(i.iss_emp_no
+		prog g on (i.iss_prog_code = g.prog_code)
+		join situ s on
+		(i.iss_situ_code = s.situ_code)
+		where iss_emp_no =
+		#{emp_no}
+
+		order by
+		iss_code desc
+	</select>
+
+
+	<!-- proj Detail -->
+	<select id="projDetail" resultType="project"
+		parameterType="string">
+		select *
+		from project p
+		join emp_info e on (p.pro_manager
 		= e.emp_info_emp_no)
-		join prog p on
-		(i.iss_prog_code = p.prog_code)
-		join
-		situ s on (i.iss_situ_code =
-		s.situ_code)
-		order by pr.pro_code desc
+
+		where pro_code = #{pro_code}
 
 	</select>
+	<select id="projDetail2" resultType="project"
+		parameterType="string">
+		select *
+		from project p
+		join iss i on (i.iss_pro_code =
+		p.pro_code)
+		join prog g on (i.iss_prog_code = g.prog_code)
+		join situ s
+		on (i.iss_situ_code = s.situ_code)
+		join emp_info e on (i.iss_emp_no =
+		e.emp_info_emp_no)
+		where pro_code = #{pro_code}
+
+	</select>
+	<select id="projDetail3" resultType="projFile"
+		parameterType="string">
+		select *
+		from pro_files f
+		join project p on (f.pro_files_proj = p.pro_code)
+		join iss i on (p.pro_code = i.iss_pro_code)
+		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+		where f.pro_files_proj = #{pro_code}
+
+	</select>
+
+	<select id="projDetail4" resultType="projFile"
+		parameterType="string">
+	  select *
+		from pro_files f
+	
+		where f.pro_files_iss  = #{iss_code}
+
+	</select>
+
+
+	<select id="projMemberlist" resultType="project"
+		parameterType="string">
+		select distinct i.iss_emp_no, e.emp_info_name
+		from iss i
+		join project p on (i.iss_pro_code = p.pro_code)
+		join emp_info e on
+		(i.iss_emp_no
+		= e.emp_info_emp_no)
+		where p.pro_code = #{pro_code}
+
+	</select>
+
+	<!-- 정치적 중립선 -->
+
 
 
 	<select id="projTodo" resultType="project">
@@ -205,4 +294,51 @@ INSERT INTO ISS(ISS_CODE, ISS_EMP_NO, ISS_TITLE, ISS_PRO_CODE,
 		order by pr.pro_code desc
 
 	</select>
+
+
+	<select id="projGetIss" parameterType="string"
+		resultType="project">
+		select *
+		from project p
+		join iss i on (p.pro_code = i.iss_pro_code)
+		where pro_code = #{pro_code}
+
+
+	</select>
+
+
+	<select id="projIssDetail" parameterType="string"
+		resultType="projFile">
+
+		select *
+		from iss i
+		join project p on (i.iss_pro_code = p.pro_code)
+		join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+		join dept_info d on (e.emp_info_dept_code = d.dept_info_code)
+		join prog g on (i.iss_prog_code = g.prog_code)
+		join situ s on (i.iss_situ_code = s.situ_code)
+		where iss_code = #{iss_code}
+
+	</select>
+	
+	
+	
+	<select id="projKanban" parameterType="string" resultType="project">
+	  select *
+  from project p
+  join iss i on (i.iss_pro_code =p.pro_code)
+   join emp_info e on (i.iss_emp_no = e.emp_info_emp_no)
+  join dept_info d on (e.emp_info_dept_code = d.dept_info_code)
+  join prog g on (i.iss_prog_code = g.prog_code)
+  join situ s on (i.iss_situ_code = s.situ_code)
+  where p.pro_code = #{pro_code}
+	</select>
+	
+	<select id="projKanbanHead" parameterType="string" resultType="string">
+	select pro_title
+	from project 
+	where pro_code = #{pro_code}
+	</select>
+
+
 </mapper>

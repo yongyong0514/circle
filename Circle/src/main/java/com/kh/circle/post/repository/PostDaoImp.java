@@ -39,6 +39,9 @@ public class PostDaoImp implements PostDao {
 
 		return postMain;
 	}
+	
+
+	
 
 //post  종류별 게시판 list
 	@Override
@@ -170,6 +173,24 @@ public class PostDaoImp implements PostDao {
 
 			return post;
 	}
+
+
+
+
+	@Override
+	public List<Post> selectPost3(PostPaging postPaging) {
+		
+		
+		List<Post> paging = sqlSession.selectList("post.postSelect3", postPaging);
+
+		return paging;
+		
+	}
+
+
+
+
+
 
 
 

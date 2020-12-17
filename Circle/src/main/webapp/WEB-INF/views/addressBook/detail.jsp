@@ -30,7 +30,7 @@
 					<tr>
 						<td>사진</td>
 						<td>
-						 	<img src="">&nbsp;&nbsp;
+						 	<img src="" onerror="this.src='https://conservation-innovations.org/wp-content/uploads/2019/09/Dummy-Person.png'">&nbsp;&nbsp;
 							<c:if test="${detailEmpInfo.emp_info_emp_no eq sessionScope.empInfo.emp_info_emp_no }">
 								<button value="remove">삭제하기</button>
 							</c:if>

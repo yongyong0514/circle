@@ -35,8 +35,9 @@
                    , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
                    , EMP_INFO_NAME
                    , JOB_INFO_NAME
+                   , poll_post_wdat
                 from poll_post
-                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+           left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
            left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
                 join emp_info on (poll_post_emp = emp_info_emp_no)
                 join job_info on (emp_info_job_code = job_info_code)
@@ -50,7 +51,9 @@
                    , POLL_POST_EDAT
                    , POLL_POST_CLOSING
                    , EMP_INFO_NAME
-                   , JOB_INFO_NAME)
+                   , JOB_INFO_NAME
+                   , poll_post_wdat
+            order by poll_post_wdat desc)
       where <![CDATA[ ROWNUM <= 10 ]]>
 	</select>
 	<resultMap type="hashMap" id="homeMap">
@@ -59,209 +62,420 @@
 	<!-- 진행중인 설문 총 개수 조회(검색 적용) -->
 	<select id="countTotalProgressPost"  parameterType="pagination" resultType="int">
 		select count(1) as cnt
-		  from (select count(poll_post_code)
-		                from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join emp_info on (poll_post_emp = emp_info_emp_no)
-		                join job_info on (emp_info_job_code = job_info_code)
-		                join poll_post_join on (poll_post_code = poll_join_post)
-		               where poll_post_stat = 'Y'
-		                 and poll_join_emp = #{empNo}
-		                 and poll_join_type = '참여'
-		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
-               			 and <![CDATA[ poll_post_edat >= sysdate ]]>
-		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
-		                 and poll_post_name like '%${searchTitle}%'
-           				 and emp_info_name like '%${searchWriter}%'
-		            group by poll_post_code)
+		  from (select A.poll_post_code
+                     , A.POLL_POST_NAME
+                     , A.POLL_POST_SEC                 
+                     , to_char(A.POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+                     , to_char(A.POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT           
+                     , A.POLL_POST_CLOSING    
+                     , A.poll_join_emp
+                     , A.EMP_INFO_NAME
+                     , A.JOB_INFO_NAME
+                     , A.poll_post_wdat
+                     , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as poll_post_qust_answ_join_emp
+                  from (select  poll_post_code
+                             , POLL_POST_NAME
+                             , POLL_POST_SEC
+                             , POLL_POST_SDAT
+                             , POLL_POST_EDAT 
+                             , POLL_POST_CLOSING  
+                             , count (case when poll_join_emp = #{empNo} then 1 end) as poll_join_emp
+                             , EMP_INFO_NAME
+                             , JOB_INFO_NAME
+                             , poll_post_wdat
+                          from poll_post
+                          join emp_info on (poll_post_emp = emp_info_emp_no)
+                          join job_info on (emp_info_job_code = job_info_code)
+                          join poll_post_join on (poll_post_code = poll_join_post)
+                         where poll_post_stat = 'Y'
+                           and (poll_join_emp = #{empNo} or poll_post_emp = #{empNo} or POLL_POST_SEC = 'Y')
+                           and ((<![CDATA[ poll_post_sdat <= sysdate ]]> and <![CDATA[ poll_post_edat > sysdate ]]>) and nvl(POLL_POST_CLOSING, 'N') = 'N')
+                           and poll_post_name like '%${searchTitle}%'
+                           and emp_info_name like '%${searchWriter}%'
+                      group by poll_post_code          
+                             , POLL_POST_NAME
+                             , POLL_POST_SEC
+                             , POLL_POST_SDAT
+                             , POLL_POST_EDAT
+                             , POLL_POST_CLOSING
+                             , EMP_INFO_NAME
+                             , JOB_INFO_NAME
+                             , poll_post_wdat
+                      order by poll_post_wdat desc) A
+              left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+              left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)        
+               group by A.poll_post_code
+                     , A.POLL_POST_NAME
+                     , A.POLL_POST_SEC                 
+                     , POLL_POST_SDAT
+                     , POLL_POST_EDAT           
+                     , A.POLL_POST_CLOSING    
+                     , A.poll_join_emp
+                     , A.EMP_INFO_NAME
+                     , A.JOB_INFO_NAME
+                     , A.poll_post_wdat
+              order by A.poll_post_wdat desc)
 	</select>
 
 	<!-- 진행중인 설문 조회(페이지/검색 적용) -->	
 	<select id="progressList" parameterType="pagination" resultMap="progressMap">
-   		 select X.rnum
-		      , X.poll_post_code
-		      , X.POLL_POST_NAME
-		      , X.POLL_POST_SEC
-		      , X.POLL_POST_SDAT
-		      , X.POLL_POST_EDAT   
-		      , X.POLL_POST_CLOSING
-		      , X.POLL_POST_QUST_ANSW_join_emp
-		      , X.EMP_INFO_NAME
-		      , X.JOB_INFO_NAME	
-		   from (select ROWNUM rnum
-		          , A.poll_post_code
-		          , A.POLL_POST_NAME
-		          , A.POLL_POST_SEC
-		          , A.POLL_POST_SDAT
-		          , A.POLL_POST_EDAT   
-		          , A.POLL_POST_CLOSING
-		          , A.POLL_POST_QUST_ANSW_join_emp
-		          , A.EMP_INFO_NAME
-		          , A.JOB_INFO_NAME		
-		       from (select  poll_post_code
-		                   , POLL_POST_NAME
-		                   , POLL_POST_SEC
-		                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
-		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
-		                   , POLL_POST_CLOSING  
-		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
-		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME
-		                from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join emp_info on (poll_post_emp = emp_info_emp_no)
-		                join job_info on (emp_info_job_code = job_info_code)
-		                join poll_post_join on (poll_post_code = poll_join_post)
-		               where poll_post_stat = 'Y'
-		                 and poll_join_emp = #{empNo}
-		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
-	                 	 and <![CDATA[ poll_post_edat >= sysdate ]]>
-		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
-		                 and poll_post_name like '%${searchTitle}%'
-               		 	 and emp_info_name like '%${searchWriter}%'
-		            group by poll_post_code          
-		                   , POLL_POST_NAME
-		                   , POLL_POST_SEC
-		                   , POLL_POST_SDAT
-		                   , POLL_POST_EDAT
-		                   , POLL_POST_CLOSING
-		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME) A
-		        where <![CDATA[ rownum <=]]>#{end}) X 
-	<![CDATA[ where X.rnum >= ]]>#{start}
+   		   select X.rnum
+			       , X.poll_post_code
+			       , X.POLL_POST_NAME
+			       , X.POLL_POST_SEC                 
+			       , X.POLL_POST_SDAT
+			       , X.POLL_POST_EDAT           
+			       , X.POLL_POST_CLOSING    
+			       , X.poll_join_emp
+			       , X.EMP_INFO_NAME
+			       , X.JOB_INFO_NAME
+			       , X.poll_post_wdat
+			       , X.poll_post_qust_answ_join_emp
+			    from (select ROWNUM rnum
+			               , B.poll_post_code
+			               , B.POLL_POST_NAME
+			               , B.POLL_POST_SEC                 
+			               , B.POLL_POST_SDAT
+			               , B.POLL_POST_EDAT           
+			               , B.POLL_POST_CLOSING    
+			               , B.poll_join_emp
+			               , B.EMP_INFO_NAME
+			               , B.JOB_INFO_NAME
+			               , B.poll_post_wdat
+			               , B.poll_post_qust_answ_join_emp
+			            from (select A.poll_post_code
+			                       , A.POLL_POST_NAME
+			                       , A.POLL_POST_SEC                 
+			                       , to_char(A.POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+			                       , to_char(A.POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT           
+			                       , A.POLL_POST_CLOSING    
+			                       , A.poll_join_emp
+			                       , A.EMP_INFO_NAME
+			                       , A.JOB_INFO_NAME
+			                       , A.poll_post_wdat
+			                       , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as poll_post_qust_answ_join_emp
+			                    from (select  poll_post_code
+			                               , POLL_POST_NAME
+			                               , POLL_POST_SEC
+			                               , POLL_POST_SDAT
+			                               , POLL_POST_EDAT 
+			                               , POLL_POST_CLOSING  
+			                               , count (case when poll_join_emp = #{empNo} then 1 end) as poll_join_emp
+			                               , EMP_INFO_NAME
+			                               , JOB_INFO_NAME
+			                               , poll_post_wdat
+			                            from poll_post
+			                            join emp_info on (poll_post_emp = emp_info_emp_no)
+			                            join job_info on (emp_info_job_code = job_info_code)
+			                            join poll_post_join on (poll_post_code = poll_join_post)
+			                           where poll_post_stat = 'Y'
+			                             and (poll_join_emp = #{empNo} or poll_post_emp = #{empNo} or POLL_POST_SEC = 'Y')
+			                             and ((<![CDATA[ poll_post_sdat <= sysdate ]]> and <![CDATA[ poll_post_edat > sysdate ]]>) and nvl(POLL_POST_CLOSING, 'N') = 'N')
+			                             and poll_post_name like '%${searchTitle}%'
+			                             and emp_info_name like '%${searchWriter}%'
+			                        group by poll_post_code          
+			                               , POLL_POST_NAME
+			                               , POLL_POST_SEC
+			                               , POLL_POST_SDAT
+			                               , POLL_POST_EDAT
+			                               , POLL_POST_CLOSING
+			                               , EMP_INFO_NAME
+			                               , JOB_INFO_NAME
+			                               , poll_post_wdat
+			                        order by poll_post_wdat desc) A
+			                left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+			                left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)        
+			                 group by A.poll_post_code
+			                       , A.POLL_POST_NAME
+			                       , A.POLL_POST_SEC                 
+			                       , POLL_POST_SDAT
+			                       , POLL_POST_EDAT           
+			                       , A.POLL_POST_CLOSING    
+			                       , A.poll_join_emp
+			                       , A.EMP_INFO_NAME
+			                       , A.JOB_INFO_NAME
+			                       , A.poll_post_wdat
+			                order by A.poll_post_wdat desc) B
+			           where  rownum<![CDATA[ <=]]>#{end}) X
+			   where X.rnum <![CDATA[ >= ]]>#{start}
 	</select>
 	<resultMap type="hashMap" id="progressMap"></resultMap>
 	
 	<!-- 마감된 설문 총 개수 조회(검색 적용) -->
 	<select id="countTotalFinishedPost"  parameterType="pagination" resultType="int">
 		select count(1) as cnt
-		  from (select count(poll_post_code)
-		                from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join emp_info on (poll_post_emp = emp_info_emp_no)
-		                join job_info on (emp_info_job_code = job_info_code)
-		                join poll_post_join on (poll_post_code = poll_join_post)
-		               where poll_post_stat = 'Y'
-		                 and poll_join_emp = #{empNo}
-		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
-               			 and <![CDATA[ poll_post_edat < sysdate ]]> 
-               			 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
-		                 and poll_post_name like '%${searchTitle}%'
-           				 and emp_info_name like '%${searchWriter}%'
-		            group by poll_post_code)
+		  from (select A.poll_post_code
+		                       , A.POLL_POST_NAME
+		                       , A.POLL_POST_SEC                 
+		                       , to_char(A.POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+		                       , to_char(A.POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT           
+		                       , A.POLL_POST_CLOSING    
+		                       , A.poll_join_emp
+		                       , A.EMP_INFO_NAME
+		                       , A.JOB_INFO_NAME
+		                       , A.poll_post_wdat
+		                       , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as poll_post_qust_answ_join_emp
+		                    from (select  poll_post_code
+		                               , POLL_POST_NAME
+		                               , POLL_POST_SEC
+		                               , POLL_POST_SDAT
+		                               , POLL_POST_EDAT 
+		                               , POLL_POST_CLOSING  
+		                               , count (case when poll_join_emp = #{empNo} then 1 end) as poll_join_emp
+		                               , EMP_INFO_NAME
+		                               , JOB_INFO_NAME
+		                               , poll_post_wdat
+		                            from poll_post
+		                            join emp_info on (poll_post_emp = emp_info_emp_no)
+		                            join job_info on (emp_info_job_code = job_info_code)
+		                            join poll_post_join on (poll_post_code = poll_join_post)
+		                           where poll_post_stat = 'Y'
+		                             and (poll_join_emp = #{empNo} or poll_post_emp = #{empNo} or POLL_POST_SEC = 'Y')
+		                             and ((poll_post_sdat <![CDATA[<=]]> sysdate and poll_post_edat <![CDATA[<]]> sysdate) or nvl(POLL_POST_CLOSING, 'N') = 'Y')
+		                             and poll_post_name like '%${searchTitle}%'
+		                             and emp_info_name like '%${searchWriter}%'
+		                        group by poll_post_code          
+		                               , POLL_POST_NAME
+		                               , POLL_POST_SEC
+		                               , POLL_POST_SDAT
+		                               , POLL_POST_EDAT
+		                               , POLL_POST_CLOSING
+		                               , EMP_INFO_NAME
+		                               , JOB_INFO_NAME
+		                               , poll_post_wdat
+		                        order by poll_post_wdat desc) A
+		                left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		                left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)        
+		                 group by A.poll_post_code
+		                       , A.POLL_POST_NAME
+		                       , A.POLL_POST_SEC                 
+		                       , POLL_POST_SDAT
+		                       , POLL_POST_EDAT           
+		                       , A.POLL_POST_CLOSING    
+		                       , A.poll_join_emp
+		                       , A.EMP_INFO_NAME
+		                       , A.JOB_INFO_NAME
+		                       , A.poll_post_wdat
+		                order by A.poll_post_wdat desc)
 	</select>
 	
 	<!-- 마감된 설문 조회(페이지/검색 적용) -->	
 	<select id="finishedList" parameterType="pagination" resultMap="finishedMap">
-		 select X.rnum
-		      , X.poll_post_code
-		      , X.POLL_POST_NAME
-		      , X.POLL_POST_SEC
-		      , X.POLL_POST_SDAT
-		      , X.POLL_POST_EDAT   
-		      , X.POLL_POST_CLOSING
-		      , X.POLL_POST_QUST_ANSW_join_emp
-		      , X.EMP_INFO_NAME
-		      , X.JOB_INFO_NAME	
-		   from (select ROWNUM rnum
-		          , A.poll_post_code
-		          , A.POLL_POST_NAME
-		          , A.POLL_POST_SEC
-		          , A.POLL_POST_SDAT
-		          , A.POLL_POST_EDAT   
-		          , A.POLL_POST_CLOSING
-		          , A.POLL_POST_QUST_ANSW_join_emp
-		          , A.EMP_INFO_NAME
-		          , A.JOB_INFO_NAME		
-		       from (select  poll_post_code
-		                   , POLL_POST_NAME
-		                   , POLL_POST_SEC
-		                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
-		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
-		                   , POLL_POST_CLOSING  
-		                   , count(POLL_POST_QUST_ANSW_join_emp) as POLL_POST_QUST_ANSW_join_emp
-		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME
-		                from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join emp_info on (poll_post_emp = emp_info_emp_no)
-		                join job_info on (emp_info_job_code = job_info_code)
-		                join poll_post_join on (poll_post_code = poll_join_post)
-		               where poll_post_stat = 'Y'
-		                 and poll_join_emp = #{empNo}
-		                 and <![CDATA[ poll_post_sdat <= sysdate ]]>
-	                 	 and <![CDATA[ poll_post_edat < sysdate ]]>
-		                 and nvl(POLL_POST_CLOSING, 'N') ^= 'Y'
-		                 and POLL_POST_SEC = 'Y'
-		                 and poll_post_name like '%${searchTitle}%'
-               		 	 and emp_info_name like '%${searchWriter}%'
-		            group by poll_post_code          
-		                   , POLL_POST_NAME
-		                   , POLL_POST_SEC
-		                   , POLL_POST_SDAT
-		                   , POLL_POST_EDAT
-		                   , POLL_POST_CLOSING
-		                   , EMP_INFO_NAME
-		                   , JOB_INFO_NAME) A
-		        where <![CDATA[ rownum <=]]>#{end}) X 
-	<![CDATA[ where X.rnum >= ]]>#{start}
+		   select X.rnum
+		       , X.poll_post_code
+		       , X.POLL_POST_NAME
+		       , X.POLL_POST_SEC                 
+		       , X.POLL_POST_SDAT
+		       , X.POLL_POST_EDAT           
+		       , X.POLL_POST_CLOSING    
+		       , X.poll_join_emp
+		       , X.EMP_INFO_NAME
+		       , X.JOB_INFO_NAME
+		       , X.poll_post_wdat
+		       , X.poll_post_qust_answ_join_emp
+		    from (select ROWNUM rnum
+		               , B.poll_post_code
+		               , B.POLL_POST_NAME
+		               , B.POLL_POST_SEC                 
+		               , B.POLL_POST_SDAT
+		               , B.POLL_POST_EDAT           
+		               , B.POLL_POST_CLOSING    
+		               , B.poll_join_emp
+		               , B.EMP_INFO_NAME
+		               , B.JOB_INFO_NAME
+		               , B.poll_post_wdat
+		               , B.poll_post_qust_answ_join_emp
+		            from (select A.poll_post_code
+		                       , A.POLL_POST_NAME
+		                       , A.POLL_POST_SEC                 
+		                       , to_char(A.POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
+		                       , to_char(A.POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT           
+		                       , A.POLL_POST_CLOSING    
+		                       , A.poll_join_emp
+		                       , A.EMP_INFO_NAME
+		                       , A.JOB_INFO_NAME
+		                       , A.poll_post_wdat
+		                       , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as poll_post_qust_answ_join_emp
+		                    from (select  poll_post_code
+		                               , POLL_POST_NAME
+		                               , POLL_POST_SEC
+		                               , POLL_POST_SDAT
+		                               , POLL_POST_EDAT 
+		                               , POLL_POST_CLOSING  
+		                               , count (case when poll_join_emp = #{empNo} then 1 end) as poll_join_emp
+		                               , EMP_INFO_NAME
+		                               , JOB_INFO_NAME
+		                               , poll_post_wdat
+		                            from poll_post
+		                            join emp_info on (poll_post_emp = emp_info_emp_no)
+		                            join job_info on (emp_info_job_code = job_info_code)
+		                            join poll_post_join on (poll_post_code = poll_join_post)
+		                           where poll_post_stat = 'Y'
+		                             and (poll_join_emp = #{empNo} or poll_post_emp = #{empNo} or POLL_POST_SEC = 'Y')
+		                             and ((poll_post_sdat <![CDATA[<=]]> sysdate and poll_post_edat <![CDATA[<]]> sysdate) or nvl(POLL_POST_CLOSING, 'N') = 'Y')
+		                             and poll_post_name like '%${searchTitle}%'
+		                             and emp_info_name like '%${searchWriter}%'
+		                        group by poll_post_code          
+		                               , POLL_POST_NAME
+		                               , POLL_POST_SEC
+		                               , POLL_POST_SDAT
+		                               , POLL_POST_EDAT
+		                               , POLL_POST_CLOSING
+		                               , EMP_INFO_NAME
+		                               , JOB_INFO_NAME
+		                               , poll_post_wdat
+		                        order by poll_post_wdat desc) A
+		                left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		                left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)        
+		                 group by A.poll_post_code
+		                       , A.POLL_POST_NAME
+		                       , A.POLL_POST_SEC                 
+		                       , POLL_POST_SDAT
+		                       , POLL_POST_EDAT           
+		                       , A.POLL_POST_CLOSING    
+		                       , A.poll_join_emp
+		                       , A.EMP_INFO_NAME
+		                       , A.JOB_INFO_NAME
+		                       , A.poll_post_wdat
+		                order by A.poll_post_wdat desc) B
+		           where  rownum <![CDATA[<=]]>#{end}) X
+		    where X.rnum <![CDATA[>= ]]>#{start}
 	</select>
 	<resultMap type="hashMap" id="finishedMap"></resultMap>
 	
 	<!-- 내 설문 총 개수 조회(검색 적용) -->
 	<select id="countTotalMyPost"  parameterType="pagination" resultType="int">
 		select count(1) as cnt
-		  from (select count(poll_post_code)
-		                from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		           left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		                join poll_post_join on (poll_post_code = poll_join_post)
-		               where poll_post_stat = 'Y'
-		                 and poll_post_emp = #{empNo}
-		                 and poll_post_name like '%${searchTitle}%'
-		            group by poll_post_code)
+		  from (select c.rnum
+				       , c.poll_post_code
+				       , c.POLL_POST_NAME
+				       , c.POLL_POST_SDAT
+				       , c.POLL_POST_EDAT
+				       , c.POLL_POST_CLOSING  
+				       , c.poll_post_wdat
+				       , c.myVoteRight
+				       , c.totalAttendableMember
+				       , c.actualAttendMember
+				       , c.myVoteCondition
+				    from (select ROWNUM rnum
+				               , b.poll_post_code
+				               , b.POLL_POST_NAME
+				               , b.POLL_POST_SDAT
+				               , b.POLL_POST_EDAT
+				               , b.POLL_POST_CLOSING  
+				               , b.poll_post_wdat
+				               , b.myVoteRight
+				               , b.totalAttendableMember
+				               , b.actualAttendMember
+				               , b.myVoteCondition
+				            from (select a.poll_post_code
+				                       , a.POLL_POST_NAME
+				                       , a.POLL_POST_SDAT
+				                       , a.POLL_POST_EDAT
+				                       , a.POLL_POST_CLOSING  
+				                       , a.poll_post_wdat
+				                       , a.myVoteRight
+				                       , a.totalAttendableMember
+				                       , count(distinct poll_post_qust_answ_join_emp) as actualAttendMember
+				                       , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as myVoteCondition
+				                    from (select poll_post_code
+				                               , POLL_POST_NAME
+				                               , POLL_POST_SDAT
+				                               , POLL_POST_EDAT
+				                               , POLL_POST_CLOSING, poll_post_wdat
+				                               , count (poll_join_emp) as totalAttendableMember
+				                               , count (case when poll_join_emp = #{empNo} then 1 end) as myVoteRight
+				                            from poll_post
+				                            join poll_post_join on (poll_post_code = poll_join_post)
+				                           where poll_post_stat = 'Y'
+				                             and poll_post_emp =#{empNo}
+				                             and poll_post_name like '%${searchTitle}%'
+				                        group by poll_post_code          
+				                               , POLL_POST_NAME
+				                               , POLL_POST_SDAT
+				                               , POLL_POST_EDAT
+				                               , POLL_POST_CLOSING
+				                               , poll_post_wdat) a
+				                left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+				                left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)
+				                group by a.poll_post_code
+				                       , a.POLL_POST_NAME
+				                       , a.POLL_POST_SDAT
+				                       , a.POLL_POST_EDAT
+				                       , a.POLL_POST_CLOSING  
+				                       , a.poll_post_wdat
+				                       , a.totalAttendableMember
+				                       , a.myVoteRight
+				                order by a.poll_post_wdat desc) b
+			           ) c
+				   )
 	</select>
 	
 	<!-- 내 설문 조회(페이지/검색 적용) -->	
 	<select id="myList" parameterType="pagination" resultMap="myMap">
-		 select X.rnum
-		      , X.poll_post_code
-		      , X.POLL_POST_NAME
-		      , X.POLL_POST_SDAT
-		      , X.POLL_POST_EDAT   
-		      , X.POLL_POST_CLOSING
-		      , X.join_count
-           from (select ROWNUM rnum
-		          , A.poll_post_code
-		          , A.POLL_POST_NAME
-		          , A.POLL_POST_SDAT
-		          , A.POLL_POST_EDAT   
-		          , A.POLL_POST_CLOSING
-		          , A.join_count
-               from (select  poll_post_code
-		                   , POLL_POST_NAME
-		                   , to_char(POLL_POST_SDAT, 'YYYY-MM-DD') as POLL_POST_SDAT
-		                   , to_char(POLL_POST_EDAT, 'YYYY-MM-DD') as POLL_POST_EDAT 
-		                   , POLL_POST_CLOSING  
-		                   , count(distinct POLL_POST_QUST_ANSW_JOIN_EMP) as join_count
-                        from poll_post
-		                join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
-		                join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code and POLL_POST_QUST_ANSW_join_emp = #{empNo})
-		               where poll_post_stat = 'Y'
-		                 and poll_post_emp =#{empNo}
-		                 and poll_post_name like '%${searchTitle}%'
-		            group by poll_post_code          
-		                   , POLL_POST_NAME
-		                   , POLL_POST_SDAT
-		                   , POLL_POST_EDAT
-		                   , POLL_POST_CLOSING
-                           , POLL_POST_QUST_ANSW_JOIN_EMP) A
-                where <![CDATA[ rownum <=]]>#{end}) X 
-	<![CDATA[ where X.rnum >= ]]>#{start}
+		  select c.rnum
+	       , c.poll_post_code
+	       , c.POLL_POST_NAME
+	       , c.POLL_POST_SDAT
+	       , c.POLL_POST_EDAT
+	       , c.POLL_POST_CLOSING  
+	       , c.poll_post_wdat
+	       , c.myVoteRight
+	       , c.totalAttendableMember
+	       , c.actualAttendMember
+	       , c.myVoteCondition
+	    from (select ROWNUM rnum
+	               , b.poll_post_code
+	               , b.POLL_POST_NAME
+	               , b.POLL_POST_SDAT
+	               , b.POLL_POST_EDAT
+	               , b.POLL_POST_CLOSING  
+	               , b.poll_post_wdat
+	               , b.myVoteRight
+	               , b.totalAttendableMember
+	               , b.actualAttendMember
+	               , b.myVoteCondition
+	            from (select a.poll_post_code
+	                       , a.POLL_POST_NAME
+	                       , a.POLL_POST_SDAT
+	                       , a.POLL_POST_EDAT
+	                       , a.POLL_POST_CLOSING  
+	                       , a.poll_post_wdat
+	                       , a.myVoteRight
+	                       , a.totalAttendableMember
+	                       , count(distinct poll_post_qust_answ_join_emp) as actualAttendMember
+	                       , count(case when poll_post_qust_answ_join_emp = #{empNo} then 1 end) as myVoteCondition
+	                    from (select poll_post_code
+	                               , POLL_POST_NAME
+	                               , POLL_POST_SDAT
+	                               , POLL_POST_EDAT
+	                               , POLL_POST_CLOSING, poll_post_wdat
+	                               , count (poll_join_emp) as totalAttendableMember
+	                               , count (case when poll_join_emp = #{empNo} then 1 end) as myVoteRight
+	                            from poll_post
+	                            join poll_post_join on (poll_post_code = poll_join_post)
+	                           where poll_post_stat = 'Y'
+	                             and poll_post_emp =#{empNo}
+	                             and poll_post_name like '%${searchTitle}%'
+	                        group by poll_post_code          
+	                               , POLL_POST_NAME
+	                               , POLL_POST_SDAT
+	                               , POLL_POST_EDAT
+	                               , POLL_POST_CLOSING
+	                               , poll_post_wdat) a
+	                left join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+	                left join poll_post_qust_answ_join on (POLL_POST_QUST_ANSW_code = POLL_POST_QUST_ANSW_join_code)
+	                group by a.poll_post_code
+	                       , a.POLL_POST_NAME
+	                       , a.POLL_POST_SDAT
+	                       , a.POLL_POST_EDAT
+	                       , a.POLL_POST_CLOSING  
+	                       , a.poll_post_wdat
+	                       , a.totalAttendableMember
+	                       , a.myVoteRight
+	                order by a.poll_post_wdat desc) b
+           where <![CDATA[ rownum <=]]>#{end}) c
+	   <![CDATA[ where c.rnum >= ]]>#{start}
 	</select>
 	<resultMap type="hashMap" id="myMap"></resultMap>
 		
@@ -358,4 +572,243 @@
 		 where emp_info_emp_no = #{empNo}
 	</select>
 	<resultMap type="hashMap" id="userInfoMap"></resultMap>
+	
+	<!-- 설문 입력용 시퀀스 반환 -->
+	<select id="sequence" resultType="String">
+		select popn_seq.nextval from dual
+	</select>
+	
+	<insert id="preInsert" parameterType="preInputData">
+		insert into poll_post (POLL_POST_CODE, POLL_POST_NAME, POLL_POST_SEC,POLL_POST_STAT
+								,POLL_POST_WDAT,POLL_POST_EMP,POLL_POST_SDAT,POLL_POST_EDAT
+								,POLL_POST_REPL_USE,POLL_POST_MOD_ADMT)
+		values('POPN'||TRIM(TO_CHAR(#{sequence},'000000'))
+			 , #{title}
+			 , #{open}
+			 , default
+			 , sysdate
+			 , #{writer}
+			 , #{startDate}
+			 , #{endDate}
+			 , #{reply}
+			 , #{editable})
+
+	</insert>
+	
+	<!-- 로그인 유저 부서 확인 -->
+	<select id="findDept" parameterType="preInputData" resultType="String">
+		select emp_info_dept_code 
+		  from emp_info
+		 where emp_info_emp_no = ${writer} 
+	</select>
+	
+	<!-- 유저의 소속부서 구성원 확인 -->
+			<!-- 하위부서를 선택했을 경우 -->
+	<select id="findWholeDeptMember" parameterType="String" resultType="String">
+				select emp_info_emp_no
+				  from emp_info
+                  join dept_info on(emp_info_dept_code = DEPT_INFO_CODE)
+				 where emp_info_dept_code = #{userDept}
+                    or DEPT_INFO_UPER = #{userDept}
+	</select>
+			<!-- 하위부서를 선택하지 않았을 경우 -->
+	<select id="findDeptMember" parameterType="String" resultType="String">
+				select emp_info_emp_no
+				  from emp_info
+				 where emp_info_dept_code = #{userDept}
+	</select>
+	
+	<!-- 소속부서 인원 입력 -->
+	<insert id="insertDeptMember" parameterType="preInputData">
+		<foreach collection="deptMember" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into poll_post_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참여')
+		</foreach>
+	</insert>
+	
+	<!-- 참가자 입력 -->
+	<insert id="insertAttend" parameterType="preInputData">
+		<foreach collection="attend" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into poll_post_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참여')
+		</foreach>
+	</insert>
+	
+	<!-- 참조자 입력 -->
+	<insert id="insertRefer" parameterType="preInputData">
+		<foreach collection="refer" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into poll_post_join values('POPN'||TRIM(TO_CHAR(#{sequence},'000000')), #{item}, '참조')
+		</foreach>
+	</insert>	
+	
+	<!-- 문항 입력용 시퀀스 반환 -->
+	<select id="questionSeq" resultType="String">
+		select popq_seq.nextval from dual
+	</select>
+	
+	<!-- 점수형 문항 입력 -->
+	<insert id="insertScoreQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , #{score}
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  )
+	</insert>
+	<!-- 점수형 선택지 입력 -->
+	<insert id="insertScoreSelection" parameterType="question">
+		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+										   , #{item.content}     
+										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+										   , 'radio')
+		</foreach>
+	</insert>
+	<!-- 텍스트형 문항 입력 -->
+	<insert id="insertTextQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , <choose>
+				 					  		<when test="checkLowerType.equals('text')">
+				 					  			'short'
+				 					  		</when>
+				 					  		<otherwise>
+				 					  			'long'
+				 					  		</otherwise>
+				 					  	</choose>
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  )
+	</insert>
+	<!-- 텍스트형 가선택지 입력 -->
+	<insert id="insertTextSelection" parameterType="question">
+		insert into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+											 , null
+											 , 'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+											 , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+											 , #{checkLowerType}
+												)
+	</insert>
+	
+	<!-- 선택형 문항 입력 -->
+	<insert id="insertSelectQuestion" parameterType="question">
+			insert into POLL_POST_QUST (POLL_POST_QUST_CODE
+									  , POLL_POST_QUST_CONT
+									  , POLL_POST_QUST_POST
+									  , POLL_POST_QUST_TYPE
+									  , POLL_POST_QUST_LOWTYPE
+									  , POLL_POST_QUST_NECESS
+									  , POLL_POST_QUST_LIMIT) 
+				 				values ('POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+				 					  , #{title}
+				 					  , 'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+				 					  , #{type}
+				 					  , #{checkLowerType}
+				 					  , <choose>
+					 					  <when test="necessary.equals('[필수]')">
+					 					  	'Y'
+					 					  </when>
+					 					  <otherwise>
+					 					  	'N'
+					 					  </otherwise>
+				 					  	</choose>
+				 					  , #{pluralMaximum})
+	</insert>
+	<!-- 선택형 선택지 입력 -->
+	<insert id="insertSelectSelection" parameterType="question">
+		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
+										   , #{item.content}     
+										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
+										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
+										   , #{item.checkType})
+		</foreach>
+	</insert>
+	
+	<!-- 설문 참가 완료 정보 입력 -->
+	<insert id="insertAttendedServey" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			<if test="index != 0">
+				into POLL_POST_QUST_ANSW_JOIN values( #{item.id}
+												    , #{list[0].empNo}
+												    , sysdate
+												    , #{item.content}
+													)
+			</if>	
+		</foreach>
+	</insert>
+	
+	<!-- 참가 완료한 설문 식별코드 추출 -->
+	<select id="selectPostCode" parameterType="java.util.List" resultType="String">
+		select poll_post_code
+		  from poll_post
+		  join POLL_POST_QUST_ANSW on (poll_post_code = POLL_POST_QUST_ANSW_POST)
+		 where POLL_POST_QUST_ANSW_CODE = #{list[1].id}
+	</select>
+	
+	
+	<!-- 설문 참여가능 멤버 삭제 -->
+	<delete id="deleteMember" parameterType="String">
+		delete from POLL_POST_JOIN where POLL_JOIN_POST = #{postCode}
+	</delete>
+	<!-- 삭제용 답변 코드 추출 -->
+	<select id="answerSearch" parameterType="String" resultType="String">
+		select POLL_POST_QUST_ANSW_CODE 
+		  from POLL_POST_QUST_ANSW 
+		 where POLL_POST_QUST_ANSW_POST = #{postCode}
+	</select>
+	
+	<!-- 답변자 삭제 -->
+	<delete id="deleteAttender" parameterType="java.util.List">
+		delete from POLL_POST_QUST_ANSW_JOIN
+		<where>
+			<foreach collection="list" item="item" separator="OR">
+				POLL_POST_QUST_ANSW_JOIN_CODE = #{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 답변 삭제 -->
+	<delete id="deleteAnswer" parameterType="String">
+		delete from POLL_POST_QUST_ANSW where POLL_POST_QUST_ANSW_POST = #{postCode}
+	</delete>
+	
+	<!-- 문항 삭제 -->
+	<delete id="deleteQuestion" parameterType="String">
+		delete from POLL_POST_QUST where POLL_POST_QUST_POST = #{postCode}
+	</delete>
+	
+	<!-- 개별 설문 삭제 -->
+	<update id="deleteOne" parameterType="String">
+		update POLL_POST set POLL_POST_STAT = 'N'
+		 where POLL_POST_CODE = #{postCode}
+	</update>
+	
 </mapper>

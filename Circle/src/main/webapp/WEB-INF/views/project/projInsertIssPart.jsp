@@ -2,8 +2,178 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+
+.wrap02 {
+	max-width: 500px;
+	width: 100%;
+	background: #fff;
+	margin: 50px auto;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+	padding: 30px;
+}
+
+.wrap02 .title {
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 25px;
+	color: #34495e;
+	text-transform00: uppercase;
+	text-align: center;
+}
+
+.wrap02 .form00 {
+	width: 100%;
+	height: 600px;
+}
+
+.wrap02 .form00 .inputfield {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.wrap02 .form00 .inputfield label {
+	width: 200px;
+	color: #34495e;
+	margin-right: 10px;
+	font-size: 14px;
+}
+
+.wrap02 .form00 .inputfield .input, .wrap02 .form00 .inputfield .textarea
+	{
+	width: 100%;
+	outline: none;
+	border: 1px solid #d5dbd9;
+	font-size: 15px;
+	padding: 8px 10px;
+	border-radius: 3px;
+	transition: all 0.3s ease;
+}
+
+.wrap02 .form00 .inputfield .textarea {
+	width: 100%;
+	height: 400px;
+	resize: none;
+}
+
+.wrap02 .form00 .inputfield  .pro_select {
+	position: relative;
+	width: 100%;
+	height: 37px;
+}
+
+.wrap02 .form00 .inputfield  .pro_select:before {
+	content: "";
+	position: absolute;
+	top: 12px;
+	right: 10px;
+	border: 8px solid;
+	border-color: #d5dbd9 transparent transparent transparent;
+	pointer-events: none;
+}
+
+.wrap02 .form00 .inputfield  .pro_select select {
+position: absolute;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	outline: none;
+	width: 100%;
+	height: 100%;
+	border: 0px;
+	padding: 8px 10px;
+	font-size: 15px;
+	border: 1px solid #d5dbd9;
+	border-radius: 3px;
+}
+
+.wrap02 .form00 .inputfield .input:focus, .wrap02 .form00 .inputfield .textarea:focus,
+	.wrap02 .form00 .inputfield  .pro_select select:focus {
+	border: 1px solid #34495e;
+}
+
+.wrap02 .form00 .inputfield p {
+	font-size: 14px;
+	color: #34495e;
+}
 
 
+
+
+
+.wrap02 .form00 .inputfield .btn01 {
+	position: absolute;
+	width: 100px;
+	padding: 8px 10px;
+	font-size: 15px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	outline: none;
+	left: 39%
+}
+
+.wrap02 .form00 .inputfield .btn01:hover {
+	background: #dbe5f1;
+}
+
+.wrap02 .form00 .inputfield .btn02 {
+	position: absolute;
+	width: 100px;
+	padding: 8px 10px;
+	font-size: 15px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	outline: none;
+	left: 45%
+}
+
+.wrap02 .form00 .inputfield .btn02:hover {
+	background: #dbe5f1;
+}
+
+.wrap02 .form00 .inputfield .btn03 {
+	position: absolute;
+	width: 100px;
+	padding: 8px 10px;
+	font-size: 15px;
+	border: 0px;
+	background: #0072c6;
+	color: #fff;
+	cursor: pointer;
+	border-radius: 3px;
+	outline: none;
+	left: 54%
+}
+
+.wrap02 .form00 .inputfield .btn03:hover {
+	background: #dbe5f1;
+}
+
+.wrap02 .form00 .inputfield:last-child {
+	margin-bottom: 0;
+}
+
+@media ( max-width :500px) {
+	.wrap02 .form00 .inputfield {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.wrap02 .form00 .inputfield label {
+		margin-bottom: 5px;
+	}
+	.wrap02 .form00 .inputfield.terms {
+		flex-direction: row;
+	}
+}
+</style>
+<div class="wrap02">
 <div class="form" id="iss">
 
 	<div class="title">업무 생성</div>
@@ -83,4 +253,6 @@
 
 		</div>
 	</form>
+</div>
+
 </div>

@@ -1,5 +1,6 @@
 package com.kh.circle.addressBook.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,23 @@ public class AddressBookController {
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "tel", required = false) String tel,
-			@RequestParam(value = "index", defaultValue = "0") int index, Model model) {
+			@RequestParam(value = "index", defaultValue = "0") int index,
+			@RequestParam(value  = "deptName", defaultValue = "all") String deptName,
+			Model model) {
 
-		PagingInfo pInfo = PagingInfo.builder().nowPage(nowPage).perPage(perPage).name(name).email(email).tel(tel)
-				.index(index).build();
+		PagingInfo pInfo = PagingInfo.builder()
+									.nowPage(nowPage)
+									.perPage(perPage)
+									.name(name)
+									.email(email)
+									.tel(tel)
+									.index(index)
+									.deptName(deptName)
+									.build();
 
+		//부서명 리스트
+		List<String> deptList = addressBookService.deptList();
+		
 		// 전체 리스트 반환
 		// 페이징 처리
 		Map<String, Object> map = addressBookService.pagingEmp(pInfo);
@@ -50,6 +63,8 @@ public class AddressBookController {
 		model.addAttribute("email", pInfo.getEmail());
 		model.addAttribute("tel", pInfo.getTel());
 		model.addAttribute("index", pInfo.getIndex());
+		model.addAttribute("deptName", pInfo.getDeptName());
+		model.addAttribute("deptList", deptList);
 
 		return "addressBook/allEmp";
 	}
@@ -64,11 +79,4 @@ public class AddressBookController {
 
 		return "addressBook/detail";
 	}
-
-
-//	 @GetMapping("/detail") public String detail(@ModelAttribute EmpInfoAll empInfo, Model model) {
-//	 
-//	 model.addAttribute("empInfo", empInfo);
-//	 
-//	 return "addressBook/detail"; }
 }

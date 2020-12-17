@@ -9,8 +9,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/poll/pollPost.css">
 <link rel="shortcut icon" href="#"><!-- favicon 에러 제거용 -->
 
-<script src="/circle/resources/js/poll/jquery.min.js"></script>
-<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
 <title>설문 참여하기</title>
 </head>
 <body>
@@ -49,8 +47,8 @@
 									<jsp:useBean id="now" class="java.util.Date" scope="request"/>
 									<fmt:parseNumber value="${now.time / (1000*60*60*24)}" integerOnly="true" var="nowNum" scope="request"/>
 									<!-- 날짜 계산용 변수 초기화 -->
-									<c:set var="sdat" value="${item.POLL_POST_SDAT }"></c:set>
-									<c:set var="edat" value="${item.POLL_POST_EDAT }"></c:set>
+									<c:set var="sdat" value="${post[0].POLL_POST_SDAT }"></c:set>
+									<c:set var="edat" value="${post[0].POLL_POST_EDAT }"></c:set>
 									<fmt:parseDate var="sdat" value="${sdat}" pattern="yyyy-MM-dd" />
 									<fmt:parseDate var="edat" value="${edat}" pattern="yyyy-MM-dd" />
 									<fmt:parseNumber value="${sdat.time / (1000*60*60*24)}" integerOnly="true" var="sdatNum" scope="request"/>
@@ -58,7 +56,7 @@
 								
 								<c:if test="${sdatNum <= nowNum && edatNum >= nowNum}">
 									<li>
-										<a class="toolbar-btn-wrap">
+										<a class="toolbar-btn-wrap" onclick="alert('마감')">
 											<span class="toolbar-icon end"></span>
 											<span class="poll-post-toolbar-end-btn-txt">마감</span>
 										</a>
@@ -68,7 +66,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -77,7 +75,7 @@
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goProgress();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -198,7 +196,8 @@
 						<div class="question-guide">
 							<c:out value="${post[0].POLL_POST_CONT }"></c:out>
 						</div>
-						<div id=poll-response-form>
+						<form id="poll-form-complete">
+						<div id="poll-response-form">
 							<div class="question-list-container">
 								<ul class="question-list">
 									<c:forEach var="item" items="${post}" varStatus="status">
@@ -218,7 +217,7 @@
 													</li>
 												</c:when>
 											</c:choose>
-											<li class=question-response>
+											<li class="question-response">
 												<span class="question">
 													<span class="seq">
 														<c:out value="${seq}"></c:out>
@@ -226,9 +225,7 @@
 													.
 													<c:if test="${item.POLL_POST_QUST_NECESS eq 'Y'}">
 													<!-- 필수 체크된 경우 -->
-														<span class="necessary">
-														<c:out value="[필수]"/>
-														</span>
+														<span class="necessary"><c:out value="[필수]"/></span>
 													</c:if>
 													<c:out value="${item.POLL_POST_QUST_CONT }"></c:out>
 												</span>
@@ -282,7 +279,7 @@
 																<li class="etc">
 																	<span class="txt-wrap">
 																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
-																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="${item.POLL_POST_QUST_ANSW_TYPE }" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
+																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="checkbox" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
 															</c:when>
 														</c:choose>
 															<label for="${item.POLL_POST_QUST_ANSW_CODE } txt">
@@ -301,8 +298,7 @@
 													<!-- 장문 선택 -->
 														<li>
 															<div class="text-area-wrap">
-																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5">
-																</textarea>
+																<textarea id="${item.POLL_POST_QUST_ANSW_CODE }" class="textarea w-max" rows="5"></textarea>
 															</div>
 														</li>
 													</c:when>
@@ -345,7 +341,8 @@
 									<span class="txt">임시 저장</span>
 								</a>
 							</div>
-						</div>				
+						</div>	
+						</form>			
 					</article>
 				</div>
 				<div class="poll-reply-container">
@@ -478,7 +475,7 @@
 						</c:choose>
 						
 						<li>
-							<a class="toolbar-btn-wrap">
+							<a class="toolbar-btn-wrap" onclick="deleteModalOpen();">
 								<span class="toolbar-icon del"></span>
 								<span class="poll-post-toolbar-delete-btn-txt">삭제</span>
 							</a>
@@ -487,7 +484,7 @@
 				</c:if>
 				<ul class="poll-post-list">
 					<li>
-						<a class="toolbar-btn-wrap toolbar-list-btn">
+						<a class="toolbar-btn-wrap toolbar-list-btn" onclick="goProgress();">
 							<span class="toolbar-icon list" title="목록"></span>
 							<span class="txt">목록</span>
 						</a>
@@ -495,43 +492,242 @@
 				</ul>
 			</section>
 		</div>
-
+	</div>
+		<input type="hidden" id="postCode" value="${postCode }"/>
+	<div>
+		<jsp:include page="../modalBody.jsp"></jsp:include>
 	</div>
 	
+	<script src="/circle/resources/js/poll/jquery.min.js"></script>
+	<script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>	
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
+	
 	<script>
-		/* 클릭한 체크박스에서 최대개수 제한 추출/방지 */
-		function checkLimit(e){
+	/******************************************************* 실행 부분 *****************************************************/
+	$(document).ready(function(){
+		/* 설문 제출버튼 클릭시  */
+		$('.poll-submit-btn').on('click', function(){
 			
-			/* 추출된 아이디로 선택자 조립 */			
-			var selector = '#' + $(e).prop('id');
+			if(requiredCheck()){
+				pollSubmitModalOpen();
+				
+			} else {
+				requiredCheckModalOpen();
+			}
 			
-			/* 개수제한 추출 */
-			var limit = $(selector).siblings('p').text();
+		})
+		
+		/* 모달 확인 버튼 클릭시 */
+		$('#modal-confirm').on('click', function(){
+			var z = $('#modal-action-divide').val();
 			
+			switch(z){
+				case 'delete' : var code = $('#postCode').val();
+								location.href = "${pageContext.request.contextPath}/poll/deleteOne?postCode=" + code;
+								break;
+				case 'submit' : var convertedData =  formDataConvert(); dataSubmit(convertedData);break;
+				default : break;
+			}
+		})
+		
+	});
+	
+	
+	/******************************************************* 함수 부분 *****************************************************/
+	
+	/* 목록으로 가기 버튼 클릭 */
+	function goProgress(){
+		location.href = "${pageContext.request.contextPath}/poll/progress";
+	}
+	
+	/* 모달 동작 구분용 변수 */
+	ModalAction = "";
+	
+	/* 모달 내용 초기화 */
+	function modalInit(){
+		$('#alertModal').find('.modal-title').text("");
+		$('#alertModal').find('.modal-body').children().text("");
+	}
+	/* 모달 제목 입력 */
+	function modalTitleInput(title){
+		$('#alertModal').find('.modal-title').text(title);
+	}
+	/* 모달 내용 입력 */
+	function modalContentInput(content){
+		$('#alertModal').find('.modal-body').children().text(content);
+	}
+	
+	/* 삭제확인 모달 팝업 */
+	function deleteModalOpen(){
+		modalInit();
+		modalActiondivide('delete');
+		modalTitleInput("설문을 삭제 하시겠습니까?");
+		modalContentInput("삭제된 설문은 복구할 수 없습니다.");
+		$('#alertModal').modal();
+	}
+	/* 설문제출 모달 팝업 */
+	function pollSubmitModalOpen(){
+		modalInit();
+		modalActiondivide('submit');
+		modalTitleInput("설문을 제출 하시겠습니까?");
+		$('#alertModal').modal();
+	}
+	/* 필수입력확인 모달 팝업 */
+	function requiredCheckModalOpen(){
+		modalInit();
+		modalActiondivide('none');
+		modalTitleInput("필수질문 응답 안내");
+		modalContentInput("응답하지 않은 필수 질문이 존재합니다. 확인 후 다시 제출해 주시기 바랍니다.");
+		$('#alertModal').modal();
+	}
+	/* 모달 기능 구분용 데이터 입력 */
+	function modalActiondivide(input){
+		$('#alertModal').find('#modal-action-divide').val(input);
+	}
+	
+	/* 필수 문항 입력 확인 */
+	function requiredCheck(){
+	
+		if($('li.question-response').find('.necessary').text().length > 0){
 			
-			/* 체크박스 변수화 */
-			var name = "input[name=" + $(e).prop('name') + "]";
-			var checkbox = $(name)
+			var isTrue = true;
+			$('li.question-response').each(function(index, item){
+				var x = $(item).find('.necessary').text();
+				if(x == '[필수]'){
+					
+					if(($(item).find('input[type=checkbox]').length > 0 || $(item).find('input[type=radio]').length > 0) && $(item).find('input:checked').length == 0){
+						isTrue = false;
+					}
+					if($(item).find('input[type=text]').length > 0 && $(item).find('input[type=text]').val() == 0){
+						if($(item).find('input[type=text]').closest('.etc').length == 0){
+							isTrue = false;
+						}
+					}
+					if($(item).find('textarea').length > 0 && $(item).find('textarea').val() == 0){
+						isTrue = false;
+					}
+				}
+			});
+			return isTrue;
+		} else {
+			return true;
+		}
+		
+	}
+	
+	/* ajax로 송신 */
+	function dataSubmit(data){
+		
+		var lastData = JSON.stringify(data);
+		
+		$.ajax({
+			type		:	'post'
+		   ,traditional	:	true
+		   ,url			:	"${pageContext.request.contextPath}/pollAjax/attendComplete"
+		   ,data		:	lastData
+		   ,dataType	:	'text'
+		   ,contentType	:	"application/json; charset=utf-8;"
+		   ,error		: 	function(request,status,error){
+			   				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		   ,success		: 	function(data){
+							   var returnedUrl = data;
+							   setTimeout(function(){
+								   location.href = "${pageContext.request.contextPath}/poll/result?postCode=" + returnedUrl;
+							   }, 1000);
+							   
+							   
+		   }
+		})
+	};
+	
+	/* form 데이터 변수화 */	
+	function formDataConvert(){
+		
+		var formData = new Array();
+		
+		/* 데이터 입력값 검색 */
+		$('ul.question-list .question-response').each(function(index, item){
 			
-			/* 카운트 변수 초기화 */
-			var count = 0;
+			var oneData = {};
 			
-			/* 반복문으로 체크상태 확인 */
-			for(var i = 0; i < checkbox.length; i++	){
-				if(checkbox[i].checked){
-					count ++;
+			/* 점수형일 경우 */
+			if($(item).find('.rank').length > 0 && $(item).find('input[type=radio]:checked').length > 0){
+				var x = $(item).find('input[type=radio]:checked').prop('id');
+				oneData = {"id": x, "content": 'null'}
+				formData.push(oneData);
+			/* 선택형일 경우 */	
+			} else if($(item).find('.answer-option-wrap').length > 0 && $(item).find('input:checked').length > 0){
+				/* 라디오 타입일 경우 */				
+				if($(item).find('input[type=radio]').length > 0){
+					var x =	$(item).find('input[type=radio]:checked').prop('id');	
+					oneData = {"id": x, "content": 'null'}
+					formData.push(oneData);
+				/* 체크 타입일 경우 */
+				} else { 
+					$(item).find('input[type=checkbox]:checked').each(function(innerIndex, innerItem){
+						var x =	$(innerItem).prop('id');	
+						/* 기타일 경우 */
+						if($(innerItem).closest('.etc').length > 0){
+							var z = $(innerItem).siblings('input[type=text]').val();
+							oneData = {"id": x, "content": z}
+							formData.push(oneData);
+						/* 일반 선택지일 경우 */
+						} else {
+							oneData = {"id": x, "content": 'null'}
+							formData.push(oneData);
+						}
+					})
+				}
+			/* 텍스트형일 경우 */
+			} else {
+				/* 장문일 경우 */
+				if($(item).find('textarea').length > 0 && $(item).find('textarea').val().length > 0){
+					var x = $(item).find('textarea').prop('id');
+					var z = $(item).find('textarea').val();
+					oneData = {"id": x, "content": z}
+					formData.push(oneData);
+				/* 단문일 경우 */	
+				} else if($(item).find('input[type=text]').length > 0 && $(item).find('input[type=text]').val().length > 0){
+					var x = $(item).find('input[type=text]').prop('id');
+					var z = $(item).find('input[type=text]').val();
+					oneData = {"id": x, "content": z}
+					formData.push(oneData);
 				}
 			}
-			
-			/* 무제한(0) 일때 카운트 설정 */
-			limit == 0 ? limit = count : limit = limit;
-					
-			/* 최대개수 초과시 경고/체크해제 */
-			if(count > limit){
-				alert("해당질문은 " + limit + "개 까지 선택이 가능합니다");
-				$(selector).prop('checked', false);
+		})
+		return formData;		
+	};
+	/* form submit 기능 */
+	function formSubmit(){
+		$('#poll-form-complete').prop("method", "post").prop('action',"${pageContext.request.contextPath}/poll/postAttendComplete").submit();
+	};
+	
+	
+	/* 클릭한 체크박스에서 최대개수 제한 추출/방지 */
+	function checkLimit(e){
+		/* 추출된 아이디로 선택자 조립 */			
+		var selector = '#' + $(e).prop('id');
+		/* 개수제한 추출 */
+		var limit = $(selector).siblings('p').text();
+		/* 체크박스 변수화 */
+		var name = "input[name=" + $(e).prop('name') + "]";
+		var checkbox = $(name)
+		/* 카운트 변수 초기화 */
+		var count = 0;
+		/* 반복문으로 체크상태 확인 */
+		for(var i = 0; i < checkbox.length; i++	){
+			if(checkbox[i].checked){
+				count ++;
 			}
 		}
+		/* 무제한(0) 일때 카운트 설정 */
+		limit == 0 ? limit = count : limit = limit;
+		/* 최대개수 초과시 경고/체크해제 */
+		if(count > limit){
+			alert("해당질문은 " + limit + "개 까지 선택이 가능합니다");
+			$(selector).prop('checked', false);
+		}
+	};
 	</script>
 
 </body>

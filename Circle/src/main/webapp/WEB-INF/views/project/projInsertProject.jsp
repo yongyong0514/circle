@@ -23,7 +23,6 @@
 		<div class="container">
 			<div class="contentBar">
 				<jsp:include page="../project/projHomebar.jsp" />
-				<jsp:include page="../project/projConsole.jsp" />
 
 			</div>
 			<div class="content">

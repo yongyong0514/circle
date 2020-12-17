@@ -28,6 +28,7 @@
 		order by
 		p.post_code desc
 	</select>
+	
 
 	<!-- 부분 게시판 -->
 	<select id="postParts" parameterType="string" resultType="post">
@@ -101,6 +102,15 @@
 		#{start} and #{end}
 
 	</select>
+	
+		<select id="postSelect3" parameterType="postPaging"
+		resultType="post">
+		select post_type_title
+		from post_type
+		where post_type_code = #{post_type}
+
+	</select>
+	
 
 
 	<!-- postList 호출 -->

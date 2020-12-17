@@ -38,11 +38,11 @@
 				- 인사 담당자 확인 후 출력
 			 -->
 			<div class="menuLeftListTitle">전사근태관리</div>
-				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allAttendanceList'">전사 근태현황</div>
-				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allAttendanceStatistic'">전사 근태통계</div>
+ 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 근태현황</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 근태통계</div>
 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/empInfo/allInfoList'">전사 인사정보</div>
-				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allVacationList'">전사 연차현황</div>
-				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/allVacationHistory'">전사 연차 사용내역</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 연차현황</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 연차 사용내역</div>
 			<!-- 근태/인사관리 메뉴 끝 -->
 					
 			<!-- 메뉴 끝 -->
@@ -60,7 +60,7 @@
 		var text = "";
 		
 	    if(isNull(sTime)){
-	    	text = "미등록";
+	    	text = "출근 전";
 		} else{
 			text = transformDateFormat(time, "time");
 		}

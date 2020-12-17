@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.circle.poll.entity.Pagination;
+import com.kh.circle.poll.entity.PostCode;
+import com.kh.circle.poll.entity.PreInputData;
+import com.kh.circle.poll.entity.Question;
 import com.kh.circle.poll.repository.PollDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -91,6 +94,45 @@ public class PollServiceImpl implements PollService{
 	@Override
 	public List<HashMap<String, String>> userInfo(String empNo) {
 		return pollDao.userInfo(empNo);
+	}
+	@Override
+	public void insertPoll(PreInputData temp, List<Question> questions) {
+		pollDao.insertPoll(temp, questions);
+	}
+
+
+	@Override
+	public String insertAttendedServey(List<HashMap<String, String>> list) {
+		return pollDao.insertAttendedServey(list);
+	}
+
+
+	@Override
+	public void deleteOne(String postCode) {
+		
+		//삭제용 답변 코드 추출
+		List<String> answers = pollDao.answerSearch(postCode);
+		
+		//답변자 삭제
+		pollDao.deleteAttender(answers);
+		
+		
+		//답변 삭제
+		int result = pollDao.deleteAnswer(postCode);
+		
+		//문항 삭제
+		pollDao.deleteQuestion(postCode);
+		
+		//참여가능 인원 삭제
+		pollDao.deleteMember(postCode);
+		
+		//개별 설문 삭제
+		pollDao.deleteOne(postCode);
+	}
+
+	@Override
+	public void deleteAll(PostCode postList) {
+		pollDao.deleteAll(postList);
 	}
 
 

@@ -6,15 +6,28 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/common/menuBar/menuLeftBar.css">
+<style>
+	a:hover{
+	color:black;
+	}
+</style>
 </head>
 <body>
 	<div>
 		<div class="menuLeftBar">
-			<div class="menuLeftListTop" onclick="location.href='/circle/community/comuList'">동호회</div>
+			<div class="menuLeftListTop" onclick="location.href='/circle/community/comuList'">
+			<a>동호회</a>
+			</div>
 			
 			<div class="menuLeftListBtn">
-			<%-- <c:if test="${ !empty sessionScope.member }">  --%>
+			
 			<button class="menuLeftBtn" onclick="location.href='/circle/community/comuAdd'">글 작성</button>
+			
+			</div>
+			
+			<div class="menuLeftListBtn">
+		 	<%-- <c:if test="${ !empty sessionScope.member }"> --%>
+			<button class="menuLeftBtn" onclick="location.href='/circle/community/comuAppList'">가입신청서 보기</button>
 			<%-- 	</c:if> --%>
 			</div>
 			
@@ -23,22 +36,20 @@
 			<!-- <button class="menuLeftBtn" onclick="location.href='/circle/community/comuApp'">가입 신청</button> -->
 			<%-- 	</c:if> --%>
 			</div>
+			<%-- <c:if test="${ !empty empInfo}"> --%>
+			<!-- <div class="menuLeftList"></div> -->
+		
 			
-			<div class="menuLeftList"></div>
-			
+			<%-- <form action="${pageContext.request.contextPath}/community/comuLeftBar"
+						method="post"> --%>
 			<div class="menuLeftListTitle"># 가입 동호회</div>
-				<form>
-				<c:forEach var="leftList" items="${leftList}"> 
-				<input type="hidden" name="emp_info_emp_no" value="${leftList.comu_info_emp_no}">
-			<div class="menuLeftList"><span>${leftList.comu_list_name}</span></div>
-			<!-- <div class="menuLeftList"></div>					
-			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div>
-			<div class="menuLeftList"></div> -->
-			</c:forEach>
-			</form>
+			<%--  <c:forEach var="empNo" items="${empNo}"> 
+			<div class="menuLeftList">${empNo.comu_list_name}</div>
+				<input type="hidden" value="${empNo.comu_list_code}">
+			 </c:forEach>  --%>
+			<!-- </form> -->
 			<!-- <div class="menuLeftListTitle"># 가입 회원</div> -->
-									
+			<%-- </c:if> --%>		
 			<!-- <div class="menuLeftList">전체</div>
 			<div class="menuLeftList"></div> -->															
 		</div>

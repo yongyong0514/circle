@@ -12,12 +12,11 @@
 <body>
 	<div class="wrap">
 		<form name="homeForm" action="${pageContext.request.contextPath}/empInfo/login" method="POST" >
-		<c:if test="${empInfo != null }">
+		<c:if test="${!empty empInfo}">
 			<script>
 				location.href="${pageContext.request.contextPath}/common/mainPage";
 			</script>
 		</c:if>
-		<c:if test="${empInfo == null }">
 		<div class="loginBox">
 			<table>
 				<tr>
@@ -55,7 +54,7 @@
 					</th>
 				</tr>
 				<tr>
-					<th class="row7" onclick="pwdfind();">&nbsp;&nbsp;&nbsp;&nbsp;사원번호나 비밀번호를 잊어버렸습니다</th>
+					<th class="row7" onclick="pwdfind();">&nbsp;&nbsp;&nbsp;&nbsp;사원번호나 비밀번호를 잊어버린 경우 문의주세요.<br>&nbsp;&nbsp;&nbsp;&nbsp;010-5766-1187</th>
 				</tr>
 				<tr>
 					<th class="row6">
@@ -70,7 +69,6 @@
 				</tr>
 			</table>
 		</div>
-		</c:if>
 		<c:if test="${message == false}">
 			<p>로그인실패: 사원번호 비밀번호가 틀렸습니다</p>
 		</c:if>
@@ -78,8 +76,8 @@
 	</div>
 
 <!-- SCRIPT 영역 -->
-  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	
 	<script>

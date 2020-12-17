@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.post.entity.Post;
 import com.kh.circle.post.entity.PostPaging;
+import com.kh.circle.project.entity.ProjFile;
 import com.kh.circle.project.entity.ProjPaging;
 import com.kh.circle.project.entity.Project;
 
@@ -34,7 +35,7 @@ public class ProjectDaoImp implements ProjectDao {
 	}
 
 	@Override
-	public int countProj() {
+	public int countProject() {
 
 		int num = sqlSession.selectOne("project.projCount");
 
@@ -85,10 +86,8 @@ public class ProjectDaoImp implements ProjectDao {
 		
 		
 		String iss_situ_code = "SITU000001";
-		System.out.println(iss_situ_code);
 		project.setIss_situ_code(iss_situ_code);
 		
-		System.out.println("DDDDDDDDDDDDWE" +  project + "sksksksksks");
 		
 		sqlSession.insert("project.proIssInsert", project);
 		
@@ -125,6 +124,100 @@ public class ProjectDaoImp implements ProjectDao {
 	public List<Project> issProg() {
 		List<Project> issProg = sqlSession.selectList("project.issProg");
 		return issProg;
+	}
+
+	@Override
+	public String projGetPro(Project project) {
+
+		String pro_code = sqlSession.selectOne("project.proGetPro", project);
+		return pro_code;
+	}
+
+	@Override
+	public List<Project> projIssAll(String emp_no) {
+		List<Project> IssAll = sqlSession.selectList("project.projissAll", emp_no);
+
+		return IssAll;
+	}
+
+	@Override
+	public List<Project> projDetail(String pro_code) {
+		
+
+		List<Project> projDetial = sqlSession.selectList("project.projDetail", pro_code);
+		
+		return projDetial;
+	}
+
+	@Override
+	public List<Project> projDetail2(String pro_code) {
+List<Project> projDetial2 = sqlSession.selectList("project.projDetail2", pro_code);
+		
+		return projDetial2;
+	}
+
+	@Override
+	public List<Project> projMemberlist(String pro_code) {
+List<Project> projMemberlist = sqlSession.selectList("project.projMemberlist", pro_code);
+		
+		return projMemberlist;
+	}
+
+	@Override
+	public List<ProjFile> projDetail3(String pro_code) {
+		
+		List<ProjFile> projDetail3 = sqlSession.selectList("project.projDetail3", pro_code);
+		
+		
+		return projDetail3;
+	}
+
+	@Override
+	public List<Project>  projGetIss(String pro_code) {
+		
+		
+		
+		List<Project>  iss_code = sqlSession.selectList("project.projGetIss", pro_code);
+
+		
+		return iss_code;
+	}
+
+	@Override
+	public List<ProjFile> projIssDetail(String iss_code) {
+
+		List<ProjFile> iss = sqlSession.selectList("project.projIssDetail", iss_code);
+		
+		return iss;
+	}
+
+	@Override
+	public List<Project> projKanban(String pro_code) {
+
+		List<Project> list = sqlSession.selectList("project.projKanban", pro_code);
+		
+		return list;
+	}
+
+	@Override
+	public String projKanbanHead(String pro_code) {
+
+		String projKanbanHead  = sqlSession.selectOne("project.projKanbanHead", pro_code);
+		
+		return projKanbanHead;
+	}
+
+	@Override
+	public List<ProjFile> projDetail4(String iss_code) {
+		
+		
+		System.out.println("check : " + iss_code);
+		
+		List<ProjFile> projDetail4 = sqlSession.selectList("project.projDetail4", iss_code);
+		
+		System.out.println(projDetail4);
+		
+		return projDetail4;
 	}
 
 

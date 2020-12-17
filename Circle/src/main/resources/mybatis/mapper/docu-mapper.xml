@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- DTD 선언 -->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="docu">
+	
+	<select id="docuListPrivate" resultType="docuList" parameterType="String">
+		SELECT *
+  		  FROM (SELECT DL.DOCU_CODE
+        		     , DL.DOCU_TYPE
+           		     , DL.DOCU_TITLE
+           		     , EI.EMP_INFO_NAME
+           		     , JI.JOB_INFO_NAME
+         		     , TO_CHAR(DL.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+          		     , TO_CHAR(DL.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+           		     , DL.DOCU_CHECK
+          		     , DL.DOCU_EMP_CODE
+       		      FROM DOCUMENT DL
+    	          JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DL.DOCU_EMP_CODE)
+     		      JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+      		     WHERE DL.DOCU_EMP_CODE = #{empCode}
+      		       AND DL.DOCU_STATUS = 'N'
+      		       AND DL.DOCU_TYPE = '1'
+   		         ORDER BY DL.DOCU_CODE DESC
+     		   )
+  	     WHERE ROWNUM &lt; 6
+	</select>
+	
+	
+	<select id="docuListPublic" resultType="docuList" parameterType="String">
+		SELECT *
+  		  FROM (SELECT DL.DOCU_CODE
+        		     , DL.DOCU_TYPE
+           		     , DL.DOCU_TITLE
+           		     , EI.EMP_INFO_NAME
+           		     , JI.JOB_INFO_NAME
+         		     , TO_CHAR(DL.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+          		     , TO_CHAR(DL.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+           		     , DL.DOCU_CHECK
+          		     , DL.DOCU_EMP_CODE
+       		      FROM DOCUMENT DL
+    	          JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DL.DOCU_EMP_CODE)
+     		      JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+      		     WHERE DL.DOCU_STATUS = 'N'
+      		       AND DL.DOCU_TYPE = '2'
+   		         ORDER BY DL.DOCU_CODE DESC
+     		   )
+  	     WHERE ROWNUM &lt; 6
+	</select>	
+	
+	
+	<select id="docuSelectOne" resultType="docuSelectOne" parameterType="String">
+		SELECT DO.DOCU_TYPE
+   			 , DO.DOCU_YEAR-DO.DOCU_DATE AS DOCU_YEAR
+   		     , DO.DOCU_TITLE
+    		 , DO.DOCU_CONTENT AS DOCU_NOTE
+    		 , DO.DOCU_CHECK
+    		 , DO.DOCU_EMP_CODE
+    		 , DO.DOCU_CODE
+    		 , EI.EMP_INFO_NAME
+    		 , JI.JOB_INFO_NAME
+    		 , TO_CHAR(DO.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+    		 , TO_CHAR(DO.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+ 		  FROM DOCUMENT DO
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+		 WHERE DO.DOCU_CODE = #{docuCode}
+	</select>
+
+	<select id="docuReply" resultType="docuReply" parameterType="String">
+		SELECT DR.DOCU_REPL_EMP_CODE
+   		     , DR.DOCU_REPL_DATE
+   		     , DR.DOCU_REPL_CONTENT
+             , DR.DOCU_REPL_EMP_CODE
+   		     , EI.EMP_INFO_NAME
+     		 , JI.JOB_INFO_NAME
+     		 , DR.DOCU_REPL_CODE
+  		  FROM DOCU_REPL DR
+  		  JOIN EMP_INFO EI ON(EI.EMP_INFO_EMP_NO = DR.DOCU_REPL_EMP_CODE)
+  		  JOIN JOB_INFO JI ON(JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+ 		 WHERE DR.DOCU_REPL_DOCU_CODE = #{docuCode}
+	</select>
+	
+	
+	<select id="seqDocu" resultType="String">
+		SELECT DOCU_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	
+	<insert id="docuWriteInsert" parameterType="docuWriteInsert">
+		INSERT INTO DOCUMENT(DOCU_CODE
+						   , DOCU_TYPE
+						   , DOCU_YEAR
+						   , DOCU_TITLE
+						   , DOCU_CONTENT
+						   , DOCU_STATUS
+						   , DOCU_CHECK
+						   , DOCU_DATE
+						   , DOCU_EMP_CODE) VALUES ('DOCU'||TRIM(TO_CHAR(#{seqDocu},'000000'))
+						   						  , #{docu_type}
+						   						  , SYSDATE+#{docu_year}
+						   						  , #{docu_title}
+						   						  , #{docu_note}
+						   						  , 'N'
+						   						  , 'N'
+						   						  , SYSDATE
+						   						  , #{docu_emp_code})
+	</insert>
+	
+	
+	<select id="seqReply" resultType="String">
+		SELECT DORP_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	
+	<insert id="docuReplyInsert" parameterType="map">
+		INSERT INTO DOCU_REPL(DOCU_REPL_CODE
+							, DOCU_REPL_DOCU_CODE
+							, DOCU_REPL_CONTENT
+							, DOCU_REPL_DATE
+							, DOCU_REPL_EMP_CODE) VALUES ('DORP'||TRIM(TO_CHAR(#{seqReply},'000000'))
+													   , #{docu_repl_docu_code}
+													   , #{docu_repl_content}
+													   , SYSDATE
+													   , #{docu_repl_emp_code})
+	</insert>
+	
+	<update id="docuUpdate" parameterType="docuSelectOne">
+		UPDATE DOCUMENT
+		   SET DOCU_YEAR = SYSDATE+#{docu_year}
+		     , DOCU_type = #{docu_type}
+		     , DOCU_TITLE = #{docu_title}
+		     , DOCU_CONTENT = #{docu_note}
+		 WHERE DOCU_CODE = #{docu_code}   
+	</update>
+	
+	<!-- delete document -->
+	<update id="docuDelete" parameterType="String">
+		UPDATE DOCUMENT
+		   SET DOCU_STATUS = 'Y'
+		 WHERE DOCU_CODE = #{docuCode}
+	</update>
+	
+	<!-- delete docuReply -->
+	<delete id="docuReplyDelete" parameterType="String">
+		DELETE 
+		  FROM DOCU_REPL
+		 WHERE DOCU_REPL_CODE = #{replyCode}
+	</delete>
+	
+	<!-- result docuFiles -->
+	<select id="docuFileOne" resultType="docuFiles" parameterType="String">
+		SELECT *
+		  FROM FILES
+		 WHERE FILES_CODE=#{fileCode}
+		   AND FILES_STATUS = 'N'
+	</select>
+	
+	<!-- result seqDocuFiles -->
+	<select id="seqDocuFiles" resultType="String">
+		SELECT FILE_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<select id="seqDocuFilesCurrval" resultType="String">
+		SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'DOCU_SEQ'
+	</select>
+	
+	<insert id="docuFiles" parameterType="map">
+		INSERT INTO FILES(FILES_CODE
+						, FILES_ONAME
+						, FILES_CNAME
+						, FILES_ROUTE
+						, FILES_DATE
+						, FILES_TYPE
+						, FILES_STATUS
+						, FILES_SIZE) VALUES ('FILE'||TRIM(TO_CHAR(#{seqDocuFiles},'000000'))
+										   , #{files_oname}
+										   , #{files_cname}
+										   , #{files_route}
+										   , SYSDATE
+										   , ('DOCU'||TRIM(TO_CHAR(#{seqDocuFilesCurrval},'000000')))
+										   , 'N'
+										   , #{files_size})	
+	</insert>
+	
+	<select id="docuFileList" resultType="docuFiles" parameterType="String">
+		SELECT FILES_CODE
+     	     , FILES_ONAME
+  		     , FILES_CNAME
+     		 , FILES_ROUTE
+     		 , FILES_DATE
+     		 , FILES_TYPE
+     		 , FILES_STATUS
+     		 , CASE WHEN MOD(FILES_SIZE, 1024) &gt; 1024 THEN CONCAT(TRUNC(FILES_SIZE/1024, 2), ' MB')
+            		WHEN MOD(FILES_SIZE, 1024) &lt; 1024 THEN CONCAT(TRUNC(FILES_SIZE/1024, 2), ' KB')
+       		    END FILES_SIZE
+       	  FROM FILES
+		 WHERE FILES_TYPE=#{docuCode}
+		   AND FILES_STATUS = 'N'
+	</select>
+	
+	<select id="docuAllPersonalCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM DOCUMENT DO
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 WHERE DO.DOCU_STATUS = 'N'
+ 		   AND DO.DOCU_TYPE = '1'
+ 		   AND DO.DOCU_EMP_CODE = #{empCode}
+	</select>
+	
+	<select id="docuAllPersonal" parameterType="map" resultType="docuList">
+		SELECT RNUM
+			 , DOCU_CODE
+			 , DOCU_TYPE
+			 , DOCU_TITLE
+			 , DOCU_CHECK
+			 , DOCU_WDAT
+			 , DOCU_WHOUR
+			 , DOCU_EMP_CODE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+		  FROM (SELECT ROWNUM RNUM
+		   			 , DOCU_CODE
+					 , DOCU_TYPE
+					 , DOCU_TITLE
+					 , DOCU_CHECK
+					 , DOCU_WDAT
+					 , DOCU_WHOUR
+					 , DOCU_EMP_CODE
+		    		 , EMP_INFO_NAME
+    				 , JOB_INFO_NAME
+				  FROM (SELECT DO.DOCU_CODE
+					 		 , DO.DOCU_TYPE
+							 , DO.DOCU_TITLE
+							 , DO.DOCU_CHECK
+							 , TO_CHAR(DO.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+							 , TO_CHAR(DO.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+							 , DO.DOCU_EMP_CODE
+		    				 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+		  				  FROM DOCUMENT DO
+		  				  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+		  				 WHERE DO.DOCU_STATUS = 'N'
+		  				   AND DO.DOCU_TYPE = '1'
+		  				   AND DO.DOCU_EMP_CODE = #{empCode}
+		  				 ORDER BY DO.DOCU_CODE DESC
+		  				)
+		  		)
+		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+
+	<select id="docuAllPublicCount" parameterType="String" resultType="int">
+		SELECT COUNT(*)
+		  FROM DOCUMENT DO
+ 		  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 WHERE DO.DOCU_STATUS = 'N'
+ 		   AND DO.DOCU_TYPE = '2'
+	</select>
+	
+	<select id="docuAllPublic" parameterType="map" resultType="docuList">
+		SELECT RNUM
+			 , DOCU_CODE
+			 , DOCU_TYPE
+			 , DOCU_TITLE
+			 , DOCU_CHECK
+			 , DOCU_WDAT
+			 , DOCU_WHOUR
+			 , DOCU_EMP_CODE
+    		 , EMP_INFO_NAME
+    		 , JOB_INFO_NAME
+		  FROM (SELECT ROWNUM RNUM
+		   			 , DOCU_CODE
+					 , DOCU_TYPE
+					 , DOCU_TITLE
+					 , DOCU_CHECK
+					 , DOCU_WDAT
+					 , DOCU_WHOUR
+					 , DOCU_EMP_CODE
+		    		 , EMP_INFO_NAME
+    				 , JOB_INFO_NAME
+				  FROM (SELECT DO.DOCU_CODE
+					 		 , DO.DOCU_TYPE
+							 , DO.DOCU_TITLE
+							 , DO.DOCU_CHECK
+							 , TO_CHAR(DO.DOCU_DATE, 'yyyy-mm-dd') AS DOCU_WDAT
+							 , TO_CHAR(DO.DOCU_DATE, 'hh:dd') AS DOCU_WHOUR
+							 , DO.DOCU_EMP_CODE
+		    				 , EI.EMP_INFO_NAME
+    						 , JI.JOB_INFO_NAME
+		  				  FROM DOCUMENT DO
+		  				  JOIN EMP_INFO EI ON (EI.EMP_INFO_EMP_NO = DO.DOCU_EMP_CODE)
+ 		 		  		  JOIN JOB_INFO JI ON (JI.JOB_INFO_CODE = EI.EMP_INFO_JOB_CODE)
+		  				 WHERE DO.DOCU_STATUS = 'N'
+		  				   AND DO.DOCU_TYPE = '2'
+		  				 ORDER BY DO.DOCU_CODE DESC
+		  				)
+		  		)
+		 WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+
+<!-- select signReplyOwner -->
+	<select id="docuReplyOwner" parameterType="String" resultType="String">
+		SELECT DOCU_REPL_EMP_CODE
+  		  FROM DOCU_REPL
+ 		 WHERE DOCU_REPL_CODE = #{replyCode}
+	</select>
+</mapper>

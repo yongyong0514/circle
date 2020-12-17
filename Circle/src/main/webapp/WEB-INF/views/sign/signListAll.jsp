@@ -90,7 +90,8 @@
 						</c:forEach>
 					</table>
 				</div>
-				 <div class="paging-area" align="center">
+			</div>
+			 <div class="paging-area" align="center">
 					<button id="paging" onclick="location.href='${pageContext.request.contextPath}/sign/signListAll?currentPages=1'"><<</button>
 			
 						<c:if test="${ pi.currentPage <= 1 }">
@@ -119,9 +120,9 @@
 						</c:if>
 						<button id="paging" onclick="location.href='${pageContext.request.contextPath}/sign/signListAll?currentPages=<c:out value="${ pi.maxPage }"/>'">>></button>
 				</div>
-			</div>
 		</div>
 	</div>
+	
 <!-- 왼쪽바 고정 추가 옵션 시작-->
 	<script>
 		$(function() {

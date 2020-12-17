@@ -45,10 +45,23 @@
 		
 		<typeAlias type="com.kh.circle.schedule.entity.Sch_unit" alias="sch_unit"/>
 		<typeAlias type="com.kh.circle.schedule.entity.SchAjax" alias="schAjax"/>
-		<typeAlias type="com.kh.circle.schedule.entity.SchAjaxEntry" alias="schAjaxEntry"/>
+		<typeAlias type="com.kh.circle.schedule.entity.Entry" alias="entry"/>
 
 		<typeAlias type="com.kh.circle.poll.entity.Pagination" alias="pagination"/>
+		<typeAlias type="com.kh.circle.poll.entity.PreInputData" alias="preInputData"/>
+		<typeAlias type="com.kh.circle.poll.entity.Question" alias="question"/>
+		<typeAlias type="com.kh.circle.poll.entity.SelectContents" alias="selectContents"/>
+		<typeAlias type="com.kh.circle.poll.entity.AttendedServey" alias="attendedServey"/>
+		<typeAlias type="com.kh.circle.poll.entity.AttendedServeyMember" alias="attendedServeyMember"/>
 
+
+		<typeAlias type="com.kh.circle.document.vo.DocuWriteInsert" alias="docuWriteInsert"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuList" alias="docuList"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuSelectOne" alias="docuSelectOne"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuReply" alias="docuReply"/>
+		<typeAlias type="com.kh.circle.document.vo.DocuFiles" alias="docuFiles"/>
+	
+	
 		<typeAlias type="com.kh.circle.sign.entity.Sign" alias="sign"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignList" alias="signList"/>
 		<typeAlias type="com.kh.circle.sign.vo.SignListJoiner" alias="signListJoiner"/>

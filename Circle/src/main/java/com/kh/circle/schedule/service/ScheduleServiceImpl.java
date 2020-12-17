@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.schedule.entity.SchAjax;
-import com.kh.circle.schedule.entity.SchAjaxEntry;
+import com.kh.circle.schedule.entity.Entry;
 import com.kh.circle.schedule.entity.Sch_unit;
 import com.kh.circle.schedule.repository.ScheduleDao;
 
@@ -48,8 +48,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	//이벤트 참가자 리턴
 	@Override
 	public List<HashMap<String,String>> entryList(String id) {
-		
-		log.info("id : {}", id);
 		
 		List<HashMap<String, String>> list =schDao.entryList(id);
 		return list;

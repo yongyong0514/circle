@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.sign.vo.SignFiles;
 import com.kh.circle.sign.vo.SignReplyInsert;
+import com.kh.circle.sign.vo.SignType;
 import com.kh.circle.sign.vo.SignWriteInsert;
 
 @Repository
@@ -133,7 +134,7 @@ public class SignDaoImpl implements SignDao {
 	//결재 서명 파일 등록
 	@Override
 	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route,
-			String empCode) {
+			String iempCode) {
 		
 		//시퀀스 번호 생성 및 파일 등록
 		String seqSignFiles = sqlSession.selectOne("sign.seqSignFiles");	
@@ -146,14 +147,17 @@ public class SignDaoImpl implements SignDao {
 		map.put("files_type", files_type);
 		map.put("files_cname", files_cname);
 		map.put("files_route", files_route);
-		map.put("empCode", empCode);
+		map.put("iempCode", iempCode);
 		
 		sqlSession.insert("sign.signFilesSignatureInsert", map);
 	}
 	
-	//결재 서명 파일 경로
-	private final String path2 = "d:/resources/files/empInfo/signature";
+	//결재 서명 이미지 파일 경로
+	private final String path2 = "d:/resources/files/sign/signature/image";
 
+	//결재 서명 기본 파일 경로
+	private final String path3 = "d:/resources/files/sign/signature/default";
+	
 	//결재 서명 파일 다운
 	@Override
 	public byte[] loadFile(String files_cname) throws IOException {
@@ -185,6 +189,37 @@ public class SignDaoImpl implements SignDao {
 	@Override
 	public void update(String fileCode) {
 		sqlSession.update("sign.sfsDelete", fileCode);
+	}
+
+	//결재 댓글 삭제
+	@Override
+	public void add(String replyCode) {
+		sqlSession.delete("sign.signReplyDelete", replyCode);
+		
+	}
+
+	//결재 타입 추가
+	@Override
+	public void add(SignType signType) {
+		
+		String seqSignType = sqlSession.selectOne("sign.seqSignType");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("seqSignType", seqSignType);
+		map.put("sign_type_code", signType.getSign_type_code());
+		map.put("sign_type_name", signType.getSign_type_name());
+		map.put("sign_type_content", signType.getSign_type_content());
+
+		sqlSession.insert("sign.signTypeInsert", map);
+		
+	}
+
+	//결재 타입 삭제
+	@Override
+	public void addDeleteSignType(String typeCode) {
+		sqlSession.delete("sign.signTypeDelete", typeCode);
+		
 	}
 
 }

@@ -18,6 +18,9 @@
 <body>
 	<!-- <div id='mydate' style="height:200px;"></div> --> <!-- 사이드바용 datepicker (jquery-ui 사용) --> 
 	<div id="calendar"></div>
+	
+	<!-- 사번 불러오는곳 -->
+	<input id="empNo" type="hidden" value="${empInfo.emp_info_emp_no}">	
 		
 	<!-- 간단 일정보기 MoDal -->
 		
@@ -68,7 +71,10 @@
                         		<label class="col-xs-4" for="view-entry" id="entry">[참가자]</label>
                         	</div>
                         	<div class="view-modal-content">
-                        		<span class="inputModal" id="view-entry"></span>
+                        		<span class="inputModal" id="view-entry">
+                        		</span>
+                        		<ul class="name-tag">
+                        		</ul>
                         	</div>
                             
                         </div>
@@ -247,11 +253,12 @@
 <script src='${pageContext.request.contextPath}/resources/js/schedule/fullcalendar.min.js'></script>
 <script src="${pageContext.request.contextPath}/resources/js/schedule/ko.js"></script>
 <script src="/circle/resources/js/poll/jquery.tmpl.min.js"></script>
-<%-- <script src="${pageContext.request.contextPath}/resources/js/schedule/jquery-ui.js"></script> --%>
+<script src="${pageContext.request.contextPath}/resources/js/poll/jquery.serializeObject.js"></script>
         
 <!-- 주석커밋 -->
       <script>
-      		var loginId = '200101090031'//${member.EMP_INFO_EMP_NO}	;//로그인 아이디
+      		
+      		var loginId = $('#empNo').val(); //${member.EMP_INFO_EMP_NO}	;//로그인 아이디'200101090031'
       		var nowEvent = "";									//클릭한 이벤트 정보 저장
       		var base = "${pageContext.request.contextPath}";	//rootdirectory 저장
       		
@@ -331,6 +338,7 @@
 						        							var end = $(this).prop('end');
 						        							var	start = $(this).prop('start');
 						        							
+						        							
 						        							if(allDay == "on"){
 						        								yn = true;
 						        								if (start !== end) {
@@ -362,7 +370,6 @@
 						        						
 						        						//월, 년 변경되었거나 자료 변경에 따라 다시 불러오기
 														callback(events);
-														console.log(events)
 						                    		}
                  							});
                  	},
@@ -373,10 +380,10 @@
             	 							$('#edit-allDay').prop('checked', true);
             	 							$('#edit-color option:eq(0)').prop('selected', true);
             	 							$('#edit-desc').val("");
-            	 							
             	 							$('.time').hide();	
             	 							$('.input-check').hide();
            	 			                	$('#attend-check').hide();
+            	 							attendFormFlush();
             	 							
             	 							//현재 시간 넣기
             	 							$('#edit-start').val(date.format());
@@ -408,7 +415,6 @@
                 	eventClick			: function(event, jsEvent, view) {
                 												
                 							nowEvent = event;
-                							console.log(nowEvent);
                 							entry=[];
                 							
                 							//참여자 데이터 불러오기
@@ -424,58 +430,61 @@
                 			                	success		: function(json){
                 			                		
                 			                		entry = json;
-                			                		console.log(json);
-                        							$(json).each(function(){
-                        								$('#view-entry').append("<span style=display:inline-block>" + $(this).prop('EMP_INFO_NAME') + "<span>&nbsp");
-                        							});
+                			                		
+                        							//empty input value
+                        							$('#view-sch-id').val("");
+                        							$('#view-title').empty();
+                        							$('#view-start').empty();
+                        							$('#view-end').empty();
+                        							$('#view-groupCode').empty();
+                        							$('#view-writer').empty();
+                        							$('#view-desc').empty();
+                        							$('#view-entry').empty();
+                        							$('.input-check').hide();
+                        							$('#attend-check').hide();
+                        							attendFormFlush();
+                        							
+                        							//fill input value
+                        							$('#view-sch-id').val(event.id);
+                        							$('#view-title').text(event.title);
+                        							if(event.allDay) {
+                        								$('#view-start').text(event.start.format('YYYY-MM-DD'));
+                            							if(event.end != null) {
+                            								$('#view-end').text(event.end.format('YYYY-MM-DD'));
+                            							}	
+                        							} else {
+                            							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
+                            							if(event.end != null) {
+                            								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
+                            							}               								
+                        							}
+                        							$('#view-groupCode').text(event.groupName);
+                        							
+
+                        							$('#view-writer').text(event.writerName);
+                        							$('#view-desc').text(event.content);
+                        							
+                        							
+                        							/* 참가자 입력 */
+                        							$.each(entry, function (index, item){
+                        								$('#view-name-template').tmpl(item).appendTo('#eventModal .name-tag');
+                        							})
+                        							
+                        							//autority check
+                        							if(event.writer != loginId) {
+        												
+        												$(".modalBtnContainer-viewEvent").hide();
+                        							} else {
+                        								$(".modalBtnContainer-viewEvent").show();
+                        							}
+                        							
+                        							//modal on
+                        							$('#eventModal').modal();
+                			                		
                 			                	} 
                 							});
                 							
-                							console.log(entry);
-                		
-                							//empty input value
-                							$('#view-sch-id').val("");
-                							$('#view-title').empty();
-                							$('#view-start').empty();
-                							$('#view-end').empty();
-                							$('#view-groupCode').empty();
-                							$('#view-writer').empty();
-                							$('#view-desc').empty();
-                							$('#view-entry').empty();
-                							$('.input-check').hide();
-                							$('#attend-check').hide();
                 							
-                							//fill input value
-                							$('#view-sch-id').val(event.id);
-                							$('#view-title').text(event.title);
-                							if(event.allDay) {
-                								$('#view-start').text(event.start.format('YYYY-MM-DD'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD'));
-                    							}	
-                							} else {
-                    							$('#view-start').text(event.start.format('YYYY-MM-DD HH:mm'));
-                    							if(event.end != null) {
-                    								$('#view-end').text(event.end.format('YYYY-MM-DD HH:mm'));	
-                    							}               								
-                							}
-                							$('#view-groupCode').text(event.groupName);
-                							
-
-                							$('#view-writer').text(event.writerName);
-                							$('#view-desc').text(event.content);
-                							
-                							//autority check
-                							if(event.writer != loginId) {
-												console.log("wrong id");
-												
-												$(".modalBtnContainer-viewEvent").hide();
-                							} else {
-                								$(".modalBtnContainer-viewEvent").show();
-                							}
-                							
-                							//modal on
-                							$('#eventModal').modal();
            			},
                 		
                 });
@@ -503,17 +512,13 @@
                 	return;
                 }
                 
-                console.log(attendCheck());
-                
-                if(attendCheck()){
+                if(attendCheck() == true){
                 	$('#attend-check').hide();
                 } else {
                 	$('#attend-check').show();
                 	return;
                 }
                 
-            	console.log("button click success");
-            	
                 // input emp.no 
                 $("#insertId").val(loginId);
                 
@@ -523,21 +528,20 @@
         			$('#edit-start').prop(date);
                 	
                 } else {
+                	if($('#end-time').val() == null) {
+						$('#end-time').val() = $('#start-time').val();
+						
+                	}
                 	startDateTime = startDateTime.concat(" ", $('#start-time').val());
                 	endDateTime = endDateTime.concat(" ", $('#end-time').val());
                 	
                 	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
                 	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
                 	
-                	if($('#end-time') == null) {
-                		console.log('end is null');
-                	}
                 	
                 }
                 
                 var insertEvent = $("form[name=insert-event]").serializeObject();
-                
-                console.log("insertEvent : " + JSON.stringify(insertEvent));
                 
                 $.ajax({
                 	type 		: 'post',
@@ -594,7 +598,7 @@
         		if(startDate > endDate) {
         			$('#date-check').show();	
         			return false;
-        		} else	if(startDate < endDate){
+        		} else	if(startDate <= endDate){
         			$('#date-check').hide();
             		$('#time-check').hide();  
             		return true;
@@ -619,11 +623,8 @@
 				
         		var id = $('#view-sch-id').val();
         		
-        		console.log(id);
-				
 				var deleteConfirm = confirm('정말로 삭제하시겠습니까?');
 				if(deleteConfirm) {
-					console.log('delete ajax on');
 					
 					$.ajax({
 						url			: base+'/schAjax/schDelete',
@@ -644,14 +645,11 @@
 	                	},
 					});
 				} else {
-					console.log('delete cancle');
 				}
         	})
         	
         	//modify button click function
         	$('#updateEvent').on('click', function() {
-        		
-        		console.log(entry);
         		
         		//view-modal close
         		$('#eventModal').modal('hide');
@@ -718,8 +716,6 @@
         	//modify-save button click function
         	$('#modify-save-event').on('click', function(){
                 	
-                	console.log("button click success");
-
                 	//input title check
                 	if($('#edit-title').val() == '' ) {
     					$('#edit-title').focus();
@@ -730,11 +726,11 @@
 						return;          	
 					}
 					//참가자 체크
-					if(attendCheck()){
+					if(attendCheck() == true){
+	                	$('#attend-check').hide();
+	                } else {
 	                	$('#attend-check').show();
 	                	return;
-	                } else {
-	                	$('#attend-check').hide();
 	                }
                 	
                 	
@@ -749,21 +745,19 @@
                     	var date = $('#edit-start').substr(0,10);
             			$('#edit-start').prop(date);
                     } else {
+                    	if($('#end-time').val() == null) {
+                    		$('#end-time').val() = $('#start-time').val();
+                    	}
                     	startDateTime = startDateTime.concat(" ", $('#start-time').val());
                     	endDateTime = endDateTime.concat(" ", $('#end-time').val());
                     	
                     	$('#start-dateTime').val(moment(startDateTime).format('YYMMDDHHMMSS'));
                     	$('#end-dateTime').val(moment(endDateTime).format('YYMMDDHHMMSS'));
                     	
-                    	if($('#end-time') == null) {
-                    		console.log('end is null');
-                    	}
                     	
                     }
 	                    
                     var updateEvent = $("form[name=insert-event]").serializeObject();
-                    
-                    console.log("updateEvent : " + JSON.stringify(updateEvent));
                     
                      $.ajax({
                     	type 		: 'post',
@@ -793,27 +787,22 @@
         	
         	//grouping checkbox onchange function
         	$('#myCalendar').change(function(){
-        		console.log($('#myCalendar').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#poll').change(function(){
-        		console.log($('#poll').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#project').change(function(){
-        		console.log($('#project').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#community').change(function(){
-        		console.log($('#community').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
         	$('#vacation').change(function(){
-        		console.log($('#vacation').prop('checked'));
                 //refresh calendar
                 $('#calendar').fullCalendar('refetchEvents');        		
         	});
@@ -866,27 +855,6 @@
       	
       	/************************************************************ 함수 부분 ********************************************************/
       	
-      	//insert form-data serialize transform
-        	$.fn.serializeObject = function() {
-			  "use strict"
-			  var result = {}
-			  var extend = function(i, element) {
-			    var node = result[element.name]
-			    if ("undefined" !== typeof node && node !== null) {
-			      if ($.isArray(node)) {
-			        node.push(element.value)
-			      } else {
-			        result[element.name] = [node, element.value]
-			      }
-			    } else {
-			      result[element.name] = element.value
-			    }
-			  }
-			
-			  $.each(this.serializeArray(), extend)
-			  return result
-			}
-      	
         /* 인원추가용 조직도 오픈 기능 */
 		function organOpen(){
 			var p = $(this).offset();
@@ -905,7 +873,6 @@
 			});
 			checkedAttendInfo.push(checkedAttendId);
 			checkedAttendInfo.push(checkedAttendName);
-			console.log(checkedAttendInfo);
 			inputNameToAttendForm();		
 		}
 		
@@ -914,7 +881,6 @@
 			attendFormFlush();
 			/* 폼에 이름 넣기 */
 			$.each(checkedAttendInfo[1], function (index, item){
-				console.log(item);
 				var tempIdName = {"name" : checkedAttendName[index], "id" : checkedAttendId[index], "type" : "attend"};
 					$('#add-name-template').tmpl(tempIdName).insertBefore('#organ-view ul.name-tag .create');
 			})
@@ -925,10 +891,12 @@
 		/* 참가자 폼 비우기 */
 		function attendFormFlush(){
 			$('#organ-view ul.name-tag li.name-icon').remove();
+			$('#eventModal .name-tag li.name-icon').remove();
 		}
       	/* 참가자 null 확인 */
 		function attendCheck(){
-      		if($('#organ-view ul.name-tag li.name-icon').length > 0){
+			var co = $('#add-eventModal ul.name-tag').children('li.name-icon').length;
+      		if(co > 0){
       			return true
       		} else{
       			return false;
@@ -940,17 +908,33 @@
 			attendFormFlush();
 			/* 폼에 이름 넣기 */
 			$.each(entry, function (index, item){
-				$('#view-name-template').tmpl(item).insertBefore('#organ-view ul.name-tag .create');
+				$('#modify-name-template').tmpl(item).insertBefore('#organ-view ul.name-tag .create');
 			})
 		};
       	
       	
         </script>
         
-        <!-- 참가자 수정 뷰 -->
+        <!-- 참가자 조회 뷰 -->
 		<script type="text/html" id="view-name-template">
+		
+			<li class="name-icon">
+				<span class="name">
+					<c:out value="\${EMP_INFO_NAME}"/>
+					<c:out value=" "/>
+					<c:out value="\${JOB_INFO_NAME}"/>	
+				</span>
+				<input name="attender" type="hidden" value="\${EMP_INFO_EMP_NO}">
+			</li>
+		</script>
+        <!-- 참가자 수정 뷰 -->
+		<script type="text/html" id="modify-name-template">
 		<li class="name-icon">
-			<span class="name">\${EMP_INFO_NAME}</span>
+			<span class="name">
+				<c:out value="\${EMP_INFO_NAME}"/>
+				<c:out value=" "/>
+				<c:out value="\${JOB_INFO_NAME}"/>	
+			</span>
 			<span class="btn-wrap">
 				<span class="icon-classic icon-del" title="삭제"></span>
 			</span>
