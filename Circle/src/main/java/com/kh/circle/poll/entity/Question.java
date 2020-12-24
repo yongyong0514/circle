@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Question {
 	private int seq ,score, pluralMaximum;
-	private String title, necessary, type, content, etcContent,
+	private String leadTitle, title, necessary, type, content, etcContent,
 				   selectType, checkLowerType, popn, popq;
 	private List<SelectContents> selectContents;
 }

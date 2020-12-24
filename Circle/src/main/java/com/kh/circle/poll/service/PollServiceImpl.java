@@ -112,6 +112,8 @@ public class PollServiceImpl implements PollService{
 		
 		//삭제용 답변 코드 추출
 		List<String> answers = pollDao.answerSearch(postCode);
+
+		log.info("답변자 삭제 체크 : {}",answers);
 		
 		//답변자 삭제
 		pollDao.deleteAttender(answers);

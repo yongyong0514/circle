@@ -278,7 +278,7 @@
 															<c:when test="${item.POLL_POST_QUST_LOWTYPE eq 'plural'}">
 																<li class="etc">
 																	<span class="txt-wrap">
-																		<p class="data" hidden="true"><c:out value="checkbox"/></p>
+																		<p class="data" hidden="true"><c:out value="${item.POLL_POST_QUST_LIMIT}"/></p>
 																		<input id="${item.POLL_POST_QUST_ANSW_CODE }" type="checkbox" name="${item.POLL_POST_QUST_CODE}" onClick="checkLimit(this);">
 															</c:when>
 														</c:choose>

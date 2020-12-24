@@ -34,12 +34,19 @@ public class PollAjaxController {
 	@RequestMapping(value="/writeComplete", method = RequestMethod.POST)
 	public void post(HttpSession session, @RequestBody List<Question> questions) {
 
+		
+		String leadTitle = (questions.get(questions.size() - 1).getLeadTitle()).toString();
+		questions.remove(questions.size() - 1);
+		
 		String empNo = ( (EmpInfo) session.getAttribute("empInfo")).getEmp_info_emp_no();
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
-
+		
+		temp.setLeadTitle(leadTitle);
 		temp.setWriter(empNo);
 		
 		pollService.insertPoll(temp, questions);
+		
+		
 	}
 	
 	@PostMapping("/attendComplete")
