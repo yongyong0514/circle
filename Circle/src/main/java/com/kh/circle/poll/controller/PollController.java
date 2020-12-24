@@ -219,6 +219,7 @@ public class PollController {
 	public void insertComplete(HttpSession session, List<HashMap<String, Object>> questions) {
 		
 		PreInputData temp = (PreInputData) session.getAttribute("prePollData");
+		
 	}
 	
 	@PostMapping("/postAttendComplete")
