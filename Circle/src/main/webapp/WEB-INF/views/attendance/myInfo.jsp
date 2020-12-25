@@ -164,7 +164,6 @@
 									<li>
 										<div class="infoTableDiv">
 											<span>자격정보</span>
-											<span class="xSmallInfo">(새로운 값을 입력한 뒤 상단의 "수정하기" 버튼을 클릭하세요.)</span>
 											<table class="detailCertificationTable">
 												<tr>
 													<th class="titleCell">분류</th>
@@ -176,18 +175,6 @@
 													<th class="titleCell">만료일</th>
 													<th class="titleCell">비고</th>
 												</tr>
-												<!-- 입력부분 시작 -->
-												<tr>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_type"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_name"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_no"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_sdat"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_crtf_levl"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_inst"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_edat"></td>
-													<td><input class="newInput" type="text" placeholder="입력" name="crtf_info_rm"></td>
-												</tr>
-												<!-- 입력부분 끝 -->
 												<c:forEach var="CertificateInfo" items="${map.crtfInfoList }">
 													<tr>
 														<td><c:out value="${CertificateInfo.crtf_info_type }" /></td>
