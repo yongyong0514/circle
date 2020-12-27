@@ -209,10 +209,13 @@
 				eDate = new Date($(".endDate").val());
 				resultDays = 0;
 				
-				var isSameDate = ( $(".startDate").val() === $(".endDate").val() ? true : false );
+				var isSameDate = "";
 				
 				// "반차"가 선택된 경우
 				if($(".vacationType option:selected").val() == "half"){
+					
+					isSameDate = ( $(".startDate").val() == $(".endDate").val() ? true : false );
+					
 					// "전일" 선택 제한
 					$(".isHalf option[value!='full']").prop("disabled", false);
 					$(".isHalf option[value='full']").prop("disabled", true);
@@ -244,6 +247,8 @@
 				else{
 					// "오전/오후 반차" 선택 제한
 					
+					isSameDate = ( $(".startDate").val() == $(".endDate").val() ? true : false );
+					
 					$(".isHalf option[value='full']").prop("disabled", false);					
 					$(".isHalf option[value!='full']").prop("disabled", true);
 
@@ -254,10 +259,16 @@
 					// 시작일과 종료일이 모두 선택된 경우
 					if( !isNull(sDate) && !isNull(eDate) ){
 						
+						console.log(isSameDate);
+						console.log("값: " + $(".endDate").val());
+						
 						// 1. 두 값이 같을 경우 -> 종료일을 null값으로 변환
 						if(isSameDate){
-							$(".endDate").trigger("reset");
-							$(".calcDate").val(0);
+							$(".endDate").val(null);
+							$(".calcDate").val("");
+
+							sDate = new Date($(".startDate").val());
+							eDate = new Date($(".endDate").val());
 						}
 						// 2. 두 값이 다를 경우 -> 계산 후 출력
 						else {
@@ -397,7 +408,7 @@
 		
 		/* null 체크 */
 		function isNull(value){
-			return (value === undefined || value === null || value === "") ? true : false;
+			return (value === undefined || value === null || value === "" || value == 'Invalid Date') ? true : false;
 		}
 		
 	</script>

@@ -41,7 +41,12 @@ public class AttendanceInfoRepositoryImpl implements AttendanceInfoRepository {
 	public WeekStackInfo weekStackWorkTime(Map<String, Object> inputMap) {
 		WeekStackInfo wsi = sqlSession.selectOne("attendance.weekStackWorkTime", inputMap);
 		
-		return wsi;
+		if(wsi != null) {
+			return wsi;
+		} else {
+			return WeekStackInfo.builder().weekSumWorktimeHour(0).weekSumWorktimeMinute(0).build();
+		}
+		
 	}
 
 	@Override
