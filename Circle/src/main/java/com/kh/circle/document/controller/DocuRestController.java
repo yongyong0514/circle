@@ -101,7 +101,16 @@ public class DocuRestController {
 	public void docuReplyDelete(@RequestParam String replyCode) {
 		
 		docuService.deleteDocuReply(replyCode);
+	}
+	
+	
+//	Result signReplyOwner
+	@GetMapping("/docuReplyOwner")
+	public String docuReplyOwner(@RequestParam String replyCode) {
 		
+		String empCode = sqlSession.selectOne("docu.docuReplyOwner", replyCode);
+		
+		return empCode;
 	}
 	
 }

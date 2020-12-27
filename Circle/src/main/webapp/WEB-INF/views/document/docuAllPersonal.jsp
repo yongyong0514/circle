@@ -22,7 +22,7 @@
 			<div class="contentBar">
 				<jsp:include page="docuHomeBar.jsp" />
 			</div>
-			<div class="content">
+		<div class="content">
 			<div class="signHomeListBar">
 				<ul>
 					<li class="signHomeListTitle"><img src="${pageContext.request.contextPath}/resources/img/sign/document.png" class="signHomeListTitleImg">전체 나의 문서</li>
@@ -31,7 +31,7 @@
 					<li><button class="signListBtn0">제목</button></li>
 				</ul>
 			</div>		
-			<div class="docuList">
+			<div class="docuList1">
 				<table id="listArea">
 				<c:forEach var="list" items="${list}">
 					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list.docu_code}"/>'">
@@ -46,6 +46,35 @@
 				</table>
 			</div>
 			</div>
+			<div class="paging-area" align="center">
+					<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPersonal?currentPages=1'"><<</button>
+			
+						<c:if test="${ pi.currentPage <= 1 }">
+							<button id="paging" disabled><</button>
+						</c:if>
+			
+						<c:if test="${ pi.currentPage > 1 }">
+							<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPersonal?currentPages=<c:out value="${ pi.currentPage - 1 }"/>'"><</button>
+						</c:if>
+		
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+							<c:if test="${ pi.currentPage eq p }">
+								<button id="paging" disabled><c:out value="${ p }"/></button>
+							</c:if>
+							<c:if test="${ pi.currentPage ne p }">
+								<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPersonal?currentPages=<c:out value="${ p }"/>'"><c:out value="${ p }"/></button>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${ pi.currentPage >= pi.maxPage }">
+							<button id="paging" disabled>></button>
+						</c:if>
+						
+						<c:if test="${ pi.currentPage < pi.maxPage }">
+							<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPersonal?currentPages=<c:out value="${ pi.currentPage + 1 }"/>'">></button>
+						</c:if>
+						<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPersonal?currentPages=<c:out value="${ pi.maxPage }"/>'">>></button>
+				</div>
 		</div>
 	</div>
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>

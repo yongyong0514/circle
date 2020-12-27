@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-	min-width: 1200px;
+	min-width: 1250px;
 	position: absolute;
 	left: 180px;
 	width: calc(100% - 180px);

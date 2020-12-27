@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PreInputData {
 
 	private Date startDate, endDate;
-	private String title, joinMember, subDept, open, reply, editable, sequence, writer;
+	private String leadTitle, title, joinMember, subDept, open, reply, editable, sequence, writer;
 	private List<String> refer, attend, deptMember;
 	
 }

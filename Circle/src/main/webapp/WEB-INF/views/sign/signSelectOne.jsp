@@ -352,18 +352,39 @@
 		$(document).on('click', '.deleteReply', function(){
 			var base = "${pageContext.request.contextPath}";
  			var replyCode = $(this).val();
+ 			var empCode= ${empInfo.emp_info_emp_no};
  			
  			$.ajax({
-				url: base + "/signResult/signReplyDelete",
-				type: "post",
-				data: {replyCode : replyCode},
-				success: function(){
-						signReply();
-				},
-				error: function(){
-					alert("error");
-				}
-			});
+ 				url: base + "/signResult/signReplyOwner",
+ 				type: "get",
+ 				data: {replyCode: replyCode},
+ 				success: function(data){
+ 					
+ 					if(data == empCode){
+ 			  			
+ 						$.ajax({
+ 							url: base + "/signResult/signReplyDelete",
+ 							type: "post",
+ 							data: {replyCode : replyCode},
+ 							success: function(){
+ 									signReply();
+ 							},
+ 							error: function(){
+ 								alert("error");
+ 							}
+ 						});
+ 						
+ 					} else {
+ 						alert("댓글 작성자만 삭제할 수 있습니다.");
+ 					}
+ 				}, 
+ 				
+ 				error: function(){
+ 					alert("서버 연결 실패");
+ 				}
+ 				
+ 			});
+
 		});
 	</script>
 	
@@ -376,7 +397,7 @@
 		});  
     </script>
     
-<!--     <script>
+     <script>
     	$(function(){
     		var content = $("#viewer").data("content"); //data-content의 값을 불러와라
     		$("#viewer").data("content", ""); //data-content의 값을 삭제(불러왔기 때문에)
@@ -388,7 +409,7 @@
                 initialValue: content,
             });
         });
-    </script> -->
+    </script>
     
     <script>
     	$("#formBtn3").click(function(){

@@ -31,13 +31,13 @@
 					<li><button class="signListBtn0">제목</button></li>
 				</ul>
 			</div>		
-			<div class="docuList">
+			<div class="docuList1">
 				<table id="listArea">
-				<c:forEach var="list1" items="${list}">
+				<c:forEach var="list" items="${list}">
 					<tr class="result" onclick="location='${pageContext.request.contextPath}/docu/docuSelectOne?docuCode=<c:out value="${list.docu_code}"/>'">
 						<td class="textBox0"></td>
 						<td class="imgBox1"><img src="${pageContext.request.contextPath}/resources/img/sign/file.png" class="img0"></td>
-						<td><img src="${pageContext.request.contextPath}/resources/img/sign/personal.png" class="img1"></td>
+						<td><img src="${pageContext.request.contextPath}/resources/img/sign/public.png" class="img1"></td>
 						<td class="textBox4"><br><c:out value="${list.docu_wdat}"/><br><br><c:out value="${list.docu_whour}"/></td>
 						<td class="textBox1"><br><c:out value="${list.emp_info_name}"/><br><c:out value="${list.job_info_name}"/></td>
 						<td class="textBox2"><c:out value="${list.docu_title}"/></td>						
@@ -46,6 +46,35 @@
 				</table>
 			</div>
 			</div>
+				<div class="paging-area" align="center">
+					<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPublic?currentPages=1'"><<</button>
+			
+						<c:if test="${ pi.currentPage <= 1 }">
+							<button id="paging" disabled><</button>
+						</c:if>
+			
+						<c:if test="${ pi.currentPage > 1 }">
+							<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPublic?currentPages=<c:out value="${ pi.currentPage - 1 }"/>'"><</button>
+						</c:if>
+		
+						<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+							<c:if test="${ pi.currentPage eq p }">
+								<button id="paging" disabled><c:out value="${ p }"/></button>
+							</c:if>
+							<c:if test="${ pi.currentPage ne p }">
+								<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPublic?currentPages=<c:out value="${ p }"/>'"><c:out value="${ p }"/></button>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${ pi.currentPage >= pi.maxPage }">
+							<button id="paging" disabled>></button>
+						</c:if>
+						
+						<c:if test="${ pi.currentPage < pi.maxPage }">
+							<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPublic?currentPages=<c:out value="${ pi.currentPage + 1 }"/>'">></button>
+						</c:if>
+						<button id="paging" onclick="location.href='${pageContext.request.contextPath}/docu/docuAllPublic?currentPages=<c:out value="${ pi.maxPage }"/>'">>></button>
+				</div>
 		</div>
 	</div>
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>

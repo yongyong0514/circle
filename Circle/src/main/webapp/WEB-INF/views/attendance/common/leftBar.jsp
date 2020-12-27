@@ -51,6 +51,14 @@
 	 --%>
 			</c:if> 	
 				<!-- 근태/인사관리 메뉴 끝 -->
+
+			<div class="menuLeftListTitle">전사근태관리</div>
+ 				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 근태현황</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 근태통계</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/empInfo/allInfoList'">전사 인사정보</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 연차현황</div>
+				<div class="menuLeftList" onclick="location.href='${ pageContext.request.contextPath }/attendance/myAttendance'">전사 연차 사용내역</div>
+			<!-- 근태/인사관리 메뉴 끝 -->
 					
 			<!-- 메뉴 끝 -->
 		</div>

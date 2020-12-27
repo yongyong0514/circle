@@ -579,12 +579,13 @@
 	</select>
 	
 	<insert id="preInsert" parameterType="preInputData">
-		insert into poll_post (POLL_POST_CODE, POLL_POST_NAME, POLL_POST_SEC,POLL_POST_STAT
-								,POLL_POST_WDAT,POLL_POST_EMP,POLL_POST_SDAT,POLL_POST_EDAT
-								,POLL_POST_REPL_USE,POLL_POST_MOD_ADMT)
+		insert into poll_post (POLL_POST_CODE, POLL_POST_NAME, POLL_POST_SEC, POLL_POST_CONT,
+								POLL_POST_STAT, POLL_POST_WDAT,POLL_POST_EMP,POLL_POST_SDAT,
+								POLL_POST_EDAT, POLL_POST_REPL_USE,POLL_POST_MOD_ADMT)
 		values('POPN'||TRIM(TO_CHAR(#{sequence},'000000'))
 			 , #{title}
 			 , #{open}
+			 , #{leadTitle}
 			 , default
 			 , sysdate
 			 , #{writer}
@@ -669,13 +670,17 @@
 	</insert>
 	<!-- 점수형 선택지 입력 -->
 	<insert id="insertScoreSelection" parameterType="question">
-		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
-										   , #{item.content}     
-										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
-										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
-										   , 'radio')
-		</foreach>
+		insert into POLL_POST_QUST_ANSW(POLL_POST_QUST_ANSW_CODE, POLL_POST_QUST_ANSW_CONT, POLL_POST_QUST_ANSW_QUST
+										, POLL_POST_QUST_ANSW_POST, POLL_POST_QUST_ANSW_TYPE)
+		select 'POPQ'||TRIM(TO_CHAR(popa_seq.nextval,'000000')), A.* from(
+											<foreach collection="selectContents" item="item" separator="UNION ALL">
+												select #{item.content} as POLL_POST_QUST_ANSW_CONT
+													 , 'POPQ'||TRIM(TO_CHAR(#{popq},'000000')) as POLL_POST_QUST_ANSW_QUST
+													 , 'POPN'||TRIM(TO_CHAR(#{popn},'000000')) as POLL_POST_QUST_ANSW_POST
+													 , 'radio' as POLL_POST_QUST_ANSW_TYPE
+											      from dual
+											</foreach>
+											)A
 	</insert>
 	<!-- 텍스트형 문항 입력 -->
 	<insert id="insertTextQuestion" parameterType="question">
@@ -743,13 +748,18 @@
 	</insert>
 	<!-- 선택형 선택지 입력 -->
 	<insert id="insertSelectSelection" parameterType="question">
-		<foreach collection="selectContents" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-			into POLL_POST_QUST_ANSW values('POPA'||TRIM(TO_CHAR(extractvalue(dbms_xmlgen.getxmltype('select POPA_SEQ.nextval - 1 from dual'),'//text()'),'000000'))
-										   , #{item.content}     
-										   ,'POPQ'||TRIM(TO_CHAR(#{popq},'000000'))
-										   ,'POPN'||TRIM(TO_CHAR(#{popn},'000000'))
-										   , #{item.checkType})
-		</foreach>
+		
+		insert into POLL_POST_QUST_ANSW(POLL_POST_QUST_ANSW_CODE, POLL_POST_QUST_ANSW_CONT, POLL_POST_QUST_ANSW_QUST
+										, POLL_POST_QUST_ANSW_POST, POLL_POST_QUST_ANSW_TYPE)
+		select 'POPQ'||TRIM(TO_CHAR(popa_seq.nextval,'000000')), A.* from(
+											<foreach collection="selectContents" item="item" separator="UNION ALL">
+												select #{item.content} as POLL_POST_QUST_ANSW_CONT
+													 , 'POPQ'||TRIM(TO_CHAR(#{popq},'000000')) as POLL_POST_QUST_ANSW_QUST
+													 , 'POPN'||TRIM(TO_CHAR(#{popn},'000000')) as POLL_POST_QUST_ANSW_POST
+													 , #{item.checkType} as POLL_POST_QUST_ANSW_TYPE
+											      from dual
+											</foreach>
+											)A
 	</insert>
 	
 	<!-- 설문 참가 완료 정보 입력 -->

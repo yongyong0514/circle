@@ -662,7 +662,15 @@ $(document).ready(function(){
 	$('#finish-btn').on('click', function(){
 		
 		if(dataCheck()){
+			
+			/* 시작문구 주입 */
+			var leadTitle = $('textarea[name=poll-start-sentence]').val();
+			
+			questions.push({'leadTitle':leadTitle});
+			
 	    	var data = JSON.stringify(questions);
+			
+			console.log(questions);
 	    	
 			var base = "${pageContext.request.contextPath}";
 			$.ajax({
@@ -674,7 +682,7 @@ $(document).ready(function(){
 	       	   ,contentType	:	"application/json; charset=utf-8;"
 			   ,error		: 	function(request,status,error){
 	       					  	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
-			   ,success		: 	location.href = "${pageContext.request.contextPath}/poll/my"
+			   ,success		: 	setTimeout(function(){location.href = "${pageContext.request.contextPath}/poll/my"}, 1000)
 			})
 			
 		} else {
@@ -853,7 +861,7 @@ $(document).ready(function(){
 			}
 		}
 		
-				/*********************************
+		/*********************************
 		** 선택형 문항 내부 기능 ** 
 		**********************************/		
 		/* 복수선택 select 선택시 */
