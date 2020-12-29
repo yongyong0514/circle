@@ -67,7 +67,7 @@ public class DocuController {
 		
 		Iterator<String> itr = multipartRequest.getFileNames();
 		
-		 String filePath = "d:/resources/files/document";
+		 String filePath = "d:/upload/kh52/resources/files/document";
 	       
 	       while (itr.hasNext()) { 
 	           MultipartFile multipartFile = multipartRequest.getFile(itr.next());   

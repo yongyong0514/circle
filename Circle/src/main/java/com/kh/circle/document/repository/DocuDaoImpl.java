@@ -34,7 +34,7 @@ public class DocuDaoImpl implements DocuDao {
 	}
 	
 	
-	private final String path = "d:/resources/files/document";
+	private final String path = "d:/upload/kh52/resources/files/document";
 
 	
 //	Create documentFiles	
