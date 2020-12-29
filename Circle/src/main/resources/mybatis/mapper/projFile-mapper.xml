@@ -16,7 +16,7 @@
 <insert id="issFileInsert" parameterType="projFile">
 
 insert into pro_files(pro_files_code, pro_files_oname, pro_files_cname, pro_files_route, pro_files_date, pro_files_proj, pro_files_iss, pro_files_size, pro_files_emp)
-values (#{pro_files_code}, #{pro_files_oname}, #{pro_files_cname}, 'D:/resources/iss', SYSDATE, #{pro_files_proj}, #{pro_files_iss}, #{pro_files_size}, #{pro_files_emp})
+values (#{pro_files_code}, #{pro_files_oname}, #{pro_files_cname}, 'D:/upload/kh52/resources/iss', SYSDATE, #{pro_files_proj}, #{pro_files_iss}, #{pro_files_size}, #{pro_files_emp})
 
 
 
