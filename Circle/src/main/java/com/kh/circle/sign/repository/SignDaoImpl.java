@@ -71,7 +71,7 @@ public class SignDaoImpl implements SignDao {
 	}
 	
 	//결재 파일 등록
-	private final String path = "d:/resources/files/sign";
+	private final String path = "d:/upload/kh52/resources/files/sign";
 	
 	@Override
 	public void add(String files_oname, long files_size, String files_type, String files_cname, String files_route) {
@@ -153,10 +153,10 @@ public class SignDaoImpl implements SignDao {
 	}
 	
 	//결재 서명 이미지 파일 경로
-	private final String path2 = "d:/resources/files/sign/signature/image";
+	private final String path2 = "d:/upload/kh52/resources/files/sign/signature/image";
 
 	//결재 서명 기본 파일 경로
-	private final String path3 = "d:/resources/files/sign/signature/default";
+	private final String path3 = "d:/upload/kh52/resources/files/sign/signature/default";
 	
 	//결재 서명 파일 다운
 	@Override

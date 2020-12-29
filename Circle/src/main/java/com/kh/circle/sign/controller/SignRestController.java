@@ -56,7 +56,7 @@ public class SignRestController {
 		String iempCode = 'i' + empCode;
 		int checkValue = sqlSession.selectOne("sign.sfsListCount", iempCode);
 		Iterator<String> itr =  multipartRequest.getFileNames();
-		String filePath = "d:/resources/files/sign/signature/image";
+		String filePath = "d:/upload/kh52/resources/files/sign/signature/image";
 		
 		if(checkValue < 5) {
 			while (itr.hasNext()) {
@@ -191,6 +191,20 @@ public class SignRestController {
 		if(Math.abs(result) == 1) {
 			sqlSession.insert("sign.signProcessAdd2", signCode);
 			sqlSession.update("sign.signGo", signCode);
+			
+			List<SignJoinerCount> signJoinerCount2 = sqlSession.selectList("sign.sjDecisionCount", signCode);
+			
+			for(SignJoinerCount value:signJoinerCount) {
+				signCount = Integer.parseInt(value.getSign_count());
+				signOCount = Integer.parseInt(value.getSign_ocount());
+			}
+			
+			int result2 = signCount - signOCount;
+			
+			if(Math.abs(result2) == signOCount) {
+				sqlSession.insert("sign.signProcessAdd3", signCode);
+				sqlSession.update("sign.signComplete", signCode);
+			}
 		}
 		
 		//카운트 값 0일 때 완료 상태 프로세스 추가
