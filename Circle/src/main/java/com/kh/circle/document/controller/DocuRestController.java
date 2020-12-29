@@ -47,7 +47,7 @@ public class DocuRestController {
 		
 		 Iterator<String> itr =  multipartRequest.getFileNames();
          
-	       String filePath = "d:/resources/files/sign";
+	       String filePath = "d:/upload/kh52/resources/files/sign";
 	       
 	       while (itr.hasNext()) { 
 	           MultipartFile multipartFile = multipartRequest.getFile(itr.next());   
