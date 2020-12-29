@@ -63,7 +63,7 @@
 
 	
 	<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="file" value="D:/log/daily"></param>
+		<param name="file" value="D:/upload/kh52/log/daily"></param>
 		<param name="append" value="true"></param>
 		<!-- daily이므로 날짜 패턴 설정을 해야함 -->
 		<param name="DatePattern" value="-yyyy-MM-dd'.log'"></param>
